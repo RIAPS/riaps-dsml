@@ -21,7 +21,7 @@
 		<module>edu.vanderbilt.riaps.datatypes.feature</module>
 		<module>edu.vanderbilt.riaps.datatypes.repository</module>
 		<module>edu.vanderbilt.riaps.datatypes.tests</module>
-		<module>edu.vanderbilt.riaps.datatypes.ui.tests</module>
+		<!--<module>edu.vanderbilt.riaps.datatypes.ui.tests</module>-->
 	</modules>
 	<build>
 		<plugins>

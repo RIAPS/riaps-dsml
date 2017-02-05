@@ -21,8 +21,7 @@
 		<module>edu.vanderbilt.riaps.app.feature</module>
 		<module>edu.vanderbilt.riaps.app.repository</module>
 		<module>edu.vanderbilt.riaps.app.tests</module>
-		<module>edu.vanderbilt.riaps.app.ui.tests</module>
-		
+		<!--<module>edu.vanderbilt.riaps.app.ui.tests</module>-->		
 		<module>../edu.vanderbilt.riaps.datatypes.parent</module>
 	</modules>
 	<build>
