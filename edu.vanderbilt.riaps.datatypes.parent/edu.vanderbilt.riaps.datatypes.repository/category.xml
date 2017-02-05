@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+	<feature id="edu.vanderbilt.riaps.datatypes.feature" version="0.0.0">
+		<category name="main"/>
+	</feature>
+	<feature id="edu.vanderbilt.riaps.datatypes.feature.source" version="0.0.0">
+		<category name="main.source"/>
+	</feature>
+	<category-def name="main" label="Datatypes"/>
+	<category-def name="main.source" label="Datatypes (Sources)"/>
+</site>

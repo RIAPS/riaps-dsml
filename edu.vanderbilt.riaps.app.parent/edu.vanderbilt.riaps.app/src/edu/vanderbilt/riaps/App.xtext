@@ -1,0 +1,207 @@
+grammar edu.vanderbilt.riaps.App with org.eclipse.xtext.common.Terminals
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "http://www.vanderbilt.edu/riaps/Datatypes" as DataTypes
+generate app "http://www.vanderbilt.edu/riaps/App"
+
+//This is the main model rule
+Model returns Mdodel:
+	{Model}
+	'package' name=FQN
+	(imports+=Import)*
+	(collections+=Collection)*;
+
+	//These are the terminal Rules	
+terminal INT returns ecore::EInt:
+	'0'..'9' ('0'..'9' | '_')*;
+
+terminal DECIMAL:
+	INT
+	(('e' | 'E') ('+' | '-')? INT)?
+	(('b' | 'B') ('i' | 'I' | 'd' | 'D') | ('l' | 'L' | 'd' | 'D' | 'f' | 'F'))?;
+
+FormalDefault:
+	StringDefault
+	| NumberDefault
+	| BoolDefault;
+
+StringDefault:
+	value=STRING;
+
+NumberDefault:
+	value=Number;
+
+BoolDefault:
+	value=BOOL;
+
+Number hidden():
+	(INT | DECIMAL) ('.' (INT | DECIMAL))?;
+
+terminal BOOL:
+	'true' | 'false';
+
+	// These are the real FCO
+Collection:
+	MessageCollection
+	| ComponentCollection
+	| Application;
+
+ComponentCollection returns ComponentCollection:
+	{ComponentCollection}
+	'componentCollection' (name=ID)
+	'{'
+	(components+=Component)*
+	'}';
+
+Application returns Application:
+	{Application}
+	'application' (name=ID) ('extends' baseapp=[Application|FQN])?
+	'{'
+	((artifacts+=Artifact) | (actors+=Actor) | (components+=Component) | (messages+=Message))*
+	'}';
+
+Import:
+	'import' (importedNamespace=ImportedFQN);
+
+ImportedFQN:
+	FQN ('.' '*')?;
+
+FQN:
+	ID ('.' ID)*;
+
+	//Now this is the real section of component description
+MessageCollection returns MessageCollection:
+	{MessageCollection}
+	'messageCollection' (name=ID)
+	'{'
+	(messages+=Message)*
+	'}';
+
+Message:
+	'message' name=ID ':' type=[DataTypes::FStructType|FQN] ('key' key=[DataTypes::FField|FQN])? (';')?;
+
+	/*
+ * Rule to create (software) artifact. Artifacts can have dependencies. 
+ * All artifacts are always found in RIAPSAPPS/artifacts folder
+ * 
+ */
+Artifact:
+	(jar?='jar' | sharedObject?='sharedObject' | configurationFile?='file') name=ID ':' (path=STRING) (';')?;
+
+Component:
+	AppComponent | DeviceComponent;
+
+DeviceComponent:
+	'device' name=ID
+	('(' formals+=ComponentFormal (',' formals+=ComponentFormal)* ')')?
+	'{'
+	((requirements+=Requirement) |
+	(ports+=Port))+
+	'}';
+
+	// Component types used in the application
+AppComponent:
+	'component' name=ID
+	('(' formals+=ComponentFormal (',' formals+=ComponentFormal)* ')')?
+	'{'
+	((requirements+=Requirement) |
+	(ports+=Port))+
+	'}';
+
+
+/*
+ * Rule that defines different supported memory units. 
+ */
+MemoryUnits:
+		kb?='KB' 
+	| 	mb?='MB' 
+	| 	gb?="GB";
+
+Requirement:
+	'requires' (('artifact' artifactrequirement=[Artifact|FQN]) | ('memory' memoryRequirement=INT memoryunit=MemoryUnits)
+	| ('storage' storageRequirement=INT storageunit=MemoryUnits)
+	| ('device' deviceRequirement=STRING)) (';')?;
+
+Port:
+	PubPort
+	| SubPort
+	| ClntPort
+	| SrvPort
+	| ReqPort
+	| TimPort
+	| InsPort;
+
+PubPort:
+	'pub' name=ID ':' type=[Message|FQN] (';')?;
+
+SubPort:
+	'sub' name=ID ':' type=[Message|FQN] (';')?;
+
+	// Client port (request and reply message types) - Owned by an SMI client
+// Client operation is expected to send on the port and then receive on the same port
+ClntPort:
+	'clt' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' (';')?;
+
+SrvPort:
+	'srv' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' (';')?;
+
+ReqPort:
+	'req' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' (';')?;
+
+
+/*
+ * Rule that defines different supported time units.
+ */
+TimeUnit:
+		months ?= 'months'
+	|	days ?= 'days'
+	|	seconds ?= 's'
+	|	milliseconds ?= 'ms'
+	|	nanoseconds ?= 'ns'
+	|	microseconds ?= 'mus';	
+
+TimPort:
+	'timer' name=ID (spec=Number unit=TimeUnit) (';')?;
+
+
+
+	// Inside port
+InsPort:
+	'inside' name=ID (spec?='default')? (';')?;
+
+ComponentFormal:
+	name=ID ('=' argDefault=FormalDefault);
+
+ActorFormal:
+	name=ID ('=' argDefault=FormalDefault);
+
+Actor:
+	'actor' name=ID ('(' formals+=ActorFormal (',' formals+=ActorFormal)* ')')?
+	'{'
+	('local' locals+=[Message|FQN] (',' locals+=[Message|FQN])* (';')?)? // Optional: local messages (stay within the host)
+	('internal' internals+=[Message|FQN] (',' internals+=[Message|FQN])* (';')?)? // Optional: internal messages (stay within the actor)
+	compsection=InstanceSection
+	wires+=Wire*
+	'}';
+	// Wiring of clients to servers (both SMI and AMI)
+InstanceSection returns InstanceSection:
+	{InstanceSection}
+	'{'
+	(instances+=Instance)+
+	'}';
+
+Wire returns Wire:
+	{Wire}
+	((clnt=[ClntPort|FQN] '=' server=[SrvPort|FQN]) | (ami?='ami' req=[ReqPort|FQN] '=' server=[SrvPort|FQN])) (';')?;
+
+Actual:
+	argName=[ComponentFormal|FQN] '=' argValue=ActualValue;
+
+ActualValue:
+	(stringdefault=StringDefault | numberdefault=NumberDefault | boolDefault=BoolDefault | param=[ActorFormal|FQN]);
+
+Instance:
+	name=ID ':' type=[Component|FQN] ('(' actuals+=Actual (',' (actuals+=Actual))* ')')? (';')?;
+
+
+	
