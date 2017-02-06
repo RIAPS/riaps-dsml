@@ -58,7 +58,7 @@ Application returns Application:
 	'application' (name=ID) ('extends' baseapp=[Application|FQN])?
 	'{'
 	((artifacts+=Artifact) | (actors+=Actor) | (components+=Component) | (messages+=Message))*
-	deploymentConstraints+=DeploymentConstraint*
+	(deploymentConstraints+=DeploymentConstraint)*
 	'}';
 
 DeploymentConstraint:
@@ -66,12 +66,12 @@ DeploymentConstraint:
 ;
 
 CollocateConstraint:
-	'collocate' actors+=[Actor|FQN] (','  actors+=[Actor|FQN])* (';'?)
+	'collocate' actorcollocatelist+=[Actor|FQN] (','  actorcollocatelist+=[Actor|FQN])* (';'?)
 ;
 
 
 DistributeConstraint:
-	'distribute' actors+=[Actor|FQN] (','  actors+=[Actor|FQN])* (';'?)
+	'distribute' actordistributelist+=[Actor|FQN] (','  actordistributelist+=[Actor|FQN])* (';'?)
 ;
 
 Import:

@@ -18,6 +18,7 @@ import edu.vanderbilt.riaps.app.Application
 import edu.vanderbilt.riaps.app.Actor
 import edu.vanderbilt.riaps.app.Artifact
 import edu.vanderbilt.riaps.app.InstanceSection
+import edu.vanderbilt.riaps.app.DeploymentConstraint
 
 class AppFormatter extends AbstractFormatter2 {
 
@@ -76,6 +77,10 @@ class AppFormatter extends AbstractFormatter2 {
 		for (Actor actor : app.getActors()) {
 			actor.format;
 			actor.prepend[noSpace; newLine].append[noSpace; newLine]
+		}
+		for(DeploymentConstraint c: app.deploymentConstraints){
+			c.format;
+			c.prepend[noSpace; newLine].append[noSpace; newLine]
 		}
 
 	}
