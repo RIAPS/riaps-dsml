@@ -8,6 +8,7 @@ import edu.vanderbilt.riaps.app.AppPackage;
 import edu.vanderbilt.riaps.app.Application;
 import edu.vanderbilt.riaps.app.Artifact;
 import edu.vanderbilt.riaps.app.Component;
+import edu.vanderbilt.riaps.app.DeploymentConstraint;
 import edu.vanderbilt.riaps.app.Message;
 
 import java.util.Collection;
@@ -38,6 +39,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link edu.vanderbilt.riaps.app.impl.ApplicationImpl#getActors <em>Actors</em>}</li>
  *   <li>{@link edu.vanderbilt.riaps.app.impl.ApplicationImpl#getComponents <em>Components</em>}</li>
  *   <li>{@link edu.vanderbilt.riaps.app.impl.ApplicationImpl#getMessages <em>Messages</em>}</li>
+ *   <li>{@link edu.vanderbilt.riaps.app.impl.ApplicationImpl#getDeploymentConstraints <em>Deployment Constraints</em>}</li>
  * </ul>
  *
  * @generated
@@ -93,6 +95,16 @@ public class ApplicationImpl extends CollectionImpl implements Application
    * @ordered
    */
   protected EList<Message> messages;
+
+  /**
+   * The cached value of the '{@link #getDeploymentConstraints() <em>Deployment Constraints</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDeploymentConstraints()
+   * @generated
+   * @ordered
+   */
+  protected EList<DeploymentConstraint> deploymentConstraints;
 
   /**
    * <!-- begin-user-doc -->
@@ -219,6 +231,20 @@ public class ApplicationImpl extends CollectionImpl implements Application
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<DeploymentConstraint> getDeploymentConstraints()
+  {
+    if (deploymentConstraints == null)
+    {
+      deploymentConstraints = new EObjectContainmentEList<DeploymentConstraint>(DeploymentConstraint.class, this, AppPackage.APPLICATION__DEPLOYMENT_CONSTRAINTS);
+    }
+    return deploymentConstraints;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -232,6 +258,8 @@ public class ApplicationImpl extends CollectionImpl implements Application
         return ((InternalEList<?>)getComponents()).basicRemove(otherEnd, msgs);
       case AppPackage.APPLICATION__MESSAGES:
         return ((InternalEList<?>)getMessages()).basicRemove(otherEnd, msgs);
+      case AppPackage.APPLICATION__DEPLOYMENT_CONSTRAINTS:
+        return ((InternalEList<?>)getDeploymentConstraints()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -257,6 +285,8 @@ public class ApplicationImpl extends CollectionImpl implements Application
         return getComponents();
       case AppPackage.APPLICATION__MESSAGES:
         return getMessages();
+      case AppPackage.APPLICATION__DEPLOYMENT_CONSTRAINTS:
+        return getDeploymentConstraints();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -291,6 +321,10 @@ public class ApplicationImpl extends CollectionImpl implements Application
         getMessages().clear();
         getMessages().addAll((Collection<? extends Message>)newValue);
         return;
+      case AppPackage.APPLICATION__DEPLOYMENT_CONSTRAINTS:
+        getDeploymentConstraints().clear();
+        getDeploymentConstraints().addAll((Collection<? extends DeploymentConstraint>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -320,6 +354,9 @@ public class ApplicationImpl extends CollectionImpl implements Application
       case AppPackage.APPLICATION__MESSAGES:
         getMessages().clear();
         return;
+      case AppPackage.APPLICATION__DEPLOYMENT_CONSTRAINTS:
+        getDeploymentConstraints().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -344,6 +381,8 @@ public class ApplicationImpl extends CollectionImpl implements Application
         return components != null && !components.isEmpty();
       case AppPackage.APPLICATION__MESSAGES:
         return messages != null && !messages.isEmpty();
+      case AppPackage.APPLICATION__DEPLOYMENT_CONSTRAINTS:
+        return deploymentConstraints != null && !deploymentConstraints.isEmpty();
     }
     return super.eIsSet(featureID);
   }

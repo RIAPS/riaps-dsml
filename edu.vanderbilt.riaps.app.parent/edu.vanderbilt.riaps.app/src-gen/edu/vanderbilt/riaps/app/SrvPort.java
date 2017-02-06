@@ -15,6 +15,7 @@ package edu.vanderbilt.riaps.app;
  * <ul>
  *   <li>{@link edu.vanderbilt.riaps.app.SrvPort#getReq_type <em>Req type</em>}</li>
  *   <li>{@link edu.vanderbilt.riaps.app.SrvPort#getRep_type <em>Rep type</em>}</li>
+ *   <li>{@link edu.vanderbilt.riaps.app.SrvPort#getRatelimit <em>Ratelimit</em>}</li>
  * </ul>
  *
  * @see edu.vanderbilt.riaps.app.AppPackage#getSrvPort()
@@ -74,5 +75,31 @@ public interface SrvPort extends Port
    * @generated
    */
   void setRep_type(Message value);
+
+  /**
+   * Returns the value of the '<em><b>Ratelimit</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Ratelimit</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Ratelimit</em>' containment reference.
+   * @see #setRatelimit(RateLimit)
+   * @see edu.vanderbilt.riaps.app.AppPackage#getSrvPort_Ratelimit()
+   * @model containment="true"
+   * @generated
+   */
+  RateLimit getRatelimit();
+
+  /**
+   * Sets the value of the '{@link edu.vanderbilt.riaps.app.SrvPort#getRatelimit <em>Ratelimit</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Ratelimit</em>' containment reference.
+   * @see #getRatelimit()
+   * @generated
+   */
+  void setRatelimit(RateLimit value);
 
 } // SrvPort

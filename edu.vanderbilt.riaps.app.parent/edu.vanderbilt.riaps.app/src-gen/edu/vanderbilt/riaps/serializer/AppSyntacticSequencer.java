@@ -20,36 +20,42 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public class AppSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected AppGrammarAccess grammarAccess;
-	protected AbstractElementAlias match_Actor_SemicolonKeyword_4_3_q;
-	protected AbstractElementAlias match_Actor_SemicolonKeyword_5_3_q;
+	protected AbstractElementAlias match_Actor_SemicolonKeyword_4_0_3_q;
+	protected AbstractElementAlias match_Actor_SemicolonKeyword_4_1_3_q;
+	protected AbstractElementAlias match_Actor_SemicolonKeyword_4_2_3_q;
 	protected AbstractElementAlias match_Artifact_SemicolonKeyword_4_q;
-	protected AbstractElementAlias match_ClntPort_SemicolonKeyword_8_q;
+	protected AbstractElementAlias match_ClntPort_SemicolonKeyword_10_q;
+	protected AbstractElementAlias match_CollocateConstraint_SemicolonKeyword_3_q;
+	protected AbstractElementAlias match_DistributeConstraint_SemicolonKeyword_3_q;
 	protected AbstractElementAlias match_InsPort_SemicolonKeyword_3_q;
 	protected AbstractElementAlias match_Instance_SemicolonKeyword_4_q;
 	protected AbstractElementAlias match_Message_SemicolonKeyword_5_q;
-	protected AbstractElementAlias match_PubPort_SemicolonKeyword_4_q;
-	protected AbstractElementAlias match_ReqPort_SemicolonKeyword_8_q;
+	protected AbstractElementAlias match_PubPort_SemicolonKeyword_5_q;
+	protected AbstractElementAlias match_ReqPort_SemicolonKeyword_10_q;
 	protected AbstractElementAlias match_Requirement_SemicolonKeyword_2_q;
-	protected AbstractElementAlias match_SrvPort_SemicolonKeyword_8_q;
-	protected AbstractElementAlias match_SubPort_SemicolonKeyword_4_q;
+	protected AbstractElementAlias match_SrvPort_SemicolonKeyword_9_q;
+	protected AbstractElementAlias match_SubPort_SemicolonKeyword_5_q;
 	protected AbstractElementAlias match_TimPort_SemicolonKeyword_3_q;
 	protected AbstractElementAlias match_Wire_SemicolonKeyword_2_q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (AppGrammarAccess) access;
-		match_Actor_SemicolonKeyword_4_3_q = new TokenAlias(false, true, grammarAccess.getActorAccess().getSemicolonKeyword_4_3());
-		match_Actor_SemicolonKeyword_5_3_q = new TokenAlias(false, true, grammarAccess.getActorAccess().getSemicolonKeyword_5_3());
+		match_Actor_SemicolonKeyword_4_0_3_q = new TokenAlias(false, true, grammarAccess.getActorAccess().getSemicolonKeyword_4_0_3());
+		match_Actor_SemicolonKeyword_4_1_3_q = new TokenAlias(false, true, grammarAccess.getActorAccess().getSemicolonKeyword_4_1_3());
+		match_Actor_SemicolonKeyword_4_2_3_q = new TokenAlias(false, true, grammarAccess.getActorAccess().getSemicolonKeyword_4_2_3());
 		match_Artifact_SemicolonKeyword_4_q = new TokenAlias(false, true, grammarAccess.getArtifactAccess().getSemicolonKeyword_4());
-		match_ClntPort_SemicolonKeyword_8_q = new TokenAlias(false, true, grammarAccess.getClntPortAccess().getSemicolonKeyword_8());
+		match_ClntPort_SemicolonKeyword_10_q = new TokenAlias(false, true, grammarAccess.getClntPortAccess().getSemicolonKeyword_10());
+		match_CollocateConstraint_SemicolonKeyword_3_q = new TokenAlias(false, true, grammarAccess.getCollocateConstraintAccess().getSemicolonKeyword_3());
+		match_DistributeConstraint_SemicolonKeyword_3_q = new TokenAlias(false, true, grammarAccess.getDistributeConstraintAccess().getSemicolonKeyword_3());
 		match_InsPort_SemicolonKeyword_3_q = new TokenAlias(false, true, grammarAccess.getInsPortAccess().getSemicolonKeyword_3());
 		match_Instance_SemicolonKeyword_4_q = new TokenAlias(false, true, grammarAccess.getInstanceAccess().getSemicolonKeyword_4());
 		match_Message_SemicolonKeyword_5_q = new TokenAlias(false, true, grammarAccess.getMessageAccess().getSemicolonKeyword_5());
-		match_PubPort_SemicolonKeyword_4_q = new TokenAlias(false, true, grammarAccess.getPubPortAccess().getSemicolonKeyword_4());
-		match_ReqPort_SemicolonKeyword_8_q = new TokenAlias(false, true, grammarAccess.getReqPortAccess().getSemicolonKeyword_8());
+		match_PubPort_SemicolonKeyword_5_q = new TokenAlias(false, true, grammarAccess.getPubPortAccess().getSemicolonKeyword_5());
+		match_ReqPort_SemicolonKeyword_10_q = new TokenAlias(false, true, grammarAccess.getReqPortAccess().getSemicolonKeyword_10());
 		match_Requirement_SemicolonKeyword_2_q = new TokenAlias(false, true, grammarAccess.getRequirementAccess().getSemicolonKeyword_2());
-		match_SrvPort_SemicolonKeyword_8_q = new TokenAlias(false, true, grammarAccess.getSrvPortAccess().getSemicolonKeyword_8());
-		match_SubPort_SemicolonKeyword_4_q = new TokenAlias(false, true, grammarAccess.getSubPortAccess().getSemicolonKeyword_4());
+		match_SrvPort_SemicolonKeyword_9_q = new TokenAlias(false, true, grammarAccess.getSrvPortAccess().getSemicolonKeyword_9());
+		match_SubPort_SemicolonKeyword_5_q = new TokenAlias(false, true, grammarAccess.getSubPortAccess().getSemicolonKeyword_5());
 		match_TimPort_SemicolonKeyword_3_q = new TokenAlias(false, true, grammarAccess.getTimPortAccess().getSemicolonKeyword_3());
 		match_Wire_SemicolonKeyword_2_q = new TokenAlias(false, true, grammarAccess.getWireAccess().getSemicolonKeyword_2());
 	}
@@ -66,30 +72,36 @@ public class AppSyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_Actor_SemicolonKeyword_4_3_q.equals(syntax))
-				emit_Actor_SemicolonKeyword_4_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_Actor_SemicolonKeyword_5_3_q.equals(syntax))
-				emit_Actor_SemicolonKeyword_5_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			if (match_Actor_SemicolonKeyword_4_0_3_q.equals(syntax))
+				emit_Actor_SemicolonKeyword_4_0_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Actor_SemicolonKeyword_4_1_3_q.equals(syntax))
+				emit_Actor_SemicolonKeyword_4_1_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Actor_SemicolonKeyword_4_2_3_q.equals(syntax))
+				emit_Actor_SemicolonKeyword_4_2_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Artifact_SemicolonKeyword_4_q.equals(syntax))
 				emit_Artifact_SemicolonKeyword_4_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_ClntPort_SemicolonKeyword_8_q.equals(syntax))
-				emit_ClntPort_SemicolonKeyword_8_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ClntPort_SemicolonKeyword_10_q.equals(syntax))
+				emit_ClntPort_SemicolonKeyword_10_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_CollocateConstraint_SemicolonKeyword_3_q.equals(syntax))
+				emit_CollocateConstraint_SemicolonKeyword_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_DistributeConstraint_SemicolonKeyword_3_q.equals(syntax))
+				emit_DistributeConstraint_SemicolonKeyword_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_InsPort_SemicolonKeyword_3_q.equals(syntax))
 				emit_InsPort_SemicolonKeyword_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Instance_SemicolonKeyword_4_q.equals(syntax))
 				emit_Instance_SemicolonKeyword_4_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Message_SemicolonKeyword_5_q.equals(syntax))
 				emit_Message_SemicolonKeyword_5_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_PubPort_SemicolonKeyword_4_q.equals(syntax))
-				emit_PubPort_SemicolonKeyword_4_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_ReqPort_SemicolonKeyword_8_q.equals(syntax))
-				emit_ReqPort_SemicolonKeyword_8_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_PubPort_SemicolonKeyword_5_q.equals(syntax))
+				emit_PubPort_SemicolonKeyword_5_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ReqPort_SemicolonKeyword_10_q.equals(syntax))
+				emit_ReqPort_SemicolonKeyword_10_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Requirement_SemicolonKeyword_2_q.equals(syntax))
 				emit_Requirement_SemicolonKeyword_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_SrvPort_SemicolonKeyword_8_q.equals(syntax))
-				emit_SrvPort_SemicolonKeyword_8_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_SubPort_SemicolonKeyword_4_q.equals(syntax))
-				emit_SubPort_SemicolonKeyword_4_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_SrvPort_SemicolonKeyword_9_q.equals(syntax))
+				emit_SrvPort_SemicolonKeyword_9_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_SubPort_SemicolonKeyword_5_q.equals(syntax))
+				emit_SubPort_SemicolonKeyword_5_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_TimPort_SemicolonKeyword_3_q.equals(syntax))
 				emit_TimPort_SemicolonKeyword_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Wire_SemicolonKeyword_2_q.equals(syntax))
@@ -103,10 +115,12 @@ public class AppSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     ';'?
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     locals+=[Message|FQN] (ambiguity) 'critical' criticals+=[Message|FQN]
 	 *     locals+=[Message|FQN] (ambiguity) 'internal' internals+=[Message|FQN]
+	 *     locals+=[Message|FQN] (ambiguity) 'local' locals+=[Message|FQN]
 	 *     locals+=[Message|FQN] (ambiguity) compsection=InstanceSection
 	 */
-	protected void emit_Actor_SemicolonKeyword_4_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Actor_SemicolonKeyword_4_0_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -115,9 +129,26 @@ public class AppSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     ';'?
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     internals+=[Message|FQN] (ambiguity) 'critical' criticals+=[Message|FQN]
+	 *     internals+=[Message|FQN] (ambiguity) 'internal' internals+=[Message|FQN]
+	 *     internals+=[Message|FQN] (ambiguity) 'local' locals+=[Message|FQN]
 	 *     internals+=[Message|FQN] (ambiguity) compsection=InstanceSection
 	 */
-	protected void emit_Actor_SemicolonKeyword_5_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Actor_SemicolonKeyword_4_1_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ';'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     criticals+=[Message|FQN] (ambiguity) 'critical' criticals+=[Message|FQN]
+	 *     criticals+=[Message|FQN] (ambiguity) 'internal' internals+=[Message|FQN]
+	 *     criticals+=[Message|FQN] (ambiguity) 'local' locals+=[Message|FQN]
+	 *     criticals+=[Message|FQN] (ambiguity) compsection=InstanceSection
+	 */
+	protected void emit_Actor_SemicolonKeyword_4_2_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -137,9 +168,33 @@ public class AppSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     ';'?
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     deadline=Deadline ')' (ambiguity) (rule end)
+	 *     ratelimit=RateLimit (ambiguity) (rule end)
 	 *     rep_type=[Message|FQN] ')' (ambiguity) (rule end)
 	 */
-	protected void emit_ClntPort_SemicolonKeyword_8_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_ClntPort_SemicolonKeyword_10_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ';'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     actors+=[Actor|FQN] (ambiguity) (rule end)
+	 */
+	protected void emit_CollocateConstraint_SemicolonKeyword_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ';'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     actors+=[Actor|FQN] (ambiguity) (rule end)
+	 */
+	protected void emit_DistributeConstraint_SemicolonKeyword_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -184,9 +239,10 @@ public class AppSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     ';'?
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     ratelimit=RateLimit (ambiguity) (rule end)
 	 *     type=[Message|FQN] (ambiguity) (rule end)
 	 */
-	protected void emit_PubPort_SemicolonKeyword_4_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_PubPort_SemicolonKeyword_5_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -195,9 +251,11 @@ public class AppSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     ';'?
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     deadline=Deadline ')' (ambiguity) (rule end)
+	 *     ratelimit=RateLimit (ambiguity) (rule end)
 	 *     rep_type=[Message|FQN] ')' (ambiguity) (rule end)
 	 */
-	protected void emit_ReqPort_SemicolonKeyword_8_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_ReqPort_SemicolonKeyword_10_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -220,9 +278,10 @@ public class AppSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     ';'?
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     ratelimit=RateLimit (ambiguity) (rule end)
 	 *     rep_type=[Message|FQN] ')' (ambiguity) (rule end)
 	 */
-	protected void emit_SrvPort_SemicolonKeyword_8_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_SrvPort_SemicolonKeyword_9_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -231,9 +290,10 @@ public class AppSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     ';'?
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     ratelimit=RateLimit (ambiguity) (rule end)
 	 *     type=[Message|FQN] (ambiguity) (rule end)
 	 */
-	protected void emit_SubPort_SemicolonKeyword_4_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_SubPort_SemicolonKeyword_5_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

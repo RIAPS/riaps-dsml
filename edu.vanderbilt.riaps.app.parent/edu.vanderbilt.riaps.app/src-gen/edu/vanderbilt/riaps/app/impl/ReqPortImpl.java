@@ -4,10 +4,13 @@
 package edu.vanderbilt.riaps.app.impl;
 
 import edu.vanderbilt.riaps.app.AppPackage;
+import edu.vanderbilt.riaps.app.Deadline;
 import edu.vanderbilt.riaps.app.Message;
+import edu.vanderbilt.riaps.app.RateLimit;
 import edu.vanderbilt.riaps.app.ReqPort;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -24,6 +27,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link edu.vanderbilt.riaps.app.impl.ReqPortImpl#getReq_type <em>Req type</em>}</li>
  *   <li>{@link edu.vanderbilt.riaps.app.impl.ReqPortImpl#getRep_type <em>Rep type</em>}</li>
+ *   <li>{@link edu.vanderbilt.riaps.app.impl.ReqPortImpl#getDeadline <em>Deadline</em>}</li>
+ *   <li>{@link edu.vanderbilt.riaps.app.impl.ReqPortImpl#getRatelimit <em>Ratelimit</em>}</li>
  * </ul>
  *
  * @generated
@@ -49,6 +54,26 @@ public class ReqPortImpl extends PortImpl implements ReqPort
    * @ordered
    */
   protected Message rep_type;
+
+  /**
+   * The cached value of the '{@link #getDeadline() <em>Deadline</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDeadline()
+   * @generated
+   * @ordered
+   */
+  protected Deadline deadline;
+
+  /**
+   * The cached value of the '{@link #getRatelimit() <em>Ratelimit</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getRatelimit()
+   * @generated
+   * @ordered
+   */
+  protected RateLimit ratelimit;
 
   /**
    * <!-- begin-user-doc -->
@@ -162,6 +187,120 @@ public class ReqPortImpl extends PortImpl implements ReqPort
    * <!-- end-user-doc -->
    * @generated
    */
+  public Deadline getDeadline()
+  {
+    return deadline;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetDeadline(Deadline newDeadline, NotificationChain msgs)
+  {
+    Deadline oldDeadline = deadline;
+    deadline = newDeadline;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AppPackage.REQ_PORT__DEADLINE, oldDeadline, newDeadline);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setDeadline(Deadline newDeadline)
+  {
+    if (newDeadline != deadline)
+    {
+      NotificationChain msgs = null;
+      if (deadline != null)
+        msgs = ((InternalEObject)deadline).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - AppPackage.REQ_PORT__DEADLINE, null, msgs);
+      if (newDeadline != null)
+        msgs = ((InternalEObject)newDeadline).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - AppPackage.REQ_PORT__DEADLINE, null, msgs);
+      msgs = basicSetDeadline(newDeadline, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AppPackage.REQ_PORT__DEADLINE, newDeadline, newDeadline));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public RateLimit getRatelimit()
+  {
+    return ratelimit;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetRatelimit(RateLimit newRatelimit, NotificationChain msgs)
+  {
+    RateLimit oldRatelimit = ratelimit;
+    ratelimit = newRatelimit;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AppPackage.REQ_PORT__RATELIMIT, oldRatelimit, newRatelimit);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setRatelimit(RateLimit newRatelimit)
+  {
+    if (newRatelimit != ratelimit)
+    {
+      NotificationChain msgs = null;
+      if (ratelimit != null)
+        msgs = ((InternalEObject)ratelimit).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - AppPackage.REQ_PORT__RATELIMIT, null, msgs);
+      if (newRatelimit != null)
+        msgs = ((InternalEObject)newRatelimit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - AppPackage.REQ_PORT__RATELIMIT, null, msgs);
+      msgs = basicSetRatelimit(newRatelimit, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AppPackage.REQ_PORT__RATELIMIT, newRatelimit, newRatelimit));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case AppPackage.REQ_PORT__DEADLINE:
+        return basicSetDeadline(null, msgs);
+      case AppPackage.REQ_PORT__RATELIMIT:
+        return basicSetRatelimit(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -173,6 +312,10 @@ public class ReqPortImpl extends PortImpl implements ReqPort
       case AppPackage.REQ_PORT__REP_TYPE:
         if (resolve) return getRep_type();
         return basicGetRep_type();
+      case AppPackage.REQ_PORT__DEADLINE:
+        return getDeadline();
+      case AppPackage.REQ_PORT__RATELIMIT:
+        return getRatelimit();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -192,6 +335,12 @@ public class ReqPortImpl extends PortImpl implements ReqPort
         return;
       case AppPackage.REQ_PORT__REP_TYPE:
         setRep_type((Message)newValue);
+        return;
+      case AppPackage.REQ_PORT__DEADLINE:
+        setDeadline((Deadline)newValue);
+        return;
+      case AppPackage.REQ_PORT__RATELIMIT:
+        setRatelimit((RateLimit)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -213,6 +362,12 @@ public class ReqPortImpl extends PortImpl implements ReqPort
       case AppPackage.REQ_PORT__REP_TYPE:
         setRep_type((Message)null);
         return;
+      case AppPackage.REQ_PORT__DEADLINE:
+        setDeadline((Deadline)null);
+        return;
+      case AppPackage.REQ_PORT__RATELIMIT:
+        setRatelimit((RateLimit)null);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -231,6 +386,10 @@ public class ReqPortImpl extends PortImpl implements ReqPort
         return req_type != null;
       case AppPackage.REQ_PORT__REP_TYPE:
         return rep_type != null;
+      case AppPackage.REQ_PORT__DEADLINE:
+        return deadline != null;
+      case AppPackage.REQ_PORT__RATELIMIT:
+        return ratelimit != null;
     }
     return super.eIsSet(featureID);
   }

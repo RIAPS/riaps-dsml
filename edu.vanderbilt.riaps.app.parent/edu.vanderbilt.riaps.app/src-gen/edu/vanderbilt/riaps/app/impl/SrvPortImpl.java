@@ -5,9 +5,11 @@ package edu.vanderbilt.riaps.app.impl;
 
 import edu.vanderbilt.riaps.app.AppPackage;
 import edu.vanderbilt.riaps.app.Message;
+import edu.vanderbilt.riaps.app.RateLimit;
 import edu.vanderbilt.riaps.app.SrvPort;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -24,6 +26,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link edu.vanderbilt.riaps.app.impl.SrvPortImpl#getReq_type <em>Req type</em>}</li>
  *   <li>{@link edu.vanderbilt.riaps.app.impl.SrvPortImpl#getRep_type <em>Rep type</em>}</li>
+ *   <li>{@link edu.vanderbilt.riaps.app.impl.SrvPortImpl#getRatelimit <em>Ratelimit</em>}</li>
  * </ul>
  *
  * @generated
@@ -49,6 +52,16 @@ public class SrvPortImpl extends PortImpl implements SrvPort
    * @ordered
    */
   protected Message rep_type;
+
+  /**
+   * The cached value of the '{@link #getRatelimit() <em>Ratelimit</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getRatelimit()
+   * @generated
+   * @ordered
+   */
+  protected RateLimit ratelimit;
 
   /**
    * <!-- begin-user-doc -->
@@ -162,6 +175,70 @@ public class SrvPortImpl extends PortImpl implements SrvPort
    * <!-- end-user-doc -->
    * @generated
    */
+  public RateLimit getRatelimit()
+  {
+    return ratelimit;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetRatelimit(RateLimit newRatelimit, NotificationChain msgs)
+  {
+    RateLimit oldRatelimit = ratelimit;
+    ratelimit = newRatelimit;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, AppPackage.SRV_PORT__RATELIMIT, oldRatelimit, newRatelimit);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setRatelimit(RateLimit newRatelimit)
+  {
+    if (newRatelimit != ratelimit)
+    {
+      NotificationChain msgs = null;
+      if (ratelimit != null)
+        msgs = ((InternalEObject)ratelimit).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - AppPackage.SRV_PORT__RATELIMIT, null, msgs);
+      if (newRatelimit != null)
+        msgs = ((InternalEObject)newRatelimit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - AppPackage.SRV_PORT__RATELIMIT, null, msgs);
+      msgs = basicSetRatelimit(newRatelimit, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AppPackage.SRV_PORT__RATELIMIT, newRatelimit, newRatelimit));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case AppPackage.SRV_PORT__RATELIMIT:
+        return basicSetRatelimit(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -173,6 +250,8 @@ public class SrvPortImpl extends PortImpl implements SrvPort
       case AppPackage.SRV_PORT__REP_TYPE:
         if (resolve) return getRep_type();
         return basicGetRep_type();
+      case AppPackage.SRV_PORT__RATELIMIT:
+        return getRatelimit();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -192,6 +271,9 @@ public class SrvPortImpl extends PortImpl implements SrvPort
         return;
       case AppPackage.SRV_PORT__REP_TYPE:
         setRep_type((Message)newValue);
+        return;
+      case AppPackage.SRV_PORT__RATELIMIT:
+        setRatelimit((RateLimit)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -213,6 +295,9 @@ public class SrvPortImpl extends PortImpl implements SrvPort
       case AppPackage.SRV_PORT__REP_TYPE:
         setRep_type((Message)null);
         return;
+      case AppPackage.SRV_PORT__RATELIMIT:
+        setRatelimit((RateLimit)null);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -231,6 +316,8 @@ public class SrvPortImpl extends PortImpl implements SrvPort
         return req_type != null;
       case AppPackage.SRV_PORT__REP_TYPE:
         return rep_type != null;
+      case AppPackage.SRV_PORT__RATELIMIT:
+        return ratelimit != null;
     }
     return super.eIsSet(featureID);
   }

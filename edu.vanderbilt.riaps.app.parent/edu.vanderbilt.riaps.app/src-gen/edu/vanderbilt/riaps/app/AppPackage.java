@@ -318,13 +318,106 @@ public interface AppPackage extends EPackage
   int APPLICATION__MESSAGES = COLLECTION_FEATURE_COUNT + 4;
 
   /**
+   * The feature id for the '<em><b>Deployment Constraints</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int APPLICATION__DEPLOYMENT_CONSTRAINTS = COLLECTION_FEATURE_COUNT + 5;
+
+  /**
    * The number of structural features of the '<em>Application</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int APPLICATION_FEATURE_COUNT = COLLECTION_FEATURE_COUNT + 5;
+  int APPLICATION_FEATURE_COUNT = COLLECTION_FEATURE_COUNT + 6;
+
+  /**
+   * The meta object id for the '{@link edu.vanderbilt.riaps.app.impl.DeploymentConstraintImpl <em>Deployment Constraint</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see edu.vanderbilt.riaps.app.impl.DeploymentConstraintImpl
+   * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getDeploymentConstraint()
+   * @generated
+   */
+  int DEPLOYMENT_CONSTRAINT = 8;
+
+  /**
+   * The feature id for the '<em><b>Actors</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DEPLOYMENT_CONSTRAINT__ACTORS = 0;
+
+  /**
+   * The number of structural features of the '<em>Deployment Constraint</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DEPLOYMENT_CONSTRAINT_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link edu.vanderbilt.riaps.app.impl.CollocateConstraintImpl <em>Collocate Constraint</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see edu.vanderbilt.riaps.app.impl.CollocateConstraintImpl
+   * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getCollocateConstraint()
+   * @generated
+   */
+  int COLLOCATE_CONSTRAINT = 9;
+
+  /**
+   * The feature id for the '<em><b>Actors</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COLLOCATE_CONSTRAINT__ACTORS = DEPLOYMENT_CONSTRAINT__ACTORS;
+
+  /**
+   * The number of structural features of the '<em>Collocate Constraint</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COLLOCATE_CONSTRAINT_FEATURE_COUNT = DEPLOYMENT_CONSTRAINT_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link edu.vanderbilt.riaps.app.impl.DistributeConstraintImpl <em>Distribute Constraint</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see edu.vanderbilt.riaps.app.impl.DistributeConstraintImpl
+   * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getDistributeConstraint()
+   * @generated
+   */
+  int DISTRIBUTE_CONSTRAINT = 10;
+
+  /**
+   * The feature id for the '<em><b>Actors</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DISTRIBUTE_CONSTRAINT__ACTORS = DEPLOYMENT_CONSTRAINT__ACTORS;
+
+  /**
+   * The number of structural features of the '<em>Distribute Constraint</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DISTRIBUTE_CONSTRAINT_FEATURE_COUNT = DEPLOYMENT_CONSTRAINT_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link edu.vanderbilt.riaps.app.impl.ImportImpl <em>Import</em>}' class.
@@ -334,7 +427,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getImport()
    * @generated
    */
-  int IMPORT = 8;
+  int IMPORT = 11;
 
   /**
    * The feature id for the '<em><b>Imported Namespace</b></em>' attribute.
@@ -362,7 +455,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getMessageCollection()
    * @generated
    */
-  int MESSAGE_COLLECTION = 9;
+  int MESSAGE_COLLECTION = 12;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -399,7 +492,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getMessage()
    * @generated
    */
-  int MESSAGE = 10;
+  int MESSAGE = 13;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -445,7 +538,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getArtifact()
    * @generated
    */
-  int ARTIFACT = 11;
+  int ARTIFACT = 14;
 
   /**
    * The feature id for the '<em><b>Jar</b></em>' attribute.
@@ -509,7 +602,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getComponent()
    * @generated
    */
-  int COMPONENT = 12;
+  int COMPONENT = 15;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -564,7 +657,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getDeviceComponent()
    * @generated
    */
-  int DEVICE_COMPONENT = 13;
+  int DEVICE_COMPONENT = 16;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -619,7 +712,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getAppComponent()
    * @generated
    */
-  int APP_COMPONENT = 14;
+  int APP_COMPONENT = 17;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -674,7 +767,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getMemoryUnits()
    * @generated
    */
-  int MEMORY_UNITS = 15;
+  int MEMORY_UNITS = 18;
 
   /**
    * The feature id for the '<em><b>Kb</b></em>' attribute.
@@ -720,7 +813,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getRequirement()
    * @generated
    */
-  int REQUIREMENT = 16;
+  int REQUIREMENT = 19;
 
   /**
    * The feature id for the '<em><b>Artifactrequirement</b></em>' reference.
@@ -793,7 +886,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getPort()
    * @generated
    */
-  int PORT = 17;
+  int PORT = 20;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -814,6 +907,61 @@ public interface AppPackage extends EPackage
   int PORT_FEATURE_COUNT = 1;
 
   /**
+   * The meta object id for the '{@link edu.vanderbilt.riaps.app.impl.RateLimitImpl <em>Rate Limit</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see edu.vanderbilt.riaps.app.impl.RateLimitImpl
+   * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getRateLimit()
+   * @generated
+   */
+  int RATE_LIMIT = 21;
+
+  /**
+   * The feature id for the '<em><b>Lower</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RATE_LIMIT__LOWER = 0;
+
+  /**
+   * The feature id for the '<em><b>Nolower</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RATE_LIMIT__NOLOWER = 1;
+
+  /**
+   * The feature id for the '<em><b>Upper</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RATE_LIMIT__UPPER = 2;
+
+  /**
+   * The feature id for the '<em><b>Noupper</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RATE_LIMIT__NOUPPER = 3;
+
+  /**
+   * The number of structural features of the '<em>Rate Limit</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RATE_LIMIT_FEATURE_COUNT = 4;
+
+  /**
    * The meta object id for the '{@link edu.vanderbilt.riaps.app.impl.PubPortImpl <em>Pub Port</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -821,7 +969,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getPubPort()
    * @generated
    */
-  int PUB_PORT = 18;
+  int PUB_PORT = 22;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -842,13 +990,22 @@ public interface AppPackage extends EPackage
   int PUB_PORT__TYPE = PORT_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>Ratelimit</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PUB_PORT__RATELIMIT = PORT_FEATURE_COUNT + 1;
+
+  /**
    * The number of structural features of the '<em>Pub Port</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PUB_PORT_FEATURE_COUNT = PORT_FEATURE_COUNT + 1;
+  int PUB_PORT_FEATURE_COUNT = PORT_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link edu.vanderbilt.riaps.app.impl.SubPortImpl <em>Sub Port</em>}' class.
@@ -858,7 +1015,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getSubPort()
    * @generated
    */
-  int SUB_PORT = 19;
+  int SUB_PORT = 23;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -879,13 +1036,59 @@ public interface AppPackage extends EPackage
   int SUB_PORT__TYPE = PORT_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>Ratelimit</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SUB_PORT__RATELIMIT = PORT_FEATURE_COUNT + 1;
+
+  /**
    * The number of structural features of the '<em>Sub Port</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SUB_PORT_FEATURE_COUNT = PORT_FEATURE_COUNT + 1;
+  int SUB_PORT_FEATURE_COUNT = PORT_FEATURE_COUNT + 2;
+
+  /**
+   * The meta object id for the '{@link edu.vanderbilt.riaps.app.impl.DeadlineImpl <em>Deadline</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see edu.vanderbilt.riaps.app.impl.DeadlineImpl
+   * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getDeadline()
+   * @generated
+   */
+  int DEADLINE = 24;
+
+  /**
+   * The feature id for the '<em><b>Deadline</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DEADLINE__DEADLINE = 0;
+
+  /**
+   * The feature id for the '<em><b>Units</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DEADLINE__UNITS = 1;
+
+  /**
+   * The number of structural features of the '<em>Deadline</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DEADLINE_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link edu.vanderbilt.riaps.app.impl.ClntPortImpl <em>Clnt Port</em>}' class.
@@ -895,7 +1098,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getClntPort()
    * @generated
    */
-  int CLNT_PORT = 20;
+  int CLNT_PORT = 25;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -925,13 +1128,31 @@ public interface AppPackage extends EPackage
   int CLNT_PORT__REP_TYPE = PORT_FEATURE_COUNT + 1;
 
   /**
+   * The feature id for the '<em><b>Deadline</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLNT_PORT__DEADLINE = PORT_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>Ratelimit</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLNT_PORT__RATELIMIT = PORT_FEATURE_COUNT + 3;
+
+  /**
    * The number of structural features of the '<em>Clnt Port</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CLNT_PORT_FEATURE_COUNT = PORT_FEATURE_COUNT + 2;
+  int CLNT_PORT_FEATURE_COUNT = PORT_FEATURE_COUNT + 4;
 
   /**
    * The meta object id for the '{@link edu.vanderbilt.riaps.app.impl.SrvPortImpl <em>Srv Port</em>}' class.
@@ -941,7 +1162,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getSrvPort()
    * @generated
    */
-  int SRV_PORT = 21;
+  int SRV_PORT = 26;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -971,13 +1192,22 @@ public interface AppPackage extends EPackage
   int SRV_PORT__REP_TYPE = PORT_FEATURE_COUNT + 1;
 
   /**
+   * The feature id for the '<em><b>Ratelimit</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SRV_PORT__RATELIMIT = PORT_FEATURE_COUNT + 2;
+
+  /**
    * The number of structural features of the '<em>Srv Port</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SRV_PORT_FEATURE_COUNT = PORT_FEATURE_COUNT + 2;
+  int SRV_PORT_FEATURE_COUNT = PORT_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link edu.vanderbilt.riaps.app.impl.ReqPortImpl <em>Req Port</em>}' class.
@@ -987,7 +1217,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getReqPort()
    * @generated
    */
-  int REQ_PORT = 22;
+  int REQ_PORT = 27;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1017,13 +1247,31 @@ public interface AppPackage extends EPackage
   int REQ_PORT__REP_TYPE = PORT_FEATURE_COUNT + 1;
 
   /**
+   * The feature id for the '<em><b>Deadline</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REQ_PORT__DEADLINE = PORT_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>Ratelimit</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REQ_PORT__RATELIMIT = PORT_FEATURE_COUNT + 3;
+
+  /**
    * The number of structural features of the '<em>Req Port</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int REQ_PORT_FEATURE_COUNT = PORT_FEATURE_COUNT + 2;
+  int REQ_PORT_FEATURE_COUNT = PORT_FEATURE_COUNT + 4;
 
   /**
    * The meta object id for the '{@link edu.vanderbilt.riaps.app.impl.TimeUnitImpl <em>Time Unit</em>}' class.
@@ -1033,7 +1281,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getTimeUnit()
    * @generated
    */
-  int TIME_UNIT = 23;
+  int TIME_UNIT = 28;
 
   /**
    * The feature id for the '<em><b>Months</b></em>' attribute.
@@ -1106,7 +1354,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getTimPort()
    * @generated
    */
-  int TIM_PORT = 24;
+  int TIM_PORT = 29;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1152,7 +1400,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getInsPort()
    * @generated
    */
-  int INS_PORT = 25;
+  int INS_PORT = 30;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1189,7 +1437,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getComponentFormal()
    * @generated
    */
-  int COMPONENT_FORMAL = 26;
+  int COMPONENT_FORMAL = 31;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1226,7 +1474,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getActorFormal()
    * @generated
    */
-  int ACTOR_FORMAL = 27;
+  int ACTOR_FORMAL = 32;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1263,7 +1511,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getActor()
    * @generated
    */
-  int ACTOR = 28;
+  int ACTOR = 33;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1302,13 +1550,22 @@ public interface AppPackage extends EPackage
   int ACTOR__INTERNALS = 3;
 
   /**
+   * The feature id for the '<em><b>Criticals</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ACTOR__CRITICALS = 4;
+
+  /**
    * The feature id for the '<em><b>Compsection</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ACTOR__COMPSECTION = 4;
+  int ACTOR__COMPSECTION = 5;
 
   /**
    * The feature id for the '<em><b>Wires</b></em>' containment reference list.
@@ -1317,7 +1574,7 @@ public interface AppPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ACTOR__WIRES = 5;
+  int ACTOR__WIRES = 6;
 
   /**
    * The number of structural features of the '<em>Actor</em>' class.
@@ -1326,7 +1583,7 @@ public interface AppPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ACTOR_FEATURE_COUNT = 6;
+  int ACTOR_FEATURE_COUNT = 7;
 
   /**
    * The meta object id for the '{@link edu.vanderbilt.riaps.app.impl.InstanceSectionImpl <em>Instance Section</em>}' class.
@@ -1336,7 +1593,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getInstanceSection()
    * @generated
    */
-  int INSTANCE_SECTION = 29;
+  int INSTANCE_SECTION = 34;
 
   /**
    * The feature id for the '<em><b>Instances</b></em>' containment reference list.
@@ -1364,7 +1621,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getWire()
    * @generated
    */
-  int WIRE = 30;
+  int WIRE = 35;
 
   /**
    * The feature id for the '<em><b>Clnt</b></em>' reference.
@@ -1419,7 +1676,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getActual()
    * @generated
    */
-  int ACTUAL = 31;
+  int ACTUAL = 36;
 
   /**
    * The feature id for the '<em><b>Arg Name</b></em>' reference.
@@ -1456,7 +1713,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getActualValue()
    * @generated
    */
-  int ACTUAL_VALUE = 32;
+  int ACTUAL_VALUE = 37;
 
   /**
    * The feature id for the '<em><b>Stringdefault</b></em>' containment reference.
@@ -1511,7 +1768,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getInstance()
    * @generated
    */
-  int INSTANCE = 33;
+  int INSTANCE = 38;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1557,7 +1814,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getModel()
    * @generated
    */
-  int MODEL = 34;
+  int MODEL = 39;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1763,6 +2020,58 @@ public interface AppPackage extends EPackage
    * @generated
    */
   EReference getApplication_Messages();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link edu.vanderbilt.riaps.app.Application#getDeploymentConstraints <em>Deployment Constraints</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Deployment Constraints</em>'.
+   * @see edu.vanderbilt.riaps.app.Application#getDeploymentConstraints()
+   * @see #getApplication()
+   * @generated
+   */
+  EReference getApplication_DeploymentConstraints();
+
+  /**
+   * Returns the meta object for class '{@link edu.vanderbilt.riaps.app.DeploymentConstraint <em>Deployment Constraint</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Deployment Constraint</em>'.
+   * @see edu.vanderbilt.riaps.app.DeploymentConstraint
+   * @generated
+   */
+  EClass getDeploymentConstraint();
+
+  /**
+   * Returns the meta object for the reference list '{@link edu.vanderbilt.riaps.app.DeploymentConstraint#getActors <em>Actors</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Actors</em>'.
+   * @see edu.vanderbilt.riaps.app.DeploymentConstraint#getActors()
+   * @see #getDeploymentConstraint()
+   * @generated
+   */
+  EReference getDeploymentConstraint_Actors();
+
+  /**
+   * Returns the meta object for class '{@link edu.vanderbilt.riaps.app.CollocateConstraint <em>Collocate Constraint</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Collocate Constraint</em>'.
+   * @see edu.vanderbilt.riaps.app.CollocateConstraint
+   * @generated
+   */
+  EClass getCollocateConstraint();
+
+  /**
+   * Returns the meta object for class '{@link edu.vanderbilt.riaps.app.DistributeConstraint <em>Distribute Constraint</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Distribute Constraint</em>'.
+   * @see edu.vanderbilt.riaps.app.DistributeConstraint
+   * @generated
+   */
+  EClass getDistributeConstraint();
 
   /**
    * Returns the meta object for class '{@link edu.vanderbilt.riaps.app.Import <em>Import</em>}'.
@@ -2129,6 +2438,60 @@ public interface AppPackage extends EPackage
   EAttribute getPort_Name();
 
   /**
+   * Returns the meta object for class '{@link edu.vanderbilt.riaps.app.RateLimit <em>Rate Limit</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Rate Limit</em>'.
+   * @see edu.vanderbilt.riaps.app.RateLimit
+   * @generated
+   */
+  EClass getRateLimit();
+
+  /**
+   * Returns the meta object for the attribute '{@link edu.vanderbilt.riaps.app.RateLimit#getLower <em>Lower</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Lower</em>'.
+   * @see edu.vanderbilt.riaps.app.RateLimit#getLower()
+   * @see #getRateLimit()
+   * @generated
+   */
+  EAttribute getRateLimit_Lower();
+
+  /**
+   * Returns the meta object for the attribute '{@link edu.vanderbilt.riaps.app.RateLimit#isNolower <em>Nolower</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Nolower</em>'.
+   * @see edu.vanderbilt.riaps.app.RateLimit#isNolower()
+   * @see #getRateLimit()
+   * @generated
+   */
+  EAttribute getRateLimit_Nolower();
+
+  /**
+   * Returns the meta object for the attribute '{@link edu.vanderbilt.riaps.app.RateLimit#getUpper <em>Upper</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Upper</em>'.
+   * @see edu.vanderbilt.riaps.app.RateLimit#getUpper()
+   * @see #getRateLimit()
+   * @generated
+   */
+  EAttribute getRateLimit_Upper();
+
+  /**
+   * Returns the meta object for the attribute '{@link edu.vanderbilt.riaps.app.RateLimit#isNoupper <em>Noupper</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Noupper</em>'.
+   * @see edu.vanderbilt.riaps.app.RateLimit#isNoupper()
+   * @see #getRateLimit()
+   * @generated
+   */
+  EAttribute getRateLimit_Noupper();
+
+  /**
    * Returns the meta object for class '{@link edu.vanderbilt.riaps.app.PubPort <em>Pub Port</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2150,6 +2513,17 @@ public interface AppPackage extends EPackage
   EReference getPubPort_Type();
 
   /**
+   * Returns the meta object for the containment reference '{@link edu.vanderbilt.riaps.app.PubPort#getRatelimit <em>Ratelimit</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Ratelimit</em>'.
+   * @see edu.vanderbilt.riaps.app.PubPort#getRatelimit()
+   * @see #getPubPort()
+   * @generated
+   */
+  EReference getPubPort_Ratelimit();
+
+  /**
    * Returns the meta object for class '{@link edu.vanderbilt.riaps.app.SubPort <em>Sub Port</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2169,6 +2543,49 @@ public interface AppPackage extends EPackage
    * @generated
    */
   EReference getSubPort_Type();
+
+  /**
+   * Returns the meta object for the containment reference '{@link edu.vanderbilt.riaps.app.SubPort#getRatelimit <em>Ratelimit</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Ratelimit</em>'.
+   * @see edu.vanderbilt.riaps.app.SubPort#getRatelimit()
+   * @see #getSubPort()
+   * @generated
+   */
+  EReference getSubPort_Ratelimit();
+
+  /**
+   * Returns the meta object for class '{@link edu.vanderbilt.riaps.app.Deadline <em>Deadline</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Deadline</em>'.
+   * @see edu.vanderbilt.riaps.app.Deadline
+   * @generated
+   */
+  EClass getDeadline();
+
+  /**
+   * Returns the meta object for the attribute '{@link edu.vanderbilt.riaps.app.Deadline#getDeadline <em>Deadline</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Deadline</em>'.
+   * @see edu.vanderbilt.riaps.app.Deadline#getDeadline()
+   * @see #getDeadline()
+   * @generated
+   */
+  EAttribute getDeadline_Deadline();
+
+  /**
+   * Returns the meta object for the containment reference '{@link edu.vanderbilt.riaps.app.Deadline#getUnits <em>Units</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Units</em>'.
+   * @see edu.vanderbilt.riaps.app.Deadline#getUnits()
+   * @see #getDeadline()
+   * @generated
+   */
+  EReference getDeadline_Units();
 
   /**
    * Returns the meta object for class '{@link edu.vanderbilt.riaps.app.ClntPort <em>Clnt Port</em>}'.
@@ -2203,6 +2620,28 @@ public interface AppPackage extends EPackage
   EReference getClntPort_Rep_type();
 
   /**
+   * Returns the meta object for the containment reference '{@link edu.vanderbilt.riaps.app.ClntPort#getDeadline <em>Deadline</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Deadline</em>'.
+   * @see edu.vanderbilt.riaps.app.ClntPort#getDeadline()
+   * @see #getClntPort()
+   * @generated
+   */
+  EReference getClntPort_Deadline();
+
+  /**
+   * Returns the meta object for the containment reference '{@link edu.vanderbilt.riaps.app.ClntPort#getRatelimit <em>Ratelimit</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Ratelimit</em>'.
+   * @see edu.vanderbilt.riaps.app.ClntPort#getRatelimit()
+   * @see #getClntPort()
+   * @generated
+   */
+  EReference getClntPort_Ratelimit();
+
+  /**
    * Returns the meta object for class '{@link edu.vanderbilt.riaps.app.SrvPort <em>Srv Port</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2235,6 +2674,17 @@ public interface AppPackage extends EPackage
   EReference getSrvPort_Rep_type();
 
   /**
+   * Returns the meta object for the containment reference '{@link edu.vanderbilt.riaps.app.SrvPort#getRatelimit <em>Ratelimit</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Ratelimit</em>'.
+   * @see edu.vanderbilt.riaps.app.SrvPort#getRatelimit()
+   * @see #getSrvPort()
+   * @generated
+   */
+  EReference getSrvPort_Ratelimit();
+
+  /**
    * Returns the meta object for class '{@link edu.vanderbilt.riaps.app.ReqPort <em>Req Port</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2265,6 +2715,28 @@ public interface AppPackage extends EPackage
    * @generated
    */
   EReference getReqPort_Rep_type();
+
+  /**
+   * Returns the meta object for the containment reference '{@link edu.vanderbilt.riaps.app.ReqPort#getDeadline <em>Deadline</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Deadline</em>'.
+   * @see edu.vanderbilt.riaps.app.ReqPort#getDeadline()
+   * @see #getReqPort()
+   * @generated
+   */
+  EReference getReqPort_Deadline();
+
+  /**
+   * Returns the meta object for the containment reference '{@link edu.vanderbilt.riaps.app.ReqPort#getRatelimit <em>Ratelimit</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Ratelimit</em>'.
+   * @see edu.vanderbilt.riaps.app.ReqPort#getRatelimit()
+   * @see #getReqPort()
+   * @generated
+   */
+  EReference getReqPort_Ratelimit();
 
   /**
    * Returns the meta object for class '{@link edu.vanderbilt.riaps.app.TimeUnit <em>Time Unit</em>}'.
@@ -2512,6 +2984,17 @@ public interface AppPackage extends EPackage
    * @generated
    */
   EReference getActor_Internals();
+
+  /**
+   * Returns the meta object for the reference list '{@link edu.vanderbilt.riaps.app.Actor#getCriticals <em>Criticals</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Criticals</em>'.
+   * @see edu.vanderbilt.riaps.app.Actor#getCriticals()
+   * @see #getActor()
+   * @generated
+   */
+  EReference getActor_Criticals();
 
   /**
    * Returns the meta object for the containment reference '{@link edu.vanderbilt.riaps.app.Actor#getCompsection <em>Compsection</em>}'.
@@ -2950,6 +3433,52 @@ public interface AppPackage extends EPackage
     EReference APPLICATION__MESSAGES = eINSTANCE.getApplication_Messages();
 
     /**
+     * The meta object literal for the '<em><b>Deployment Constraints</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference APPLICATION__DEPLOYMENT_CONSTRAINTS = eINSTANCE.getApplication_DeploymentConstraints();
+
+    /**
+     * The meta object literal for the '{@link edu.vanderbilt.riaps.app.impl.DeploymentConstraintImpl <em>Deployment Constraint</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see edu.vanderbilt.riaps.app.impl.DeploymentConstraintImpl
+     * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getDeploymentConstraint()
+     * @generated
+     */
+    EClass DEPLOYMENT_CONSTRAINT = eINSTANCE.getDeploymentConstraint();
+
+    /**
+     * The meta object literal for the '<em><b>Actors</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DEPLOYMENT_CONSTRAINT__ACTORS = eINSTANCE.getDeploymentConstraint_Actors();
+
+    /**
+     * The meta object literal for the '{@link edu.vanderbilt.riaps.app.impl.CollocateConstraintImpl <em>Collocate Constraint</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see edu.vanderbilt.riaps.app.impl.CollocateConstraintImpl
+     * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getCollocateConstraint()
+     * @generated
+     */
+    EClass COLLOCATE_CONSTRAINT = eINSTANCE.getCollocateConstraint();
+
+    /**
+     * The meta object literal for the '{@link edu.vanderbilt.riaps.app.impl.DistributeConstraintImpl <em>Distribute Constraint</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see edu.vanderbilt.riaps.app.impl.DistributeConstraintImpl
+     * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getDistributeConstraint()
+     * @generated
+     */
+    EClass DISTRIBUTE_CONSTRAINT = eINSTANCE.getDistributeConstraint();
+
+    /**
      * The meta object literal for the '{@link edu.vanderbilt.riaps.app.impl.ImportImpl <em>Import</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3242,6 +3771,48 @@ public interface AppPackage extends EPackage
     EAttribute PORT__NAME = eINSTANCE.getPort_Name();
 
     /**
+     * The meta object literal for the '{@link edu.vanderbilt.riaps.app.impl.RateLimitImpl <em>Rate Limit</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see edu.vanderbilt.riaps.app.impl.RateLimitImpl
+     * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getRateLimit()
+     * @generated
+     */
+    EClass RATE_LIMIT = eINSTANCE.getRateLimit();
+
+    /**
+     * The meta object literal for the '<em><b>Lower</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute RATE_LIMIT__LOWER = eINSTANCE.getRateLimit_Lower();
+
+    /**
+     * The meta object literal for the '<em><b>Nolower</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute RATE_LIMIT__NOLOWER = eINSTANCE.getRateLimit_Nolower();
+
+    /**
+     * The meta object literal for the '<em><b>Upper</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute RATE_LIMIT__UPPER = eINSTANCE.getRateLimit_Upper();
+
+    /**
+     * The meta object literal for the '<em><b>Noupper</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute RATE_LIMIT__NOUPPER = eINSTANCE.getRateLimit_Noupper();
+
+    /**
      * The meta object literal for the '{@link edu.vanderbilt.riaps.app.impl.PubPortImpl <em>Pub Port</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3260,6 +3831,14 @@ public interface AppPackage extends EPackage
     EReference PUB_PORT__TYPE = eINSTANCE.getPubPort_Type();
 
     /**
+     * The meta object literal for the '<em><b>Ratelimit</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PUB_PORT__RATELIMIT = eINSTANCE.getPubPort_Ratelimit();
+
+    /**
      * The meta object literal for the '{@link edu.vanderbilt.riaps.app.impl.SubPortImpl <em>Sub Port</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3276,6 +3855,40 @@ public interface AppPackage extends EPackage
      * @generated
      */
     EReference SUB_PORT__TYPE = eINSTANCE.getSubPort_Type();
+
+    /**
+     * The meta object literal for the '<em><b>Ratelimit</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SUB_PORT__RATELIMIT = eINSTANCE.getSubPort_Ratelimit();
+
+    /**
+     * The meta object literal for the '{@link edu.vanderbilt.riaps.app.impl.DeadlineImpl <em>Deadline</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see edu.vanderbilt.riaps.app.impl.DeadlineImpl
+     * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getDeadline()
+     * @generated
+     */
+    EClass DEADLINE = eINSTANCE.getDeadline();
+
+    /**
+     * The meta object literal for the '<em><b>Deadline</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute DEADLINE__DEADLINE = eINSTANCE.getDeadline_Deadline();
+
+    /**
+     * The meta object literal for the '<em><b>Units</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DEADLINE__UNITS = eINSTANCE.getDeadline_Units();
 
     /**
      * The meta object literal for the '{@link edu.vanderbilt.riaps.app.impl.ClntPortImpl <em>Clnt Port</em>}' class.
@@ -3304,6 +3917,22 @@ public interface AppPackage extends EPackage
     EReference CLNT_PORT__REP_TYPE = eINSTANCE.getClntPort_Rep_type();
 
     /**
+     * The meta object literal for the '<em><b>Deadline</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CLNT_PORT__DEADLINE = eINSTANCE.getClntPort_Deadline();
+
+    /**
+     * The meta object literal for the '<em><b>Ratelimit</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CLNT_PORT__RATELIMIT = eINSTANCE.getClntPort_Ratelimit();
+
+    /**
      * The meta object literal for the '{@link edu.vanderbilt.riaps.app.impl.SrvPortImpl <em>Srv Port</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3330,6 +3959,14 @@ public interface AppPackage extends EPackage
     EReference SRV_PORT__REP_TYPE = eINSTANCE.getSrvPort_Rep_type();
 
     /**
+     * The meta object literal for the '<em><b>Ratelimit</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SRV_PORT__RATELIMIT = eINSTANCE.getSrvPort_Ratelimit();
+
+    /**
      * The meta object literal for the '{@link edu.vanderbilt.riaps.app.impl.ReqPortImpl <em>Req Port</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3354,6 +3991,22 @@ public interface AppPackage extends EPackage
      * @generated
      */
     EReference REQ_PORT__REP_TYPE = eINSTANCE.getReqPort_Rep_type();
+
+    /**
+     * The meta object literal for the '<em><b>Deadline</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference REQ_PORT__DEADLINE = eINSTANCE.getReqPort_Deadline();
+
+    /**
+     * The meta object literal for the '<em><b>Ratelimit</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference REQ_PORT__RATELIMIT = eINSTANCE.getReqPort_Ratelimit();
 
     /**
      * The meta object literal for the '{@link edu.vanderbilt.riaps.app.impl.TimeUnitImpl <em>Time Unit</em>}' class.
@@ -3550,6 +4203,14 @@ public interface AppPackage extends EPackage
      * @generated
      */
     EReference ACTOR__INTERNALS = eINSTANCE.getActor_Internals();
+
+    /**
+     * The meta object literal for the '<em><b>Criticals</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ACTOR__CRITICALS = eINSTANCE.getActor_Criticals();
 
     /**
      * The meta object literal for the '<em><b>Compsection</b></em>' containment reference feature.

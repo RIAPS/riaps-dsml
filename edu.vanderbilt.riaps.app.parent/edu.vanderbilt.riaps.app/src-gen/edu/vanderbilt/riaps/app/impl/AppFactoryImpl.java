@@ -73,6 +73,9 @@ public class AppFactoryImpl extends EFactoryImpl implements AppFactory
       case AppPackage.COLLECTION: return createCollection();
       case AppPackage.COMPONENT_COLLECTION: return createComponentCollection();
       case AppPackage.APPLICATION: return createApplication();
+      case AppPackage.DEPLOYMENT_CONSTRAINT: return createDeploymentConstraint();
+      case AppPackage.COLLOCATE_CONSTRAINT: return createCollocateConstraint();
+      case AppPackage.DISTRIBUTE_CONSTRAINT: return createDistributeConstraint();
       case AppPackage.IMPORT: return createImport();
       case AppPackage.MESSAGE_COLLECTION: return createMessageCollection();
       case AppPackage.MESSAGE: return createMessage();
@@ -83,8 +86,10 @@ public class AppFactoryImpl extends EFactoryImpl implements AppFactory
       case AppPackage.MEMORY_UNITS: return createMemoryUnits();
       case AppPackage.REQUIREMENT: return createRequirement();
       case AppPackage.PORT: return createPort();
+      case AppPackage.RATE_LIMIT: return createRateLimit();
       case AppPackage.PUB_PORT: return createPubPort();
       case AppPackage.SUB_PORT: return createSubPort();
+      case AppPackage.DEADLINE: return createDeadline();
       case AppPackage.CLNT_PORT: return createClntPort();
       case AppPackage.SRV_PORT: return createSrvPort();
       case AppPackage.REQ_PORT: return createReqPort();
@@ -191,6 +196,39 @@ public class AppFactoryImpl extends EFactoryImpl implements AppFactory
   {
     ApplicationImpl application = new ApplicationImpl();
     return application;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public DeploymentConstraint createDeploymentConstraint()
+  {
+    DeploymentConstraintImpl deploymentConstraint = new DeploymentConstraintImpl();
+    return deploymentConstraint;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public CollocateConstraint createCollocateConstraint()
+  {
+    CollocateConstraintImpl collocateConstraint = new CollocateConstraintImpl();
+    return collocateConstraint;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public DistributeConstraint createDistributeConstraint()
+  {
+    DistributeConstraintImpl distributeConstraint = new DistributeConstraintImpl();
+    return distributeConstraint;
   }
 
   /**
@@ -308,6 +346,17 @@ public class AppFactoryImpl extends EFactoryImpl implements AppFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  public RateLimit createRateLimit()
+  {
+    RateLimitImpl rateLimit = new RateLimitImpl();
+    return rateLimit;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public PubPort createPubPort()
   {
     PubPortImpl pubPort = new PubPortImpl();
@@ -323,6 +372,17 @@ public class AppFactoryImpl extends EFactoryImpl implements AppFactory
   {
     SubPortImpl subPort = new SubPortImpl();
     return subPort;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Deadline createDeadline()
+  {
+    DeadlineImpl deadline = new DeadlineImpl();
+    return deadline;
   }
 
   /**

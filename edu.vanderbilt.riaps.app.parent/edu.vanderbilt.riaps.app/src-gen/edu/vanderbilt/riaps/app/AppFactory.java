@@ -96,6 +96,33 @@ public interface AppFactory extends EFactory
   Application createApplication();
 
   /**
+   * Returns a new object of class '<em>Deployment Constraint</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Deployment Constraint</em>'.
+   * @generated
+   */
+  DeploymentConstraint createDeploymentConstraint();
+
+  /**
+   * Returns a new object of class '<em>Collocate Constraint</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Collocate Constraint</em>'.
+   * @generated
+   */
+  CollocateConstraint createCollocateConstraint();
+
+  /**
+   * Returns a new object of class '<em>Distribute Constraint</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Distribute Constraint</em>'.
+   * @generated
+   */
+  DistributeConstraint createDistributeConstraint();
+
+  /**
    * Returns a new object of class '<em>Import</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -186,6 +213,15 @@ public interface AppFactory extends EFactory
   Port createPort();
 
   /**
+   * Returns a new object of class '<em>Rate Limit</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Rate Limit</em>'.
+   * @generated
+   */
+  RateLimit createRateLimit();
+
+  /**
    * Returns a new object of class '<em>Pub Port</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -202,6 +238,15 @@ public interface AppFactory extends EFactory
    * @generated
    */
   SubPort createSubPort();
+
+  /**
+   * Returns a new object of class '<em>Deadline</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Deadline</em>'.
+   * @generated
+   */
+  Deadline createDeadline();
 
   /**
    * Returns a new object of class '<em>Clnt Port</em>'.

@@ -58,7 +58,21 @@ Application returns Application:
 	'application' (name=ID) ('extends' baseapp=[Application|FQN])?
 	'{'
 	((artifacts+=Artifact) | (actors+=Actor) | (components+=Component) | (messages+=Message))*
+	deploymentConstraints+=DeploymentConstraint*
 	'}';
+
+DeploymentConstraint:
+	CollocateConstraint|DistributeConstraint
+;
+
+CollocateConstraint:
+	'collocate' actors+=[Actor|FQN] (','  actors+=[Actor|FQN])* (';'?)
+;
+
+
+DistributeConstraint:
+	'distribute' actors+=[Actor|FQN] (','  actors+=[Actor|FQN])* (';'?)
+;
 
 Import:
 	'import' (importedNamespace=ImportedFQN);
@@ -131,22 +145,31 @@ Port:
 	| TimPort
 	| InsPort;
 
+RateLimit:
+	'Hz' '[' (lower=INT|nolower?='-')','(upper=INT|noupper?='-')']'
+;
 PubPort:
-	'pub' name=ID ':' type=[Message|FQN] (';')?;
+	'pub' name=ID ':' type=[Message|FQN] (ratelimit=RateLimit)? (';')?;
 
 SubPort:
-	'sub' name=ID ':' type=[Message|FQN] (';')?;
+	'sub' name=ID ':' type=[Message|FQN] (ratelimit=RateLimit)? (';')?;
+
+
+Deadline:
+	'within' deadline=INT units=TimeUnit
+	;
+
 
 	// Client port (request and reply message types) - Owned by an SMI client
 // Client operation is expected to send on the port and then receive on the same port
 ClntPort:
-	'clt' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' (';')?;
+	'clt' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] (deadline=Deadline)?')' (ratelimit=RateLimit)? (';')?;
 
 SrvPort:
-	'srv' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' (';')?;
+	'srv' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' (ratelimit=RateLimit)? (';')?;
 
 ReqPort:
-	'req' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' (';')?;
+	'req' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] (deadline=Deadline)?')' (ratelimit=RateLimit)? (';')?;
 
 
 /*
@@ -178,8 +201,7 @@ ActorFormal:
 Actor:
 	'actor' name=ID ('(' formals+=ActorFormal (',' formals+=ActorFormal)* ')')?
 	'{'
-	('local' locals+=[Message|FQN] (',' locals+=[Message|FQN])* (';')?)? // Optional: local messages (stay within the host)
-	('internal' internals+=[Message|FQN] (',' internals+=[Message|FQN])* (';')?)? // Optional: internal messages (stay within the actor)
+	(('local' locals+=[Message|FQN] (',' locals+=[Message|FQN])* (';')?)|('internal' internals+=[Message|FQN] (',' internals+=[Message|FQN])* (';')?) |('critical' criticals+=[Message|FQN] (',' criticals+=[Message|FQN])* (';')?)  )*
 	compsection=InstanceSection
 	wires+=Wire*
 	'}';

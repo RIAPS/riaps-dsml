@@ -116,6 +116,21 @@ public class AppAdapterFactory extends AdapterFactoryImpl
         return createApplicationAdapter();
       }
       @Override
+      public Adapter caseDeploymentConstraint(DeploymentConstraint object)
+      {
+        return createDeploymentConstraintAdapter();
+      }
+      @Override
+      public Adapter caseCollocateConstraint(CollocateConstraint object)
+      {
+        return createCollocateConstraintAdapter();
+      }
+      @Override
+      public Adapter caseDistributeConstraint(DistributeConstraint object)
+      {
+        return createDistributeConstraintAdapter();
+      }
+      @Override
       public Adapter caseImport(Import object)
       {
         return createImportAdapter();
@@ -166,6 +181,11 @@ public class AppAdapterFactory extends AdapterFactoryImpl
         return createPortAdapter();
       }
       @Override
+      public Adapter caseRateLimit(RateLimit object)
+      {
+        return createRateLimitAdapter();
+      }
+      @Override
       public Adapter casePubPort(PubPort object)
       {
         return createPubPortAdapter();
@@ -174,6 +194,11 @@ public class AppAdapterFactory extends AdapterFactoryImpl
       public Adapter caseSubPort(SubPort object)
       {
         return createSubPortAdapter();
+      }
+      @Override
+      public Adapter caseDeadline(Deadline object)
+      {
+        return createDeadlineAdapter();
       }
       @Override
       public Adapter caseClntPort(ClntPort object)
@@ -393,6 +418,51 @@ public class AppAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link edu.vanderbilt.riaps.app.DeploymentConstraint <em>Deployment Constraint</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see edu.vanderbilt.riaps.app.DeploymentConstraint
+   * @generated
+   */
+  public Adapter createDeploymentConstraintAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link edu.vanderbilt.riaps.app.CollocateConstraint <em>Collocate Constraint</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see edu.vanderbilt.riaps.app.CollocateConstraint
+   * @generated
+   */
+  public Adapter createCollocateConstraintAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link edu.vanderbilt.riaps.app.DistributeConstraint <em>Distribute Constraint</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see edu.vanderbilt.riaps.app.DistributeConstraint
+   * @generated
+   */
+  public Adapter createDistributeConstraintAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link edu.vanderbilt.riaps.app.Import <em>Import</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -543,6 +613,21 @@ public class AppAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link edu.vanderbilt.riaps.app.RateLimit <em>Rate Limit</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see edu.vanderbilt.riaps.app.RateLimit
+   * @generated
+   */
+  public Adapter createRateLimitAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link edu.vanderbilt.riaps.app.PubPort <em>Pub Port</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -568,6 +653,21 @@ public class AppAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createSubPortAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link edu.vanderbilt.riaps.app.Deadline <em>Deadline</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see edu.vanderbilt.riaps.app.Deadline
+   * @generated
+   */
+  public Adapter createDeadlineAdapter()
   {
     return null;
   }

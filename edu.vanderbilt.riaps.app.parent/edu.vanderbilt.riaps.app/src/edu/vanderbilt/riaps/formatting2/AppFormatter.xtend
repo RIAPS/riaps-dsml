@@ -133,6 +133,11 @@ class AppFormatter extends AbstractFormatter2 {
 			entry.format
 			entry.prepend[noSpace; newLine].append[noSpace; newLine]
 		}
+		
+		for (entry : actor.criticals) {
+			entry.format
+			entry.prepend[noSpace; newLine].append[noSpace; newLine]
+		}
 		for (entry : actor.wires) {
 			entry.format
 			entry.prepend[noSpace; newLine].append[noSpace; newLine]

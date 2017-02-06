@@ -15,6 +15,8 @@ package edu.vanderbilt.riaps.app;
  * <ul>
  *   <li>{@link edu.vanderbilt.riaps.app.ClntPort#getReq_type <em>Req type</em>}</li>
  *   <li>{@link edu.vanderbilt.riaps.app.ClntPort#getRep_type <em>Rep type</em>}</li>
+ *   <li>{@link edu.vanderbilt.riaps.app.ClntPort#getDeadline <em>Deadline</em>}</li>
+ *   <li>{@link edu.vanderbilt.riaps.app.ClntPort#getRatelimit <em>Ratelimit</em>}</li>
  * </ul>
  *
  * @see edu.vanderbilt.riaps.app.AppPackage#getClntPort()
@@ -74,5 +76,57 @@ public interface ClntPort extends Port
    * @generated
    */
   void setRep_type(Message value);
+
+  /**
+   * Returns the value of the '<em><b>Deadline</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Deadline</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Deadline</em>' containment reference.
+   * @see #setDeadline(Deadline)
+   * @see edu.vanderbilt.riaps.app.AppPackage#getClntPort_Deadline()
+   * @model containment="true"
+   * @generated
+   */
+  Deadline getDeadline();
+
+  /**
+   * Sets the value of the '{@link edu.vanderbilt.riaps.app.ClntPort#getDeadline <em>Deadline</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Deadline</em>' containment reference.
+   * @see #getDeadline()
+   * @generated
+   */
+  void setDeadline(Deadline value);
+
+  /**
+   * Returns the value of the '<em><b>Ratelimit</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Ratelimit</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Ratelimit</em>' containment reference.
+   * @see #setRatelimit(RateLimit)
+   * @see edu.vanderbilt.riaps.app.AppPackage#getClntPort_Ratelimit()
+   * @model containment="true"
+   * @generated
+   */
+  RateLimit getRatelimit();
+
+  /**
+   * Sets the value of the '{@link edu.vanderbilt.riaps.app.ClntPort#getRatelimit <em>Ratelimit</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Ratelimit</em>' containment reference.
+   * @see #getRatelimit()
+   * @generated
+   */
+  void setRatelimit(RateLimit value);
 
 } // ClntPort

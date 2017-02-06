@@ -278,17 +278,20 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cComponentsComponentParserRuleCall_5_2_0 = (RuleCall)cComponentsAssignment_5_2.eContents().get(0);
 		private final Assignment cMessagesAssignment_5_3 = (Assignment)cAlternatives_5.eContents().get(3);
 		private final RuleCall cMessagesMessageParserRuleCall_5_3_0 = (RuleCall)cMessagesAssignment_5_3.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
+		private final Assignment cDeploymentConstraintsAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final RuleCall cDeploymentConstraintsDeploymentConstraintParserRuleCall_6_0 = (RuleCall)cDeploymentConstraintsAssignment_6.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_7 = (Keyword)cGroup.eContents().get(7);
 		
 		//Application:
 		//	{Application}
 		//	'application' name=ID ('extends' baseapp=[Application|FQN])?
 		//	'{' (artifacts+=Artifact | actors+=Actor | components+=Component | messages+=Message)*
+		//	deploymentConstraints+=DeploymentConstraint*
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
 		//{Application} 'application' name=ID ('extends' baseapp=[Application|FQN])? '{' (artifacts+=Artifact | actors+=Actor |
-		//components+=Component | messages+=Message)* '}'
+		//components+=Component | messages+=Message)* deploymentConstraints+=DeploymentConstraint* '}'
 		public Group getGroup() { return cGroup; }
 		
 		//{Application}
@@ -348,8 +351,135 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 		//Message
 		public RuleCall getMessagesMessageParserRuleCall_5_3_0() { return cMessagesMessageParserRuleCall_5_3_0; }
 		
+		//deploymentConstraints+=DeploymentConstraint*
+		public Assignment getDeploymentConstraintsAssignment_6() { return cDeploymentConstraintsAssignment_6; }
+		
+		//DeploymentConstraint
+		public RuleCall getDeploymentConstraintsDeploymentConstraintParserRuleCall_6_0() { return cDeploymentConstraintsDeploymentConstraintParserRuleCall_6_0; }
+		
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_6() { return cRightCurlyBracketKeyword_6; }
+		public Keyword getRightCurlyBracketKeyword_7() { return cRightCurlyBracketKeyword_7; }
+	}
+	public class DeploymentConstraintElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "edu.vanderbilt.riaps.App.DeploymentConstraint");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cCollocateConstraintParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cDistributeConstraintParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//DeploymentConstraint:
+		//	CollocateConstraint | DistributeConstraint;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//CollocateConstraint | DistributeConstraint
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//CollocateConstraint
+		public RuleCall getCollocateConstraintParserRuleCall_0() { return cCollocateConstraintParserRuleCall_0; }
+		
+		//DistributeConstraint
+		public RuleCall getDistributeConstraintParserRuleCall_1() { return cDistributeConstraintParserRuleCall_1; }
+	}
+	public class CollocateConstraintElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "edu.vanderbilt.riaps.App.CollocateConstraint");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cCollocateKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cActorsAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cActorsActorCrossReference_1_0 = (CrossReference)cActorsAssignment_1.eContents().get(0);
+		private final RuleCall cActorsActorFQNParserRuleCall_1_0_1 = (RuleCall)cActorsActorCrossReference_1_0.eContents().get(1);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cCommaKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cActorsAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final CrossReference cActorsActorCrossReference_2_1_0 = (CrossReference)cActorsAssignment_2_1.eContents().get(0);
+		private final RuleCall cActorsActorFQNParserRuleCall_2_1_0_1 = (RuleCall)cActorsActorCrossReference_2_1_0.eContents().get(1);
+		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//CollocateConstraint:
+		//	'collocate' actors+=[Actor|FQN] (',' actors+=[Actor|FQN])* ';'?;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'collocate' actors+=[Actor|FQN] (',' actors+=[Actor|FQN])* ';'?
+		public Group getGroup() { return cGroup; }
+		
+		//'collocate'
+		public Keyword getCollocateKeyword_0() { return cCollocateKeyword_0; }
+		
+		//actors+=[Actor|FQN]
+		public Assignment getActorsAssignment_1() { return cActorsAssignment_1; }
+		
+		//[Actor|FQN]
+		public CrossReference getActorsActorCrossReference_1_0() { return cActorsActorCrossReference_1_0; }
+		
+		//FQN
+		public RuleCall getActorsActorFQNParserRuleCall_1_0_1() { return cActorsActorFQNParserRuleCall_1_0_1; }
+		
+		//(',' actors+=[Actor|FQN])*
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//','
+		public Keyword getCommaKeyword_2_0() { return cCommaKeyword_2_0; }
+		
+		//actors+=[Actor|FQN]
+		public Assignment getActorsAssignment_2_1() { return cActorsAssignment_2_1; }
+		
+		//[Actor|FQN]
+		public CrossReference getActorsActorCrossReference_2_1_0() { return cActorsActorCrossReference_2_1_0; }
+		
+		//FQN
+		public RuleCall getActorsActorFQNParserRuleCall_2_1_0_1() { return cActorsActorFQNParserRuleCall_2_1_0_1; }
+		
+		//';'?
+		public Keyword getSemicolonKeyword_3() { return cSemicolonKeyword_3; }
+	}
+	public class DistributeConstraintElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "edu.vanderbilt.riaps.App.DistributeConstraint");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cDistributeKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cActorsAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cActorsActorCrossReference_1_0 = (CrossReference)cActorsAssignment_1.eContents().get(0);
+		private final RuleCall cActorsActorFQNParserRuleCall_1_0_1 = (RuleCall)cActorsActorCrossReference_1_0.eContents().get(1);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cCommaKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cActorsAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final CrossReference cActorsActorCrossReference_2_1_0 = (CrossReference)cActorsAssignment_2_1.eContents().get(0);
+		private final RuleCall cActorsActorFQNParserRuleCall_2_1_0_1 = (RuleCall)cActorsActorCrossReference_2_1_0.eContents().get(1);
+		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//DistributeConstraint:
+		//	'distribute' actors+=[Actor|FQN] (',' actors+=[Actor|FQN])* ';'?;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'distribute' actors+=[Actor|FQN] (',' actors+=[Actor|FQN])* ';'?
+		public Group getGroup() { return cGroup; }
+		
+		//'distribute'
+		public Keyword getDistributeKeyword_0() { return cDistributeKeyword_0; }
+		
+		//actors+=[Actor|FQN]
+		public Assignment getActorsAssignment_1() { return cActorsAssignment_1; }
+		
+		//[Actor|FQN]
+		public CrossReference getActorsActorCrossReference_1_0() { return cActorsActorCrossReference_1_0; }
+		
+		//FQN
+		public RuleCall getActorsActorFQNParserRuleCall_1_0_1() { return cActorsActorFQNParserRuleCall_1_0_1; }
+		
+		//(',' actors+=[Actor|FQN])*
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//','
+		public Keyword getCommaKeyword_2_0() { return cCommaKeyword_2_0; }
+		
+		//actors+=[Actor|FQN]
+		public Assignment getActorsAssignment_2_1() { return cActorsAssignment_2_1; }
+		
+		//[Actor|FQN]
+		public CrossReference getActorsActorCrossReference_2_1_0() { return cActorsActorCrossReference_2_1_0; }
+		
+		//FQN
+		public RuleCall getActorsActorFQNParserRuleCall_2_1_0_1() { return cActorsActorFQNParserRuleCall_2_1_0_1; }
+		
+		//';'?
+		public Keyword getSemicolonKeyword_3() { return cSemicolonKeyword_3; }
 	}
 	public class ImportElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "edu.vanderbilt.riaps.App.Import");
@@ -999,6 +1129,73 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 		//InsPort
 		public RuleCall getInsPortParserRuleCall_6() { return cInsPortParserRuleCall_6; }
 	}
+	public class RateLimitElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "edu.vanderbilt.riaps.App.RateLimit");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cHzKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cLeftSquareBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
+		private final Assignment cLowerAssignment_2_0 = (Assignment)cAlternatives_2.eContents().get(0);
+		private final RuleCall cLowerINTTerminalRuleCall_2_0_0 = (RuleCall)cLowerAssignment_2_0.eContents().get(0);
+		private final Assignment cNolowerAssignment_2_1 = (Assignment)cAlternatives_2.eContents().get(1);
+		private final Keyword cNolowerHyphenMinusKeyword_2_1_0 = (Keyword)cNolowerAssignment_2_1.eContents().get(0);
+		private final Keyword cCommaKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Alternatives cAlternatives_4 = (Alternatives)cGroup.eContents().get(4);
+		private final Assignment cUpperAssignment_4_0 = (Assignment)cAlternatives_4.eContents().get(0);
+		private final RuleCall cUpperINTTerminalRuleCall_4_0_0 = (RuleCall)cUpperAssignment_4_0.eContents().get(0);
+		private final Assignment cNoupperAssignment_4_1 = (Assignment)cAlternatives_4.eContents().get(1);
+		private final Keyword cNoupperHyphenMinusKeyword_4_1_0 = (Keyword)cNoupperAssignment_4_1.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		
+		//RateLimit:
+		//	'Hz' '[' (lower=INT | nolower?='-') ',' (upper=INT | noupper?='-') ']';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'Hz' '[' (lower=INT | nolower?='-') ',' (upper=INT | noupper?='-') ']'
+		public Group getGroup() { return cGroup; }
+		
+		//'Hz'
+		public Keyword getHzKeyword_0() { return cHzKeyword_0; }
+		
+		//'['
+		public Keyword getLeftSquareBracketKeyword_1() { return cLeftSquareBracketKeyword_1; }
+		
+		//(lower=INT | nolower?='-')
+		public Alternatives getAlternatives_2() { return cAlternatives_2; }
+		
+		//lower=INT
+		public Assignment getLowerAssignment_2_0() { return cLowerAssignment_2_0; }
+		
+		//INT
+		public RuleCall getLowerINTTerminalRuleCall_2_0_0() { return cLowerINTTerminalRuleCall_2_0_0; }
+		
+		//nolower?='-'
+		public Assignment getNolowerAssignment_2_1() { return cNolowerAssignment_2_1; }
+		
+		//'-'
+		public Keyword getNolowerHyphenMinusKeyword_2_1_0() { return cNolowerHyphenMinusKeyword_2_1_0; }
+		
+		//','
+		public Keyword getCommaKeyword_3() { return cCommaKeyword_3; }
+		
+		//(upper=INT | noupper?='-')
+		public Alternatives getAlternatives_4() { return cAlternatives_4; }
+		
+		//upper=INT
+		public Assignment getUpperAssignment_4_0() { return cUpperAssignment_4_0; }
+		
+		//INT
+		public RuleCall getUpperINTTerminalRuleCall_4_0_0() { return cUpperINTTerminalRuleCall_4_0_0; }
+		
+		//noupper?='-'
+		public Assignment getNoupperAssignment_4_1() { return cNoupperAssignment_4_1; }
+		
+		//'-'
+		public Keyword getNoupperHyphenMinusKeyword_4_1_0() { return cNoupperHyphenMinusKeyword_4_1_0; }
+		
+		//']'
+		public Keyword getRightSquareBracketKeyword_5() { return cRightSquareBracketKeyword_5; }
+	}
 	public class PubPortElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "edu.vanderbilt.riaps.App.PubPort");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -1009,13 +1206,15 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cTypeAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final CrossReference cTypeMessageCrossReference_3_0 = (CrossReference)cTypeAssignment_3.eContents().get(0);
 		private final RuleCall cTypeMessageFQNParserRuleCall_3_0_1 = (RuleCall)cTypeMessageCrossReference_3_0.eContents().get(1);
-		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cRatelimitAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cRatelimitRateLimitParserRuleCall_4_0 = (RuleCall)cRatelimitAssignment_4.eContents().get(0);
+		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//PubPort:
-		//	'pub' name=ID ':' type=[Message|FQN] ';'?;
+		//	'pub' name=ID ':' type=[Message|FQN] ratelimit=RateLimit? ';'?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'pub' name=ID ':' type=[Message|FQN] ';'?
+		//'pub' name=ID ':' type=[Message|FQN] ratelimit=RateLimit? ';'?
 		public Group getGroup() { return cGroup; }
 		
 		//'pub'
@@ -1039,8 +1238,14 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 		//FQN
 		public RuleCall getTypeMessageFQNParserRuleCall_3_0_1() { return cTypeMessageFQNParserRuleCall_3_0_1; }
 		
+		//ratelimit=RateLimit?
+		public Assignment getRatelimitAssignment_4() { return cRatelimitAssignment_4; }
+		
+		//RateLimit
+		public RuleCall getRatelimitRateLimitParserRuleCall_4_0() { return cRatelimitRateLimitParserRuleCall_4_0; }
+		
 		//';'?
-		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
+		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
 	}
 	public class SubPortElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "edu.vanderbilt.riaps.App.SubPort");
@@ -1052,13 +1257,15 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cTypeAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final CrossReference cTypeMessageCrossReference_3_0 = (CrossReference)cTypeAssignment_3.eContents().get(0);
 		private final RuleCall cTypeMessageFQNParserRuleCall_3_0_1 = (RuleCall)cTypeMessageCrossReference_3_0.eContents().get(1);
-		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cRatelimitAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cRatelimitRateLimitParserRuleCall_4_0 = (RuleCall)cRatelimitAssignment_4.eContents().get(0);
+		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//SubPort:
-		//	'sub' name=ID ':' type=[Message|FQN] ';'?;
+		//	'sub' name=ID ':' type=[Message|FQN] ratelimit=RateLimit? ';'?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'sub' name=ID ':' type=[Message|FQN] ';'?
+		//'sub' name=ID ':' type=[Message|FQN] ratelimit=RateLimit? ';'?
 		public Group getGroup() { return cGroup; }
 		
 		//'sub'
@@ -1082,8 +1289,45 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 		//FQN
 		public RuleCall getTypeMessageFQNParserRuleCall_3_0_1() { return cTypeMessageFQNParserRuleCall_3_0_1; }
 		
+		//ratelimit=RateLimit?
+		public Assignment getRatelimitAssignment_4() { return cRatelimitAssignment_4; }
+		
+		//RateLimit
+		public RuleCall getRatelimitRateLimitParserRuleCall_4_0() { return cRatelimitRateLimitParserRuleCall_4_0; }
+		
 		//';'?
-		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
+		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
+	}
+	public class DeadlineElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "edu.vanderbilt.riaps.App.Deadline");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cWithinKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cDeadlineAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cDeadlineINTTerminalRuleCall_1_0 = (RuleCall)cDeadlineAssignment_1.eContents().get(0);
+		private final Assignment cUnitsAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cUnitsTimeUnitParserRuleCall_2_0 = (RuleCall)cUnitsAssignment_2.eContents().get(0);
+		
+		//Deadline:
+		//	'within' deadline=INT units=TimeUnit;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'within' deadline=INT units=TimeUnit
+		public Group getGroup() { return cGroup; }
+		
+		//'within'
+		public Keyword getWithinKeyword_0() { return cWithinKeyword_0; }
+		
+		//deadline=INT
+		public Assignment getDeadlineAssignment_1() { return cDeadlineAssignment_1; }
+		
+		//INT
+		public RuleCall getDeadlineINTTerminalRuleCall_1_0() { return cDeadlineINTTerminalRuleCall_1_0; }
+		
+		//units=TimeUnit
+		public Assignment getUnitsAssignment_2() { return cUnitsAssignment_2; }
+		
+		//TimeUnit
+		public RuleCall getUnitsTimeUnitParserRuleCall_2_0() { return cUnitsTimeUnitParserRuleCall_2_0; }
 	}
 	public class ClntPortElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "edu.vanderbilt.riaps.App.ClntPort");
@@ -1100,16 +1344,21 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cRep_typeAssignment_6 = (Assignment)cGroup.eContents().get(6);
 		private final CrossReference cRep_typeMessageCrossReference_6_0 = (CrossReference)cRep_typeAssignment_6.eContents().get(0);
 		private final RuleCall cRep_typeMessageFQNParserRuleCall_6_0_1 = (RuleCall)cRep_typeMessageCrossReference_6_0.eContents().get(1);
-		private final Keyword cRightParenthesisKeyword_7 = (Keyword)cGroup.eContents().get(7);
-		private final Keyword cSemicolonKeyword_8 = (Keyword)cGroup.eContents().get(8);
+		private final Assignment cDeadlineAssignment_7 = (Assignment)cGroup.eContents().get(7);
+		private final RuleCall cDeadlineDeadlineParserRuleCall_7_0 = (RuleCall)cDeadlineAssignment_7.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_8 = (Keyword)cGroup.eContents().get(8);
+		private final Assignment cRatelimitAssignment_9 = (Assignment)cGroup.eContents().get(9);
+		private final RuleCall cRatelimitRateLimitParserRuleCall_9_0 = (RuleCall)cRatelimitAssignment_9.eContents().get(0);
+		private final Keyword cSemicolonKeyword_10 = (Keyword)cGroup.eContents().get(10);
 		
 		//// Client port (request and reply message types) - Owned by an SMI client
 		//// Client operation is expected to send on the port and then receive on the same port
 		//ClntPort:
-		//	'clt' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' ';'?;
+		//	'clt' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] deadline=Deadline? ')' ratelimit=RateLimit?
+		//	';'?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'clt' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' ';'?
+		//'clt' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] deadline=Deadline? ')' ratelimit=RateLimit? ';'?
 		public Group getGroup() { return cGroup; }
 		
 		//'clt'
@@ -1148,11 +1397,23 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 		//FQN
 		public RuleCall getRep_typeMessageFQNParserRuleCall_6_0_1() { return cRep_typeMessageFQNParserRuleCall_6_0_1; }
 		
+		//deadline=Deadline?
+		public Assignment getDeadlineAssignment_7() { return cDeadlineAssignment_7; }
+		
+		//Deadline
+		public RuleCall getDeadlineDeadlineParserRuleCall_7_0() { return cDeadlineDeadlineParserRuleCall_7_0; }
+		
 		//')'
-		public Keyword getRightParenthesisKeyword_7() { return cRightParenthesisKeyword_7; }
+		public Keyword getRightParenthesisKeyword_8() { return cRightParenthesisKeyword_8; }
+		
+		//ratelimit=RateLimit?
+		public Assignment getRatelimitAssignment_9() { return cRatelimitAssignment_9; }
+		
+		//RateLimit
+		public RuleCall getRatelimitRateLimitParserRuleCall_9_0() { return cRatelimitRateLimitParserRuleCall_9_0; }
 		
 		//';'?
-		public Keyword getSemicolonKeyword_8() { return cSemicolonKeyword_8; }
+		public Keyword getSemicolonKeyword_10() { return cSemicolonKeyword_10; }
 	}
 	public class SrvPortElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "edu.vanderbilt.riaps.App.SrvPort");
@@ -1170,13 +1431,15 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cRep_typeMessageCrossReference_6_0 = (CrossReference)cRep_typeAssignment_6.eContents().get(0);
 		private final RuleCall cRep_typeMessageFQNParserRuleCall_6_0_1 = (RuleCall)cRep_typeMessageCrossReference_6_0.eContents().get(1);
 		private final Keyword cRightParenthesisKeyword_7 = (Keyword)cGroup.eContents().get(7);
-		private final Keyword cSemicolonKeyword_8 = (Keyword)cGroup.eContents().get(8);
+		private final Assignment cRatelimitAssignment_8 = (Assignment)cGroup.eContents().get(8);
+		private final RuleCall cRatelimitRateLimitParserRuleCall_8_0 = (RuleCall)cRatelimitAssignment_8.eContents().get(0);
+		private final Keyword cSemicolonKeyword_9 = (Keyword)cGroup.eContents().get(9);
 		
 		//SrvPort:
-		//	'srv' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' ';'?;
+		//	'srv' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' ratelimit=RateLimit? ';'?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'srv' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' ';'?
+		//'srv' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' ratelimit=RateLimit? ';'?
 		public Group getGroup() { return cGroup; }
 		
 		//'srv'
@@ -1218,8 +1481,14 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 		//')'
 		public Keyword getRightParenthesisKeyword_7() { return cRightParenthesisKeyword_7; }
 		
+		//ratelimit=RateLimit?
+		public Assignment getRatelimitAssignment_8() { return cRatelimitAssignment_8; }
+		
+		//RateLimit
+		public RuleCall getRatelimitRateLimitParserRuleCall_8_0() { return cRatelimitRateLimitParserRuleCall_8_0; }
+		
 		//';'?
-		public Keyword getSemicolonKeyword_8() { return cSemicolonKeyword_8; }
+		public Keyword getSemicolonKeyword_9() { return cSemicolonKeyword_9; }
 	}
 	public class ReqPortElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "edu.vanderbilt.riaps.App.ReqPort");
@@ -1236,14 +1505,19 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cRep_typeAssignment_6 = (Assignment)cGroup.eContents().get(6);
 		private final CrossReference cRep_typeMessageCrossReference_6_0 = (CrossReference)cRep_typeAssignment_6.eContents().get(0);
 		private final RuleCall cRep_typeMessageFQNParserRuleCall_6_0_1 = (RuleCall)cRep_typeMessageCrossReference_6_0.eContents().get(1);
-		private final Keyword cRightParenthesisKeyword_7 = (Keyword)cGroup.eContents().get(7);
-		private final Keyword cSemicolonKeyword_8 = (Keyword)cGroup.eContents().get(8);
+		private final Assignment cDeadlineAssignment_7 = (Assignment)cGroup.eContents().get(7);
+		private final RuleCall cDeadlineDeadlineParserRuleCall_7_0 = (RuleCall)cDeadlineAssignment_7.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_8 = (Keyword)cGroup.eContents().get(8);
+		private final Assignment cRatelimitAssignment_9 = (Assignment)cGroup.eContents().get(9);
+		private final RuleCall cRatelimitRateLimitParserRuleCall_9_0 = (RuleCall)cRatelimitAssignment_9.eContents().get(0);
+		private final Keyword cSemicolonKeyword_10 = (Keyword)cGroup.eContents().get(10);
 		
 		//ReqPort:
-		//	'req' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' ';'?;
+		//	'req' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] deadline=Deadline? ')' ratelimit=RateLimit?
+		//	';'?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'req' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' ';'?
+		//'req' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] deadline=Deadline? ')' ratelimit=RateLimit? ';'?
 		public Group getGroup() { return cGroup; }
 		
 		//'req'
@@ -1282,11 +1556,23 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 		//FQN
 		public RuleCall getRep_typeMessageFQNParserRuleCall_6_0_1() { return cRep_typeMessageFQNParserRuleCall_6_0_1; }
 		
+		//deadline=Deadline?
+		public Assignment getDeadlineAssignment_7() { return cDeadlineAssignment_7; }
+		
+		//Deadline
+		public RuleCall getDeadlineDeadlineParserRuleCall_7_0() { return cDeadlineDeadlineParserRuleCall_7_0; }
+		
 		//')'
-		public Keyword getRightParenthesisKeyword_7() { return cRightParenthesisKeyword_7; }
+		public Keyword getRightParenthesisKeyword_8() { return cRightParenthesisKeyword_8; }
+		
+		//ratelimit=RateLimit?
+		public Assignment getRatelimitAssignment_9() { return cRatelimitAssignment_9; }
+		
+		//RateLimit
+		public RuleCall getRatelimitRateLimitParserRuleCall_9_0() { return cRatelimitRateLimitParserRuleCall_9_0; }
 		
 		//';'?
-		public Keyword getSemicolonKeyword_8() { return cSemicolonKeyword_8; }
+		public Keyword getSemicolonKeyword_10() { return cSemicolonKeyword_10; }
 	}
 	public class TimeUnitElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "edu.vanderbilt.riaps.App.TimeUnit");
@@ -1523,46 +1809,58 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cFormalsActorFormalParserRuleCall_2_2_1_0 = (RuleCall)cFormalsAssignment_2_2_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
 		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final Keyword cLocalKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
-		private final Assignment cLocalsAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
-		private final CrossReference cLocalsMessageCrossReference_4_1_0 = (CrossReference)cLocalsAssignment_4_1.eContents().get(0);
-		private final RuleCall cLocalsMessageFQNParserRuleCall_4_1_0_1 = (RuleCall)cLocalsMessageCrossReference_4_1_0.eContents().get(1);
-		private final Group cGroup_4_2 = (Group)cGroup_4.eContents().get(2);
-		private final Keyword cCommaKeyword_4_2_0 = (Keyword)cGroup_4_2.eContents().get(0);
-		private final Assignment cLocalsAssignment_4_2_1 = (Assignment)cGroup_4_2.eContents().get(1);
-		private final CrossReference cLocalsMessageCrossReference_4_2_1_0 = (CrossReference)cLocalsAssignment_4_2_1.eContents().get(0);
-		private final RuleCall cLocalsMessageFQNParserRuleCall_4_2_1_0_1 = (RuleCall)cLocalsMessageCrossReference_4_2_1_0.eContents().get(1);
-		private final Keyword cSemicolonKeyword_4_3 = (Keyword)cGroup_4.eContents().get(3);
-		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
-		private final Keyword cInternalKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
-		private final Assignment cInternalsAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
-		private final CrossReference cInternalsMessageCrossReference_5_1_0 = (CrossReference)cInternalsAssignment_5_1.eContents().get(0);
-		private final RuleCall cInternalsMessageFQNParserRuleCall_5_1_0_1 = (RuleCall)cInternalsMessageCrossReference_5_1_0.eContents().get(1);
-		private final Group cGroup_5_2 = (Group)cGroup_5.eContents().get(2);
-		private final Keyword cCommaKeyword_5_2_0 = (Keyword)cGroup_5_2.eContents().get(0);
-		private final Assignment cInternalsAssignment_5_2_1 = (Assignment)cGroup_5_2.eContents().get(1);
-		private final CrossReference cInternalsMessageCrossReference_5_2_1_0 = (CrossReference)cInternalsAssignment_5_2_1.eContents().get(0);
-		private final RuleCall cInternalsMessageFQNParserRuleCall_5_2_1_0_1 = (RuleCall)cInternalsMessageCrossReference_5_2_1_0.eContents().get(1);
-		private final Keyword cSemicolonKeyword_5_3 = (Keyword)cGroup_5.eContents().get(3);
-		private final Assignment cCompsectionAssignment_6 = (Assignment)cGroup.eContents().get(6);
-		private final RuleCall cCompsectionInstanceSectionParserRuleCall_6_0 = (RuleCall)cCompsectionAssignment_6.eContents().get(0);
-		private final Assignment cWiresAssignment_7 = (Assignment)cGroup.eContents().get(7);
-		private final RuleCall cWiresWireParserRuleCall_7_0 = (RuleCall)cWiresAssignment_7.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_8 = (Keyword)cGroup.eContents().get(8);
+		private final Alternatives cAlternatives_4 = (Alternatives)cGroup.eContents().get(4);
+		private final Group cGroup_4_0 = (Group)cAlternatives_4.eContents().get(0);
+		private final Keyword cLocalKeyword_4_0_0 = (Keyword)cGroup_4_0.eContents().get(0);
+		private final Assignment cLocalsAssignment_4_0_1 = (Assignment)cGroup_4_0.eContents().get(1);
+		private final CrossReference cLocalsMessageCrossReference_4_0_1_0 = (CrossReference)cLocalsAssignment_4_0_1.eContents().get(0);
+		private final RuleCall cLocalsMessageFQNParserRuleCall_4_0_1_0_1 = (RuleCall)cLocalsMessageCrossReference_4_0_1_0.eContents().get(1);
+		private final Group cGroup_4_0_2 = (Group)cGroup_4_0.eContents().get(2);
+		private final Keyword cCommaKeyword_4_0_2_0 = (Keyword)cGroup_4_0_2.eContents().get(0);
+		private final Assignment cLocalsAssignment_4_0_2_1 = (Assignment)cGroup_4_0_2.eContents().get(1);
+		private final CrossReference cLocalsMessageCrossReference_4_0_2_1_0 = (CrossReference)cLocalsAssignment_4_0_2_1.eContents().get(0);
+		private final RuleCall cLocalsMessageFQNParserRuleCall_4_0_2_1_0_1 = (RuleCall)cLocalsMessageCrossReference_4_0_2_1_0.eContents().get(1);
+		private final Keyword cSemicolonKeyword_4_0_3 = (Keyword)cGroup_4_0.eContents().get(3);
+		private final Group cGroup_4_1 = (Group)cAlternatives_4.eContents().get(1);
+		private final Keyword cInternalKeyword_4_1_0 = (Keyword)cGroup_4_1.eContents().get(0);
+		private final Assignment cInternalsAssignment_4_1_1 = (Assignment)cGroup_4_1.eContents().get(1);
+		private final CrossReference cInternalsMessageCrossReference_4_1_1_0 = (CrossReference)cInternalsAssignment_4_1_1.eContents().get(0);
+		private final RuleCall cInternalsMessageFQNParserRuleCall_4_1_1_0_1 = (RuleCall)cInternalsMessageCrossReference_4_1_1_0.eContents().get(1);
+		private final Group cGroup_4_1_2 = (Group)cGroup_4_1.eContents().get(2);
+		private final Keyword cCommaKeyword_4_1_2_0 = (Keyword)cGroup_4_1_2.eContents().get(0);
+		private final Assignment cInternalsAssignment_4_1_2_1 = (Assignment)cGroup_4_1_2.eContents().get(1);
+		private final CrossReference cInternalsMessageCrossReference_4_1_2_1_0 = (CrossReference)cInternalsAssignment_4_1_2_1.eContents().get(0);
+		private final RuleCall cInternalsMessageFQNParserRuleCall_4_1_2_1_0_1 = (RuleCall)cInternalsMessageCrossReference_4_1_2_1_0.eContents().get(1);
+		private final Keyword cSemicolonKeyword_4_1_3 = (Keyword)cGroup_4_1.eContents().get(3);
+		private final Group cGroup_4_2 = (Group)cAlternatives_4.eContents().get(2);
+		private final Keyword cCriticalKeyword_4_2_0 = (Keyword)cGroup_4_2.eContents().get(0);
+		private final Assignment cCriticalsAssignment_4_2_1 = (Assignment)cGroup_4_2.eContents().get(1);
+		private final CrossReference cCriticalsMessageCrossReference_4_2_1_0 = (CrossReference)cCriticalsAssignment_4_2_1.eContents().get(0);
+		private final RuleCall cCriticalsMessageFQNParserRuleCall_4_2_1_0_1 = (RuleCall)cCriticalsMessageCrossReference_4_2_1_0.eContents().get(1);
+		private final Group cGroup_4_2_2 = (Group)cGroup_4_2.eContents().get(2);
+		private final Keyword cCommaKeyword_4_2_2_0 = (Keyword)cGroup_4_2_2.eContents().get(0);
+		private final Assignment cCriticalsAssignment_4_2_2_1 = (Assignment)cGroup_4_2_2.eContents().get(1);
+		private final CrossReference cCriticalsMessageCrossReference_4_2_2_1_0 = (CrossReference)cCriticalsAssignment_4_2_2_1.eContents().get(0);
+		private final RuleCall cCriticalsMessageFQNParserRuleCall_4_2_2_1_0_1 = (RuleCall)cCriticalsMessageCrossReference_4_2_2_1_0.eContents().get(1);
+		private final Keyword cSemicolonKeyword_4_2_3 = (Keyword)cGroup_4_2.eContents().get(3);
+		private final Assignment cCompsectionAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cCompsectionInstanceSectionParserRuleCall_5_0 = (RuleCall)cCompsectionAssignment_5.eContents().get(0);
+		private final Assignment cWiresAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final RuleCall cWiresWireParserRuleCall_6_0 = (RuleCall)cWiresAssignment_6.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_7 = (Keyword)cGroup.eContents().get(7);
 		
 		//Actor:
 		//	'actor' name=ID ('(' formals+=ActorFormal (',' formals+=ActorFormal)* ')')?
-		//	'{' ('local' locals+=[Message|FQN] (',' locals+=[Message|FQN])* ';'?)? ('internal' internals+=[Message|FQN] (','
-		//	internals+=[Message|FQN])* ';'?)? // Optional: internal messages (stay within the actor)
+		//	'{' ('local' locals+=[Message|FQN] (',' locals+=[Message|FQN])* ';'? | 'internal' internals+=[Message|FQN] (','
+		//	internals+=[Message|FQN])* ';'? | 'critical' criticals+=[Message|FQN] (',' criticals+=[Message|FQN])* ';'?)*
 		//	compsection=InstanceSection
 		//	wires+=Wire*
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
 		//'actor' name=ID ('(' formals+=ActorFormal (',' formals+=ActorFormal)* ')')? '{' ('local' locals+=[Message|FQN] (','
-		//locals+=[Message|FQN])* ';'?)? ('internal' internals+=[Message|FQN] (',' internals+=[Message|FQN])* ';'?)? // Optional: internal messages (stay within the actor)
-		//compsection=InstanceSection wires+=Wire* '}'
+		//locals+=[Message|FQN])* ';'? | 'internal' internals+=[Message|FQN] (',' internals+=[Message|FQN])* ';'? | 'critical'
+		//criticals+=[Message|FQN] (',' criticals+=[Message|FQN])* ';'?)* compsection=InstanceSection wires+=Wire* '}'
 		public Group getGroup() { return cGroup; }
 		
 		//'actor'
@@ -1604,87 +1902,123 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
 		
-		//('local' locals+=[Message|FQN] (',' locals+=[Message|FQN])* ';'?)?
-		public Group getGroup_4() { return cGroup_4; }
+		//('local' locals+=[Message|FQN] (',' locals+=[Message|FQN])* ';'? | 'internal' internals+=[Message|FQN] (','
+		//internals+=[Message|FQN])* ';'? | 'critical' criticals+=[Message|FQN] (',' criticals+=[Message|FQN])* ';'?)*
+		public Alternatives getAlternatives_4() { return cAlternatives_4; }
+		
+		//'local' locals+=[Message|FQN] (',' locals+=[Message|FQN])* ';'?
+		public Group getGroup_4_0() { return cGroup_4_0; }
 		
 		//'local'
-		public Keyword getLocalKeyword_4_0() { return cLocalKeyword_4_0; }
+		public Keyword getLocalKeyword_4_0_0() { return cLocalKeyword_4_0_0; }
 		
 		//locals+=[Message|FQN]
-		public Assignment getLocalsAssignment_4_1() { return cLocalsAssignment_4_1; }
+		public Assignment getLocalsAssignment_4_0_1() { return cLocalsAssignment_4_0_1; }
 		
 		//[Message|FQN]
-		public CrossReference getLocalsMessageCrossReference_4_1_0() { return cLocalsMessageCrossReference_4_1_0; }
+		public CrossReference getLocalsMessageCrossReference_4_0_1_0() { return cLocalsMessageCrossReference_4_0_1_0; }
 		
 		//FQN
-		public RuleCall getLocalsMessageFQNParserRuleCall_4_1_0_1() { return cLocalsMessageFQNParserRuleCall_4_1_0_1; }
+		public RuleCall getLocalsMessageFQNParserRuleCall_4_0_1_0_1() { return cLocalsMessageFQNParserRuleCall_4_0_1_0_1; }
 		
 		//(',' locals+=[Message|FQN])*
-		public Group getGroup_4_2() { return cGroup_4_2; }
+		public Group getGroup_4_0_2() { return cGroup_4_0_2; }
 		
 		//','
-		public Keyword getCommaKeyword_4_2_0() { return cCommaKeyword_4_2_0; }
+		public Keyword getCommaKeyword_4_0_2_0() { return cCommaKeyword_4_0_2_0; }
 		
 		//locals+=[Message|FQN]
-		public Assignment getLocalsAssignment_4_2_1() { return cLocalsAssignment_4_2_1; }
+		public Assignment getLocalsAssignment_4_0_2_1() { return cLocalsAssignment_4_0_2_1; }
 		
 		//[Message|FQN]
-		public CrossReference getLocalsMessageCrossReference_4_2_1_0() { return cLocalsMessageCrossReference_4_2_1_0; }
+		public CrossReference getLocalsMessageCrossReference_4_0_2_1_0() { return cLocalsMessageCrossReference_4_0_2_1_0; }
 		
 		//FQN
-		public RuleCall getLocalsMessageFQNParserRuleCall_4_2_1_0_1() { return cLocalsMessageFQNParserRuleCall_4_2_1_0_1; }
+		public RuleCall getLocalsMessageFQNParserRuleCall_4_0_2_1_0_1() { return cLocalsMessageFQNParserRuleCall_4_0_2_1_0_1; }
 		
 		//';'?
-		public Keyword getSemicolonKeyword_4_3() { return cSemicolonKeyword_4_3; }
+		public Keyword getSemicolonKeyword_4_0_3() { return cSemicolonKeyword_4_0_3; }
 		
-		//('internal' internals+=[Message|FQN] (',' internals+=[Message|FQN])* ';'?)?
-		public Group getGroup_5() { return cGroup_5; }
+		//'internal' internals+=[Message|FQN] (',' internals+=[Message|FQN])* ';'?
+		public Group getGroup_4_1() { return cGroup_4_1; }
 		
 		//'internal'
-		public Keyword getInternalKeyword_5_0() { return cInternalKeyword_5_0; }
+		public Keyword getInternalKeyword_4_1_0() { return cInternalKeyword_4_1_0; }
 		
 		//internals+=[Message|FQN]
-		public Assignment getInternalsAssignment_5_1() { return cInternalsAssignment_5_1; }
+		public Assignment getInternalsAssignment_4_1_1() { return cInternalsAssignment_4_1_1; }
 		
 		//[Message|FQN]
-		public CrossReference getInternalsMessageCrossReference_5_1_0() { return cInternalsMessageCrossReference_5_1_0; }
+		public CrossReference getInternalsMessageCrossReference_4_1_1_0() { return cInternalsMessageCrossReference_4_1_1_0; }
 		
 		//FQN
-		public RuleCall getInternalsMessageFQNParserRuleCall_5_1_0_1() { return cInternalsMessageFQNParserRuleCall_5_1_0_1; }
+		public RuleCall getInternalsMessageFQNParserRuleCall_4_1_1_0_1() { return cInternalsMessageFQNParserRuleCall_4_1_1_0_1; }
 		
 		//(',' internals+=[Message|FQN])*
-		public Group getGroup_5_2() { return cGroup_5_2; }
+		public Group getGroup_4_1_2() { return cGroup_4_1_2; }
 		
 		//','
-		public Keyword getCommaKeyword_5_2_0() { return cCommaKeyword_5_2_0; }
+		public Keyword getCommaKeyword_4_1_2_0() { return cCommaKeyword_4_1_2_0; }
 		
 		//internals+=[Message|FQN]
-		public Assignment getInternalsAssignment_5_2_1() { return cInternalsAssignment_5_2_1; }
+		public Assignment getInternalsAssignment_4_1_2_1() { return cInternalsAssignment_4_1_2_1; }
 		
 		//[Message|FQN]
-		public CrossReference getInternalsMessageCrossReference_5_2_1_0() { return cInternalsMessageCrossReference_5_2_1_0; }
+		public CrossReference getInternalsMessageCrossReference_4_1_2_1_0() { return cInternalsMessageCrossReference_4_1_2_1_0; }
 		
 		//FQN
-		public RuleCall getInternalsMessageFQNParserRuleCall_5_2_1_0_1() { return cInternalsMessageFQNParserRuleCall_5_2_1_0_1; }
+		public RuleCall getInternalsMessageFQNParserRuleCall_4_1_2_1_0_1() { return cInternalsMessageFQNParserRuleCall_4_1_2_1_0_1; }
 		
 		//';'?
-		public Keyword getSemicolonKeyword_5_3() { return cSemicolonKeyword_5_3; }
+		public Keyword getSemicolonKeyword_4_1_3() { return cSemicolonKeyword_4_1_3; }
 		
-		//// Optional: internal messages (stay within the actor)
+		//'critical' criticals+=[Message|FQN] (',' criticals+=[Message|FQN])* ';'?
+		public Group getGroup_4_2() { return cGroup_4_2; }
+		
+		//'critical'
+		public Keyword getCriticalKeyword_4_2_0() { return cCriticalKeyword_4_2_0; }
+		
+		//criticals+=[Message|FQN]
+		public Assignment getCriticalsAssignment_4_2_1() { return cCriticalsAssignment_4_2_1; }
+		
+		//[Message|FQN]
+		public CrossReference getCriticalsMessageCrossReference_4_2_1_0() { return cCriticalsMessageCrossReference_4_2_1_0; }
+		
+		//FQN
+		public RuleCall getCriticalsMessageFQNParserRuleCall_4_2_1_0_1() { return cCriticalsMessageFQNParserRuleCall_4_2_1_0_1; }
+		
+		//(',' criticals+=[Message|FQN])*
+		public Group getGroup_4_2_2() { return cGroup_4_2_2; }
+		
+		//','
+		public Keyword getCommaKeyword_4_2_2_0() { return cCommaKeyword_4_2_2_0; }
+		
+		//criticals+=[Message|FQN]
+		public Assignment getCriticalsAssignment_4_2_2_1() { return cCriticalsAssignment_4_2_2_1; }
+		
+		//[Message|FQN]
+		public CrossReference getCriticalsMessageCrossReference_4_2_2_1_0() { return cCriticalsMessageCrossReference_4_2_2_1_0; }
+		
+		//FQN
+		public RuleCall getCriticalsMessageFQNParserRuleCall_4_2_2_1_0_1() { return cCriticalsMessageFQNParserRuleCall_4_2_2_1_0_1; }
+		
+		//';'?
+		public Keyword getSemicolonKeyword_4_2_3() { return cSemicolonKeyword_4_2_3; }
+		
 		//compsection=InstanceSection
-		public Assignment getCompsectionAssignment_6() { return cCompsectionAssignment_6; }
+		public Assignment getCompsectionAssignment_5() { return cCompsectionAssignment_5; }
 		
 		//InstanceSection
-		public RuleCall getCompsectionInstanceSectionParserRuleCall_6_0() { return cCompsectionInstanceSectionParserRuleCall_6_0; }
+		public RuleCall getCompsectionInstanceSectionParserRuleCall_5_0() { return cCompsectionInstanceSectionParserRuleCall_5_0; }
 		
 		//wires+=Wire*
-		public Assignment getWiresAssignment_7() { return cWiresAssignment_7; }
+		public Assignment getWiresAssignment_6() { return cWiresAssignment_6; }
 		
 		//Wire
-		public RuleCall getWiresWireParserRuleCall_7_0() { return cWiresWireParserRuleCall_7_0; }
+		public RuleCall getWiresWireParserRuleCall_6_0() { return cWiresWireParserRuleCall_6_0; }
 		
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_8() { return cRightCurlyBracketKeyword_8; }
+		public Keyword getRightCurlyBracketKeyword_7() { return cRightCurlyBracketKeyword_7; }
 	}
 	public class InstanceSectionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "edu.vanderbilt.riaps.App.InstanceSection");
@@ -1987,6 +2321,9 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 	private final CollectionElements pCollection;
 	private final ComponentCollectionElements pComponentCollection;
 	private final ApplicationElements pApplication;
+	private final DeploymentConstraintElements pDeploymentConstraint;
+	private final CollocateConstraintElements pCollocateConstraint;
+	private final DistributeConstraintElements pDistributeConstraint;
 	private final ImportElements pImport;
 	private final ImportedFQNElements pImportedFQN;
 	private final FQNElements pFQN;
@@ -1999,8 +2336,10 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 	private final MemoryUnitsElements pMemoryUnits;
 	private final RequirementElements pRequirement;
 	private final PortElements pPort;
+	private final RateLimitElements pRateLimit;
 	private final PubPortElements pPubPort;
 	private final SubPortElements pSubPort;
+	private final DeadlineElements pDeadline;
 	private final ClntPortElements pClntPort;
 	private final SrvPortElements pSrvPort;
 	private final ReqPortElements pReqPort;
@@ -2037,6 +2376,9 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 		this.pCollection = new CollectionElements();
 		this.pComponentCollection = new ComponentCollectionElements();
 		this.pApplication = new ApplicationElements();
+		this.pDeploymentConstraint = new DeploymentConstraintElements();
+		this.pCollocateConstraint = new CollocateConstraintElements();
+		this.pDistributeConstraint = new DistributeConstraintElements();
 		this.pImport = new ImportElements();
 		this.pImportedFQN = new ImportedFQNElements();
 		this.pFQN = new FQNElements();
@@ -2049,8 +2391,10 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 		this.pMemoryUnits = new MemoryUnitsElements();
 		this.pRequirement = new RequirementElements();
 		this.pPort = new PortElements();
+		this.pRateLimit = new RateLimitElements();
 		this.pPubPort = new PubPortElements();
 		this.pSubPort = new SubPortElements();
+		this.pDeadline = new DeadlineElements();
 		this.pClntPort = new ClntPortElements();
 		this.pSrvPort = new SrvPortElements();
 		this.pReqPort = new ReqPortElements();
@@ -2208,6 +2552,7 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 	//	{Application}
 	//	'application' name=ID ('extends' baseapp=[Application|FQN])?
 	//	'{' (artifacts+=Artifact | actors+=Actor | components+=Component | messages+=Message)*
+	//	deploymentConstraints+=DeploymentConstraint*
 	//	'}';
 	public ApplicationElements getApplicationAccess() {
 		return pApplication;
@@ -2215,6 +2560,36 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getApplicationRule() {
 		return getApplicationAccess().getRule();
+	}
+	
+	//DeploymentConstraint:
+	//	CollocateConstraint | DistributeConstraint;
+	public DeploymentConstraintElements getDeploymentConstraintAccess() {
+		return pDeploymentConstraint;
+	}
+	
+	public ParserRule getDeploymentConstraintRule() {
+		return getDeploymentConstraintAccess().getRule();
+	}
+	
+	//CollocateConstraint:
+	//	'collocate' actors+=[Actor|FQN] (',' actors+=[Actor|FQN])* ';'?;
+	public CollocateConstraintElements getCollocateConstraintAccess() {
+		return pCollocateConstraint;
+	}
+	
+	public ParserRule getCollocateConstraintRule() {
+		return getCollocateConstraintAccess().getRule();
+	}
+	
+	//DistributeConstraint:
+	//	'distribute' actors+=[Actor|FQN] (',' actors+=[Actor|FQN])* ';'?;
+	public DistributeConstraintElements getDistributeConstraintAccess() {
+		return pDistributeConstraint;
+	}
+	
+	public ParserRule getDistributeConstraintRule() {
+		return getDistributeConstraintAccess().getRule();
 	}
 	
 	//Import:
@@ -2361,8 +2736,18 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 		return getPortAccess().getRule();
 	}
 	
+	//RateLimit:
+	//	'Hz' '[' (lower=INT | nolower?='-') ',' (upper=INT | noupper?='-') ']';
+	public RateLimitElements getRateLimitAccess() {
+		return pRateLimit;
+	}
+	
+	public ParserRule getRateLimitRule() {
+		return getRateLimitAccess().getRule();
+	}
+	
 	//PubPort:
-	//	'pub' name=ID ':' type=[Message|FQN] ';'?;
+	//	'pub' name=ID ':' type=[Message|FQN] ratelimit=RateLimit? ';'?;
 	public PubPortElements getPubPortAccess() {
 		return pPubPort;
 	}
@@ -2372,7 +2757,7 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//SubPort:
-	//	'sub' name=ID ':' type=[Message|FQN] ';'?;
+	//	'sub' name=ID ':' type=[Message|FQN] ratelimit=RateLimit? ';'?;
 	public SubPortElements getSubPortAccess() {
 		return pSubPort;
 	}
@@ -2381,10 +2766,21 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 		return getSubPortAccess().getRule();
 	}
 	
+	//Deadline:
+	//	'within' deadline=INT units=TimeUnit;
+	public DeadlineElements getDeadlineAccess() {
+		return pDeadline;
+	}
+	
+	public ParserRule getDeadlineRule() {
+		return getDeadlineAccess().getRule();
+	}
+	
 	//// Client port (request and reply message types) - Owned by an SMI client
 	//// Client operation is expected to send on the port and then receive on the same port
 	//ClntPort:
-	//	'clt' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' ';'?;
+	//	'clt' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] deadline=Deadline? ')' ratelimit=RateLimit?
+	//	';'?;
 	public ClntPortElements getClntPortAccess() {
 		return pClntPort;
 	}
@@ -2394,7 +2790,7 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//SrvPort:
-	//	'srv' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' ';'?;
+	//	'srv' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' ratelimit=RateLimit? ';'?;
 	public SrvPortElements getSrvPortAccess() {
 		return pSrvPort;
 	}
@@ -2404,7 +2800,8 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ReqPort:
-	//	'req' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' ';'?;
+	//	'req' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] deadline=Deadline? ')' ratelimit=RateLimit?
+	//	';'?;
 	public ReqPortElements getReqPortAccess() {
 		return pReqPort;
 	}
@@ -2473,8 +2870,8 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//Actor:
 	//	'actor' name=ID ('(' formals+=ActorFormal (',' formals+=ActorFormal)* ')')?
-	//	'{' ('local' locals+=[Message|FQN] (',' locals+=[Message|FQN])* ';'?)? ('internal' internals+=[Message|FQN] (','
-	//	internals+=[Message|FQN])* ';'?)? // Optional: internal messages (stay within the actor)
+	//	'{' ('local' locals+=[Message|FQN] (',' locals+=[Message|FQN])* ';'? | 'internal' internals+=[Message|FQN] (','
+	//	internals+=[Message|FQN])* ';'? | 'critical' criticals+=[Message|FQN] (',' criticals+=[Message|FQN])* ';'?)*
 	//	compsection=InstanceSection
 	//	wires+=Wire*
 	//	'}';

@@ -19,6 +19,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link edu.vanderbilt.riaps.app.Application#getActors <em>Actors</em>}</li>
  *   <li>{@link edu.vanderbilt.riaps.app.Application#getComponents <em>Components</em>}</li>
  *   <li>{@link edu.vanderbilt.riaps.app.Application#getMessages <em>Messages</em>}</li>
+ *   <li>{@link edu.vanderbilt.riaps.app.Application#getDeploymentConstraints <em>Deployment Constraints</em>}</li>
  * </ul>
  *
  * @see edu.vanderbilt.riaps.app.AppPackage#getApplication()
@@ -116,5 +117,21 @@ public interface Application extends Collection
    * @generated
    */
   EList<Message> getMessages();
+
+  /**
+   * Returns the value of the '<em><b>Deployment Constraints</b></em>' containment reference list.
+   * The list contents are of type {@link edu.vanderbilt.riaps.app.DeploymentConstraint}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Deployment Constraints</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Deployment Constraints</em>' containment reference list.
+   * @see edu.vanderbilt.riaps.app.AppPackage#getApplication_DeploymentConstraints()
+   * @model containment="true"
+   * @generated
+   */
+  EList<DeploymentConstraint> getDeploymentConstraints();
 
 } // Application

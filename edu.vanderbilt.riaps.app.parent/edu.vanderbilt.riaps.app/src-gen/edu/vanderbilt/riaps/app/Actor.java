@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link edu.vanderbilt.riaps.app.Actor#getFormals <em>Formals</em>}</li>
  *   <li>{@link edu.vanderbilt.riaps.app.Actor#getLocals <em>Locals</em>}</li>
  *   <li>{@link edu.vanderbilt.riaps.app.Actor#getInternals <em>Internals</em>}</li>
+ *   <li>{@link edu.vanderbilt.riaps.app.Actor#getCriticals <em>Criticals</em>}</li>
  *   <li>{@link edu.vanderbilt.riaps.app.Actor#getCompsection <em>Compsection</em>}</li>
  *   <li>{@link edu.vanderbilt.riaps.app.Actor#getWires <em>Wires</em>}</li>
  * </ul>
@@ -103,6 +104,22 @@ public interface Actor extends EObject
    * @generated
    */
   EList<Message> getInternals();
+
+  /**
+   * Returns the value of the '<em><b>Criticals</b></em>' reference list.
+   * The list contents are of type {@link edu.vanderbilt.riaps.app.Message}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Criticals</em>' reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Criticals</em>' reference list.
+   * @see edu.vanderbilt.riaps.app.AppPackage#getActor_Criticals()
+   * @model
+   * @generated
+   */
+  EList<Message> getCriticals();
 
   /**
    * Returns the value of the '<em><b>Compsection</b></em>' containment reference.

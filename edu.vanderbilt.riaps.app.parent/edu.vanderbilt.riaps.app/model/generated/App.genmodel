@@ -25,7 +25,13 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference App.ecore#//Application/actors"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference App.ecore#//Application/components"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference App.ecore#//Application/messages"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference App.ecore#//Application/deploymentConstraints"/>
     </genClasses>
+    <genClasses ecoreClass="App.ecore#//DeploymentConstraint">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference App.ecore#//DeploymentConstraint/actors"/>
+    </genClasses>
+    <genClasses ecoreClass="App.ecore#//CollocateConstraint"/>
+    <genClasses ecoreClass="App.ecore#//DistributeConstraint"/>
     <genClasses ecoreClass="App.ecore#//Import">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute App.ecore#//Import/importedNamespace"/>
     </genClasses>
@@ -68,23 +74,40 @@
     <genClasses ecoreClass="App.ecore#//Port">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute App.ecore#//Port/name"/>
     </genClasses>
+    <genClasses ecoreClass="App.ecore#//RateLimit">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute App.ecore#//RateLimit/lower"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute App.ecore#//RateLimit/nolower"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute App.ecore#//RateLimit/upper"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute App.ecore#//RateLimit/noupper"/>
+    </genClasses>
     <genClasses ecoreClass="App.ecore#//PubPort">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference App.ecore#//PubPort/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference App.ecore#//PubPort/ratelimit"/>
     </genClasses>
     <genClasses ecoreClass="App.ecore#//SubPort">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference App.ecore#//SubPort/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference App.ecore#//SubPort/ratelimit"/>
+    </genClasses>
+    <genClasses ecoreClass="App.ecore#//Deadline">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute App.ecore#//Deadline/deadline"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference App.ecore#//Deadline/units"/>
     </genClasses>
     <genClasses ecoreClass="App.ecore#//ClntPort">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference App.ecore#//ClntPort/req_type"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference App.ecore#//ClntPort/rep_type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference App.ecore#//ClntPort/deadline"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference App.ecore#//ClntPort/ratelimit"/>
     </genClasses>
     <genClasses ecoreClass="App.ecore#//SrvPort">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference App.ecore#//SrvPort/req_type"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference App.ecore#//SrvPort/rep_type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference App.ecore#//SrvPort/ratelimit"/>
     </genClasses>
     <genClasses ecoreClass="App.ecore#//ReqPort">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference App.ecore#//ReqPort/req_type"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference App.ecore#//ReqPort/rep_type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference App.ecore#//ReqPort/deadline"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference App.ecore#//ReqPort/ratelimit"/>
     </genClasses>
     <genClasses ecoreClass="App.ecore#//TimeUnit">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute App.ecore#//TimeUnit/months"/>
@@ -114,6 +137,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference App.ecore#//Actor/formals"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference App.ecore#//Actor/locals"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference App.ecore#//Actor/internals"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference App.ecore#//Actor/criticals"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference App.ecore#//Actor/compsection"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference App.ecore#//Actor/wires"/>
     </genClasses>

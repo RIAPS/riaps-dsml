@@ -15,10 +15,14 @@ import edu.vanderbilt.riaps.app.Artifact;
 import edu.vanderbilt.riaps.app.BoolDefault;
 import edu.vanderbilt.riaps.app.ClntPort;
 import edu.vanderbilt.riaps.app.Collection;
+import edu.vanderbilt.riaps.app.CollocateConstraint;
 import edu.vanderbilt.riaps.app.Component;
 import edu.vanderbilt.riaps.app.ComponentCollection;
 import edu.vanderbilt.riaps.app.ComponentFormal;
+import edu.vanderbilt.riaps.app.Deadline;
+import edu.vanderbilt.riaps.app.DeploymentConstraint;
 import edu.vanderbilt.riaps.app.DeviceComponent;
+import edu.vanderbilt.riaps.app.DistributeConstraint;
 import edu.vanderbilt.riaps.app.FormalDefault;
 import edu.vanderbilt.riaps.app.Import;
 import edu.vanderbilt.riaps.app.InsPort;
@@ -32,6 +36,7 @@ import edu.vanderbilt.riaps.app.Model;
 import edu.vanderbilt.riaps.app.NumberDefault;
 import edu.vanderbilt.riaps.app.Port;
 import edu.vanderbilt.riaps.app.PubPort;
+import edu.vanderbilt.riaps.app.RateLimit;
 import edu.vanderbilt.riaps.app.ReqPort;
 import edu.vanderbilt.riaps.app.Requirement;
 import edu.vanderbilt.riaps.app.SrvPort;
@@ -119,6 +124,27 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass deploymentConstraintEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass collocateConstraintEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass distributeConstraintEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass importEClass = null;
 
   /**
@@ -189,6 +215,13 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass rateLimitEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass pubPortEClass = null;
 
   /**
@@ -197,6 +230,13 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
    * @generated
    */
   private EClass subPortEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass deadlineEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -527,6 +567,56 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
   public EReference getApplication_Messages()
   {
     return (EReference)applicationEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getApplication_DeploymentConstraints()
+  {
+    return (EReference)applicationEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getDeploymentConstraint()
+  {
+    return deploymentConstraintEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getDeploymentConstraint_Actors()
+  {
+    return (EReference)deploymentConstraintEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getCollocateConstraint()
+  {
+    return collocateConstraintEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getDistributeConstraint()
+  {
+    return distributeConstraintEClass;
   }
 
   /**
@@ -874,6 +964,56 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getRateLimit()
+  {
+    return rateLimitEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getRateLimit_Lower()
+  {
+    return (EAttribute)rateLimitEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getRateLimit_Nolower()
+  {
+    return (EAttribute)rateLimitEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getRateLimit_Upper()
+  {
+    return (EAttribute)rateLimitEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getRateLimit_Noupper()
+  {
+    return (EAttribute)rateLimitEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getPubPort()
   {
     return pubPortEClass;
@@ -894,6 +1034,16 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getPubPort_Ratelimit()
+  {
+    return (EReference)pubPortEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getSubPort()
   {
     return subPortEClass;
@@ -907,6 +1057,46 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
   public EReference getSubPort_Type()
   {
     return (EReference)subPortEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSubPort_Ratelimit()
+  {
+    return (EReference)subPortEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getDeadline()
+  {
+    return deadlineEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getDeadline_Deadline()
+  {
+    return (EAttribute)deadlineEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getDeadline_Units()
+  {
+    return (EReference)deadlineEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -944,6 +1134,26 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getClntPort_Deadline()
+  {
+    return (EReference)clntPortEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getClntPort_Ratelimit()
+  {
+    return (EReference)clntPortEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getSrvPort()
   {
     return srvPortEClass;
@@ -974,6 +1184,16 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getSrvPort_Ratelimit()
+  {
+    return (EReference)srvPortEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getReqPort()
   {
     return reqPortEClass;
@@ -997,6 +1217,26 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
   public EReference getReqPort_Rep_type()
   {
     return (EReference)reqPortEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getReqPort_Deadline()
+  {
+    return (EReference)reqPortEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getReqPort_Ratelimit()
+  {
+    return (EReference)reqPortEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -1234,7 +1474,7 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getActor_Compsection()
+  public EReference getActor_Criticals()
   {
     return (EReference)actorEClass.getEStructuralFeatures().get(4);
   }
@@ -1244,9 +1484,19 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getActor_Wires()
+  public EReference getActor_Compsection()
   {
     return (EReference)actorEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getActor_Wires()
+  {
+    return (EReference)actorEClass.getEStructuralFeatures().get(6);
   }
 
   /**
@@ -1532,6 +1782,14 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
     createEReference(applicationEClass, APPLICATION__ACTORS);
     createEReference(applicationEClass, APPLICATION__COMPONENTS);
     createEReference(applicationEClass, APPLICATION__MESSAGES);
+    createEReference(applicationEClass, APPLICATION__DEPLOYMENT_CONSTRAINTS);
+
+    deploymentConstraintEClass = createEClass(DEPLOYMENT_CONSTRAINT);
+    createEReference(deploymentConstraintEClass, DEPLOYMENT_CONSTRAINT__ACTORS);
+
+    collocateConstraintEClass = createEClass(COLLOCATE_CONSTRAINT);
+
+    distributeConstraintEClass = createEClass(DISTRIBUTE_CONSTRAINT);
 
     importEClass = createEClass(IMPORT);
     createEAttribute(importEClass, IMPORT__IMPORTED_NAMESPACE);
@@ -1577,23 +1835,40 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
     portEClass = createEClass(PORT);
     createEAttribute(portEClass, PORT__NAME);
 
+    rateLimitEClass = createEClass(RATE_LIMIT);
+    createEAttribute(rateLimitEClass, RATE_LIMIT__LOWER);
+    createEAttribute(rateLimitEClass, RATE_LIMIT__NOLOWER);
+    createEAttribute(rateLimitEClass, RATE_LIMIT__UPPER);
+    createEAttribute(rateLimitEClass, RATE_LIMIT__NOUPPER);
+
     pubPortEClass = createEClass(PUB_PORT);
     createEReference(pubPortEClass, PUB_PORT__TYPE);
+    createEReference(pubPortEClass, PUB_PORT__RATELIMIT);
 
     subPortEClass = createEClass(SUB_PORT);
     createEReference(subPortEClass, SUB_PORT__TYPE);
+    createEReference(subPortEClass, SUB_PORT__RATELIMIT);
+
+    deadlineEClass = createEClass(DEADLINE);
+    createEAttribute(deadlineEClass, DEADLINE__DEADLINE);
+    createEReference(deadlineEClass, DEADLINE__UNITS);
 
     clntPortEClass = createEClass(CLNT_PORT);
     createEReference(clntPortEClass, CLNT_PORT__REQ_TYPE);
     createEReference(clntPortEClass, CLNT_PORT__REP_TYPE);
+    createEReference(clntPortEClass, CLNT_PORT__DEADLINE);
+    createEReference(clntPortEClass, CLNT_PORT__RATELIMIT);
 
     srvPortEClass = createEClass(SRV_PORT);
     createEReference(srvPortEClass, SRV_PORT__REQ_TYPE);
     createEReference(srvPortEClass, SRV_PORT__REP_TYPE);
+    createEReference(srvPortEClass, SRV_PORT__RATELIMIT);
 
     reqPortEClass = createEClass(REQ_PORT);
     createEReference(reqPortEClass, REQ_PORT__REQ_TYPE);
     createEReference(reqPortEClass, REQ_PORT__REP_TYPE);
+    createEReference(reqPortEClass, REQ_PORT__DEADLINE);
+    createEReference(reqPortEClass, REQ_PORT__RATELIMIT);
 
     timeUnitEClass = createEClass(TIME_UNIT);
     createEAttribute(timeUnitEClass, TIME_UNIT__MONTHS);
@@ -1623,6 +1898,7 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
     createEReference(actorEClass, ACTOR__FORMALS);
     createEReference(actorEClass, ACTOR__LOCALS);
     createEReference(actorEClass, ACTOR__INTERNALS);
+    createEReference(actorEClass, ACTOR__CRITICALS);
     createEReference(actorEClass, ACTOR__COMPSECTION);
     createEReference(actorEClass, ACTOR__WIRES);
 
@@ -1693,6 +1969,8 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
     boolDefaultEClass.getESuperTypes().add(this.getFormalDefault());
     componentCollectionEClass.getESuperTypes().add(this.getCollection());
     applicationEClass.getESuperTypes().add(this.getCollection());
+    collocateConstraintEClass.getESuperTypes().add(this.getDeploymentConstraint());
+    distributeConstraintEClass.getESuperTypes().add(this.getDeploymentConstraint());
     messageCollectionEClass.getESuperTypes().add(this.getCollection());
     deviceComponentEClass.getESuperTypes().add(this.getComponent());
     appComponentEClass.getESuperTypes().add(this.getComponent());
@@ -1729,6 +2007,14 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
     initEReference(getApplication_Actors(), this.getActor(), null, "actors", null, 0, -1, Application.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getApplication_Components(), this.getComponent(), null, "components", null, 0, -1, Application.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getApplication_Messages(), this.getMessage(), null, "messages", null, 0, -1, Application.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getApplication_DeploymentConstraints(), this.getDeploymentConstraint(), null, "deploymentConstraints", null, 0, -1, Application.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(deploymentConstraintEClass, DeploymentConstraint.class, "DeploymentConstraint", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getDeploymentConstraint_Actors(), this.getActor(), null, "actors", null, 0, -1, DeploymentConstraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(collocateConstraintEClass, CollocateConstraint.class, "CollocateConstraint", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(distributeConstraintEClass, DistributeConstraint.class, "DistributeConstraint", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(importEClass, Import.class, "Import", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getImport_ImportedNamespace(), ecorePackage.getEString(), "importedNamespace", null, 0, 1, Import.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1774,23 +2060,40 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
     initEClass(portEClass, Port.class, "Port", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getPort_Name(), ecorePackage.getEString(), "name", null, 0, 1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+    initEClass(rateLimitEClass, RateLimit.class, "RateLimit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getRateLimit_Lower(), ecorePackage.getEInt(), "lower", null, 0, 1, RateLimit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getRateLimit_Nolower(), ecorePackage.getEBoolean(), "nolower", null, 0, 1, RateLimit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getRateLimit_Upper(), ecorePackage.getEInt(), "upper", null, 0, 1, RateLimit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getRateLimit_Noupper(), ecorePackage.getEBoolean(), "noupper", null, 0, 1, RateLimit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(pubPortEClass, PubPort.class, "PubPort", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getPubPort_Type(), this.getMessage(), null, "type", null, 0, 1, PubPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPubPort_Ratelimit(), this.getRateLimit(), null, "ratelimit", null, 0, 1, PubPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(subPortEClass, SubPort.class, "SubPort", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getSubPort_Type(), this.getMessage(), null, "type", null, 0, 1, SubPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSubPort_Ratelimit(), this.getRateLimit(), null, "ratelimit", null, 0, 1, SubPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(deadlineEClass, Deadline.class, "Deadline", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getDeadline_Deadline(), ecorePackage.getEInt(), "deadline", null, 0, 1, Deadline.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDeadline_Units(), this.getTimeUnit(), null, "units", null, 0, 1, Deadline.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(clntPortEClass, ClntPort.class, "ClntPort", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getClntPort_Req_type(), this.getMessage(), null, "req_type", null, 0, 1, ClntPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getClntPort_Rep_type(), this.getMessage(), null, "rep_type", null, 0, 1, ClntPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getClntPort_Deadline(), this.getDeadline(), null, "deadline", null, 0, 1, ClntPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getClntPort_Ratelimit(), this.getRateLimit(), null, "ratelimit", null, 0, 1, ClntPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(srvPortEClass, SrvPort.class, "SrvPort", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getSrvPort_Req_type(), this.getMessage(), null, "req_type", null, 0, 1, SrvPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSrvPort_Rep_type(), this.getMessage(), null, "rep_type", null, 0, 1, SrvPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSrvPort_Ratelimit(), this.getRateLimit(), null, "ratelimit", null, 0, 1, SrvPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(reqPortEClass, ReqPort.class, "ReqPort", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getReqPort_Req_type(), this.getMessage(), null, "req_type", null, 0, 1, ReqPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getReqPort_Rep_type(), this.getMessage(), null, "rep_type", null, 0, 1, ReqPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getReqPort_Deadline(), this.getDeadline(), null, "deadline", null, 0, 1, ReqPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getReqPort_Ratelimit(), this.getRateLimit(), null, "ratelimit", null, 0, 1, ReqPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(timeUnitEClass, TimeUnit.class, "TimeUnit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getTimeUnit_Months(), ecorePackage.getEBoolean(), "months", null, 0, 1, TimeUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1820,6 +2123,7 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
     initEReference(getActor_Formals(), this.getActorFormal(), null, "formals", null, 0, -1, Actor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getActor_Locals(), this.getMessage(), null, "locals", null, 0, -1, Actor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getActor_Internals(), this.getMessage(), null, "internals", null, 0, -1, Actor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getActor_Criticals(), this.getMessage(), null, "criticals", null, 0, -1, Actor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getActor_Compsection(), this.getInstanceSection(), null, "compsection", null, 0, 1, Actor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getActor_Wires(), this.getWire(), null, "wires", null, 0, -1, Actor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

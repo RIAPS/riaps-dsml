@@ -14,9 +14,12 @@ import edu.vanderbilt.riaps.app.Application;
 import edu.vanderbilt.riaps.app.Artifact;
 import edu.vanderbilt.riaps.app.BoolDefault;
 import edu.vanderbilt.riaps.app.ClntPort;
+import edu.vanderbilt.riaps.app.CollocateConstraint;
 import edu.vanderbilt.riaps.app.ComponentCollection;
 import edu.vanderbilt.riaps.app.ComponentFormal;
+import edu.vanderbilt.riaps.app.Deadline;
 import edu.vanderbilt.riaps.app.DeviceComponent;
+import edu.vanderbilt.riaps.app.DistributeConstraint;
 import edu.vanderbilt.riaps.app.Import;
 import edu.vanderbilt.riaps.app.InsPort;
 import edu.vanderbilt.riaps.app.Instance;
@@ -27,6 +30,7 @@ import edu.vanderbilt.riaps.app.MessageCollection;
 import edu.vanderbilt.riaps.app.Model;
 import edu.vanderbilt.riaps.app.NumberDefault;
 import edu.vanderbilt.riaps.app.PubPort;
+import edu.vanderbilt.riaps.app.RateLimit;
 import edu.vanderbilt.riaps.app.ReqPort;
 import edu.vanderbilt.riaps.app.Requirement;
 import edu.vanderbilt.riaps.app.SrvPort;
@@ -88,14 +92,23 @@ public class AppSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 			case AppPackage.CLNT_PORT:
 				sequence_ClntPort(context, (ClntPort) semanticObject); 
 				return; 
+			case AppPackage.COLLOCATE_CONSTRAINT:
+				sequence_CollocateConstraint(context, (CollocateConstraint) semanticObject); 
+				return; 
 			case AppPackage.COMPONENT_COLLECTION:
 				sequence_ComponentCollection(context, (ComponentCollection) semanticObject); 
 				return; 
 			case AppPackage.COMPONENT_FORMAL:
 				sequence_ComponentFormal(context, (ComponentFormal) semanticObject); 
 				return; 
+			case AppPackage.DEADLINE:
+				sequence_Deadline(context, (Deadline) semanticObject); 
+				return; 
 			case AppPackage.DEVICE_COMPONENT:
 				sequence_DeviceComponent(context, (DeviceComponent) semanticObject); 
+				return; 
+			case AppPackage.DISTRIBUTE_CONSTRAINT:
+				sequence_DistributeConstraint(context, (DistributeConstraint) semanticObject); 
 				return; 
 			case AppPackage.IMPORT:
 				sequence_Import(context, (Import) semanticObject); 
@@ -126,6 +139,9 @@ public class AppSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				return; 
 			case AppPackage.PUB_PORT:
 				sequence_PubPort(context, (PubPort) semanticObject); 
+				return; 
+			case AppPackage.RATE_LIMIT:
+				sequence_RateLimit(context, (RateLimit) semanticObject); 
 				return; 
 			case AppPackage.REQ_PORT:
 				sequence_ReqPort(context, (ReqPort) semanticObject); 
@@ -185,8 +201,11 @@ public class AppSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     (
 	 *         name=ID 
 	 *         (formals+=ActorFormal formals+=ActorFormal*)? 
-	 *         (locals+=[Message|FQN] locals+=[Message|FQN]*)? 
-	 *         (internals+=[Message|FQN] internals+=[Message|FQN]*)? 
+	 *         (
+	 *             (locals+=[Message|FQN] locals+=[Message|FQN]*) | 
+	 *             (internals+=[Message|FQN] internals+=[Message|FQN]*) | 
+	 *             (criticals+=[Message|FQN] criticals+=[Message|FQN]*)
+	 *         )* 
 	 *         compsection=InstanceSection 
 	 *         wires+=Wire*
 	 *     )
@@ -248,7 +267,12 @@ public class AppSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Application returns Application
 	 *
 	 * Constraint:
-	 *     (name=ID baseapp=[Application|FQN]? (artifacts+=Artifact | actors+=Actor | components+=Component | messages+=Message)*)
+	 *     (
+	 *         name=ID 
+	 *         baseapp=[Application|FQN]? 
+	 *         (artifacts+=Artifact | actors+=Actor | components+=Component | messages+=Message)* 
+	 *         deploymentConstraints+=DeploymentConstraint*
+	 *     )
 	 */
 	protected void sequence_Application(ISerializationContext context, Application semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -292,22 +316,23 @@ public class AppSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     ClntPort returns ClntPort
 	 *
 	 * Constraint:
-	 *     (name=ID req_type=[Message|FQN] rep_type=[Message|FQN])
+	 *     (name=ID req_type=[Message|FQN] rep_type=[Message|FQN] deadline=Deadline? ratelimit=RateLimit?)
 	 */
 	protected void sequence_ClntPort(ISerializationContext context, ClntPort semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, AppPackage.Literals.PORT__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AppPackage.Literals.PORT__NAME));
-			if (transientValues.isValueTransient(semanticObject, AppPackage.Literals.CLNT_PORT__REQ_TYPE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AppPackage.Literals.CLNT_PORT__REQ_TYPE));
-			if (transientValues.isValueTransient(semanticObject, AppPackage.Literals.CLNT_PORT__REP_TYPE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AppPackage.Literals.CLNT_PORT__REP_TYPE));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getClntPortAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());
-		feeder.accept(grammarAccess.getClntPortAccess().getReq_typeMessageFQNParserRuleCall_4_0_1(), semanticObject.getReq_type());
-		feeder.accept(grammarAccess.getClntPortAccess().getRep_typeMessageFQNParserRuleCall_6_0_1(), semanticObject.getRep_type());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     DeploymentConstraint returns CollocateConstraint
+	 *     CollocateConstraint returns CollocateConstraint
+	 *
+	 * Constraint:
+	 *     (actors+=[Actor|FQN] actors+=[Actor|FQN]*)
+	 */
+	protected void sequence_CollocateConstraint(ISerializationContext context, CollocateConstraint semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -347,6 +372,27 @@ public class AppSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
+	 *     Deadline returns Deadline
+	 *
+	 * Constraint:
+	 *     (deadline=INT units=TimeUnit)
+	 */
+	protected void sequence_Deadline(ISerializationContext context, Deadline semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AppPackage.Literals.DEADLINE__DEADLINE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AppPackage.Literals.DEADLINE__DEADLINE));
+			if (transientValues.isValueTransient(semanticObject, AppPackage.Literals.DEADLINE__UNITS) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AppPackage.Literals.DEADLINE__UNITS));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getDeadlineAccess().getDeadlineINTTerminalRuleCall_1_0(), semanticObject.getDeadline());
+		feeder.accept(grammarAccess.getDeadlineAccess().getUnitsTimeUnitParserRuleCall_2_0(), semanticObject.getUnits());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Component returns DeviceComponent
 	 *     DeviceComponent returns DeviceComponent
 	 *
@@ -354,6 +400,19 @@ public class AppSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     (name=ID (formals+=ComponentFormal formals+=ComponentFormal*)? (requirements+=Requirement | ports+=Port)+)
 	 */
 	protected void sequence_DeviceComponent(ISerializationContext context, DeviceComponent semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     DeploymentConstraint returns DistributeConstraint
+	 *     DistributeConstraint returns DistributeConstraint
+	 *
+	 * Constraint:
+	 *     (actors+=[Actor|FQN] actors+=[Actor|FQN]*)
+	 */
+	protected void sequence_DistributeConstraint(ISerializationContext context, DistributeConstraint semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -487,19 +546,22 @@ public class AppSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     PubPort returns PubPort
 	 *
 	 * Constraint:
-	 *     (name=ID type=[Message|FQN])
+	 *     (name=ID type=[Message|FQN] ratelimit=RateLimit?)
 	 */
 	protected void sequence_PubPort(ISerializationContext context, PubPort semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, AppPackage.Literals.PORT__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AppPackage.Literals.PORT__NAME));
-			if (transientValues.isValueTransient(semanticObject, AppPackage.Literals.PUB_PORT__TYPE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AppPackage.Literals.PUB_PORT__TYPE));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getPubPortAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());
-		feeder.accept(grammarAccess.getPubPortAccess().getTypeMessageFQNParserRuleCall_3_0_1(), semanticObject.getType());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     RateLimit returns RateLimit
+	 *
+	 * Constraint:
+	 *     ((lower=INT | nolower?='-') (upper=INT | noupper?='-'))
+	 */
+	protected void sequence_RateLimit(ISerializationContext context, RateLimit semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -509,22 +571,10 @@ public class AppSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     ReqPort returns ReqPort
 	 *
 	 * Constraint:
-	 *     (name=ID req_type=[Message|FQN] rep_type=[Message|FQN])
+	 *     (name=ID req_type=[Message|FQN] rep_type=[Message|FQN] deadline=Deadline? ratelimit=RateLimit?)
 	 */
 	protected void sequence_ReqPort(ISerializationContext context, ReqPort semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, AppPackage.Literals.PORT__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AppPackage.Literals.PORT__NAME));
-			if (transientValues.isValueTransient(semanticObject, AppPackage.Literals.REQ_PORT__REQ_TYPE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AppPackage.Literals.REQ_PORT__REQ_TYPE));
-			if (transientValues.isValueTransient(semanticObject, AppPackage.Literals.REQ_PORT__REP_TYPE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AppPackage.Literals.REQ_PORT__REP_TYPE));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getReqPortAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());
-		feeder.accept(grammarAccess.getReqPortAccess().getReq_typeMessageFQNParserRuleCall_4_0_1(), semanticObject.getReq_type());
-		feeder.accept(grammarAccess.getReqPortAccess().getRep_typeMessageFQNParserRuleCall_6_0_1(), semanticObject.getRep_type());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -551,22 +601,10 @@ public class AppSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     SrvPort returns SrvPort
 	 *
 	 * Constraint:
-	 *     (name=ID req_type=[Message|FQN] rep_type=[Message|FQN])
+	 *     (name=ID req_type=[Message|FQN] rep_type=[Message|FQN] ratelimit=RateLimit?)
 	 */
 	protected void sequence_SrvPort(ISerializationContext context, SrvPort semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, AppPackage.Literals.PORT__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AppPackage.Literals.PORT__NAME));
-			if (transientValues.isValueTransient(semanticObject, AppPackage.Literals.SRV_PORT__REQ_TYPE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AppPackage.Literals.SRV_PORT__REQ_TYPE));
-			if (transientValues.isValueTransient(semanticObject, AppPackage.Literals.SRV_PORT__REP_TYPE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AppPackage.Literals.SRV_PORT__REP_TYPE));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getSrvPortAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());
-		feeder.accept(grammarAccess.getSrvPortAccess().getReq_typeMessageFQNParserRuleCall_4_0_1(), semanticObject.getReq_type());
-		feeder.accept(grammarAccess.getSrvPortAccess().getRep_typeMessageFQNParserRuleCall_6_0_1(), semanticObject.getRep_type());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -595,19 +633,10 @@ public class AppSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     SubPort returns SubPort
 	 *
 	 * Constraint:
-	 *     (name=ID type=[Message|FQN])
+	 *     (name=ID type=[Message|FQN] ratelimit=RateLimit?)
 	 */
 	protected void sequence_SubPort(ISerializationContext context, SubPort semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, AppPackage.Literals.PORT__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AppPackage.Literals.PORT__NAME));
-			if (transientValues.isValueTransient(semanticObject, AppPackage.Literals.SUB_PORT__TYPE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AppPackage.Literals.SUB_PORT__TYPE));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getSubPortAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());
-		feeder.accept(grammarAccess.getSubPortAccess().getTypeMessageFQNParserRuleCall_3_0_1(), semanticObject.getType());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	

@@ -39,6 +39,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link edu.vanderbilt.riaps.app.impl.ActorImpl#getFormals <em>Formals</em>}</li>
  *   <li>{@link edu.vanderbilt.riaps.app.impl.ActorImpl#getLocals <em>Locals</em>}</li>
  *   <li>{@link edu.vanderbilt.riaps.app.impl.ActorImpl#getInternals <em>Internals</em>}</li>
+ *   <li>{@link edu.vanderbilt.riaps.app.impl.ActorImpl#getCriticals <em>Criticals</em>}</li>
  *   <li>{@link edu.vanderbilt.riaps.app.impl.ActorImpl#getCompsection <em>Compsection</em>}</li>
  *   <li>{@link edu.vanderbilt.riaps.app.impl.ActorImpl#getWires <em>Wires</em>}</li>
  * </ul>
@@ -96,6 +97,16 @@ public class ActorImpl extends MinimalEObjectImpl.Container implements Actor
    * @ordered
    */
   protected EList<Message> internals;
+
+  /**
+   * The cached value of the '{@link #getCriticals() <em>Criticals</em>}' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getCriticals()
+   * @generated
+   * @ordered
+   */
+  protected EList<Message> criticals;
 
   /**
    * The cached value of the '{@link #getCompsection() <em>Compsection</em>}' containment reference.
@@ -208,6 +219,20 @@ public class ActorImpl extends MinimalEObjectImpl.Container implements Actor
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Message> getCriticals()
+  {
+    if (criticals == null)
+    {
+      criticals = new EObjectResolvingEList<Message>(Message.class, this, AppPackage.ACTOR__CRITICALS);
+    }
+    return criticals;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public InstanceSection getCompsection()
   {
     return compsection;
@@ -303,6 +328,8 @@ public class ActorImpl extends MinimalEObjectImpl.Container implements Actor
         return getLocals();
       case AppPackage.ACTOR__INTERNALS:
         return getInternals();
+      case AppPackage.ACTOR__CRITICALS:
+        return getCriticals();
       case AppPackage.ACTOR__COMPSECTION:
         return getCompsection();
       case AppPackage.ACTOR__WIRES:
@@ -337,6 +364,10 @@ public class ActorImpl extends MinimalEObjectImpl.Container implements Actor
         getInternals().clear();
         getInternals().addAll((Collection<? extends Message>)newValue);
         return;
+      case AppPackage.ACTOR__CRITICALS:
+        getCriticals().clear();
+        getCriticals().addAll((Collection<? extends Message>)newValue);
+        return;
       case AppPackage.ACTOR__COMPSECTION:
         setCompsection((InstanceSection)newValue);
         return;
@@ -370,6 +401,9 @@ public class ActorImpl extends MinimalEObjectImpl.Container implements Actor
       case AppPackage.ACTOR__INTERNALS:
         getInternals().clear();
         return;
+      case AppPackage.ACTOR__CRITICALS:
+        getCriticals().clear();
+        return;
       case AppPackage.ACTOR__COMPSECTION:
         setCompsection((InstanceSection)null);
         return;
@@ -398,6 +432,8 @@ public class ActorImpl extends MinimalEObjectImpl.Container implements Actor
         return locals != null && !locals.isEmpty();
       case AppPackage.ACTOR__INTERNALS:
         return internals != null && !internals.isEmpty();
+      case AppPackage.ACTOR__CRITICALS:
+        return criticals != null && !criticals.isEmpty();
       case AppPackage.ACTOR__COMPSECTION:
         return compsection != null;
       case AppPackage.ACTOR__WIRES:

@@ -134,6 +134,29 @@ public class AppSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case AppPackage.DEPLOYMENT_CONSTRAINT:
+      {
+        DeploymentConstraint deploymentConstraint = (DeploymentConstraint)theEObject;
+        T result = caseDeploymentConstraint(deploymentConstraint);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AppPackage.COLLOCATE_CONSTRAINT:
+      {
+        CollocateConstraint collocateConstraint = (CollocateConstraint)theEObject;
+        T result = caseCollocateConstraint(collocateConstraint);
+        if (result == null) result = caseDeploymentConstraint(collocateConstraint);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AppPackage.DISTRIBUTE_CONSTRAINT:
+      {
+        DistributeConstraint distributeConstraint = (DistributeConstraint)theEObject;
+        T result = caseDistributeConstraint(distributeConstraint);
+        if (result == null) result = caseDeploymentConstraint(distributeConstraint);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case AppPackage.IMPORT:
       {
         Import import_ = (Import)theEObject;
@@ -207,6 +230,13 @@ public class AppSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case AppPackage.RATE_LIMIT:
+      {
+        RateLimit rateLimit = (RateLimit)theEObject;
+        T result = caseRateLimit(rateLimit);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case AppPackage.PUB_PORT:
       {
         PubPort pubPort = (PubPort)theEObject;
@@ -220,6 +250,13 @@ public class AppSwitch<T> extends Switch<T>
         SubPort subPort = (SubPort)theEObject;
         T result = caseSubPort(subPort);
         if (result == null) result = casePort(subPort);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AppPackage.DEADLINE:
+      {
+        Deadline deadline = (Deadline)theEObject;
+        T result = caseDeadline(deadline);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -467,6 +504,54 @@ public class AppSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Deployment Constraint</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Deployment Constraint</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseDeploymentConstraint(DeploymentConstraint object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Collocate Constraint</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Collocate Constraint</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseCollocateConstraint(CollocateConstraint object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Distribute Constraint</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Distribute Constraint</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseDistributeConstraint(DistributeConstraint object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Import</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -627,6 +712,22 @@ public class AppSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Rate Limit</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Rate Limit</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseRateLimit(RateLimit object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Pub Port</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -654,6 +755,22 @@ public class AppSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseSubPort(SubPort object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Deadline</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Deadline</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseDeadline(Deadline object)
   {
     return null;
   }
