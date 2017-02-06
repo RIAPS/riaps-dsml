@@ -28,12 +28,15 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="deploymentConstraints"
         upperBound="-1" eType="#//DeploymentConstraint" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="DeploymentConstraint">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="actors" unique="false"
+  <eClassifiers xsi:type="ecore:EClass" name="DeploymentConstraint"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CollocateConstraint" eSuperTypes="#//DeploymentConstraint">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="actorcollocatelist" unique="false"
         upperBound="-1" eType="#//Actor"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CollocateConstraint" eSuperTypes="#//DeploymentConstraint"/>
-  <eClassifiers xsi:type="ecore:EClass" name="DistributeConstraint" eSuperTypes="#//DeploymentConstraint"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DistributeConstraint" eSuperTypes="#//DeploymentConstraint">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="actordistributelist" unique="false"
+        upperBound="-1" eType="#//Actor"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Import">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="importedNamespace" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>

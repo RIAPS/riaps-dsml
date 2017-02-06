@@ -66,12 +66,12 @@ DeploymentConstraint:
 ;
 
 CollocateConstraint:
-	'collocate' actorcollocatelist+=[Actor|FQN] (','  actorcollocatelist+=[Actor|FQN])* (';'?)
+	'collocate' actorcollocatelist+=[Actor|FQN] ','  actorcollocatelist+=[Actor|FQN] (','  actorcollocatelist+=[Actor|FQN])* (';'?)
 ;
 
 
 DistributeConstraint:
-	'distribute' actordistributelist+=[Actor|FQN] (','  actordistributelist+=[Actor|FQN])* (';'?)
+	'distribute' actordistributelist+=[Actor|FQN] ','  actordistributelist+=[Actor|FQN] (','  actordistributelist+=[Actor|FQN])* (';'?)
 ;
 
 Import:

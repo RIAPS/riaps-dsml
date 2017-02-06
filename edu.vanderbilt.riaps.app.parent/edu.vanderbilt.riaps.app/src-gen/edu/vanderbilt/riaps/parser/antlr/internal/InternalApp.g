@@ -729,7 +729,27 @@ ruleCollocateConstraint returns [EObject current=null]
 					}
 				}
 				{
-					newCompositeNode(grammarAccess.getCollocateConstraintAccess().getActorsActorCrossReference_1_0());
+					newCompositeNode(grammarAccess.getCollocateConstraintAccess().getActorcollocatelistActorCrossReference_1_0());
+				}
+				ruleFQN
+				{
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		otherlv_2=','
+		{
+			newLeafNode(otherlv_2, grammarAccess.getCollocateConstraintAccess().getCommaKeyword_2());
+		}
+		(
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getCollocateConstraintRule());
+					}
+				}
+				{
+					newCompositeNode(grammarAccess.getCollocateConstraintAccess().getActorcollocatelistActorCrossReference_3_0());
 				}
 				ruleFQN
 				{
@@ -738,9 +758,9 @@ ruleCollocateConstraint returns [EObject current=null]
 			)
 		)
 		(
-			otherlv_2=','
+			otherlv_4=','
 			{
-				newLeafNode(otherlv_2, grammarAccess.getCollocateConstraintAccess().getCommaKeyword_2_0());
+				newLeafNode(otherlv_4, grammarAccess.getCollocateConstraintAccess().getCommaKeyword_4_0());
 			}
 			(
 				(
@@ -750,7 +770,7 @@ ruleCollocateConstraint returns [EObject current=null]
 						}
 					}
 					{
-						newCompositeNode(grammarAccess.getCollocateConstraintAccess().getActorsActorCrossReference_2_1_0());
+						newCompositeNode(grammarAccess.getCollocateConstraintAccess().getActorcollocatelistActorCrossReference_4_1_0());
 					}
 					ruleFQN
 					{
@@ -760,9 +780,9 @@ ruleCollocateConstraint returns [EObject current=null]
 			)
 		)*
 		(
-			otherlv_4=';'
+			otherlv_6=';'
 			{
-				newLeafNode(otherlv_4, grammarAccess.getCollocateConstraintAccess().getSemicolonKeyword_3());
+				newLeafNode(otherlv_6, grammarAccess.getCollocateConstraintAccess().getSemicolonKeyword_5());
 			}
 		)?
 	)
@@ -796,7 +816,27 @@ ruleDistributeConstraint returns [EObject current=null]
 					}
 				}
 				{
-					newCompositeNode(grammarAccess.getDistributeConstraintAccess().getActorsActorCrossReference_1_0());
+					newCompositeNode(grammarAccess.getDistributeConstraintAccess().getActordistributelistActorCrossReference_1_0());
+				}
+				ruleFQN
+				{
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		otherlv_2=','
+		{
+			newLeafNode(otherlv_2, grammarAccess.getDistributeConstraintAccess().getCommaKeyword_2());
+		}
+		(
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getDistributeConstraintRule());
+					}
+				}
+				{
+					newCompositeNode(grammarAccess.getDistributeConstraintAccess().getActordistributelistActorCrossReference_3_0());
 				}
 				ruleFQN
 				{
@@ -805,9 +845,9 @@ ruleDistributeConstraint returns [EObject current=null]
 			)
 		)
 		(
-			otherlv_2=','
+			otherlv_4=','
 			{
-				newLeafNode(otherlv_2, grammarAccess.getDistributeConstraintAccess().getCommaKeyword_2_0());
+				newLeafNode(otherlv_4, grammarAccess.getDistributeConstraintAccess().getCommaKeyword_4_0());
 			}
 			(
 				(
@@ -817,7 +857,7 @@ ruleDistributeConstraint returns [EObject current=null]
 						}
 					}
 					{
-						newCompositeNode(grammarAccess.getDistributeConstraintAccess().getActorsActorCrossReference_2_1_0());
+						newCompositeNode(grammarAccess.getDistributeConstraintAccess().getActordistributelistActorCrossReference_4_1_0());
 					}
 					ruleFQN
 					{
@@ -827,9 +867,9 @@ ruleDistributeConstraint returns [EObject current=null]
 			)
 		)*
 		(
-			otherlv_4=';'
+			otherlv_6=';'
 			{
-				newLeafNode(otherlv_4, grammarAccess.getDistributeConstraintAccess().getSemicolonKeyword_3());
+				newLeafNode(otherlv_6, grammarAccess.getDistributeConstraintAccess().getSemicolonKeyword_5());
 			}
 		)?
 	)

@@ -12,29 +12,80 @@ import edu.vanderbilt.riaps.system.Model
 import edu.vanderbilt.riaps.system.NodeType
 import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.IFormattableDocument
+import edu.vanderbilt.riaps.system.AppDeployment
+import edu.vanderbilt.riaps.system.KnownNodes
+import edu.vanderbilt.riaps.system.NetworkInterface
+import edu.vanderbilt.riaps.system.ActorDeployment
 
 class SystemFormatter extends AbstractFormatter2 {
-	
+
 	@Inject extension SystemGrammarAccess
 
 	def dispatch void format(Model model, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 		for (Import imports : model.getImports()) {
 			imports.format;
+			imports.prepend[noSpace; newLine].append[noSpace; newLine]
 		}
-		for (Collection collections : model.getCollections()) {
-			collections.format;
+		model.prepend[noSpace].append[noSpace; newLine]
+
+		for (collection : model.getCollections()) {
+			if (collection instanceof NodeType)
+				(collection as NodeType).format
+			if (collection instanceof KnownNodes)
+				(collection as KnownNodes).format
+			if (collection instanceof AppDeployment)
+				(collection as AppDeployment).format
 		}
 	}
 
 	def dispatch void format(NodeType nodeType, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+		val open = nodeType.regionFor.keyword("{").prepend[noSpace; newLine].append[noSpace; newLine]
+		val close = nodeType.regionFor.keyword("}").prepend[noSpace; newLine].append[noSpace; newLine]
+		interior(open, close)[indent]
+
 		for (DeviceSupported deviceSupport : nodeType.getDeviceSupport()) {
 			deviceSupport.format;
+			deviceSupport.prepend[noSpace; newLine].append[noSpace; newLine]
+		}
+		nodeType.getMemory.format;
+		nodeType.getMemory.prepend[noSpace; newLine].append[noSpace; newLine]
+		nodeType.getStorage.format;
+		nodeType.getStorage.prepend[noSpace; newLine].append[noSpace; newLine]
+	}
+
+	def dispatch void format(KnownNodes nodeType, extension IFormattableDocument document) {
+		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+		val open = nodeType.regionFor.keyword("{").prepend[noSpace; newLine].append[noSpace; newLine]
+		val close = nodeType.regionFor.keyword("}").prepend[noSpace; newLine].append[noSpace; newLine]
+		interior(open, close)[indent]
+
+		for (DeviceSupported deviceSupport : nodeType.getDeviceSupport()) {
+			deviceSupport.format;
+			deviceSupport.prepend[noSpace; newLine].append[noSpace; newLine]
 		}
 		nodeType.getMemory.format;
 		nodeType.getStorage.format;
+		nodeType.getMemory.prepend[noSpace; newLine].append[noSpace; newLine]
+		nodeType.getStorage.prepend[noSpace; newLine].append[noSpace; newLine]
+		for (NetworkInterface net : nodeType.netinterface) {
+			net.format;
+			net.prepend[noSpace; newLine].append[noSpace; newLine]
+		}
 	}
-	
-	// TODO: implement for MemoryProvision, StorageProvision, KnownNodes, NetworkInterface, AppDeployment, ActorDeployment, ActorAssignment, ActorFormalAssignment, ActualValue
+
+	def dispatch void format(AppDeployment app, extension IFormattableDocument document) {
+		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+		val open = app.regionFor.keyword("{").prepend[noSpace; newLine].append[noSpace; newLine]
+		val close = app.regionFor.keyword("}").prepend[noSpace; newLine].append[noSpace; newLine]
+		interior(open, close)[indent]
+
+		for (ActorDeployment actor : app.actorDeployments) {
+			actor.format;
+			actor.prepend[noSpace; newLine].append[noSpace; newLine]
+		}
+	}
+
+// TODO: implement for MemoryProvision, StorageProvision, KnownNodes, AppDeployment, ActorDeployment, ActorAssignment, ActorFormalAssignment, ActualValue
 }

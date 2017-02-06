@@ -329,7 +329,7 @@ public class AppSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     CollocateConstraint returns CollocateConstraint
 	 *
 	 * Constraint:
-	 *     (actors+=[Actor|FQN] actors+=[Actor|FQN]*)
+	 *     (actorcollocatelist+=[Actor|FQN] actorcollocatelist+=[Actor|FQN] actorcollocatelist+=[Actor|FQN]*)
 	 */
 	protected void sequence_CollocateConstraint(ISerializationContext context, CollocateConstraint semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -410,7 +410,7 @@ public class AppSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     DistributeConstraint returns DistributeConstraint
 	 *
 	 * Constraint:
-	 *     (actors+=[Actor|FQN] actors+=[Actor|FQN]*)
+	 *     (actordistributelist+=[Actor|FQN] actordistributelist+=[Actor|FQN] actordistributelist+=[Actor|FQN]*)
 	 */
 	protected void sequence_DistributeConstraint(ISerializationContext context, DistributeConstraint semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

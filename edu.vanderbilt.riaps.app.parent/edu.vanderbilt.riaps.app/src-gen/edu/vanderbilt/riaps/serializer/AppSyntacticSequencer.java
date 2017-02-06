@@ -25,8 +25,8 @@ public class AppSyntacticSequencer extends AbstractSyntacticSequencer {
 	protected AbstractElementAlias match_Actor_SemicolonKeyword_4_2_3_q;
 	protected AbstractElementAlias match_Artifact_SemicolonKeyword_4_q;
 	protected AbstractElementAlias match_ClntPort_SemicolonKeyword_10_q;
-	protected AbstractElementAlias match_CollocateConstraint_SemicolonKeyword_3_q;
-	protected AbstractElementAlias match_DistributeConstraint_SemicolonKeyword_3_q;
+	protected AbstractElementAlias match_CollocateConstraint_SemicolonKeyword_5_q;
+	protected AbstractElementAlias match_DistributeConstraint_SemicolonKeyword_5_q;
 	protected AbstractElementAlias match_InsPort_SemicolonKeyword_3_q;
 	protected AbstractElementAlias match_Instance_SemicolonKeyword_4_q;
 	protected AbstractElementAlias match_Message_SemicolonKeyword_5_q;
@@ -46,8 +46,8 @@ public class AppSyntacticSequencer extends AbstractSyntacticSequencer {
 		match_Actor_SemicolonKeyword_4_2_3_q = new TokenAlias(false, true, grammarAccess.getActorAccess().getSemicolonKeyword_4_2_3());
 		match_Artifact_SemicolonKeyword_4_q = new TokenAlias(false, true, grammarAccess.getArtifactAccess().getSemicolonKeyword_4());
 		match_ClntPort_SemicolonKeyword_10_q = new TokenAlias(false, true, grammarAccess.getClntPortAccess().getSemicolonKeyword_10());
-		match_CollocateConstraint_SemicolonKeyword_3_q = new TokenAlias(false, true, grammarAccess.getCollocateConstraintAccess().getSemicolonKeyword_3());
-		match_DistributeConstraint_SemicolonKeyword_3_q = new TokenAlias(false, true, grammarAccess.getDistributeConstraintAccess().getSemicolonKeyword_3());
+		match_CollocateConstraint_SemicolonKeyword_5_q = new TokenAlias(false, true, grammarAccess.getCollocateConstraintAccess().getSemicolonKeyword_5());
+		match_DistributeConstraint_SemicolonKeyword_5_q = new TokenAlias(false, true, grammarAccess.getDistributeConstraintAccess().getSemicolonKeyword_5());
 		match_InsPort_SemicolonKeyword_3_q = new TokenAlias(false, true, grammarAccess.getInsPortAccess().getSemicolonKeyword_3());
 		match_Instance_SemicolonKeyword_4_q = new TokenAlias(false, true, grammarAccess.getInstanceAccess().getSemicolonKeyword_4());
 		match_Message_SemicolonKeyword_5_q = new TokenAlias(false, true, grammarAccess.getMessageAccess().getSemicolonKeyword_5());
@@ -82,10 +82,10 @@ public class AppSyntacticSequencer extends AbstractSyntacticSequencer {
 				emit_Artifact_SemicolonKeyword_4_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ClntPort_SemicolonKeyword_10_q.equals(syntax))
 				emit_ClntPort_SemicolonKeyword_10_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_CollocateConstraint_SemicolonKeyword_3_q.equals(syntax))
-				emit_CollocateConstraint_SemicolonKeyword_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_DistributeConstraint_SemicolonKeyword_3_q.equals(syntax))
-				emit_DistributeConstraint_SemicolonKeyword_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_CollocateConstraint_SemicolonKeyword_5_q.equals(syntax))
+				emit_CollocateConstraint_SemicolonKeyword_5_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_DistributeConstraint_SemicolonKeyword_5_q.equals(syntax))
+				emit_DistributeConstraint_SemicolonKeyword_5_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_InsPort_SemicolonKeyword_3_q.equals(syntax))
 				emit_InsPort_SemicolonKeyword_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Instance_SemicolonKeyword_4_q.equals(syntax))
@@ -181,9 +181,9 @@ public class AppSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     ';'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     actors+=[Actor|FQN] (ambiguity) (rule end)
+	 *     actorcollocatelist+=[Actor|FQN] (ambiguity) (rule end)
 	 */
-	protected void emit_CollocateConstraint_SemicolonKeyword_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_CollocateConstraint_SemicolonKeyword_5_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -192,9 +192,9 @@ public class AppSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     ';'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     actors+=[Actor|FQN] (ambiguity) (rule end)
+	 *     actordistributelist+=[Actor|FQN] (ambiguity) (rule end)
 	 */
-	protected void emit_DistributeConstraint_SemicolonKeyword_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_DistributeConstraint_SemicolonKeyword_5_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

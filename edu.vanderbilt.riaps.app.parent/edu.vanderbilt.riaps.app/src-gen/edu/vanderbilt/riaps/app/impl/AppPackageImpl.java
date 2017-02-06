@@ -594,16 +594,6 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getDeploymentConstraint_Actors()
-  {
-    return (EReference)deploymentConstraintEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getCollocateConstraint()
   {
     return collocateConstraintEClass;
@@ -614,9 +604,29 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getCollocateConstraint_Actorcollocatelist()
+  {
+    return (EReference)collocateConstraintEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getDistributeConstraint()
   {
     return distributeConstraintEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getDistributeConstraint_Actordistributelist()
+  {
+    return (EReference)distributeConstraintEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1785,11 +1795,12 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
     createEReference(applicationEClass, APPLICATION__DEPLOYMENT_CONSTRAINTS);
 
     deploymentConstraintEClass = createEClass(DEPLOYMENT_CONSTRAINT);
-    createEReference(deploymentConstraintEClass, DEPLOYMENT_CONSTRAINT__ACTORS);
 
     collocateConstraintEClass = createEClass(COLLOCATE_CONSTRAINT);
+    createEReference(collocateConstraintEClass, COLLOCATE_CONSTRAINT__ACTORCOLLOCATELIST);
 
     distributeConstraintEClass = createEClass(DISTRIBUTE_CONSTRAINT);
+    createEReference(distributeConstraintEClass, DISTRIBUTE_CONSTRAINT__ACTORDISTRIBUTELIST);
 
     importEClass = createEClass(IMPORT);
     createEAttribute(importEClass, IMPORT__IMPORTED_NAMESPACE);
@@ -2010,11 +2021,12 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
     initEReference(getApplication_DeploymentConstraints(), this.getDeploymentConstraint(), null, "deploymentConstraints", null, 0, -1, Application.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(deploymentConstraintEClass, DeploymentConstraint.class, "DeploymentConstraint", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getDeploymentConstraint_Actors(), this.getActor(), null, "actors", null, 0, -1, DeploymentConstraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(collocateConstraintEClass, CollocateConstraint.class, "CollocateConstraint", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getCollocateConstraint_Actorcollocatelist(), this.getActor(), null, "actorcollocatelist", null, 0, -1, CollocateConstraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(distributeConstraintEClass, DistributeConstraint.class, "DistributeConstraint", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getDistributeConstraint_Actordistributelist(), this.getActor(), null, "actordistributelist", null, 0, -1, DistributeConstraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(importEClass, Import.class, "Import", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getImport_ImportedNamespace(), ecorePackage.getEString(), "importedNamespace", null, 0, 1, Import.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

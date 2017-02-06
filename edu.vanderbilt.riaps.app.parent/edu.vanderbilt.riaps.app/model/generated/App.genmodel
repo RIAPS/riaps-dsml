@@ -27,11 +27,13 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference App.ecore#//Application/messages"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference App.ecore#//Application/deploymentConstraints"/>
     </genClasses>
-    <genClasses ecoreClass="App.ecore#//DeploymentConstraint">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference App.ecore#//DeploymentConstraint/actors"/>
+    <genClasses ecoreClass="App.ecore#//DeploymentConstraint"/>
+    <genClasses ecoreClass="App.ecore#//CollocateConstraint">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference App.ecore#//CollocateConstraint/actorcollocatelist"/>
     </genClasses>
-    <genClasses ecoreClass="App.ecore#//CollocateConstraint"/>
-    <genClasses ecoreClass="App.ecore#//DistributeConstraint"/>
+    <genClasses ecoreClass="App.ecore#//DistributeConstraint">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference App.ecore#//DistributeConstraint/actordistributelist"/>
+    </genClasses>
     <genClasses ecoreClass="App.ecore#//Import">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute App.ecore#//Import/importedNamespace"/>
     </genClasses>

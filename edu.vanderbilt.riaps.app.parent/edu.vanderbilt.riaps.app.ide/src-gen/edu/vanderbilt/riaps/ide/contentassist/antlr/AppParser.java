@@ -61,9 +61,9 @@ public class AppParser extends AbstractContentAssistParser {
 					put(grammarAccess.getApplicationAccess().getGroup(), "rule__Application__Group__0");
 					put(grammarAccess.getApplicationAccess().getGroup_3(), "rule__Application__Group_3__0");
 					put(grammarAccess.getCollocateConstraintAccess().getGroup(), "rule__CollocateConstraint__Group__0");
-					put(grammarAccess.getCollocateConstraintAccess().getGroup_2(), "rule__CollocateConstraint__Group_2__0");
+					put(grammarAccess.getCollocateConstraintAccess().getGroup_4(), "rule__CollocateConstraint__Group_4__0");
 					put(grammarAccess.getDistributeConstraintAccess().getGroup(), "rule__DistributeConstraint__Group__0");
-					put(grammarAccess.getDistributeConstraintAccess().getGroup_2(), "rule__DistributeConstraint__Group_2__0");
+					put(grammarAccess.getDistributeConstraintAccess().getGroup_4(), "rule__DistributeConstraint__Group_4__0");
 					put(grammarAccess.getImportAccess().getGroup(), "rule__Import__Group__0");
 					put(grammarAccess.getImportedFQNAccess().getGroup(), "rule__ImportedFQN__Group__0");
 					put(grammarAccess.getImportedFQNAccess().getGroup_1(), "rule__ImportedFQN__Group_1__0");
@@ -130,10 +130,12 @@ public class AppParser extends AbstractContentAssistParser {
 					put(grammarAccess.getApplicationAccess().getComponentsAssignment_5_2(), "rule__Application__ComponentsAssignment_5_2");
 					put(grammarAccess.getApplicationAccess().getMessagesAssignment_5_3(), "rule__Application__MessagesAssignment_5_3");
 					put(grammarAccess.getApplicationAccess().getDeploymentConstraintsAssignment_6(), "rule__Application__DeploymentConstraintsAssignment_6");
-					put(grammarAccess.getCollocateConstraintAccess().getActorsAssignment_1(), "rule__CollocateConstraint__ActorsAssignment_1");
-					put(grammarAccess.getCollocateConstraintAccess().getActorsAssignment_2_1(), "rule__CollocateConstraint__ActorsAssignment_2_1");
-					put(grammarAccess.getDistributeConstraintAccess().getActorsAssignment_1(), "rule__DistributeConstraint__ActorsAssignment_1");
-					put(grammarAccess.getDistributeConstraintAccess().getActorsAssignment_2_1(), "rule__DistributeConstraint__ActorsAssignment_2_1");
+					put(grammarAccess.getCollocateConstraintAccess().getActorcollocatelistAssignment_1(), "rule__CollocateConstraint__ActorcollocatelistAssignment_1");
+					put(grammarAccess.getCollocateConstraintAccess().getActorcollocatelistAssignment_3(), "rule__CollocateConstraint__ActorcollocatelistAssignment_3");
+					put(grammarAccess.getCollocateConstraintAccess().getActorcollocatelistAssignment_4_1(), "rule__CollocateConstraint__ActorcollocatelistAssignment_4_1");
+					put(grammarAccess.getDistributeConstraintAccess().getActordistributelistAssignment_1(), "rule__DistributeConstraint__ActordistributelistAssignment_1");
+					put(grammarAccess.getDistributeConstraintAccess().getActordistributelistAssignment_3(), "rule__DistributeConstraint__ActordistributelistAssignment_3");
+					put(grammarAccess.getDistributeConstraintAccess().getActordistributelistAssignment_4_1(), "rule__DistributeConstraint__ActordistributelistAssignment_4_1");
 					put(grammarAccess.getImportAccess().getImportedNamespaceAssignment_1(), "rule__Import__ImportedNamespaceAssignment_1");
 					put(grammarAccess.getMessageCollectionAccess().getNameAssignment_2(), "rule__MessageCollection__NameAssignment_2");
 					put(grammarAccess.getMessageCollectionAccess().getMessagesAssignment_4(), "rule__MessageCollection__MessagesAssignment_4");

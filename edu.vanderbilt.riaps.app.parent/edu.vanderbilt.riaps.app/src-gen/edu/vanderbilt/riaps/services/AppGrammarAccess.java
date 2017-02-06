@@ -383,103 +383,139 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "edu.vanderbilt.riaps.App.CollocateConstraint");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cCollocateKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cActorsAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final CrossReference cActorsActorCrossReference_1_0 = (CrossReference)cActorsAssignment_1.eContents().get(0);
-		private final RuleCall cActorsActorFQNParserRuleCall_1_0_1 = (RuleCall)cActorsActorCrossReference_1_0.eContents().get(1);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cCommaKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cActorsAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final CrossReference cActorsActorCrossReference_2_1_0 = (CrossReference)cActorsAssignment_2_1.eContents().get(0);
-		private final RuleCall cActorsActorFQNParserRuleCall_2_1_0_1 = (RuleCall)cActorsActorCrossReference_2_1_0.eContents().get(1);
-		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cActorcollocatelistAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cActorcollocatelistActorCrossReference_1_0 = (CrossReference)cActorcollocatelistAssignment_1.eContents().get(0);
+		private final RuleCall cActorcollocatelistActorFQNParserRuleCall_1_0_1 = (RuleCall)cActorcollocatelistActorCrossReference_1_0.eContents().get(1);
+		private final Keyword cCommaKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cActorcollocatelistAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final CrossReference cActorcollocatelistActorCrossReference_3_0 = (CrossReference)cActorcollocatelistAssignment_3.eContents().get(0);
+		private final RuleCall cActorcollocatelistActorFQNParserRuleCall_3_0_1 = (RuleCall)cActorcollocatelistActorCrossReference_3_0.eContents().get(1);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cCommaKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cActorcollocatelistAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final CrossReference cActorcollocatelistActorCrossReference_4_1_0 = (CrossReference)cActorcollocatelistAssignment_4_1.eContents().get(0);
+		private final RuleCall cActorcollocatelistActorFQNParserRuleCall_4_1_0_1 = (RuleCall)cActorcollocatelistActorCrossReference_4_1_0.eContents().get(1);
+		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//CollocateConstraint:
-		//	'collocate' actors+=[Actor|FQN] (',' actors+=[Actor|FQN])* ';'?;
+		//	'collocate' actorcollocatelist+=[Actor|FQN] ',' actorcollocatelist+=[Actor|FQN] (','
+		//	actorcollocatelist+=[Actor|FQN])* ';'?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'collocate' actors+=[Actor|FQN] (',' actors+=[Actor|FQN])* ';'?
+		//'collocate' actorcollocatelist+=[Actor|FQN] ',' actorcollocatelist+=[Actor|FQN] (',' actorcollocatelist+=[Actor|FQN])*
+		//';'?
 		public Group getGroup() { return cGroup; }
 		
 		//'collocate'
 		public Keyword getCollocateKeyword_0() { return cCollocateKeyword_0; }
 		
-		//actors+=[Actor|FQN]
-		public Assignment getActorsAssignment_1() { return cActorsAssignment_1; }
+		//actorcollocatelist+=[Actor|FQN]
+		public Assignment getActorcollocatelistAssignment_1() { return cActorcollocatelistAssignment_1; }
 		
 		//[Actor|FQN]
-		public CrossReference getActorsActorCrossReference_1_0() { return cActorsActorCrossReference_1_0; }
+		public CrossReference getActorcollocatelistActorCrossReference_1_0() { return cActorcollocatelistActorCrossReference_1_0; }
 		
 		//FQN
-		public RuleCall getActorsActorFQNParserRuleCall_1_0_1() { return cActorsActorFQNParserRuleCall_1_0_1; }
-		
-		//(',' actors+=[Actor|FQN])*
-		public Group getGroup_2() { return cGroup_2; }
+		public RuleCall getActorcollocatelistActorFQNParserRuleCall_1_0_1() { return cActorcollocatelistActorFQNParserRuleCall_1_0_1; }
 		
 		//','
-		public Keyword getCommaKeyword_2_0() { return cCommaKeyword_2_0; }
+		public Keyword getCommaKeyword_2() { return cCommaKeyword_2; }
 		
-		//actors+=[Actor|FQN]
-		public Assignment getActorsAssignment_2_1() { return cActorsAssignment_2_1; }
+		//actorcollocatelist+=[Actor|FQN]
+		public Assignment getActorcollocatelistAssignment_3() { return cActorcollocatelistAssignment_3; }
 		
 		//[Actor|FQN]
-		public CrossReference getActorsActorCrossReference_2_1_0() { return cActorsActorCrossReference_2_1_0; }
+		public CrossReference getActorcollocatelistActorCrossReference_3_0() { return cActorcollocatelistActorCrossReference_3_0; }
 		
 		//FQN
-		public RuleCall getActorsActorFQNParserRuleCall_2_1_0_1() { return cActorsActorFQNParserRuleCall_2_1_0_1; }
+		public RuleCall getActorcollocatelistActorFQNParserRuleCall_3_0_1() { return cActorcollocatelistActorFQNParserRuleCall_3_0_1; }
+		
+		//(',' actorcollocatelist+=[Actor|FQN])*
+		public Group getGroup_4() { return cGroup_4; }
+		
+		//','
+		public Keyword getCommaKeyword_4_0() { return cCommaKeyword_4_0; }
+		
+		//actorcollocatelist+=[Actor|FQN]
+		public Assignment getActorcollocatelistAssignment_4_1() { return cActorcollocatelistAssignment_4_1; }
+		
+		//[Actor|FQN]
+		public CrossReference getActorcollocatelistActorCrossReference_4_1_0() { return cActorcollocatelistActorCrossReference_4_1_0; }
+		
+		//FQN
+		public RuleCall getActorcollocatelistActorFQNParserRuleCall_4_1_0_1() { return cActorcollocatelistActorFQNParserRuleCall_4_1_0_1; }
 		
 		//';'?
-		public Keyword getSemicolonKeyword_3() { return cSemicolonKeyword_3; }
+		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
 	}
 	public class DistributeConstraintElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "edu.vanderbilt.riaps.App.DistributeConstraint");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cDistributeKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cActorsAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final CrossReference cActorsActorCrossReference_1_0 = (CrossReference)cActorsAssignment_1.eContents().get(0);
-		private final RuleCall cActorsActorFQNParserRuleCall_1_0_1 = (RuleCall)cActorsActorCrossReference_1_0.eContents().get(1);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cCommaKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cActorsAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final CrossReference cActorsActorCrossReference_2_1_0 = (CrossReference)cActorsAssignment_2_1.eContents().get(0);
-		private final RuleCall cActorsActorFQNParserRuleCall_2_1_0_1 = (RuleCall)cActorsActorCrossReference_2_1_0.eContents().get(1);
-		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cActordistributelistAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cActordistributelistActorCrossReference_1_0 = (CrossReference)cActordistributelistAssignment_1.eContents().get(0);
+		private final RuleCall cActordistributelistActorFQNParserRuleCall_1_0_1 = (RuleCall)cActordistributelistActorCrossReference_1_0.eContents().get(1);
+		private final Keyword cCommaKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cActordistributelistAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final CrossReference cActordistributelistActorCrossReference_3_0 = (CrossReference)cActordistributelistAssignment_3.eContents().get(0);
+		private final RuleCall cActordistributelistActorFQNParserRuleCall_3_0_1 = (RuleCall)cActordistributelistActorCrossReference_3_0.eContents().get(1);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cCommaKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cActordistributelistAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final CrossReference cActordistributelistActorCrossReference_4_1_0 = (CrossReference)cActordistributelistAssignment_4_1.eContents().get(0);
+		private final RuleCall cActordistributelistActorFQNParserRuleCall_4_1_0_1 = (RuleCall)cActordistributelistActorCrossReference_4_1_0.eContents().get(1);
+		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//DistributeConstraint:
-		//	'distribute' actors+=[Actor|FQN] (',' actors+=[Actor|FQN])* ';'?;
+		//	'distribute' actordistributelist+=[Actor|FQN] ',' actordistributelist+=[Actor|FQN] (','
+		//	actordistributelist+=[Actor|FQN])* ';'?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'distribute' actors+=[Actor|FQN] (',' actors+=[Actor|FQN])* ';'?
+		//'distribute' actordistributelist+=[Actor|FQN] ',' actordistributelist+=[Actor|FQN] (','
+		//actordistributelist+=[Actor|FQN])* ';'?
 		public Group getGroup() { return cGroup; }
 		
 		//'distribute'
 		public Keyword getDistributeKeyword_0() { return cDistributeKeyword_0; }
 		
-		//actors+=[Actor|FQN]
-		public Assignment getActorsAssignment_1() { return cActorsAssignment_1; }
+		//actordistributelist+=[Actor|FQN]
+		public Assignment getActordistributelistAssignment_1() { return cActordistributelistAssignment_1; }
 		
 		//[Actor|FQN]
-		public CrossReference getActorsActorCrossReference_1_0() { return cActorsActorCrossReference_1_0; }
+		public CrossReference getActordistributelistActorCrossReference_1_0() { return cActordistributelistActorCrossReference_1_0; }
 		
 		//FQN
-		public RuleCall getActorsActorFQNParserRuleCall_1_0_1() { return cActorsActorFQNParserRuleCall_1_0_1; }
-		
-		//(',' actors+=[Actor|FQN])*
-		public Group getGroup_2() { return cGroup_2; }
+		public RuleCall getActordistributelistActorFQNParserRuleCall_1_0_1() { return cActordistributelistActorFQNParserRuleCall_1_0_1; }
 		
 		//','
-		public Keyword getCommaKeyword_2_0() { return cCommaKeyword_2_0; }
+		public Keyword getCommaKeyword_2() { return cCommaKeyword_2; }
 		
-		//actors+=[Actor|FQN]
-		public Assignment getActorsAssignment_2_1() { return cActorsAssignment_2_1; }
+		//actordistributelist+=[Actor|FQN]
+		public Assignment getActordistributelistAssignment_3() { return cActordistributelistAssignment_3; }
 		
 		//[Actor|FQN]
-		public CrossReference getActorsActorCrossReference_2_1_0() { return cActorsActorCrossReference_2_1_0; }
+		public CrossReference getActordistributelistActorCrossReference_3_0() { return cActordistributelistActorCrossReference_3_0; }
 		
 		//FQN
-		public RuleCall getActorsActorFQNParserRuleCall_2_1_0_1() { return cActorsActorFQNParserRuleCall_2_1_0_1; }
+		public RuleCall getActordistributelistActorFQNParserRuleCall_3_0_1() { return cActordistributelistActorFQNParserRuleCall_3_0_1; }
+		
+		//(',' actordistributelist+=[Actor|FQN])*
+		public Group getGroup_4() { return cGroup_4; }
+		
+		//','
+		public Keyword getCommaKeyword_4_0() { return cCommaKeyword_4_0; }
+		
+		//actordistributelist+=[Actor|FQN]
+		public Assignment getActordistributelistAssignment_4_1() { return cActordistributelistAssignment_4_1; }
+		
+		//[Actor|FQN]
+		public CrossReference getActordistributelistActorCrossReference_4_1_0() { return cActordistributelistActorCrossReference_4_1_0; }
+		
+		//FQN
+		public RuleCall getActordistributelistActorFQNParserRuleCall_4_1_0_1() { return cActordistributelistActorFQNParserRuleCall_4_1_0_1; }
 		
 		//';'?
-		public Keyword getSemicolonKeyword_3() { return cSemicolonKeyword_3; }
+		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
 	}
 	public class ImportElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "edu.vanderbilt.riaps.App.Import");
@@ -2573,7 +2609,8 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//CollocateConstraint:
-	//	'collocate' actors+=[Actor|FQN] (',' actors+=[Actor|FQN])* ';'?;
+	//	'collocate' actorcollocatelist+=[Actor|FQN] ',' actorcollocatelist+=[Actor|FQN] (','
+	//	actorcollocatelist+=[Actor|FQN])* ';'?;
 	public CollocateConstraintElements getCollocateConstraintAccess() {
 		return pCollocateConstraint;
 	}
@@ -2583,7 +2620,8 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//DistributeConstraint:
-	//	'distribute' actors+=[Actor|FQN] (',' actors+=[Actor|FQN])* ';'?;
+	//	'distribute' actordistributelist+=[Actor|FQN] ',' actordistributelist+=[Actor|FQN] (','
+	//	actordistributelist+=[Actor|FQN])* ';'?;
 	public DistributeConstraintElements getDistributeConstraintAccess() {
 		return pDistributeConstraint;
 	}

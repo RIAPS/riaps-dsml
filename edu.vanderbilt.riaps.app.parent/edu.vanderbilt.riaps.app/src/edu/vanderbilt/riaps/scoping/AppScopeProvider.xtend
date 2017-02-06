@@ -3,6 +3,16 @@
  */
 package edu.vanderbilt.riaps.scoping
 
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.EReference
+import edu.vanderbilt.riaps.app.CollocateConstraint
+import edu.vanderbilt.riaps.app.AppPackage
+import org.eclipse.xtext.EcoreUtil2
+import edu.vanderbilt.riaps.Console
+import edu.vanderbilt.riaps.app.Application
+import edu.vanderbilt.riaps.app.Actor
+import org.eclipse.xtext.scoping.Scopes
+import edu.vanderbilt.riaps.app.DistributeConstraint
 
 /**
  * This class contains custom scoping description.
@@ -12,4 +22,27 @@ package edu.vanderbilt.riaps.scoping
  */
 class AppScopeProvider extends AbstractAppScopeProvider {
 
-}
+	override getScope(EObject context, EReference reference) {
+		// We want to define the Scope for the Element's superElement cross-reference
+		//Console.instance.log(java.util.logging.Level.INFO, "inscope rule")
+		if ((context instanceof CollocateConstraint &&
+			reference == AppPackage.Literals.COLLOCATE_CONSTRAINT__ACTORCOLLOCATELIST) ||
+			(context instanceof DistributeConstraint &&
+				reference == AppPackage.Literals.DISTRIBUTE_CONSTRAINT__ACTORDISTRIBUTELIST) ) {
+					// Collect a list of candidates by going through the model
+					// EcoreUtil2 provides useful functionality to do that
+					// For example searching for all elements within the root Object's tree    	
+					val rootElement = context.eContainer
+					if (rootElement instanceof Application) {
+						//Console.instance.log(java.util.logging.Level.INFO, rootElement.name)
+
+						val candidates = EcoreUtil2.getAllContentsOfType(rootElement, Actor)
+						// Create IEObjectDescriptions and puts them into an IScope instance
+						return Scopes.scopeFor(candidates)
+					}
+				}
+				return super.getScope(context, reference);
+			}
+
+		}
+		

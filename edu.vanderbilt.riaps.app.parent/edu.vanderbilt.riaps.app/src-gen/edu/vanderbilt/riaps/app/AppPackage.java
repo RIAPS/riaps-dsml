@@ -346,22 +346,13 @@ public interface AppPackage extends EPackage
   int DEPLOYMENT_CONSTRAINT = 8;
 
   /**
-   * The feature id for the '<em><b>Actors</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int DEPLOYMENT_CONSTRAINT__ACTORS = 0;
-
-  /**
    * The number of structural features of the '<em>Deployment Constraint</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DEPLOYMENT_CONSTRAINT_FEATURE_COUNT = 1;
+  int DEPLOYMENT_CONSTRAINT_FEATURE_COUNT = 0;
 
   /**
    * The meta object id for the '{@link edu.vanderbilt.riaps.app.impl.CollocateConstraintImpl <em>Collocate Constraint</em>}' class.
@@ -374,13 +365,13 @@ public interface AppPackage extends EPackage
   int COLLOCATE_CONSTRAINT = 9;
 
   /**
-   * The feature id for the '<em><b>Actors</b></em>' reference list.
+   * The feature id for the '<em><b>Actorcollocatelist</b></em>' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int COLLOCATE_CONSTRAINT__ACTORS = DEPLOYMENT_CONSTRAINT__ACTORS;
+  int COLLOCATE_CONSTRAINT__ACTORCOLLOCATELIST = DEPLOYMENT_CONSTRAINT_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Collocate Constraint</em>' class.
@@ -389,7 +380,7 @@ public interface AppPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COLLOCATE_CONSTRAINT_FEATURE_COUNT = DEPLOYMENT_CONSTRAINT_FEATURE_COUNT + 0;
+  int COLLOCATE_CONSTRAINT_FEATURE_COUNT = DEPLOYMENT_CONSTRAINT_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link edu.vanderbilt.riaps.app.impl.DistributeConstraintImpl <em>Distribute Constraint</em>}' class.
@@ -402,13 +393,13 @@ public interface AppPackage extends EPackage
   int DISTRIBUTE_CONSTRAINT = 10;
 
   /**
-   * The feature id for the '<em><b>Actors</b></em>' reference list.
+   * The feature id for the '<em><b>Actordistributelist</b></em>' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DISTRIBUTE_CONSTRAINT__ACTORS = DEPLOYMENT_CONSTRAINT__ACTORS;
+  int DISTRIBUTE_CONSTRAINT__ACTORDISTRIBUTELIST = DEPLOYMENT_CONSTRAINT_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Distribute Constraint</em>' class.
@@ -417,7 +408,7 @@ public interface AppPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DISTRIBUTE_CONSTRAINT_FEATURE_COUNT = DEPLOYMENT_CONSTRAINT_FEATURE_COUNT + 0;
+  int DISTRIBUTE_CONSTRAINT_FEATURE_COUNT = DEPLOYMENT_CONSTRAINT_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link edu.vanderbilt.riaps.app.impl.ImportImpl <em>Import</em>}' class.
@@ -2043,17 +2034,6 @@ public interface AppPackage extends EPackage
   EClass getDeploymentConstraint();
 
   /**
-   * Returns the meta object for the reference list '{@link edu.vanderbilt.riaps.app.DeploymentConstraint#getActors <em>Actors</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference list '<em>Actors</em>'.
-   * @see edu.vanderbilt.riaps.app.DeploymentConstraint#getActors()
-   * @see #getDeploymentConstraint()
-   * @generated
-   */
-  EReference getDeploymentConstraint_Actors();
-
-  /**
    * Returns the meta object for class '{@link edu.vanderbilt.riaps.app.CollocateConstraint <em>Collocate Constraint</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2064,6 +2044,17 @@ public interface AppPackage extends EPackage
   EClass getCollocateConstraint();
 
   /**
+   * Returns the meta object for the reference list '{@link edu.vanderbilt.riaps.app.CollocateConstraint#getActorcollocatelist <em>Actorcollocatelist</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Actorcollocatelist</em>'.
+   * @see edu.vanderbilt.riaps.app.CollocateConstraint#getActorcollocatelist()
+   * @see #getCollocateConstraint()
+   * @generated
+   */
+  EReference getCollocateConstraint_Actorcollocatelist();
+
+  /**
    * Returns the meta object for class '{@link edu.vanderbilt.riaps.app.DistributeConstraint <em>Distribute Constraint</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2072,6 +2063,17 @@ public interface AppPackage extends EPackage
    * @generated
    */
   EClass getDistributeConstraint();
+
+  /**
+   * Returns the meta object for the reference list '{@link edu.vanderbilt.riaps.app.DistributeConstraint#getActordistributelist <em>Actordistributelist</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Actordistributelist</em>'.
+   * @see edu.vanderbilt.riaps.app.DistributeConstraint#getActordistributelist()
+   * @see #getDistributeConstraint()
+   * @generated
+   */
+  EReference getDistributeConstraint_Actordistributelist();
 
   /**
    * Returns the meta object for class '{@link edu.vanderbilt.riaps.app.Import <em>Import</em>}'.
@@ -3451,14 +3453,6 @@ public interface AppPackage extends EPackage
     EClass DEPLOYMENT_CONSTRAINT = eINSTANCE.getDeploymentConstraint();
 
     /**
-     * The meta object literal for the '<em><b>Actors</b></em>' reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference DEPLOYMENT_CONSTRAINT__ACTORS = eINSTANCE.getDeploymentConstraint_Actors();
-
-    /**
      * The meta object literal for the '{@link edu.vanderbilt.riaps.app.impl.CollocateConstraintImpl <em>Collocate Constraint</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3469,6 +3463,14 @@ public interface AppPackage extends EPackage
     EClass COLLOCATE_CONSTRAINT = eINSTANCE.getCollocateConstraint();
 
     /**
+     * The meta object literal for the '<em><b>Actorcollocatelist</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference COLLOCATE_CONSTRAINT__ACTORCOLLOCATELIST = eINSTANCE.getCollocateConstraint_Actorcollocatelist();
+
+    /**
      * The meta object literal for the '{@link edu.vanderbilt.riaps.app.impl.DistributeConstraintImpl <em>Distribute Constraint</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3477,6 +3479,14 @@ public interface AppPackage extends EPackage
      * @generated
      */
     EClass DISTRIBUTE_CONSTRAINT = eINSTANCE.getDistributeConstraint();
+
+    /**
+     * The meta object literal for the '<em><b>Actordistributelist</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DISTRIBUTE_CONSTRAINT__ACTORDISTRIBUTELIST = eINSTANCE.getDistributeConstraint_Actordistributelist();
 
     /**
      * The meta object literal for the '{@link edu.vanderbilt.riaps.app.impl.ImportImpl <em>Import</em>}' class.
