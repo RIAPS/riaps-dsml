@@ -106,11 +106,6 @@ public class AppAdapterFactory extends AdapterFactoryImpl
         return createCollectionAdapter();
       }
       @Override
-      public Adapter caseComponentCollection(ComponentCollection object)
-      {
-        return createComponentCollectionAdapter();
-      }
-      @Override
       public Adapter caseApplication(Application object)
       {
         return createApplicationAdapter();
@@ -134,11 +129,6 @@ public class AppAdapterFactory extends AdapterFactoryImpl
       public Adapter caseImport(Import object)
       {
         return createImportAdapter();
-      }
-      @Override
-      public Adapter caseMessageCollection(MessageCollection object)
-      {
-        return createMessageCollectionAdapter();
       }
       @Override
       public Adapter caseMessage(Message object)
@@ -259,11 +249,6 @@ public class AppAdapterFactory extends AdapterFactoryImpl
       public Adapter caseActual(Actual object)
       {
         return createActualAdapter();
-      }
-      @Override
-      public Adapter caseActualValue(ActualValue object)
-      {
-        return createActualValueAdapter();
       }
       @Override
       public Adapter caseInstance(Instance object)
@@ -388,21 +373,6 @@ public class AppAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link edu.vanderbilt.riaps.app.ComponentCollection <em>Component Collection</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see edu.vanderbilt.riaps.app.ComponentCollection
-   * @generated
-   */
-  public Adapter createComponentCollectionAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link edu.vanderbilt.riaps.app.Application <em>Application</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -473,21 +443,6 @@ public class AppAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createImportAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link edu.vanderbilt.riaps.app.MessageCollection <em>Message Collection</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see edu.vanderbilt.riaps.app.MessageCollection
-   * @generated
-   */
-  public Adapter createMessageCollectionAdapter()
   {
     return null;
   }
@@ -848,21 +803,6 @@ public class AppAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createActualAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link edu.vanderbilt.riaps.app.ActualValue <em>Actual Value</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see edu.vanderbilt.riaps.app.ActualValue
-   * @generated
-   */
-  public Adapter createActualValueAdapter()
   {
     return null;
   }

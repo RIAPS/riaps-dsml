@@ -22,7 +22,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalDatatypesParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'package'", "'import'", "'.'", "'*'", "'typeCollection'", "'{'", "'version'", "'}'", "'major'", "'minor'", "'struct'", "'extends'", "'enumeration'", "','", "'='", "'map'", "'to'", "'['", "']'", "'Int8'", "'UInt8'", "'Int16'", "'UInt16'", "'Int32'", "'UInt32'", "'Int64'", "'UInt64'", "'Boolean'", "'String'", "'Float'", "'Double'", "'Char'", "'ByteBuffer'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'package'", "'import'", "'.'", "'*'", "'types'", "'{'", "'version'", "'}'", "'major'", "'minor'", "'struct'", "'extends'", "'enumeration'", "','", "'='", "'map'", "'to'", "'['", "']'", "'Int8'", "'UInt8'", "'Int16'", "'UInt16'", "'Int32'", "'UInt32'", "'Int64'", "'UInt64'", "'Boolean'", "'String'", "'Float'", "'Double'", "'Char'", "'ByteBuffer'"
     };
     public static final int T__19=19;
     public static final int T__15=15;
@@ -723,7 +723,7 @@ public class InternalDatatypesParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFTypeCollection"
-    // InternalDatatypes.g:282:1: ruleFTypeCollection returns [EObject current=null] : ( () otherlv_1= 'typeCollection' ( (lv_name_2_0= RULE_ID ) )? otherlv_3= '{' (otherlv_4= 'version' ( (lv_version_5_0= ruleFVersion ) ) )? ( (lv_types_6_0= ruleFType ) )* otherlv_7= '}' ) ;
+    // InternalDatatypes.g:282:1: ruleFTypeCollection returns [EObject current=null] : ( () otherlv_1= 'types' ( (lv_name_2_0= RULE_ID ) )? otherlv_3= '{' (otherlv_4= 'version' ( (lv_version_5_0= ruleFVersion ) ) )? ( (lv_types_6_0= ruleFType ) )* otherlv_7= '}' ) ;
     public final EObject ruleFTypeCollection() throws RecognitionException {
         EObject current = null;
 
@@ -741,11 +741,11 @@ public class InternalDatatypesParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalDatatypes.g:288:2: ( ( () otherlv_1= 'typeCollection' ( (lv_name_2_0= RULE_ID ) )? otherlv_3= '{' (otherlv_4= 'version' ( (lv_version_5_0= ruleFVersion ) ) )? ( (lv_types_6_0= ruleFType ) )* otherlv_7= '}' ) )
-            // InternalDatatypes.g:289:2: ( () otherlv_1= 'typeCollection' ( (lv_name_2_0= RULE_ID ) )? otherlv_3= '{' (otherlv_4= 'version' ( (lv_version_5_0= ruleFVersion ) ) )? ( (lv_types_6_0= ruleFType ) )* otherlv_7= '}' )
+            // InternalDatatypes.g:288:2: ( ( () otherlv_1= 'types' ( (lv_name_2_0= RULE_ID ) )? otherlv_3= '{' (otherlv_4= 'version' ( (lv_version_5_0= ruleFVersion ) ) )? ( (lv_types_6_0= ruleFType ) )* otherlv_7= '}' ) )
+            // InternalDatatypes.g:289:2: ( () otherlv_1= 'types' ( (lv_name_2_0= RULE_ID ) )? otherlv_3= '{' (otherlv_4= 'version' ( (lv_version_5_0= ruleFVersion ) ) )? ( (lv_types_6_0= ruleFType ) )* otherlv_7= '}' )
             {
-            // InternalDatatypes.g:289:2: ( () otherlv_1= 'typeCollection' ( (lv_name_2_0= RULE_ID ) )? otherlv_3= '{' (otherlv_4= 'version' ( (lv_version_5_0= ruleFVersion ) ) )? ( (lv_types_6_0= ruleFType ) )* otherlv_7= '}' )
-            // InternalDatatypes.g:290:3: () otherlv_1= 'typeCollection' ( (lv_name_2_0= RULE_ID ) )? otherlv_3= '{' (otherlv_4= 'version' ( (lv_version_5_0= ruleFVersion ) ) )? ( (lv_types_6_0= ruleFType ) )* otherlv_7= '}'
+            // InternalDatatypes.g:289:2: ( () otherlv_1= 'types' ( (lv_name_2_0= RULE_ID ) )? otherlv_3= '{' (otherlv_4= 'version' ( (lv_version_5_0= ruleFVersion ) ) )? ( (lv_types_6_0= ruleFType ) )* otherlv_7= '}' )
+            // InternalDatatypes.g:290:3: () otherlv_1= 'types' ( (lv_name_2_0= RULE_ID ) )? otherlv_3= '{' (otherlv_4= 'version' ( (lv_version_5_0= ruleFVersion ) ) )? ( (lv_types_6_0= ruleFType ) )* otherlv_7= '}'
             {
             // InternalDatatypes.g:290:3: ()
             // InternalDatatypes.g:291:4: 
@@ -760,7 +760,7 @@ public class InternalDatatypesParser extends AbstractInternalAntlrParser {
 
             otherlv_1=(Token)match(input,15,FOLLOW_8); 
 
-            			newLeafNode(otherlv_1, grammarAccess.getFTypeCollectionAccess().getTypeCollectionKeyword_1());
+            			newLeafNode(otherlv_1, grammarAccess.getFTypeCollectionAccess().getTypesKeyword_1());
             		
             // InternalDatatypes.g:301:3: ( (lv_name_2_0= RULE_ID ) )?
             int alt5=2;

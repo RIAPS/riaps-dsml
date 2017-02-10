@@ -16,9 +16,6 @@
     <genClasses ecoreClass="App.ecore#//Collection">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute App.ecore#//Collection/name"/>
     </genClasses>
-    <genClasses ecoreClass="App.ecore#//ComponentCollection">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference App.ecore#//ComponentCollection/components"/>
-    </genClasses>
     <genClasses ecoreClass="App.ecore#//Application">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference App.ecore#//Application/baseapp"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference App.ecore#//Application/artifacts"/>
@@ -37,11 +34,7 @@
     <genClasses ecoreClass="App.ecore#//Import">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute App.ecore#//Import/importedNamespace"/>
     </genClasses>
-    <genClasses ecoreClass="App.ecore#//MessageCollection">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference App.ecore#//MessageCollection/messages"/>
-    </genClasses>
     <genClasses ecoreClass="App.ecore#//Message">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute App.ecore#//Message/name"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference App.ecore#//Message/type"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference App.ecore#//Message/key"/>
     </genClasses>
@@ -53,7 +46,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute App.ecore#//Artifact/path"/>
     </genClasses>
     <genClasses ecoreClass="App.ecore#//Component">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute App.ecore#//Component/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference App.ecore#//Component/formals"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference App.ecore#//Component/requirements"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference App.ecore#//Component/ports"/>
@@ -154,13 +146,10 @@
     </genClasses>
     <genClasses ecoreClass="App.ecore#//Actual">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference App.ecore#//Actual/argName"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference App.ecore#//Actual/argValue"/>
-    </genClasses>
-    <genClasses ecoreClass="App.ecore#//ActualValue">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference App.ecore#//ActualValue/stringdefault"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference App.ecore#//ActualValue/numberdefault"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference App.ecore#//ActualValue/boolDefault"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference App.ecore#//ActualValue/param"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference App.ecore#//Actual/tringdefault"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference App.ecore#//Actual/numberdefault"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference App.ecore#//Actual/boolDefault"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference App.ecore#//Actual/argValue"/>
     </genClasses>
     <genClasses ecoreClass="App.ecore#//Instance">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute App.ecore#//Instance/name"/>

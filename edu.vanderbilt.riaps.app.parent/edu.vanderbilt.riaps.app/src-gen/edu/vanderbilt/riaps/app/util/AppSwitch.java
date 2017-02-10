@@ -118,14 +118,6 @@ public class AppSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case AppPackage.COMPONENT_COLLECTION:
-      {
-        ComponentCollection componentCollection = (ComponentCollection)theEObject;
-        T result = caseComponentCollection(componentCollection);
-        if (result == null) result = caseCollection(componentCollection);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case AppPackage.APPLICATION:
       {
         Application application = (Application)theEObject;
@@ -164,18 +156,11 @@ public class AppSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case AppPackage.MESSAGE_COLLECTION:
-      {
-        MessageCollection messageCollection = (MessageCollection)theEObject;
-        T result = caseMessageCollection(messageCollection);
-        if (result == null) result = caseCollection(messageCollection);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case AppPackage.MESSAGE:
       {
         Message message = (Message)theEObject;
         T result = caseMessage(message);
+        if (result == null) result = caseCollection(message);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -190,6 +175,7 @@ public class AppSwitch<T> extends Switch<T>
       {
         Component component = (Component)theEObject;
         T result = caseComponent(component);
+        if (result == null) result = caseCollection(component);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -198,6 +184,7 @@ public class AppSwitch<T> extends Switch<T>
         DeviceComponent deviceComponent = (DeviceComponent)theEObject;
         T result = caseDeviceComponent(deviceComponent);
         if (result == null) result = caseComponent(deviceComponent);
+        if (result == null) result = caseCollection(deviceComponent);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -206,6 +193,7 @@ public class AppSwitch<T> extends Switch<T>
         AppComponent appComponent = (AppComponent)theEObject;
         T result = caseAppComponent(appComponent);
         if (result == null) result = caseComponent(appComponent);
+        if (result == null) result = caseCollection(appComponent);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -349,13 +337,6 @@ public class AppSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case AppPackage.ACTUAL_VALUE:
-      {
-        ActualValue actualValue = (ActualValue)theEObject;
-        T result = caseActualValue(actualValue);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case AppPackage.INSTANCE:
       {
         Instance instance = (Instance)theEObject;
@@ -472,22 +453,6 @@ public class AppSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Component Collection</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Component Collection</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseComponentCollection(ComponentCollection object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Application</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -563,22 +528,6 @@ public class AppSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseImport(Import object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Message Collection</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Message Collection</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseMessageCollection(MessageCollection object)
   {
     return null;
   }
@@ -963,22 +912,6 @@ public class AppSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseActual(Actual object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Actual Value</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Actual Value</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseActualValue(ActualValue object)
   {
     return null;
   }

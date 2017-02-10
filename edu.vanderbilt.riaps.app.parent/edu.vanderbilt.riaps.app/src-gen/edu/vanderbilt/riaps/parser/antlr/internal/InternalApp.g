@@ -384,20 +384,20 @@ ruleCollection returns [EObject current=null]
 }:
 	(
 		{
-			newCompositeNode(grammarAccess.getCollectionAccess().getMessageCollectionParserRuleCall_0());
+			newCompositeNode(grammarAccess.getCollectionAccess().getMessageParserRuleCall_0());
 		}
-		this_MessageCollection_0=ruleMessageCollection
+		this_Message_0=ruleMessage
 		{
-			$current = $this_MessageCollection_0.current;
+			$current = $this_Message_0.current;
 			afterParserOrEnumRuleCall();
 		}
 		    |
 		{
-			newCompositeNode(grammarAccess.getCollectionAccess().getComponentCollectionParserRuleCall_1());
+			newCompositeNode(grammarAccess.getCollectionAccess().getComponentParserRuleCall_1());
 		}
-		this_ComponentCollection_1=ruleComponentCollection
+		this_Component_1=ruleComponent
 		{
-			$current = $this_ComponentCollection_1.current;
+			$current = $this_Component_1.current;
 			afterParserOrEnumRuleCall();
 		}
 		    |
@@ -408,81 +408,6 @@ ruleCollection returns [EObject current=null]
 		{
 			$current = $this_Application_2.current;
 			afterParserOrEnumRuleCall();
-		}
-	)
-;
-
-// Entry rule entryRuleComponentCollection
-entryRuleComponentCollection returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getComponentCollectionRule()); }
-	iv_ruleComponentCollection=ruleComponentCollection
-	{ $current=$iv_ruleComponentCollection.current; }
-	EOF;
-
-// Rule ComponentCollection
-ruleComponentCollection returns [EObject current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		(
-			{
-				$current = forceCreateModelElement(
-					grammarAccess.getComponentCollectionAccess().getComponentCollectionAction_0(),
-					$current);
-			}
-		)
-		otherlv_1='componentCollection'
-		{
-			newLeafNode(otherlv_1, grammarAccess.getComponentCollectionAccess().getComponentCollectionKeyword_1());
-		}
-		(
-			(
-				lv_name_2_0=RULE_ID
-				{
-					newLeafNode(lv_name_2_0, grammarAccess.getComponentCollectionAccess().getNameIDTerminalRuleCall_2_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getComponentCollectionRule());
-					}
-					setWithLastConsumed(
-						$current,
-						"name",
-						lv_name_2_0,
-						"org.eclipse.xtext.common.Terminals.ID");
-				}
-			)
-		)
-		otherlv_3='{'
-		{
-			newLeafNode(otherlv_3, grammarAccess.getComponentCollectionAccess().getLeftCurlyBracketKeyword_3());
-		}
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getComponentCollectionAccess().getComponentsComponentParserRuleCall_4_0());
-				}
-				lv_components_4_0=ruleComponent
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getComponentCollectionRule());
-					}
-					add(
-						$current,
-						"components",
-						lv_components_4_0,
-						"edu.vanderbilt.riaps.App.Component");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)*
-		otherlv_5='}'
-		{
-			newLeafNode(otherlv_5, grammarAccess.getComponentCollectionAccess().getRightCurlyBracketKeyword_5());
 		}
 	)
 ;
@@ -995,81 +920,6 @@ ruleFQN returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()]
 				newLeafNode(this_ID_2, grammarAccess.getFQNAccess().getIDTerminalRuleCall_1_1());
 			}
 		)*
-	)
-;
-
-// Entry rule entryRuleMessageCollection
-entryRuleMessageCollection returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getMessageCollectionRule()); }
-	iv_ruleMessageCollection=ruleMessageCollection
-	{ $current=$iv_ruleMessageCollection.current; }
-	EOF;
-
-// Rule MessageCollection
-ruleMessageCollection returns [EObject current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		(
-			{
-				$current = forceCreateModelElement(
-					grammarAccess.getMessageCollectionAccess().getMessageCollectionAction_0(),
-					$current);
-			}
-		)
-		otherlv_1='messageCollection'
-		{
-			newLeafNode(otherlv_1, grammarAccess.getMessageCollectionAccess().getMessageCollectionKeyword_1());
-		}
-		(
-			(
-				lv_name_2_0=RULE_ID
-				{
-					newLeafNode(lv_name_2_0, grammarAccess.getMessageCollectionAccess().getNameIDTerminalRuleCall_2_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getMessageCollectionRule());
-					}
-					setWithLastConsumed(
-						$current,
-						"name",
-						lv_name_2_0,
-						"org.eclipse.xtext.common.Terminals.ID");
-				}
-			)
-		)
-		otherlv_3='{'
-		{
-			newLeafNode(otherlv_3, grammarAccess.getMessageCollectionAccess().getLeftCurlyBracketKeyword_3());
-		}
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getMessageCollectionAccess().getMessagesMessageParserRuleCall_4_0());
-				}
-				lv_messages_4_0=ruleMessage
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getMessageCollectionRule());
-					}
-					add(
-						$current,
-						"messages",
-						lv_messages_4_0,
-						"edu.vanderbilt.riaps.App.Message");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)*
-		otherlv_5='}'
-		{
-			newLeafNode(otherlv_5, grammarAccess.getMessageCollectionAccess().getRightCurlyBracketKeyword_5());
-		}
 	)
 ;
 
@@ -3494,6 +3344,13 @@ ruleActual returns [EObject current=null]
 }:
 	(
 		(
+			{
+				$current = forceCreateModelElement(
+					grammarAccess.getActualAccess().getActualAction_0(),
+					$current);
+			}
+		)
+		(
 			(
 				{
 					if ($current==null) {
@@ -3501,7 +3358,7 @@ ruleActual returns [EObject current=null]
 					}
 				}
 				{
-					newCompositeNode(grammarAccess.getActualAccess().getArgNameComponentFormalCrossReference_0_0());
+					newCompositeNode(grammarAccess.getActualAccess().getArgNameComponentFormalCrossReference_1_0());
 				}
 				ruleFQN
 				{
@@ -3509,122 +3366,86 @@ ruleActual returns [EObject current=null]
 				}
 			)
 		)
-		otherlv_1='='
+		otherlv_2='='
 		{
-			newLeafNode(otherlv_1, grammarAccess.getActualAccess().getEqualsSignKeyword_1());
+			newLeafNode(otherlv_2, grammarAccess.getActualAccess().getEqualsSignKeyword_2());
 		}
 		(
 			(
-				{
-					newCompositeNode(grammarAccess.getActualAccess().getArgValueActualValueParserRuleCall_2_0());
-				}
-				lv_argValue_2_0=ruleActualValue
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getActualRule());
+				(
+					{
+						newCompositeNode(grammarAccess.getActualAccess().getTringdefaultStringDefaultParserRuleCall_3_0_0());
 					}
-					set(
-						$current,
-						"argValue",
-						lv_argValue_2_0,
-						"edu.vanderbilt.riaps.App.ActualValue");
-					afterParserOrEnumRuleCall();
-				}
+					lv_tringdefault_3_0=ruleStringDefault
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getActualRule());
+						}
+						set(
+							$current,
+							"tringdefault",
+							lv_tringdefault_3_0,
+							"edu.vanderbilt.riaps.App.StringDefault");
+						afterParserOrEnumRuleCall();
+					}
+				)
 			)
-		)
-	)
-;
-
-// Entry rule entryRuleActualValue
-entryRuleActualValue returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getActualValueRule()); }
-	iv_ruleActualValue=ruleActualValue
-	{ $current=$iv_ruleActualValue.current; }
-	EOF;
-
-// Rule ActualValue
-ruleActualValue returns [EObject current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		(
+			    |
 			(
-				{
-					newCompositeNode(grammarAccess.getActualValueAccess().getStringdefaultStringDefaultParserRuleCall_0_0());
-				}
-				lv_stringdefault_0_0=ruleStringDefault
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getActualValueRule());
+				(
+					{
+						newCompositeNode(grammarAccess.getActualAccess().getNumberdefaultNumberDefaultParserRuleCall_3_1_0());
 					}
-					set(
-						$current,
-						"stringdefault",
-						lv_stringdefault_0_0,
-						"edu.vanderbilt.riaps.App.StringDefault");
-					afterParserOrEnumRuleCall();
-				}
+					lv_numberdefault_4_0=ruleNumberDefault
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getActualRule());
+						}
+						set(
+							$current,
+							"numberdefault",
+							lv_numberdefault_4_0,
+							"edu.vanderbilt.riaps.App.NumberDefault");
+						afterParserOrEnumRuleCall();
+					}
+				)
 			)
-		)
-		    |
-		(
+			    |
 			(
-				{
-					newCompositeNode(grammarAccess.getActualValueAccess().getNumberdefaultNumberDefaultParserRuleCall_1_0());
-				}
-				lv_numberdefault_1_0=ruleNumberDefault
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getActualValueRule());
+				(
+					{
+						newCompositeNode(grammarAccess.getActualAccess().getBoolDefaultBoolDefaultParserRuleCall_3_2_0());
 					}
-					set(
-						$current,
-						"numberdefault",
-						lv_numberdefault_1_0,
-						"edu.vanderbilt.riaps.App.NumberDefault");
-					afterParserOrEnumRuleCall();
-				}
+					lv_boolDefault_5_0=ruleBoolDefault
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getActualRule());
+						}
+						set(
+							$current,
+							"boolDefault",
+							lv_boolDefault_5_0,
+							"edu.vanderbilt.riaps.App.BoolDefault");
+						afterParserOrEnumRuleCall();
+					}
+				)
 			)
-		)
-		    |
-		(
+			    |
 			(
-				{
-					newCompositeNode(grammarAccess.getActualValueAccess().getBoolDefaultBoolDefaultParserRuleCall_2_0());
-				}
-				lv_boolDefault_2_0=ruleBoolDefault
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getActualValueRule());
+				(
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getActualRule());
+						}
 					}
-					set(
-						$current,
-						"boolDefault",
-						lv_boolDefault_2_0,
-						"edu.vanderbilt.riaps.App.BoolDefault");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)
-		    |
-		(
-			(
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getActualValueRule());
+					{
+						newCompositeNode(grammarAccess.getActualAccess().getArgValueActorFormalCrossReference_3_3_0());
 					}
-				}
-				{
-					newCompositeNode(grammarAccess.getActualValueAccess().getParamActorFormalCrossReference_3_0());
-				}
-				ruleFQN
-				{
-					afterParserOrEnumRuleCall();
-				}
+					ruleFQN
+					{
+						afterParserOrEnumRuleCall();
+					}
+				)
 			)
 		)
 	)

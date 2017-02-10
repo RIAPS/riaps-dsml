@@ -71,13 +71,11 @@ public class AppFactoryImpl extends EFactoryImpl implements AppFactory
       case AppPackage.NUMBER_DEFAULT: return createNumberDefault();
       case AppPackage.BOOL_DEFAULT: return createBoolDefault();
       case AppPackage.COLLECTION: return createCollection();
-      case AppPackage.COMPONENT_COLLECTION: return createComponentCollection();
       case AppPackage.APPLICATION: return createApplication();
       case AppPackage.DEPLOYMENT_CONSTRAINT: return createDeploymentConstraint();
       case AppPackage.COLLOCATE_CONSTRAINT: return createCollocateConstraint();
       case AppPackage.DISTRIBUTE_CONSTRAINT: return createDistributeConstraint();
       case AppPackage.IMPORT: return createImport();
-      case AppPackage.MESSAGE_COLLECTION: return createMessageCollection();
       case AppPackage.MESSAGE: return createMessage();
       case AppPackage.ARTIFACT: return createArtifact();
       case AppPackage.COMPONENT: return createComponent();
@@ -102,7 +100,6 @@ public class AppFactoryImpl extends EFactoryImpl implements AppFactory
       case AppPackage.INSTANCE_SECTION: return createInstanceSection();
       case AppPackage.WIRE: return createWire();
       case AppPackage.ACTUAL: return createActual();
-      case AppPackage.ACTUAL_VALUE: return createActualValue();
       case AppPackage.INSTANCE: return createInstance();
       case AppPackage.MODEL: return createModel();
       default:
@@ -181,17 +178,6 @@ public class AppFactoryImpl extends EFactoryImpl implements AppFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public ComponentCollection createComponentCollection()
-  {
-    ComponentCollectionImpl componentCollection = new ComponentCollectionImpl();
-    return componentCollection;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public Application createApplication()
   {
     ApplicationImpl application = new ApplicationImpl();
@@ -240,17 +226,6 @@ public class AppFactoryImpl extends EFactoryImpl implements AppFactory
   {
     ImportImpl import_ = new ImportImpl();
     return import_;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public MessageCollection createMessageCollection()
-  {
-    MessageCollectionImpl messageCollection = new MessageCollectionImpl();
-    return messageCollection;
   }
 
   /**
@@ -515,17 +490,6 @@ public class AppFactoryImpl extends EFactoryImpl implements AppFactory
   {
     ActualImpl actual = new ActualImpl();
     return actual;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public ActualValue createActualValue()
-  {
-    ActualValueImpl actualValue = new ActualValueImpl();
-    return actualValue;
   }
 
   /**

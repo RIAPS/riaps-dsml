@@ -42,16 +42,16 @@ terminal BOOL:
 
 	// These are the real FCO
 Collection:
-	MessageCollection
-	| ComponentCollection
+	Message
+	| Component
 	| Application;
 
-ComponentCollection returns ComponentCollection:
-	{ComponentCollection}
-	'componentCollection' (name=ID)
-	'{'
-	(components+=Component)*
-	'}';
+//ComponentCollection returns ComponentCollection:
+//	{ComponentCollection}
+//	'componentCollection' (name=ID)
+//	'{'
+//	(components+=Component)*
+//	'}';
 
 Application returns Application:
 	{Application}
@@ -84,12 +84,12 @@ FQN:
 	ID ('.' ID)*;
 
 	//Now this is the real section of component description
-MessageCollection returns MessageCollection:
-	{MessageCollection}
-	'messageCollection' (name=ID)
-	'{'
-	(messages+=Message)*
-	'}';
+//MessageCollection returns MessageCollection:
+//	{MessageCollection}
+//	'messageCollection' (name=ID)
+//	'{'
+//	(messages+=Message)*
+//	'}';
 
 Message:
 	'message' name=ID ':' type=[DataTypes::FStructType|FQN] ('key' key=[DataTypes::FField|FQN])? (';')?;
@@ -216,11 +216,11 @@ Wire returns Wire:
 	{Wire}
 	((clnt=[ClntPort|FQN] '=' server=[SrvPort|FQN]) | (ami?='ami' req=[ReqPort|FQN] '=' server=[SrvPort|FQN])) (';')?;
 
-Actual:
-	argName=[ComponentFormal|FQN] '=' argValue=ActualValue;
+Actual returns Actual:
+{Actual}	argName=[ComponentFormal|FQN] '=' (tringdefault=StringDefault | numberdefault=NumberDefault | boolDefault=BoolDefault |argValue=[ActorFormal|FQN]);
 
-ActualValue:
-	(stringdefault=StringDefault | numberdefault=NumberDefault | boolDefault=BoolDefault | param=[ActorFormal|FQN]);
+//ActualValue:
+//	(stringdefault=StringDefault | numberdefault=NumberDefault | boolDefault=BoolDefault | param=[ActorFormal|FQN]);
 
 Instance:
 	name=ID ':' type=[Component|FQN] ('(' actuals+=Actual (',' (actuals+=Actual))* ')')? (';')?;

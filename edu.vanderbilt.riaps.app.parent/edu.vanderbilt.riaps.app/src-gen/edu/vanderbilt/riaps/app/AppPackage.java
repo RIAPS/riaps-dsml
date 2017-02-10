@@ -217,43 +217,6 @@ public interface AppPackage extends EPackage
   int COLLECTION_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link edu.vanderbilt.riaps.app.impl.ComponentCollectionImpl <em>Component Collection</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see edu.vanderbilt.riaps.app.impl.ComponentCollectionImpl
-   * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getComponentCollection()
-   * @generated
-   */
-  int COMPONENT_COLLECTION = 6;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMPONENT_COLLECTION__NAME = COLLECTION__NAME;
-
-  /**
-   * The feature id for the '<em><b>Components</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMPONENT_COLLECTION__COMPONENTS = COLLECTION_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Component Collection</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMPONENT_COLLECTION_FEATURE_COUNT = COLLECTION_FEATURE_COUNT + 1;
-
-  /**
    * The meta object id for the '{@link edu.vanderbilt.riaps.app.impl.ApplicationImpl <em>Application</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -261,7 +224,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getApplication()
    * @generated
    */
-  int APPLICATION = 7;
+  int APPLICATION = 6;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -343,7 +306,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getDeploymentConstraint()
    * @generated
    */
-  int DEPLOYMENT_CONSTRAINT = 8;
+  int DEPLOYMENT_CONSTRAINT = 7;
 
   /**
    * The number of structural features of the '<em>Deployment Constraint</em>' class.
@@ -362,7 +325,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getCollocateConstraint()
    * @generated
    */
-  int COLLOCATE_CONSTRAINT = 9;
+  int COLLOCATE_CONSTRAINT = 8;
 
   /**
    * The feature id for the '<em><b>Actorcollocatelist</b></em>' reference list.
@@ -390,7 +353,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getDistributeConstraint()
    * @generated
    */
-  int DISTRIBUTE_CONSTRAINT = 10;
+  int DISTRIBUTE_CONSTRAINT = 9;
 
   /**
    * The feature id for the '<em><b>Actordistributelist</b></em>' reference list.
@@ -418,7 +381,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getImport()
    * @generated
    */
-  int IMPORT = 11;
+  int IMPORT = 10;
 
   /**
    * The feature id for the '<em><b>Imported Namespace</b></em>' attribute.
@@ -439,43 +402,6 @@ public interface AppPackage extends EPackage
   int IMPORT_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link edu.vanderbilt.riaps.app.impl.MessageCollectionImpl <em>Message Collection</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see edu.vanderbilt.riaps.app.impl.MessageCollectionImpl
-   * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getMessageCollection()
-   * @generated
-   */
-  int MESSAGE_COLLECTION = 12;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MESSAGE_COLLECTION__NAME = COLLECTION__NAME;
-
-  /**
-   * The feature id for the '<em><b>Messages</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MESSAGE_COLLECTION__MESSAGES = COLLECTION_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Message Collection</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MESSAGE_COLLECTION_FEATURE_COUNT = COLLECTION_FEATURE_COUNT + 1;
-
-  /**
    * The meta object id for the '{@link edu.vanderbilt.riaps.app.impl.MessageImpl <em>Message</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -483,7 +409,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getMessage()
    * @generated
    */
-  int MESSAGE = 13;
+  int MESSAGE = 11;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -492,7 +418,7 @@ public interface AppPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MESSAGE__NAME = 0;
+  int MESSAGE__NAME = COLLECTION__NAME;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' reference.
@@ -501,7 +427,7 @@ public interface AppPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MESSAGE__TYPE = 1;
+  int MESSAGE__TYPE = COLLECTION_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Key</b></em>' reference.
@@ -510,7 +436,7 @@ public interface AppPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MESSAGE__KEY = 2;
+  int MESSAGE__KEY = COLLECTION_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Message</em>' class.
@@ -519,7 +445,7 @@ public interface AppPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MESSAGE_FEATURE_COUNT = 3;
+  int MESSAGE_FEATURE_COUNT = COLLECTION_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link edu.vanderbilt.riaps.app.impl.ArtifactImpl <em>Artifact</em>}' class.
@@ -529,7 +455,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getArtifact()
    * @generated
    */
-  int ARTIFACT = 14;
+  int ARTIFACT = 12;
 
   /**
    * The feature id for the '<em><b>Jar</b></em>' attribute.
@@ -593,7 +519,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getComponent()
    * @generated
    */
-  int COMPONENT = 15;
+  int COMPONENT = 13;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -602,7 +528,7 @@ public interface AppPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMPONENT__NAME = 0;
+  int COMPONENT__NAME = COLLECTION__NAME;
 
   /**
    * The feature id for the '<em><b>Formals</b></em>' containment reference list.
@@ -611,7 +537,7 @@ public interface AppPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMPONENT__FORMALS = 1;
+  int COMPONENT__FORMALS = COLLECTION_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Requirements</b></em>' containment reference list.
@@ -620,7 +546,7 @@ public interface AppPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMPONENT__REQUIREMENTS = 2;
+  int COMPONENT__REQUIREMENTS = COLLECTION_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Ports</b></em>' containment reference list.
@@ -629,7 +555,7 @@ public interface AppPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMPONENT__PORTS = 3;
+  int COMPONENT__PORTS = COLLECTION_FEATURE_COUNT + 2;
 
   /**
    * The number of structural features of the '<em>Component</em>' class.
@@ -638,7 +564,7 @@ public interface AppPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMPONENT_FEATURE_COUNT = 4;
+  int COMPONENT_FEATURE_COUNT = COLLECTION_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link edu.vanderbilt.riaps.app.impl.DeviceComponentImpl <em>Device Component</em>}' class.
@@ -648,7 +574,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getDeviceComponent()
    * @generated
    */
-  int DEVICE_COMPONENT = 16;
+  int DEVICE_COMPONENT = 14;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -703,7 +629,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getAppComponent()
    * @generated
    */
-  int APP_COMPONENT = 17;
+  int APP_COMPONENT = 15;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -758,7 +684,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getMemoryUnits()
    * @generated
    */
-  int MEMORY_UNITS = 18;
+  int MEMORY_UNITS = 16;
 
   /**
    * The feature id for the '<em><b>Kb</b></em>' attribute.
@@ -804,7 +730,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getRequirement()
    * @generated
    */
-  int REQUIREMENT = 19;
+  int REQUIREMENT = 17;
 
   /**
    * The feature id for the '<em><b>Artifactrequirement</b></em>' reference.
@@ -877,7 +803,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getPort()
    * @generated
    */
-  int PORT = 20;
+  int PORT = 18;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -905,7 +831,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getRateLimit()
    * @generated
    */
-  int RATE_LIMIT = 21;
+  int RATE_LIMIT = 19;
 
   /**
    * The feature id for the '<em><b>Lower</b></em>' attribute.
@@ -960,7 +886,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getPubPort()
    * @generated
    */
-  int PUB_PORT = 22;
+  int PUB_PORT = 20;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1006,7 +932,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getSubPort()
    * @generated
    */
-  int SUB_PORT = 23;
+  int SUB_PORT = 21;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1052,7 +978,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getDeadline()
    * @generated
    */
-  int DEADLINE = 24;
+  int DEADLINE = 22;
 
   /**
    * The feature id for the '<em><b>Deadline</b></em>' attribute.
@@ -1089,7 +1015,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getClntPort()
    * @generated
    */
-  int CLNT_PORT = 25;
+  int CLNT_PORT = 23;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1153,7 +1079,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getSrvPort()
    * @generated
    */
-  int SRV_PORT = 26;
+  int SRV_PORT = 24;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1208,7 +1134,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getReqPort()
    * @generated
    */
-  int REQ_PORT = 27;
+  int REQ_PORT = 25;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1272,7 +1198,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getTimeUnit()
    * @generated
    */
-  int TIME_UNIT = 28;
+  int TIME_UNIT = 26;
 
   /**
    * The feature id for the '<em><b>Months</b></em>' attribute.
@@ -1345,7 +1271,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getTimPort()
    * @generated
    */
-  int TIM_PORT = 29;
+  int TIM_PORT = 27;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1391,7 +1317,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getInsPort()
    * @generated
    */
-  int INS_PORT = 30;
+  int INS_PORT = 28;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1428,7 +1354,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getComponentFormal()
    * @generated
    */
-  int COMPONENT_FORMAL = 31;
+  int COMPONENT_FORMAL = 29;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1465,7 +1391,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getActorFormal()
    * @generated
    */
-  int ACTOR_FORMAL = 32;
+  int ACTOR_FORMAL = 30;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1502,7 +1428,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getActor()
    * @generated
    */
-  int ACTOR = 33;
+  int ACTOR = 31;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1584,7 +1510,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getInstanceSection()
    * @generated
    */
-  int INSTANCE_SECTION = 34;
+  int INSTANCE_SECTION = 32;
 
   /**
    * The feature id for the '<em><b>Instances</b></em>' containment reference list.
@@ -1612,7 +1538,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getWire()
    * @generated
    */
-  int WIRE = 35;
+  int WIRE = 33;
 
   /**
    * The feature id for the '<em><b>Clnt</b></em>' reference.
@@ -1667,7 +1593,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getActual()
    * @generated
    */
-  int ACTUAL = 36;
+  int ACTUAL = 34;
 
   /**
    * The feature id for the '<em><b>Arg Name</b></em>' reference.
@@ -1679,41 +1605,13 @@ public interface AppPackage extends EPackage
   int ACTUAL__ARG_NAME = 0;
 
   /**
-   * The feature id for the '<em><b>Arg Value</b></em>' containment reference.
+   * The feature id for the '<em><b>Tringdefault</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ACTUAL__ARG_VALUE = 1;
-
-  /**
-   * The number of structural features of the '<em>Actual</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ACTUAL_FEATURE_COUNT = 2;
-
-  /**
-   * The meta object id for the '{@link edu.vanderbilt.riaps.app.impl.ActualValueImpl <em>Actual Value</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see edu.vanderbilt.riaps.app.impl.ActualValueImpl
-   * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getActualValue()
-   * @generated
-   */
-  int ACTUAL_VALUE = 37;
-
-  /**
-   * The feature id for the '<em><b>Stringdefault</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ACTUAL_VALUE__STRINGDEFAULT = 0;
+  int ACTUAL__TRINGDEFAULT = 1;
 
   /**
    * The feature id for the '<em><b>Numberdefault</b></em>' containment reference.
@@ -1722,7 +1620,7 @@ public interface AppPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ACTUAL_VALUE__NUMBERDEFAULT = 1;
+  int ACTUAL__NUMBERDEFAULT = 2;
 
   /**
    * The feature id for the '<em><b>Bool Default</b></em>' containment reference.
@@ -1731,25 +1629,25 @@ public interface AppPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ACTUAL_VALUE__BOOL_DEFAULT = 2;
+  int ACTUAL__BOOL_DEFAULT = 3;
 
   /**
-   * The feature id for the '<em><b>Param</b></em>' reference.
+   * The feature id for the '<em><b>Arg Value</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ACTUAL_VALUE__PARAM = 3;
+  int ACTUAL__ARG_VALUE = 4;
 
   /**
-   * The number of structural features of the '<em>Actual Value</em>' class.
+   * The number of structural features of the '<em>Actual</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ACTUAL_VALUE_FEATURE_COUNT = 4;
+  int ACTUAL_FEATURE_COUNT = 5;
 
   /**
    * The meta object id for the '{@link edu.vanderbilt.riaps.app.impl.InstanceImpl <em>Instance</em>}' class.
@@ -1759,7 +1657,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getInstance()
    * @generated
    */
-  int INSTANCE = 38;
+  int INSTANCE = 35;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1805,7 +1703,7 @@ public interface AppPackage extends EPackage
    * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getModel()
    * @generated
    */
-  int MODEL = 39;
+  int MODEL = 36;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1925,27 +1823,6 @@ public interface AppPackage extends EPackage
    * @generated
    */
   EAttribute getCollection_Name();
-
-  /**
-   * Returns the meta object for class '{@link edu.vanderbilt.riaps.app.ComponentCollection <em>Component Collection</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Component Collection</em>'.
-   * @see edu.vanderbilt.riaps.app.ComponentCollection
-   * @generated
-   */
-  EClass getComponentCollection();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link edu.vanderbilt.riaps.app.ComponentCollection#getComponents <em>Components</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Components</em>'.
-   * @see edu.vanderbilt.riaps.app.ComponentCollection#getComponents()
-   * @see #getComponentCollection()
-   * @generated
-   */
-  EReference getComponentCollection_Components();
 
   /**
    * Returns the meta object for class '{@link edu.vanderbilt.riaps.app.Application <em>Application</em>}'.
@@ -2097,27 +1974,6 @@ public interface AppPackage extends EPackage
   EAttribute getImport_ImportedNamespace();
 
   /**
-   * Returns the meta object for class '{@link edu.vanderbilt.riaps.app.MessageCollection <em>Message Collection</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Message Collection</em>'.
-   * @see edu.vanderbilt.riaps.app.MessageCollection
-   * @generated
-   */
-  EClass getMessageCollection();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link edu.vanderbilt.riaps.app.MessageCollection#getMessages <em>Messages</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Messages</em>'.
-   * @see edu.vanderbilt.riaps.app.MessageCollection#getMessages()
-   * @see #getMessageCollection()
-   * @generated
-   */
-  EReference getMessageCollection_Messages();
-
-  /**
    * Returns the meta object for class '{@link edu.vanderbilt.riaps.app.Message <em>Message</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2126,17 +1982,6 @@ public interface AppPackage extends EPackage
    * @generated
    */
   EClass getMessage();
-
-  /**
-   * Returns the meta object for the attribute '{@link edu.vanderbilt.riaps.app.Message#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see edu.vanderbilt.riaps.app.Message#getName()
-   * @see #getMessage()
-   * @generated
-   */
-  EAttribute getMessage_Name();
 
   /**
    * Returns the meta object for the reference '{@link edu.vanderbilt.riaps.app.Message#getType <em>Type</em>}'.
@@ -2234,17 +2079,6 @@ public interface AppPackage extends EPackage
    * @generated
    */
   EClass getComponent();
-
-  /**
-   * Returns the meta object for the attribute '{@link edu.vanderbilt.riaps.app.Component#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see edu.vanderbilt.riaps.app.Component#getName()
-   * @see #getComponent()
-   * @generated
-   */
-  EAttribute getComponent_Name();
 
   /**
    * Returns the meta object for the containment reference list '{@link edu.vanderbilt.riaps.app.Component#getFormals <em>Formals</em>}'.
@@ -3117,69 +2951,48 @@ public interface AppPackage extends EPackage
   EReference getActual_ArgName();
 
   /**
-   * Returns the meta object for the containment reference '{@link edu.vanderbilt.riaps.app.Actual#getArgValue <em>Arg Value</em>}'.
+   * Returns the meta object for the containment reference '{@link edu.vanderbilt.riaps.app.Actual#getTringdefault <em>Tringdefault</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Arg Value</em>'.
+   * @return the meta object for the containment reference '<em>Tringdefault</em>'.
+   * @see edu.vanderbilt.riaps.app.Actual#getTringdefault()
+   * @see #getActual()
+   * @generated
+   */
+  EReference getActual_Tringdefault();
+
+  /**
+   * Returns the meta object for the containment reference '{@link edu.vanderbilt.riaps.app.Actual#getNumberdefault <em>Numberdefault</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Numberdefault</em>'.
+   * @see edu.vanderbilt.riaps.app.Actual#getNumberdefault()
+   * @see #getActual()
+   * @generated
+   */
+  EReference getActual_Numberdefault();
+
+  /**
+   * Returns the meta object for the containment reference '{@link edu.vanderbilt.riaps.app.Actual#getBoolDefault <em>Bool Default</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Bool Default</em>'.
+   * @see edu.vanderbilt.riaps.app.Actual#getBoolDefault()
+   * @see #getActual()
+   * @generated
+   */
+  EReference getActual_BoolDefault();
+
+  /**
+   * Returns the meta object for the reference '{@link edu.vanderbilt.riaps.app.Actual#getArgValue <em>Arg Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Arg Value</em>'.
    * @see edu.vanderbilt.riaps.app.Actual#getArgValue()
    * @see #getActual()
    * @generated
    */
   EReference getActual_ArgValue();
-
-  /**
-   * Returns the meta object for class '{@link edu.vanderbilt.riaps.app.ActualValue <em>Actual Value</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Actual Value</em>'.
-   * @see edu.vanderbilt.riaps.app.ActualValue
-   * @generated
-   */
-  EClass getActualValue();
-
-  /**
-   * Returns the meta object for the containment reference '{@link edu.vanderbilt.riaps.app.ActualValue#getStringdefault <em>Stringdefault</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Stringdefault</em>'.
-   * @see edu.vanderbilt.riaps.app.ActualValue#getStringdefault()
-   * @see #getActualValue()
-   * @generated
-   */
-  EReference getActualValue_Stringdefault();
-
-  /**
-   * Returns the meta object for the containment reference '{@link edu.vanderbilt.riaps.app.ActualValue#getNumberdefault <em>Numberdefault</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Numberdefault</em>'.
-   * @see edu.vanderbilt.riaps.app.ActualValue#getNumberdefault()
-   * @see #getActualValue()
-   * @generated
-   */
-  EReference getActualValue_Numberdefault();
-
-  /**
-   * Returns the meta object for the containment reference '{@link edu.vanderbilt.riaps.app.ActualValue#getBoolDefault <em>Bool Default</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Bool Default</em>'.
-   * @see edu.vanderbilt.riaps.app.ActualValue#getBoolDefault()
-   * @see #getActualValue()
-   * @generated
-   */
-  EReference getActualValue_BoolDefault();
-
-  /**
-   * Returns the meta object for the reference '{@link edu.vanderbilt.riaps.app.ActualValue#getParam <em>Param</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Param</em>'.
-   * @see edu.vanderbilt.riaps.app.ActualValue#getParam()
-   * @see #getActualValue()
-   * @generated
-   */
-  EReference getActualValue_Param();
 
   /**
    * Returns the meta object for class '{@link edu.vanderbilt.riaps.app.Instance <em>Instance</em>}'.
@@ -3367,24 +3180,6 @@ public interface AppPackage extends EPackage
     EAttribute COLLECTION__NAME = eINSTANCE.getCollection_Name();
 
     /**
-     * The meta object literal for the '{@link edu.vanderbilt.riaps.app.impl.ComponentCollectionImpl <em>Component Collection</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see edu.vanderbilt.riaps.app.impl.ComponentCollectionImpl
-     * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getComponentCollection()
-     * @generated
-     */
-    EClass COMPONENT_COLLECTION = eINSTANCE.getComponentCollection();
-
-    /**
-     * The meta object literal for the '<em><b>Components</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference COMPONENT_COLLECTION__COMPONENTS = eINSTANCE.getComponentCollection_Components();
-
-    /**
      * The meta object literal for the '{@link edu.vanderbilt.riaps.app.impl.ApplicationImpl <em>Application</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3507,24 +3302,6 @@ public interface AppPackage extends EPackage
     EAttribute IMPORT__IMPORTED_NAMESPACE = eINSTANCE.getImport_ImportedNamespace();
 
     /**
-     * The meta object literal for the '{@link edu.vanderbilt.riaps.app.impl.MessageCollectionImpl <em>Message Collection</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see edu.vanderbilt.riaps.app.impl.MessageCollectionImpl
-     * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getMessageCollection()
-     * @generated
-     */
-    EClass MESSAGE_COLLECTION = eINSTANCE.getMessageCollection();
-
-    /**
-     * The meta object literal for the '<em><b>Messages</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference MESSAGE_COLLECTION__MESSAGES = eINSTANCE.getMessageCollection_Messages();
-
-    /**
      * The meta object literal for the '{@link edu.vanderbilt.riaps.app.impl.MessageImpl <em>Message</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3533,14 +3310,6 @@ public interface AppPackage extends EPackage
      * @generated
      */
     EClass MESSAGE = eINSTANCE.getMessage();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute MESSAGE__NAME = eINSTANCE.getMessage_Name();
 
     /**
      * The meta object literal for the '<em><b>Type</b></em>' reference feature.
@@ -3617,14 +3386,6 @@ public interface AppPackage extends EPackage
      * @generated
      */
     EClass COMPONENT = eINSTANCE.getComponent();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute COMPONENT__NAME = eINSTANCE.getComponent_Name();
 
     /**
      * The meta object literal for the '<em><b>Formals</b></em>' containment reference list feature.
@@ -4317,30 +4078,12 @@ public interface AppPackage extends EPackage
     EReference ACTUAL__ARG_NAME = eINSTANCE.getActual_ArgName();
 
     /**
-     * The meta object literal for the '<em><b>Arg Value</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Tringdefault</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference ACTUAL__ARG_VALUE = eINSTANCE.getActual_ArgValue();
-
-    /**
-     * The meta object literal for the '{@link edu.vanderbilt.riaps.app.impl.ActualValueImpl <em>Actual Value</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see edu.vanderbilt.riaps.app.impl.ActualValueImpl
-     * @see edu.vanderbilt.riaps.app.impl.AppPackageImpl#getActualValue()
-     * @generated
-     */
-    EClass ACTUAL_VALUE = eINSTANCE.getActualValue();
-
-    /**
-     * The meta object literal for the '<em><b>Stringdefault</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference ACTUAL_VALUE__STRINGDEFAULT = eINSTANCE.getActualValue_Stringdefault();
+    EReference ACTUAL__TRINGDEFAULT = eINSTANCE.getActual_Tringdefault();
 
     /**
      * The meta object literal for the '<em><b>Numberdefault</b></em>' containment reference feature.
@@ -4348,7 +4091,7 @@ public interface AppPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference ACTUAL_VALUE__NUMBERDEFAULT = eINSTANCE.getActualValue_Numberdefault();
+    EReference ACTUAL__NUMBERDEFAULT = eINSTANCE.getActual_Numberdefault();
 
     /**
      * The meta object literal for the '<em><b>Bool Default</b></em>' containment reference feature.
@@ -4356,15 +4099,15 @@ public interface AppPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference ACTUAL_VALUE__BOOL_DEFAULT = eINSTANCE.getActualValue_BoolDefault();
+    EReference ACTUAL__BOOL_DEFAULT = eINSTANCE.getActual_BoolDefault();
 
     /**
-     * The meta object literal for the '<em><b>Param</b></em>' reference feature.
+     * The meta object literal for the '<em><b>Arg Value</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference ACTUAL_VALUE__PARAM = eINSTANCE.getActualValue_Param();
+    EReference ACTUAL__ARG_VALUE = eINSTANCE.getActual_ArgValue();
 
     /**
      * The meta object literal for the '{@link edu.vanderbilt.riaps.app.impl.InstanceImpl <em>Instance</em>}' class.

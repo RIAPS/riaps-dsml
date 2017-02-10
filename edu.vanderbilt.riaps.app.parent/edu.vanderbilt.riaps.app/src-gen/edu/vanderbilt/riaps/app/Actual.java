@@ -15,6 +15,9 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link edu.vanderbilt.riaps.app.Actual#getArgName <em>Arg Name</em>}</li>
+ *   <li>{@link edu.vanderbilt.riaps.app.Actual#getTringdefault <em>Tringdefault</em>}</li>
+ *   <li>{@link edu.vanderbilt.riaps.app.Actual#getNumberdefault <em>Numberdefault</em>}</li>
+ *   <li>{@link edu.vanderbilt.riaps.app.Actual#getBoolDefault <em>Bool Default</em>}</li>
  *   <li>{@link edu.vanderbilt.riaps.app.Actual#getArgValue <em>Arg Value</em>}</li>
  * </ul>
  *
@@ -51,29 +54,107 @@ public interface Actual extends EObject
   void setArgName(ComponentFormal value);
 
   /**
-   * Returns the value of the '<em><b>Arg Value</b></em>' containment reference.
+   * Returns the value of the '<em><b>Tringdefault</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Arg Value</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Tringdefault</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Arg Value</em>' containment reference.
-   * @see #setArgValue(ActualValue)
-   * @see edu.vanderbilt.riaps.app.AppPackage#getActual_ArgValue()
+   * @return the value of the '<em>Tringdefault</em>' containment reference.
+   * @see #setTringdefault(StringDefault)
+   * @see edu.vanderbilt.riaps.app.AppPackage#getActual_Tringdefault()
    * @model containment="true"
    * @generated
    */
-  ActualValue getArgValue();
+  StringDefault getTringdefault();
 
   /**
-   * Sets the value of the '{@link edu.vanderbilt.riaps.app.Actual#getArgValue <em>Arg Value</em>}' containment reference.
+   * Sets the value of the '{@link edu.vanderbilt.riaps.app.Actual#getTringdefault <em>Tringdefault</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Arg Value</em>' containment reference.
+   * @param value the new value of the '<em>Tringdefault</em>' containment reference.
+   * @see #getTringdefault()
+   * @generated
+   */
+  void setTringdefault(StringDefault value);
+
+  /**
+   * Returns the value of the '<em><b>Numberdefault</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Numberdefault</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Numberdefault</em>' containment reference.
+   * @see #setNumberdefault(NumberDefault)
+   * @see edu.vanderbilt.riaps.app.AppPackage#getActual_Numberdefault()
+   * @model containment="true"
+   * @generated
+   */
+  NumberDefault getNumberdefault();
+
+  /**
+   * Sets the value of the '{@link edu.vanderbilt.riaps.app.Actual#getNumberdefault <em>Numberdefault</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Numberdefault</em>' containment reference.
+   * @see #getNumberdefault()
+   * @generated
+   */
+  void setNumberdefault(NumberDefault value);
+
+  /**
+   * Returns the value of the '<em><b>Bool Default</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Bool Default</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Bool Default</em>' containment reference.
+   * @see #setBoolDefault(BoolDefault)
+   * @see edu.vanderbilt.riaps.app.AppPackage#getActual_BoolDefault()
+   * @model containment="true"
+   * @generated
+   */
+  BoolDefault getBoolDefault();
+
+  /**
+   * Sets the value of the '{@link edu.vanderbilt.riaps.app.Actual#getBoolDefault <em>Bool Default</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Bool Default</em>' containment reference.
+   * @see #getBoolDefault()
+   * @generated
+   */
+  void setBoolDefault(BoolDefault value);
+
+  /**
+   * Returns the value of the '<em><b>Arg Value</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Arg Value</em>' reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Arg Value</em>' reference.
+   * @see #setArgValue(ActorFormal)
+   * @see edu.vanderbilt.riaps.app.AppPackage#getActual_ArgValue()
+   * @model
+   * @generated
+   */
+  ActorFormal getArgValue();
+
+  /**
+   * Sets the value of the '{@link edu.vanderbilt.riaps.app.Actual#getArgValue <em>Arg Value</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Arg Value</em>' reference.
    * @see #getArgValue()
    * @generated
    */
-  void setArgValue(ActualValue value);
+  void setArgValue(ActorFormal value);
 
 } // Actual

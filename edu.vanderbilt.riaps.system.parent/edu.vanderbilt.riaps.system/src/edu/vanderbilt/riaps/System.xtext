@@ -110,30 +110,30 @@ AppDeployment:
 ;
 
 ActorDeployment:
-  'on' location=Location actors+=ActorAssignment (',' actors+=ActorAssignment)* ';'
+  'on' location=Location actors+=ActorAssignment (',' actors+=ActorAssignment)* (';')?
 ;
 
 ActorAssignment:
  actor=[App::Actor|FQN] ('(' formals+=ActorFormalAssignment (',' formals+=ActorFormalAssignment)* ')')?	
 ;
 
-ActorFormalAssignment:
-	argName=[App::ActorFormal|FQN] '=' argValue=ActualValue;
+ActorFormalAssignment returns ActorFormalAssignment :
+	{ActorFormalAssignment} argName=[App::ActorFormal|FQN] '=' argValue=ActualValue;
 
-ActualValue:
-	(stringdefault=StringDefault | numberdefault=NumberDefault | boolDefault=BoolDefault);
+ActualValue returns ActualValue:
+	{ActualValue} (stringdefault=StringDefault | numberdefault=NumberDefault | boolDefault=BoolDefault);
 	
 
 
 Location:
-	All
-	|Nodes
+	LocationNodeTypes
+	|LocationNodes
 ;
 
-All:
-	'all' target+=[NodeType|FQN] (',' target+=[NodeType|FQN])*
+LocationNodeTypes:
+	(all?='all'|(exactly?='exactly' lb=INT)|(lb=INT (atmost?='to' up=INT)? )) target+=[NodeType|FQN] (',' target+=[NodeType|FQN])* 
 ;
 
-Nodes:
+LocationNodes:
 	hosts+=[KnownNodes|FQN](',' hosts+=[KnownNodes|FQN])*
 ;

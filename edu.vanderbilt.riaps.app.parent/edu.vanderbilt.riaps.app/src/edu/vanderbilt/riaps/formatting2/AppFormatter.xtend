@@ -6,13 +6,12 @@ package edu.vanderbilt.riaps.formatting2
 import com.google.inject.Inject
 import edu.vanderbilt.riaps.app.Collection
 import edu.vanderbilt.riaps.app.Component
-import edu.vanderbilt.riaps.app.ComponentCollection
+
 import edu.vanderbilt.riaps.app.Import
 import edu.vanderbilt.riaps.app.Model
 import edu.vanderbilt.riaps.services.AppGrammarAccess
 import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.IFormattableDocument
-import edu.vanderbilt.riaps.app.MessageCollection
 import edu.vanderbilt.riaps.app.Message
 import edu.vanderbilt.riaps.app.Application
 import edu.vanderbilt.riaps.app.Actor
@@ -33,28 +32,28 @@ class AppFormatter extends AbstractFormatter2 {
 		model.prepend[noSpace].append[noSpace; newLine]
 
 		for (collection : model.getCollections()) {
-			if (collection instanceof MessageCollection)
-				(collection as MessageCollection).format
-			if (collection instanceof ComponentCollection)
-				(collection as ComponentCollection).format
+			if (collection instanceof Message)
+				(collection as Message).format
+			if (collection instanceof Component)
+				(collection as Component).format
 			if (collection instanceof Application)
 				(collection as Application).format
 		}
 	}
 
-	def dispatch void format(MessageCollection collection, extension IFormattableDocument document) {
-//		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		val open = collection.regionFor.keyword("{").prepend[noSpace; newLine].append[noSpace; newLine]
-		val close = collection.regionFor.keyword("}").prepend[noSpace; newLine].append[noSpace; newLine]
-		interior(open, close)[indent]
-		for (Message elements : collection.getMessages()) {
-			elements.format;
-			elements.prepend[noSpace; newLine].append[noSpace; newLine]
-		}
-
-		collection.prepend[noSpace; newLine].append[noSpace; newLine]
-
-	}
+//	def dispatch void format(MessageCollection collection, extension IFormattableDocument document) {
+////		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//		val open = collection.regionFor.keyword("{").prepend[noSpace; newLine].append[noSpace; newLine]
+//		val close = collection.regionFor.keyword("}").prepend[noSpace; newLine].append[noSpace; newLine]
+//		interior(open, close)[indent]
+//		for (Message elements : collection.getMessages()) {
+//			elements.format;
+//			elements.prepend[noSpace; newLine].append[noSpace; newLine]
+//		}
+//
+//		collection.prepend[noSpace; newLine].append[noSpace; newLine]
+//
+//	}
 
 	def dispatch void format(Application app, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
@@ -85,15 +84,15 @@ class AppFormatter extends AbstractFormatter2 {
 
 	}
 
-	def dispatch void format(ComponentCollection collection, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		val open = collection.regionFor.keyword("{").prepend[noSpace; newLine].append[noSpace; newLine]
-		val close = collection.regionFor.keyword("}").prepend[noSpace; newLine].append[noSpace; newLine]
-		interior(open, close)[indent]
-		for (Component components : collection.getComponents()) {
-			components.format;
-		}
-	}
+//	def dispatch void format(ComponentCollection collection, extension IFormattableDocument document) {
+//		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+//		val open = collection.regionFor.keyword("{").prepend[noSpace; newLine].append[noSpace; newLine]
+//		val close = collection.regionFor.keyword("}").prepend[noSpace; newLine].append[noSpace; newLine]
+//		interior(open, close)[indent]
+//		for (Component components : collection.getComponents()) {
+//			components.format;
+//		}
+//	}
 
 	def dispatch void format(Component component, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 

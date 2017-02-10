@@ -294,9 +294,9 @@ ruleFTypeCollection returns [EObject current=null]
 					$current);
 			}
 		)
-		otherlv_1='typeCollection'
+		otherlv_1='types'
 		{
-			newLeafNode(otherlv_1, grammarAccess.getFTypeCollectionAccess().getTypeCollectionKeyword_1());
+			newLeafNode(otherlv_1, grammarAccess.getFTypeCollectionAccess().getTypesKeyword_1());
 		}
 		(
 			(

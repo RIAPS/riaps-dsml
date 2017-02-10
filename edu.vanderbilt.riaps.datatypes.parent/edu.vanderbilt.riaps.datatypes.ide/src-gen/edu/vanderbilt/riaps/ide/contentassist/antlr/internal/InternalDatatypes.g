@@ -981,9 +981,9 @@ rule__FTypeCollection__Group__1__Impl
 	}
 :
 (
-	{ before(grammarAccess.getFTypeCollectionAccess().getTypeCollectionKeyword_1()); }
-	'typeCollection'
-	{ after(grammarAccess.getFTypeCollectionAccess().getTypeCollectionKeyword_1()); }
+	{ before(grammarAccess.getFTypeCollectionAccess().getTypesKeyword_1()); }
+	'types'
+	{ after(grammarAccess.getFTypeCollectionAccess().getTypesKeyword_1()); }
 )
 ;
 finally {

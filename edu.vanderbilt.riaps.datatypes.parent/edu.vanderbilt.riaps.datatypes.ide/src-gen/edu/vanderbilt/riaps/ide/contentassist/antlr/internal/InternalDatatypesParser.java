@@ -22,7 +22,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalDatatypesParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'Int8'", "'UInt8'", "'Int16'", "'UInt16'", "'Int32'", "'UInt32'", "'Int64'", "'UInt64'", "'Boolean'", "'String'", "'Float'", "'Double'", "'Char'", "'ByteBuffer'", "'package'", "'import'", "'.'", "'*'", "'typeCollection'", "'{'", "'}'", "'version'", "'major'", "'minor'", "'struct'", "'extends'", "'enumeration'", "','", "'='", "'map'", "'to'", "']'", "'['"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'Int8'", "'UInt8'", "'Int16'", "'UInt16'", "'Int32'", "'UInt32'", "'Int64'", "'UInt64'", "'Boolean'", "'String'", "'Float'", "'Double'", "'Char'", "'ByteBuffer'", "'package'", "'import'", "'.'", "'*'", "'types'", "'{'", "'}'", "'version'", "'major'", "'minor'", "'struct'", "'extends'", "'enumeration'", "','", "'='", "'map'", "'to'", "']'", "'['"
     };
     public static final int T__19=19;
     public static final int T__15=15;
@@ -3090,21 +3090,21 @@ public class InternalDatatypesParser extends AbstractInternalContentAssistParser
 
 
     // $ANTLR start "rule__FTypeCollection__Group__1__Impl"
-    // InternalDatatypes.g:978:1: rule__FTypeCollection__Group__1__Impl : ( 'typeCollection' ) ;
+    // InternalDatatypes.g:978:1: rule__FTypeCollection__Group__1__Impl : ( 'types' ) ;
     public final void rule__FTypeCollection__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalDatatypes.g:982:1: ( ( 'typeCollection' ) )
-            // InternalDatatypes.g:983:1: ( 'typeCollection' )
+            // InternalDatatypes.g:982:1: ( ( 'types' ) )
+            // InternalDatatypes.g:983:1: ( 'types' )
             {
-            // InternalDatatypes.g:983:1: ( 'typeCollection' )
-            // InternalDatatypes.g:984:2: 'typeCollection'
+            // InternalDatatypes.g:983:1: ( 'types' )
+            // InternalDatatypes.g:984:2: 'types'
             {
-             before(grammarAccess.getFTypeCollectionAccess().getTypeCollectionKeyword_1()); 
+             before(grammarAccess.getFTypeCollectionAccess().getTypesKeyword_1()); 
             match(input,29,FOLLOW_2); 
-             after(grammarAccess.getFTypeCollectionAccess().getTypeCollectionKeyword_1()); 
+             after(grammarAccess.getFTypeCollectionAccess().getTypesKeyword_1()); 
 
             }
 

@@ -161,7 +161,7 @@ public class DatatypesGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "edu.vanderbilt.riaps.Datatypes.FTypeCollection");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cFTypeCollectionAction_0 = (Action)cGroup.eContents().get(0);
-		private final Keyword cTypeCollectionKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cTypesKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
@@ -175,20 +175,20 @@ public class DatatypesGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//FTypeCollection:
 		//	{FTypeCollection}
-		//	'typeCollection' name=ID?
+		//	'types' name=ID?
 		//	'{' ('version' version=FVersion)?
 		//	types+=FType*
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{FTypeCollection} 'typeCollection' name=ID? '{' ('version' version=FVersion)? types+=FType* '}'
+		//{FTypeCollection} 'types' name=ID? '{' ('version' version=FVersion)? types+=FType* '}'
 		public Group getGroup() { return cGroup; }
 		
 		//{FTypeCollection}
 		public Action getFTypeCollectionAction_0() { return cFTypeCollectionAction_0; }
 		
-		//'typeCollection'
-		public Keyword getTypeCollectionKeyword_1() { return cTypeCollectionKeyword_1; }
+		//'types'
+		public Keyword getTypesKeyword_1() { return cTypesKeyword_1; }
 		
 		//name=ID?
 		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
@@ -933,7 +933,7 @@ public class DatatypesGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//FTypeCollection:
 	//	{FTypeCollection}
-	//	'typeCollection' name=ID?
+	//	'types' name=ID?
 	//	'{' ('version' version=FVersion)?
 	//	types+=FType*
 	//	'}';

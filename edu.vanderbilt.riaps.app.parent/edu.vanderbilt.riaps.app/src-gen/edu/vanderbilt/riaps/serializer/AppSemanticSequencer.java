@@ -7,7 +7,6 @@ import com.google.inject.Inject;
 import edu.vanderbilt.riaps.app.Actor;
 import edu.vanderbilt.riaps.app.ActorFormal;
 import edu.vanderbilt.riaps.app.Actual;
-import edu.vanderbilt.riaps.app.ActualValue;
 import edu.vanderbilt.riaps.app.AppComponent;
 import edu.vanderbilt.riaps.app.AppPackage;
 import edu.vanderbilt.riaps.app.Application;
@@ -15,7 +14,6 @@ import edu.vanderbilt.riaps.app.Artifact;
 import edu.vanderbilt.riaps.app.BoolDefault;
 import edu.vanderbilt.riaps.app.ClntPort;
 import edu.vanderbilt.riaps.app.CollocateConstraint;
-import edu.vanderbilt.riaps.app.ComponentCollection;
 import edu.vanderbilt.riaps.app.ComponentFormal;
 import edu.vanderbilt.riaps.app.Deadline;
 import edu.vanderbilt.riaps.app.DeviceComponent;
@@ -26,7 +24,6 @@ import edu.vanderbilt.riaps.app.Instance;
 import edu.vanderbilt.riaps.app.InstanceSection;
 import edu.vanderbilt.riaps.app.MemoryUnits;
 import edu.vanderbilt.riaps.app.Message;
-import edu.vanderbilt.riaps.app.MessageCollection;
 import edu.vanderbilt.riaps.app.Model;
 import edu.vanderbilt.riaps.app.NumberDefault;
 import edu.vanderbilt.riaps.app.PubPort;
@@ -74,9 +71,6 @@ public class AppSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 			case AppPackage.ACTUAL:
 				sequence_Actual(context, (Actual) semanticObject); 
 				return; 
-			case AppPackage.ACTUAL_VALUE:
-				sequence_ActualValue(context, (ActualValue) semanticObject); 
-				return; 
 			case AppPackage.APP_COMPONENT:
 				sequence_AppComponent(context, (AppComponent) semanticObject); 
 				return; 
@@ -94,9 +88,6 @@ public class AppSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				return; 
 			case AppPackage.COLLOCATE_CONSTRAINT:
 				sequence_CollocateConstraint(context, (CollocateConstraint) semanticObject); 
-				return; 
-			case AppPackage.COMPONENT_COLLECTION:
-				sequence_ComponentCollection(context, (ComponentCollection) semanticObject); 
 				return; 
 			case AppPackage.COMPONENT_FORMAL:
 				sequence_ComponentFormal(context, (ComponentFormal) semanticObject); 
@@ -127,9 +118,6 @@ public class AppSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				return; 
 			case AppPackage.MESSAGE:
 				sequence_Message(context, (Message) semanticObject); 
-				return; 
-			case AppPackage.MESSAGE_COLLECTION:
-				sequence_MessageCollection(context, (MessageCollection) semanticObject); 
 				return; 
 			case AppPackage.MODEL:
 				sequence_Model(context, (Model) semanticObject); 
@@ -217,39 +205,22 @@ public class AppSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
-	 *     ActualValue returns ActualValue
+	 *     Actual returns Actual
 	 *
 	 * Constraint:
-	 *     (stringdefault=StringDefault | numberdefault=NumberDefault | boolDefault=BoolDefault | param=[ActorFormal|FQN])
+	 *     (
+	 *         argName=[ComponentFormal|FQN] 
+	 *         (tringdefault=StringDefault | numberdefault=NumberDefault | boolDefault=BoolDefault | argValue=[ActorFormal|FQN])
+	 *     )
 	 */
-	protected void sequence_ActualValue(ISerializationContext context, ActualValue semanticObject) {
+	protected void sequence_Actual(ISerializationContext context, Actual semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Actual returns Actual
-	 *
-	 * Constraint:
-	 *     (argName=[ComponentFormal|FQN] argValue=ActualValue)
-	 */
-	protected void sequence_Actual(ISerializationContext context, Actual semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, AppPackage.Literals.ACTUAL__ARG_NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AppPackage.Literals.ACTUAL__ARG_NAME));
-			if (transientValues.isValueTransient(semanticObject, AppPackage.Literals.ACTUAL__ARG_VALUE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AppPackage.Literals.ACTUAL__ARG_VALUE));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getActualAccess().getArgNameComponentFormalFQNParserRuleCall_0_0_1(), semanticObject.getArgName());
-		feeder.accept(grammarAccess.getActualAccess().getArgValueActualValueParserRuleCall_2_0(), semanticObject.getArgValue());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
+	 *     Collection returns AppComponent
 	 *     Component returns AppComponent
 	 *     AppComponent returns AppComponent
 	 *
@@ -338,19 +309,6 @@ public class AppSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
-	 *     Collection returns ComponentCollection
-	 *     ComponentCollection returns ComponentCollection
-	 *
-	 * Constraint:
-	 *     (name=ID components+=Component*)
-	 */
-	protected void sequence_ComponentCollection(ISerializationContext context, ComponentCollection semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     ComponentFormal returns ComponentFormal
 	 *
 	 * Constraint:
@@ -393,6 +351,7 @@ public class AppSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
+	 *     Collection returns DeviceComponent
 	 *     Component returns DeviceComponent
 	 *     DeviceComponent returns DeviceComponent
 	 *
@@ -486,19 +445,7 @@ public class AppSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
-	 *     Collection returns MessageCollection
-	 *     MessageCollection returns MessageCollection
-	 *
-	 * Constraint:
-	 *     (name=ID messages+=Message*)
-	 */
-	protected void sequence_MessageCollection(ISerializationContext context, MessageCollection semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
+	 *     Collection returns Message
 	 *     Message returns Message
 	 *
 	 * Constraint:

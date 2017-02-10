@@ -11,16 +11,12 @@ import edu.vanderbilt.riaps.app.Requirement;
 
 import java.util.Collection;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -33,7 +29,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link edu.vanderbilt.riaps.app.impl.ComponentImpl#getName <em>Name</em>}</li>
  *   <li>{@link edu.vanderbilt.riaps.app.impl.ComponentImpl#getFormals <em>Formals</em>}</li>
  *   <li>{@link edu.vanderbilt.riaps.app.impl.ComponentImpl#getRequirements <em>Requirements</em>}</li>
  *   <li>{@link edu.vanderbilt.riaps.app.impl.ComponentImpl#getPorts <em>Ports</em>}</li>
@@ -41,28 +36,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class ComponentImpl extends MinimalEObjectImpl.Container implements Component
+public class ComponentImpl extends CollectionImpl implements Component
 {
-  /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected static final String NAME_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected String name = NAME_EDEFAULT;
-
   /**
    * The cached value of the '{@link #getFormals() <em>Formals</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -112,29 +87,6 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
   protected EClass eStaticClass()
   {
     return AppPackage.Literals.COMPONENT;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setName(String newName)
-  {
-    String oldName = name;
-    name = newName;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AppPackage.COMPONENT__NAME, oldName, name));
   }
 
   /**
@@ -209,8 +161,6 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
   {
     switch (featureID)
     {
-      case AppPackage.COMPONENT__NAME:
-        return getName();
       case AppPackage.COMPONENT__FORMALS:
         return getFormals();
       case AppPackage.COMPONENT__REQUIREMENTS:
@@ -232,9 +182,6 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
   {
     switch (featureID)
     {
-      case AppPackage.COMPONENT__NAME:
-        setName((String)newValue);
-        return;
       case AppPackage.COMPONENT__FORMALS:
         getFormals().clear();
         getFormals().addAll((Collection<? extends ComponentFormal>)newValue);
@@ -261,9 +208,6 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
   {
     switch (featureID)
     {
-      case AppPackage.COMPONENT__NAME:
-        setName(NAME_EDEFAULT);
-        return;
       case AppPackage.COMPONENT__FORMALS:
         getFormals().clear();
         return;
@@ -287,8 +231,6 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
   {
     switch (featureID)
     {
-      case AppPackage.COMPONENT__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case AppPackage.COMPONENT__FORMALS:
         return formals != null && !formals.isEmpty();
       case AppPackage.COMPONENT__REQUIREMENTS:
@@ -297,23 +239,6 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
         return ports != null && !ports.isEmpty();
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (name: ");
-    result.append(name);
-    result.append(')');
-    return result.toString();
   }
 
 } //ComponentImpl

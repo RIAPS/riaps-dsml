@@ -15,7 +15,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,35 +24,14 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link edu.vanderbilt.riaps.app.impl.MessageImpl#getName <em>Name</em>}</li>
  *   <li>{@link edu.vanderbilt.riaps.app.impl.MessageImpl#getType <em>Type</em>}</li>
  *   <li>{@link edu.vanderbilt.riaps.app.impl.MessageImpl#getKey <em>Key</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class MessageImpl extends MinimalEObjectImpl.Container implements Message
+public class MessageImpl extends CollectionImpl implements Message
 {
-  /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected static final String NAME_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected String name = NAME_EDEFAULT;
-
   /**
    * The cached value of the '{@link #getType() <em>Type</em>}' reference.
    * <!-- begin-user-doc -->
@@ -93,29 +71,6 @@ public class MessageImpl extends MinimalEObjectImpl.Container implements Message
   protected EClass eStaticClass()
   {
     return AppPackage.Literals.MESSAGE;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setName(String newName)
-  {
-    String oldName = name;
-    name = newName;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, AppPackage.MESSAGE__NAME, oldName, name));
   }
 
   /**
@@ -214,8 +169,6 @@ public class MessageImpl extends MinimalEObjectImpl.Container implements Message
   {
     switch (featureID)
     {
-      case AppPackage.MESSAGE__NAME:
-        return getName();
       case AppPackage.MESSAGE__TYPE:
         if (resolve) return getType();
         return basicGetType();
@@ -236,9 +189,6 @@ public class MessageImpl extends MinimalEObjectImpl.Container implements Message
   {
     switch (featureID)
     {
-      case AppPackage.MESSAGE__NAME:
-        setName((String)newValue);
-        return;
       case AppPackage.MESSAGE__TYPE:
         setType((FStructType)newValue);
         return;
@@ -259,9 +209,6 @@ public class MessageImpl extends MinimalEObjectImpl.Container implements Message
   {
     switch (featureID)
     {
-      case AppPackage.MESSAGE__NAME:
-        setName(NAME_EDEFAULT);
-        return;
       case AppPackage.MESSAGE__TYPE:
         setType((FStructType)null);
         return;
@@ -282,31 +229,12 @@ public class MessageImpl extends MinimalEObjectImpl.Container implements Message
   {
     switch (featureID)
     {
-      case AppPackage.MESSAGE__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case AppPackage.MESSAGE__TYPE:
         return type != null;
       case AppPackage.MESSAGE__KEY:
         return key != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (name: ");
-    result.append(name);
-    result.append(')');
-    return result.toString();
   }
 
 } //MessageImpl

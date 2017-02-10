@@ -187,74 +187,28 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 	public class CollectionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "edu.vanderbilt.riaps.App.Collection");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cMessageCollectionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cComponentCollectionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cMessageParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cComponentParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cApplicationParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//// These are the real FCO
 		//Collection:
-		//	MessageCollection
-		//	| ComponentCollection
+		//	Message
+		//	| Component
 		//	| Application;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//MessageCollection | ComponentCollection | Application
+		//Message | Component | Application
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//MessageCollection
-		public RuleCall getMessageCollectionParserRuleCall_0() { return cMessageCollectionParserRuleCall_0; }
+		//Message
+		public RuleCall getMessageParserRuleCall_0() { return cMessageParserRuleCall_0; }
 		
-		//ComponentCollection
-		public RuleCall getComponentCollectionParserRuleCall_1() { return cComponentCollectionParserRuleCall_1; }
+		//Component
+		public RuleCall getComponentParserRuleCall_1() { return cComponentParserRuleCall_1; }
 		
 		//Application
 		public RuleCall getApplicationParserRuleCall_2() { return cApplicationParserRuleCall_2; }
-	}
-	public class ComponentCollectionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "edu.vanderbilt.riaps.App.ComponentCollection");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cComponentCollectionAction_0 = (Action)cGroup.eContents().get(0);
-		private final Keyword cComponentCollectionKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Assignment cComponentsAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cComponentsComponentParserRuleCall_4_0 = (RuleCall)cComponentsAssignment_4.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
-		
-		//ComponentCollection:
-		//	{ComponentCollection}
-		//	'componentCollection' name=ID '{'
-		//	components+=Component*
-		//	'}';
-		@Override public ParserRule getRule() { return rule; }
-		
-		//{ComponentCollection} 'componentCollection' name=ID '{' components+=Component* '}'
-		public Group getGroup() { return cGroup; }
-		
-		//{ComponentCollection}
-		public Action getComponentCollectionAction_0() { return cComponentCollectionAction_0; }
-		
-		//'componentCollection'
-		public Keyword getComponentCollectionKeyword_1() { return cComponentCollectionKeyword_1; }
-		
-		//name=ID
-		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
-		
-		//ID
-		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
-		
-		//'{'
-		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
-		
-		//components+=Component*
-		public Assignment getComponentsAssignment_4() { return cComponentsAssignment_4; }
-		
-		//Component
-		public RuleCall getComponentsComponentParserRuleCall_4_0() { return cComponentsComponentParserRuleCall_4_0; }
-		
-		//'}'
-		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
 	}
 	public class ApplicationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "edu.vanderbilt.riaps.App.Application");
@@ -282,6 +236,12 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cDeploymentConstraintsDeploymentConstraintParserRuleCall_6_0 = (RuleCall)cDeploymentConstraintsAssignment_6.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_7 = (Keyword)cGroup.eContents().get(7);
 		
+		////ComponentCollection returns ComponentCollection:
+		////	{ComponentCollection}
+		////	'componentCollection' (name=ID)
+		////	'{'
+		////	(components+=Component)*
+		////	'}';
 		//Application:
 		//	{Application}
 		//	'application' name=ID ('extends' baseapp=[Application|FQN])?
@@ -594,53 +554,6 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getIDTerminalRuleCall_1_1() { return cIDTerminalRuleCall_1_1; }
 	}
-	public class MessageCollectionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "edu.vanderbilt.riaps.App.MessageCollection");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cMessageCollectionAction_0 = (Action)cGroup.eContents().get(0);
-		private final Keyword cMessageCollectionKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Assignment cMessagesAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cMessagesMessageParserRuleCall_4_0 = (RuleCall)cMessagesAssignment_4.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
-		
-		////Now this is the real section of component description
-		//MessageCollection:
-		//	{MessageCollection}
-		//	'messageCollection' name=ID '{'
-		//	messages+=Message*
-		//	'}';
-		@Override public ParserRule getRule() { return rule; }
-		
-		//{MessageCollection} 'messageCollection' name=ID '{' messages+=Message* '}'
-		public Group getGroup() { return cGroup; }
-		
-		//{MessageCollection}
-		public Action getMessageCollectionAction_0() { return cMessageCollectionAction_0; }
-		
-		//'messageCollection'
-		public Keyword getMessageCollectionKeyword_1() { return cMessageCollectionKeyword_1; }
-		
-		//name=ID
-		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
-		
-		//ID
-		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
-		
-		//'{'
-		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
-		
-		//messages+=Message*
-		public Assignment getMessagesAssignment_4() { return cMessagesAssignment_4; }
-		
-		//Message
-		public RuleCall getMessagesMessageParserRuleCall_4_0() { return cMessagesMessageParserRuleCall_4_0; }
-		
-		//'}'
-		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
-	}
 	public class MessageElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "edu.vanderbilt.riaps.App.Message");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -658,6 +571,13 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cKeyFFieldFQNParserRuleCall_4_1_0_1 = (RuleCall)cKeyFFieldCrossReference_4_1_0.eContents().get(1);
 		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
+		////Now this is the real section of component description
+		////MessageCollection returns MessageCollection:
+		////	{MessageCollection}
+		////	'messageCollection' (name=ID)
+		////	'{'
+		////	(messages+=Message)*
+		////	'}';
 		//Message:
 		//	'message' name=ID ':' type=[DataTypes::FStructType|FQN] ('key' key=[DataTypes::FField|FQN])? ';'?;
 		@Override public ParserRule getRule() { return rule; }
@@ -2189,84 +2109,75 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 	public class ActualElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "edu.vanderbilt.riaps.App.Actual");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cArgNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final CrossReference cArgNameComponentFormalCrossReference_0_0 = (CrossReference)cArgNameAssignment_0.eContents().get(0);
-		private final RuleCall cArgNameComponentFormalFQNParserRuleCall_0_0_1 = (RuleCall)cArgNameComponentFormalCrossReference_0_0.eContents().get(1);
-		private final Keyword cEqualsSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cArgValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cArgValueActualValueParserRuleCall_2_0 = (RuleCall)cArgValueAssignment_2.eContents().get(0);
+		private final Action cActualAction_0 = (Action)cGroup.eContents().get(0);
+		private final Assignment cArgNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cArgNameComponentFormalCrossReference_1_0 = (CrossReference)cArgNameAssignment_1.eContents().get(0);
+		private final RuleCall cArgNameComponentFormalFQNParserRuleCall_1_0_1 = (RuleCall)cArgNameComponentFormalCrossReference_1_0.eContents().get(1);
+		private final Keyword cEqualsSignKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
+		private final Assignment cTringdefaultAssignment_3_0 = (Assignment)cAlternatives_3.eContents().get(0);
+		private final RuleCall cTringdefaultStringDefaultParserRuleCall_3_0_0 = (RuleCall)cTringdefaultAssignment_3_0.eContents().get(0);
+		private final Assignment cNumberdefaultAssignment_3_1 = (Assignment)cAlternatives_3.eContents().get(1);
+		private final RuleCall cNumberdefaultNumberDefaultParserRuleCall_3_1_0 = (RuleCall)cNumberdefaultAssignment_3_1.eContents().get(0);
+		private final Assignment cBoolDefaultAssignment_3_2 = (Assignment)cAlternatives_3.eContents().get(2);
+		private final RuleCall cBoolDefaultBoolDefaultParserRuleCall_3_2_0 = (RuleCall)cBoolDefaultAssignment_3_2.eContents().get(0);
+		private final Assignment cArgValueAssignment_3_3 = (Assignment)cAlternatives_3.eContents().get(3);
+		private final CrossReference cArgValueActorFormalCrossReference_3_3_0 = (CrossReference)cArgValueAssignment_3_3.eContents().get(0);
+		private final RuleCall cArgValueActorFormalFQNParserRuleCall_3_3_0_1 = (RuleCall)cArgValueActorFormalCrossReference_3_3_0.eContents().get(1);
 		
 		//Actual:
-		//	argName=[ComponentFormal|FQN] '=' argValue=ActualValue;
+		//	{Actual} argName=[ComponentFormal|FQN] '=' (tringdefault=StringDefault | numberdefault=NumberDefault |
+		//	boolDefault=BoolDefault | argValue=[ActorFormal|FQN]);
 		@Override public ParserRule getRule() { return rule; }
 		
-		//argName=[ComponentFormal|FQN] '=' argValue=ActualValue
+		//{Actual} argName=[ComponentFormal|FQN] '=' (tringdefault=StringDefault | numberdefault=NumberDefault |
+		//boolDefault=BoolDefault | argValue=[ActorFormal|FQN])
 		public Group getGroup() { return cGroup; }
 		
+		//{Actual}
+		public Action getActualAction_0() { return cActualAction_0; }
+		
 		//argName=[ComponentFormal|FQN]
-		public Assignment getArgNameAssignment_0() { return cArgNameAssignment_0; }
+		public Assignment getArgNameAssignment_1() { return cArgNameAssignment_1; }
 		
 		//[ComponentFormal|FQN]
-		public CrossReference getArgNameComponentFormalCrossReference_0_0() { return cArgNameComponentFormalCrossReference_0_0; }
+		public CrossReference getArgNameComponentFormalCrossReference_1_0() { return cArgNameComponentFormalCrossReference_1_0; }
 		
 		//FQN
-		public RuleCall getArgNameComponentFormalFQNParserRuleCall_0_0_1() { return cArgNameComponentFormalFQNParserRuleCall_0_0_1; }
+		public RuleCall getArgNameComponentFormalFQNParserRuleCall_1_0_1() { return cArgNameComponentFormalFQNParserRuleCall_1_0_1; }
 		
 		//'='
-		public Keyword getEqualsSignKeyword_1() { return cEqualsSignKeyword_1; }
+		public Keyword getEqualsSignKeyword_2() { return cEqualsSignKeyword_2; }
 		
-		//argValue=ActualValue
-		public Assignment getArgValueAssignment_2() { return cArgValueAssignment_2; }
+		//(tringdefault=StringDefault | numberdefault=NumberDefault | boolDefault=BoolDefault | argValue=[ActorFormal|FQN])
+		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 		
-		//ActualValue
-		public RuleCall getArgValueActualValueParserRuleCall_2_0() { return cArgValueActualValueParserRuleCall_2_0; }
-	}
-	public class ActualValueElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "edu.vanderbilt.riaps.App.ActualValue");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Assignment cStringdefaultAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
-		private final RuleCall cStringdefaultStringDefaultParserRuleCall_0_0 = (RuleCall)cStringdefaultAssignment_0.eContents().get(0);
-		private final Assignment cNumberdefaultAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
-		private final RuleCall cNumberdefaultNumberDefaultParserRuleCall_1_0 = (RuleCall)cNumberdefaultAssignment_1.eContents().get(0);
-		private final Assignment cBoolDefaultAssignment_2 = (Assignment)cAlternatives.eContents().get(2);
-		private final RuleCall cBoolDefaultBoolDefaultParserRuleCall_2_0 = (RuleCall)cBoolDefaultAssignment_2.eContents().get(0);
-		private final Assignment cParamAssignment_3 = (Assignment)cAlternatives.eContents().get(3);
-		private final CrossReference cParamActorFormalCrossReference_3_0 = (CrossReference)cParamAssignment_3.eContents().get(0);
-		private final RuleCall cParamActorFormalFQNParserRuleCall_3_0_1 = (RuleCall)cParamActorFormalCrossReference_3_0.eContents().get(1);
-		
-		//ActualValue:
-		//	stringdefault=StringDefault | numberdefault=NumberDefault | boolDefault=BoolDefault | param=[ActorFormal|FQN];
-		@Override public ParserRule getRule() { return rule; }
-		
-		//stringdefault=StringDefault | numberdefault=NumberDefault | boolDefault=BoolDefault | param=[ActorFormal|FQN]
-		public Alternatives getAlternatives() { return cAlternatives; }
-		
-		//stringdefault=StringDefault
-		public Assignment getStringdefaultAssignment_0() { return cStringdefaultAssignment_0; }
+		//tringdefault=StringDefault
+		public Assignment getTringdefaultAssignment_3_0() { return cTringdefaultAssignment_3_0; }
 		
 		//StringDefault
-		public RuleCall getStringdefaultStringDefaultParserRuleCall_0_0() { return cStringdefaultStringDefaultParserRuleCall_0_0; }
+		public RuleCall getTringdefaultStringDefaultParserRuleCall_3_0_0() { return cTringdefaultStringDefaultParserRuleCall_3_0_0; }
 		
 		//numberdefault=NumberDefault
-		public Assignment getNumberdefaultAssignment_1() { return cNumberdefaultAssignment_1; }
+		public Assignment getNumberdefaultAssignment_3_1() { return cNumberdefaultAssignment_3_1; }
 		
 		//NumberDefault
-		public RuleCall getNumberdefaultNumberDefaultParserRuleCall_1_0() { return cNumberdefaultNumberDefaultParserRuleCall_1_0; }
+		public RuleCall getNumberdefaultNumberDefaultParserRuleCall_3_1_0() { return cNumberdefaultNumberDefaultParserRuleCall_3_1_0; }
 		
 		//boolDefault=BoolDefault
-		public Assignment getBoolDefaultAssignment_2() { return cBoolDefaultAssignment_2; }
+		public Assignment getBoolDefaultAssignment_3_2() { return cBoolDefaultAssignment_3_2; }
 		
 		//BoolDefault
-		public RuleCall getBoolDefaultBoolDefaultParserRuleCall_2_0() { return cBoolDefaultBoolDefaultParserRuleCall_2_0; }
+		public RuleCall getBoolDefaultBoolDefaultParserRuleCall_3_2_0() { return cBoolDefaultBoolDefaultParserRuleCall_3_2_0; }
 		
-		//param=[ActorFormal|FQN]
-		public Assignment getParamAssignment_3() { return cParamAssignment_3; }
+		//argValue=[ActorFormal|FQN]
+		public Assignment getArgValueAssignment_3_3() { return cArgValueAssignment_3_3; }
 		
 		//[ActorFormal|FQN]
-		public CrossReference getParamActorFormalCrossReference_3_0() { return cParamActorFormalCrossReference_3_0; }
+		public CrossReference getArgValueActorFormalCrossReference_3_3_0() { return cArgValueActorFormalCrossReference_3_3_0; }
 		
 		//FQN
-		public RuleCall getParamActorFormalFQNParserRuleCall_3_0_1() { return cParamActorFormalFQNParserRuleCall_3_0_1; }
+		public RuleCall getArgValueActorFormalFQNParserRuleCall_3_3_0_1() { return cArgValueActorFormalFQNParserRuleCall_3_3_0_1; }
 	}
 	public class InstanceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "edu.vanderbilt.riaps.App.Instance");
@@ -2288,6 +2199,8 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_3_3 = (Keyword)cGroup_3.eContents().get(3);
 		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
+		////ActualValue:
+		////	(stringdefault=StringDefault | numberdefault=NumberDefault | boolDefault=BoolDefault | param=[ActorFormal|FQN]);
 		//Instance:
 		//	name=ID ':' type=[Component|FQN] ('(' actuals+=Actual (',' actuals+=Actual)* ')')? ';'?;
 		@Override public ParserRule getRule() { return rule; }
@@ -2355,7 +2268,6 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 	private final NumberElements pNumber;
 	private final TerminalRule tBOOL;
 	private final CollectionElements pCollection;
-	private final ComponentCollectionElements pComponentCollection;
 	private final ApplicationElements pApplication;
 	private final DeploymentConstraintElements pDeploymentConstraint;
 	private final CollocateConstraintElements pCollocateConstraint;
@@ -2363,7 +2275,6 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 	private final ImportElements pImport;
 	private final ImportedFQNElements pImportedFQN;
 	private final FQNElements pFQN;
-	private final MessageCollectionElements pMessageCollection;
 	private final MessageElements pMessage;
 	private final ArtifactElements pArtifact;
 	private final ComponentElements pComponent;
@@ -2388,7 +2299,6 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 	private final InstanceSectionElements pInstanceSection;
 	private final WireElements pWire;
 	private final ActualElements pActual;
-	private final ActualValueElements pActualValue;
 	private final InstanceElements pInstance;
 	
 	private final Grammar grammar;
@@ -2410,7 +2320,6 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 		this.pNumber = new NumberElements();
 		this.tBOOL = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "edu.vanderbilt.riaps.App.BOOL");
 		this.pCollection = new CollectionElements();
-		this.pComponentCollection = new ComponentCollectionElements();
 		this.pApplication = new ApplicationElements();
 		this.pDeploymentConstraint = new DeploymentConstraintElements();
 		this.pCollocateConstraint = new CollocateConstraintElements();
@@ -2418,7 +2327,6 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 		this.pImport = new ImportElements();
 		this.pImportedFQN = new ImportedFQNElements();
 		this.pFQN = new FQNElements();
-		this.pMessageCollection = new MessageCollectionElements();
 		this.pMessage = new MessageElements();
 		this.pArtifact = new ArtifactElements();
 		this.pComponent = new ComponentElements();
@@ -2443,7 +2351,6 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 		this.pInstanceSection = new InstanceSectionElements();
 		this.pWire = new WireElements();
 		this.pActual = new ActualElements();
-		this.pActualValue = new ActualValueElements();
 		this.pInstance = new InstanceElements();
 	}
 	
@@ -2560,8 +2467,8 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//// These are the real FCO
 	//Collection:
-	//	MessageCollection
-	//	| ComponentCollection
+	//	Message
+	//	| Component
 	//	| Application;
 	public CollectionElements getCollectionAccess() {
 		return pCollection;
@@ -2571,19 +2478,12 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 		return getCollectionAccess().getRule();
 	}
 	
-	//ComponentCollection:
-	//	{ComponentCollection}
-	//	'componentCollection' name=ID '{'
-	//	components+=Component*
-	//	'}';
-	public ComponentCollectionElements getComponentCollectionAccess() {
-		return pComponentCollection;
-	}
-	
-	public ParserRule getComponentCollectionRule() {
-		return getComponentCollectionAccess().getRule();
-	}
-	
+	////ComponentCollection returns ComponentCollection:
+	////	{ComponentCollection}
+	////	'componentCollection' (name=ID)
+	////	'{'
+	////	(components+=Component)*
+	////	'}';
 	//Application:
 	//	{Application}
 	//	'application' name=ID ('extends' baseapp=[Application|FQN])?
@@ -2661,19 +2561,12 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	////Now this is the real section of component description
-	//MessageCollection:
-	//	{MessageCollection}
-	//	'messageCollection' name=ID '{'
-	//	messages+=Message*
-	//	'}';
-	public MessageCollectionElements getMessageCollectionAccess() {
-		return pMessageCollection;
-	}
-	
-	public ParserRule getMessageCollectionRule() {
-		return getMessageCollectionAccess().getRule();
-	}
-	
+	////MessageCollection returns MessageCollection:
+	////	{MessageCollection}
+	////	'messageCollection' (name=ID)
+	////	'{'
+	////	(messages+=Message)*
+	////	'}';
 	//Message:
 	//	'message' name=ID ':' type=[DataTypes::FStructType|FQN] ('key' key=[DataTypes::FField|FQN])? ';'?;
 	public MessageElements getMessageAccess() {
@@ -2946,7 +2839,8 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Actual:
-	//	argName=[ComponentFormal|FQN] '=' argValue=ActualValue;
+	//	{Actual} argName=[ComponentFormal|FQN] '=' (tringdefault=StringDefault | numberdefault=NumberDefault |
+	//	boolDefault=BoolDefault | argValue=[ActorFormal|FQN]);
 	public ActualElements getActualAccess() {
 		return pActual;
 	}
@@ -2955,16 +2849,8 @@ public class AppGrammarAccess extends AbstractGrammarElementFinder {
 		return getActualAccess().getRule();
 	}
 	
-	//ActualValue:
-	//	stringdefault=StringDefault | numberdefault=NumberDefault | boolDefault=BoolDefault | param=[ActorFormal|FQN];
-	public ActualValueElements getActualValueAccess() {
-		return pActualValue;
-	}
-	
-	public ParserRule getActualValueRule() {
-		return getActualValueAccess().getRule();
-	}
-	
+	////ActualValue:
+	////	(stringdefault=StringDefault | numberdefault=NumberDefault | boolDefault=BoolDefault | param=[ActorFormal|FQN]);
 	//Instance:
 	//	name=ID ':' type=[Component|FQN] ('(' actuals+=Actual (',' actuals+=Actual)* ')')? ';'?;
 	public InstanceElements getInstanceAccess() {

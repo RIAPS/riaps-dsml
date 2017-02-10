@@ -6,7 +6,6 @@ package edu.vanderbilt.riaps.app.impl;
 import edu.vanderbilt.riaps.app.Actor;
 import edu.vanderbilt.riaps.app.ActorFormal;
 import edu.vanderbilt.riaps.app.Actual;
-import edu.vanderbilt.riaps.app.ActualValue;
 import edu.vanderbilt.riaps.app.AppComponent;
 import edu.vanderbilt.riaps.app.AppFactory;
 import edu.vanderbilt.riaps.app.AppPackage;
@@ -17,7 +16,6 @@ import edu.vanderbilt.riaps.app.ClntPort;
 import edu.vanderbilt.riaps.app.Collection;
 import edu.vanderbilt.riaps.app.CollocateConstraint;
 import edu.vanderbilt.riaps.app.Component;
-import edu.vanderbilt.riaps.app.ComponentCollection;
 import edu.vanderbilt.riaps.app.ComponentFormal;
 import edu.vanderbilt.riaps.app.Deadline;
 import edu.vanderbilt.riaps.app.DeploymentConstraint;
@@ -31,7 +29,6 @@ import edu.vanderbilt.riaps.app.InstanceSection;
 import edu.vanderbilt.riaps.app.Mdodel;
 import edu.vanderbilt.riaps.app.MemoryUnits;
 import edu.vanderbilt.riaps.app.Message;
-import edu.vanderbilt.riaps.app.MessageCollection;
 import edu.vanderbilt.riaps.app.Model;
 import edu.vanderbilt.riaps.app.NumberDefault;
 import edu.vanderbilt.riaps.app.Port;
@@ -110,13 +107,6 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass componentCollectionEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   private EClass applicationEClass = null;
 
   /**
@@ -146,13 +136,6 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
    * @generated
    */
   private EClass importEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass messageCollectionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -327,13 +310,6 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass actualValueEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   private EClass instanceEClass = null;
 
   /**
@@ -494,26 +470,6 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getComponentCollection()
-  {
-    return componentCollectionEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getComponentCollection_Components()
-  {
-    return (EReference)componentCollectionEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getApplication()
   {
     return applicationEClass;
@@ -654,26 +610,6 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getMessageCollection()
-  {
-    return messageCollectionEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getMessageCollection_Messages()
-  {
-    return (EReference)messageCollectionEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getMessage()
   {
     return messageEClass;
@@ -684,19 +620,9 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getMessage_Name()
-  {
-    return (EAttribute)messageEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EReference getMessage_Type()
   {
-    return (EReference)messageEClass.getEStructuralFeatures().get(1);
+    return (EReference)messageEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -706,7 +632,7 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
    */
   public EReference getMessage_Key()
   {
-    return (EReference)messageEClass.getEStructuralFeatures().get(2);
+    return (EReference)messageEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -784,19 +710,9 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getComponent_Name()
-  {
-    return (EAttribute)componentEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EReference getComponent_Formals()
   {
-    return (EReference)componentEClass.getEStructuralFeatures().get(1);
+    return (EReference)componentEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -806,7 +722,7 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
    */
   public EReference getComponent_Requirements()
   {
-    return (EReference)componentEClass.getEStructuralFeatures().get(2);
+    return (EReference)componentEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -816,7 +732,7 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
    */
   public EReference getComponent_Ports()
   {
-    return (EReference)componentEClass.getEStructuralFeatures().get(3);
+    return (EReference)componentEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1604,7 +1520,7 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getActual_ArgValue()
+  public EReference getActual_Tringdefault()
   {
     return (EReference)actualEClass.getEStructuralFeatures().get(1);
   }
@@ -1614,9 +1530,9 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getActualValue()
+  public EReference getActual_Numberdefault()
   {
-    return actualValueEClass;
+    return (EReference)actualEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1624,9 +1540,9 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getActualValue_Stringdefault()
+  public EReference getActual_BoolDefault()
   {
-    return (EReference)actualValueEClass.getEStructuralFeatures().get(0);
+    return (EReference)actualEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -1634,29 +1550,9 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getActualValue_Numberdefault()
+  public EReference getActual_ArgValue()
   {
-    return (EReference)actualValueEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getActualValue_BoolDefault()
-  {
-    return (EReference)actualValueEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getActualValue_Param()
-  {
-    return (EReference)actualValueEClass.getEStructuralFeatures().get(3);
+    return (EReference)actualEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -1783,9 +1679,6 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
     collectionEClass = createEClass(COLLECTION);
     createEAttribute(collectionEClass, COLLECTION__NAME);
 
-    componentCollectionEClass = createEClass(COMPONENT_COLLECTION);
-    createEReference(componentCollectionEClass, COMPONENT_COLLECTION__COMPONENTS);
-
     applicationEClass = createEClass(APPLICATION);
     createEReference(applicationEClass, APPLICATION__BASEAPP);
     createEReference(applicationEClass, APPLICATION__ARTIFACTS);
@@ -1805,11 +1698,7 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
     importEClass = createEClass(IMPORT);
     createEAttribute(importEClass, IMPORT__IMPORTED_NAMESPACE);
 
-    messageCollectionEClass = createEClass(MESSAGE_COLLECTION);
-    createEReference(messageCollectionEClass, MESSAGE_COLLECTION__MESSAGES);
-
     messageEClass = createEClass(MESSAGE);
-    createEAttribute(messageEClass, MESSAGE__NAME);
     createEReference(messageEClass, MESSAGE__TYPE);
     createEReference(messageEClass, MESSAGE__KEY);
 
@@ -1821,7 +1710,6 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
     createEAttribute(artifactEClass, ARTIFACT__PATH);
 
     componentEClass = createEClass(COMPONENT);
-    createEAttribute(componentEClass, COMPONENT__NAME);
     createEReference(componentEClass, COMPONENT__FORMALS);
     createEReference(componentEClass, COMPONENT__REQUIREMENTS);
     createEReference(componentEClass, COMPONENT__PORTS);
@@ -1924,13 +1812,10 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
 
     actualEClass = createEClass(ACTUAL);
     createEReference(actualEClass, ACTUAL__ARG_NAME);
+    createEReference(actualEClass, ACTUAL__TRINGDEFAULT);
+    createEReference(actualEClass, ACTUAL__NUMBERDEFAULT);
+    createEReference(actualEClass, ACTUAL__BOOL_DEFAULT);
     createEReference(actualEClass, ACTUAL__ARG_VALUE);
-
-    actualValueEClass = createEClass(ACTUAL_VALUE);
-    createEReference(actualValueEClass, ACTUAL_VALUE__STRINGDEFAULT);
-    createEReference(actualValueEClass, ACTUAL_VALUE__NUMBERDEFAULT);
-    createEReference(actualValueEClass, ACTUAL_VALUE__BOOL_DEFAULT);
-    createEReference(actualValueEClass, ACTUAL_VALUE__PARAM);
 
     instanceEClass = createEClass(INSTANCE);
     createEAttribute(instanceEClass, INSTANCE__NAME);
@@ -1978,11 +1863,11 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
     stringDefaultEClass.getESuperTypes().add(this.getFormalDefault());
     numberDefaultEClass.getESuperTypes().add(this.getFormalDefault());
     boolDefaultEClass.getESuperTypes().add(this.getFormalDefault());
-    componentCollectionEClass.getESuperTypes().add(this.getCollection());
     applicationEClass.getESuperTypes().add(this.getCollection());
     collocateConstraintEClass.getESuperTypes().add(this.getDeploymentConstraint());
     distributeConstraintEClass.getESuperTypes().add(this.getDeploymentConstraint());
-    messageCollectionEClass.getESuperTypes().add(this.getCollection());
+    messageEClass.getESuperTypes().add(this.getCollection());
+    componentEClass.getESuperTypes().add(this.getCollection());
     deviceComponentEClass.getESuperTypes().add(this.getComponent());
     appComponentEClass.getESuperTypes().add(this.getComponent());
     pubPortEClass.getESuperTypes().add(this.getPort());
@@ -2009,9 +1894,6 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
     initEClass(collectionEClass, Collection.class, "Collection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getCollection_Name(), ecorePackage.getEString(), "name", null, 0, 1, Collection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(componentCollectionEClass, ComponentCollection.class, "ComponentCollection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getComponentCollection_Components(), this.getComponent(), null, "components", null, 0, -1, ComponentCollection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEClass(applicationEClass, Application.class, "Application", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getApplication_Baseapp(), this.getApplication(), null, "baseapp", null, 0, 1, Application.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getApplication_Artifacts(), this.getArtifact(), null, "artifacts", null, 0, -1, Application.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2031,11 +1913,7 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
     initEClass(importEClass, Import.class, "Import", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getImport_ImportedNamespace(), ecorePackage.getEString(), "importedNamespace", null, 0, 1, Import.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(messageCollectionEClass, MessageCollection.class, "MessageCollection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getMessageCollection_Messages(), this.getMessage(), null, "messages", null, 0, -1, MessageCollection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEClass(messageEClass, Message.class, "Message", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getMessage_Name(), ecorePackage.getEString(), "name", null, 0, 1, Message.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getMessage_Type(), theDatatypesPackage.getFStructType(), null, "type", null, 0, 1, Message.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getMessage_Key(), theDatatypesPackage.getFField(), null, "key", null, 0, 1, Message.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -2047,7 +1925,6 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
     initEAttribute(getArtifact_Path(), ecorePackage.getEString(), "path", null, 0, 1, Artifact.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(componentEClass, Component.class, "Component", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getComponent_Name(), ecorePackage.getEString(), "name", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getComponent_Formals(), this.getComponentFormal(), null, "formals", null, 0, -1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getComponent_Requirements(), this.getRequirement(), null, "requirements", null, 0, -1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getComponent_Ports(), this.getPort(), null, "ports", null, 0, -1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2150,13 +2027,10 @@ public class AppPackageImpl extends EPackageImpl implements AppPackage
 
     initEClass(actualEClass, Actual.class, "Actual", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getActual_ArgName(), this.getComponentFormal(), null, "argName", null, 0, 1, Actual.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getActual_ArgValue(), this.getActualValue(), null, "argValue", null, 0, 1, Actual.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(actualValueEClass, ActualValue.class, "ActualValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getActualValue_Stringdefault(), this.getStringDefault(), null, "stringdefault", null, 0, 1, ActualValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getActualValue_Numberdefault(), this.getNumberDefault(), null, "numberdefault", null, 0, 1, ActualValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getActualValue_BoolDefault(), this.getBoolDefault(), null, "boolDefault", null, 0, 1, ActualValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getActualValue_Param(), this.getActorFormal(), null, "param", null, 0, 1, ActualValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getActual_Tringdefault(), this.getStringDefault(), null, "tringdefault", null, 0, 1, Actual.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getActual_Numberdefault(), this.getNumberDefault(), null, "numberdefault", null, 0, 1, Actual.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getActual_BoolDefault(), this.getBoolDefault(), null, "boolDefault", null, 0, 1, Actual.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getActual_ArgValue(), this.getActorFormal(), null, "argValue", null, 0, 1, Actual.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(instanceEClass, Instance.class, "Instance", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getInstance_Name(), ecorePackage.getEString(), "name", null, 0, 1, Instance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

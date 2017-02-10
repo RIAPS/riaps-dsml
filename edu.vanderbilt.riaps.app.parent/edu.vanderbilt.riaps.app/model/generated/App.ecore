@@ -11,10 +11,6 @@
   <eClassifiers xsi:type="ecore:EClass" name="Collection">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ComponentCollection" eSuperTypes="#//Collection">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="components" upperBound="-1"
-        eType="#//Component" containment="true"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Application" eSuperTypes="#//Collection">
     <eStructuralFeatures xsi:type="ecore:EReference" name="baseapp" eType="#//Application"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="artifacts" upperBound="-1"
@@ -40,12 +36,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Import">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="importedNamespace" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="MessageCollection" eSuperTypes="#//Collection">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="messages" upperBound="-1"
-        eType="#//Message" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Message">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Message" eSuperTypes="#//Collection">
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="ecore:EClass platform:/resource/edu.vanderbilt.riaps.datatypes/model/generated/Datatypes.ecore#//FStructType"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="key" eType="ecore:EClass platform:/resource/edu.vanderbilt.riaps.datatypes/model/generated/Datatypes.ecore#//FField"/>
   </eClassifiers>
@@ -56,8 +47,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="path" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Component">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Component" eSuperTypes="#//Collection">
     <eStructuralFeatures xsi:type="ecore:EReference" name="formals" upperBound="-1"
         eType="#//ComponentFormal" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="requirements" upperBound="-1"
@@ -181,17 +171,13 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Actual">
     <eStructuralFeatures xsi:type="ecore:EReference" name="argName" eType="#//ComponentFormal"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="argValue" eType="#//ActualValue"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ActualValue">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="stringdefault" eType="#//StringDefault"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tringdefault" eType="#//StringDefault"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="numberdefault" eType="#//NumberDefault"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="boolDefault" eType="#//BoolDefault"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="param" eType="#//ActorFormal"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="argValue" eType="#//ActorFormal"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Instance">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

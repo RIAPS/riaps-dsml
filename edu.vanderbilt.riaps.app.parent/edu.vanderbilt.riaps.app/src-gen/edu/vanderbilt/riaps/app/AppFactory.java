@@ -78,15 +78,6 @@ public interface AppFactory extends EFactory
   Collection createCollection();
 
   /**
-   * Returns a new object of class '<em>Component Collection</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Component Collection</em>'.
-   * @generated
-   */
-  ComponentCollection createComponentCollection();
-
-  /**
    * Returns a new object of class '<em>Application</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -130,15 +121,6 @@ public interface AppFactory extends EFactory
    * @generated
    */
   Import createImport();
-
-  /**
-   * Returns a new object of class '<em>Message Collection</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Message Collection</em>'.
-   * @generated
-   */
-  MessageCollection createMessageCollection();
 
   /**
    * Returns a new object of class '<em>Message</em>'.
@@ -355,15 +337,6 @@ public interface AppFactory extends EFactory
    * @generated
    */
   Actual createActual();
-
-  /**
-   * Returns a new object of class '<em>Actual Value</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Actual Value</em>'.
-   * @generated
-   */
-  ActualValue createActualValue();
 
   /**
    * Returns a new object of class '<em>Instance</em>'.
