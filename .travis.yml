@@ -11,11 +11,12 @@ jdk:
 script: mvn -v && pushd edu.vanderbilt.riaps.system.parent && mvn clean install &&
   popd && pushd edu.vanderbilt.riaps.system.parent/edu.vanderbilt.riaps.system.repository/target && tar -zcvf repository.tar.gz repository/ && popd
 deploy:
-  provider: releases
+  provider: pages
   overwrite: true
   api_key:
     secure: cRbhIK/SlWTFZX4T9btnnDvtNZbWFXBsXpx0XoOqCPrwbLg2fri6DLi/fcNNgK26Kbshly5d5/CPvrVajR32a3eRr36S+OoNLqh7r2w27VnQK4LGk699Pk7ztz0ZxbFJ5S6OMkV2Rswk6dZgjUcmI/mKPBZIx8qlR9Kr0QIZBna0kZPNx+WvnvyKd7JFtYAiJp3m3w7wUBh5QerwoRcJ7s/hDRzqkH5d1czWbFaTLbW4e2WZKbD2hUkmnt4vhINSDN+8EDl8xq7cp81InPiRhO1tRXdFbllpdp1XZqQ0QKFNRepDD3mQCm+pen7EQ8SfafwblJFl4i12RzGYKeFizfJ4nzNEYGHnhc/6WJ4ZxcIWYGaCYaM6KYNkovQNinPLnDPwRsVZBkoi/k+hQwWB2kabCthoImvuGlV/8SEUCh1Jhena2Qd6pIaFJWnAyi3ckyuo65fokH3eP7AnnH/e8uVjmN5a8tkIq7sT/pJkvz7u00xJp9VBprMTeqtTKIinoMKC/RErzp0IW/BzssPttJ+5cz5Rzbehmoj/wSKnC9YKXL29Gm9NxxNtywA+iGPiz+fY6izC2eRlgw78Yb+ybfdI3++PzZF4qU9iN7EQwkIa3HI0jdWS0sQKeXrKmW8rBRWMYLE/UEkgtFjy1Z71Y27UjAe/zRr66oXpBGQoGIY=
-  file: 'edu.vanderbilt.riaps.system.parent/edu.vanderbilt.riaps.system.repository/target/repository.tar.gz'
+  #file: 'edu.vanderbilt.riaps.system.parent/edu.vanderbilt.riaps.system.repository/target/repository.tar.gz'
+  local_dir: edu.vanderbilt.riaps.system.parent/edu.vanderbilt.riaps.system.repository/target
   skip_cleanup: true
   on:
     repo: RIAPS/riapsml
