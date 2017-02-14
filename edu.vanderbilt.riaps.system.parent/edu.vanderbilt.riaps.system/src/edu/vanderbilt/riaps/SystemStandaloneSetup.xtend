@@ -3,13 +3,74 @@
  */
 package edu.vanderbilt.riaps
 
+import com.google.inject.Injector;
+import java.io.File
+import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.xtext.resource.XtextResourceSet
+import org.eclipse.xtext.resource.XtextResource
+import org.eclipse.xtext.validation.CheckMode
+import org.eclipse.xtext.util.CancelIndicator
 
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
  */
 class SystemStandaloneSetup extends SystemStandaloneSetupGenerated {
 
+	private static Injector injector;
+	private static Injector inject2;
+
 	def static void doSetup() {
-		new SystemStandaloneSetup().createInjectorAndDoEMFRegistration()
+		injector = new SystemStandaloneSetup().createInjectorAndDoEMFRegistration()
+		inject2 = new AppStandaloneSetup().createInjectorAndDoEMFRegistration()
+	}
+
+	public def static void main(String[] args) {
+		if (args.size <= 0) {
+			System.out.println("specify the file containing the model, args.size is " + args.size)
+			System.exit(1)
+		}
+		var url = args.get(0)
+		System.out.println("Generating for the file " + url)
+		var file = new File(url)
+		if (!file.exists()) {
+			System.out.println("file does not exist " + url)
+			System.exit(1)
+		}
+		doSetup();
+
+		var resourceSet = injector.getInstance(typeof(XtextResourceSet))
+		var resourceSet2 = inject2.getInstance(typeof(XtextResourceSet))
+		var resource = resourceSet.getResource(URI.createFileURI(url), true);
+		for (arg : args) {
+			var uril = URI.createFileURI(arg)
+			var segments = uril.segments
+			var filename = segments.get(segments.size - 1)
+			System.out.println(filename)
+			var extlist = filename.split('\\.')
+			if (extlist.size == 2) {
+				var ext = extlist.get(1)
+				System.out.println(ext)
+				if(ext=="depl")
+				{
+					resourceSet.getResource(URI.createFileURI(arg), true)
+					
+				}
+				else if (ext=="riaps")
+				{
+					resourceSet.getResource(URI.createFileURI(arg), true)
+				}				
+
+			}
+			
+			
+
+			
+		}
+		var validator = (resource as XtextResource).resourceServiceProvider.resourceValidator
+		var issues = validator.validate(resource, CheckMode.ALL, CancelIndicator.NullImpl)
+		for (issue : issues) {
+			System.out.println(issue.getMessage());
+		}
 	}
 }
