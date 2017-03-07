@@ -6,7 +6,7 @@ package edu.vanderbilt.riaps.formatting2
 import com.google.inject.Inject
 
 
-import edu.vanderbilt.riaps.datatypes.FTypeCollection
+
 import edu.vanderbilt.riaps.datatypes.Import
 import edu.vanderbilt.riaps.datatypes.Model
 import edu.vanderbilt.riaps.services.DatatypesGrammarAccess
@@ -30,8 +30,8 @@ class DatatypesFormatter extends AbstractFormatter2 {
 		model.prepend[noSpace].append[noSpace; newLine]
 		
 		
-		for (FTypeCollection typeCollections : model.getTypeCollections()) {
-			typeCollections.format;
+		for (FType Type : model.types) {
+			Type.format;
 		}
 //		for (FMessageCollection messageCollections : model.getMessageCollections()) {
 //			messageCollections.format;
@@ -40,23 +40,7 @@ class DatatypesFormatter extends AbstractFormatter2 {
 
 	
 
-	def dispatch void format(FTypeCollection collection, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		val open = collection.regionFor.keyword("{").prepend[noSpace; newLine].append[noSpace; newLine]
-		val close = collection.regionFor.keyword("}").prepend[noSpace; newLine].append[noSpace; newLine]
-		interior(open, close)[indent]
-		for (FType elements : collection.getTypes()) {
-			elements.format;
-		}
 
-		var v = collection.getVersion
-		{
-			val opena = v.regionFor.keyword("{").prepend[noSpace; newLine].append[noSpace; newLine]
-			val closea = v.regionFor.keyword("}").prepend[noSpace; newLine].append[noSpace; newLine]
-			interior(opena, closea)[indent]
-		}
-		collection.prepend[noSpace; newLine].append[noSpace; newLine]
-	}
 
 	def dispatch void format(FType collection, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 

@@ -8,7 +8,7 @@ Model returns Mdodel:
 	{Model}
 	'package' name=FQN
 	(imports+=Import)*
-	( typeCollections+=FTypeCollection)*
+	( types+=FType)*
 	;
 // **************************************************************
 // general
@@ -29,15 +29,7 @@ FQN:
 
 	
 
-FTypeCollection returns FTypeCollection:
-	{FTypeCollection}
-	'types' (name=ID)?
-	'{'
-		('version' version=FVersion)?
-		(
-			types+=FType
-		)*
-	'}';
+
 
 FMessage returns FMessage:
 	{FMessage}
@@ -73,23 +65,19 @@ enum FBasicTypeId returns FBasicTypeId:
 	
 FType returns FType:
 	FEnumerationType |
-	FStructType |
-	FMapType ;
+	FStructType ;
+	
 	
 FStructType returns FStructType:
 	{FStructType}
-	'struct' name=ID
-		(
-			('extends' base=[FStructType|FQN])
-		)?
+	'struct' name=ID		
 	'{'
 		(elements+=FField)*
     '}';
 
 FEnumerationType returns FEnumerationType:
 	{FEnumerationType}
-	'enumeration' name=ID
-	('extends' base=[FEnumerationType|FQN])?
+	'enumeration' name=ID	
 	'{'
 		(enumerators+=FEnumerator (','? enumerators+=FEnumerator)*)?
     '}';
@@ -98,15 +86,10 @@ FEnumerator returns FEnumerator:
 	{FEnumerator}
 	name=ID ('=' value=STRING)?
     ;
-    
-FMapType returns FMapType:
-	{FMapType}
-	'map' name=ID '{'
-		keyType=FTypeRef 'to' valueType=FTypeRef
-	'}';
+
  
 FField:
-	type=FTypeRef (list?='['  ']')? name=ID;
+	type=FTypeRef  name=ID (list?='['  ']')?;
 	
 
 	

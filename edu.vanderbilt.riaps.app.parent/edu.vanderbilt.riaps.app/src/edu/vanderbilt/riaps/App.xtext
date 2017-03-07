@@ -55,7 +55,7 @@ Collection:
 
 Application returns Application:
 	{Application}
-	'application' (name=ID) ('extends' baseapp=[Application|FQN])?
+	'app' (name=ID)
 	'{'
 	((artifacts+=Artifact) | (actors+=Actor) | (components+=Component) | (messages+=Message))*
 	(deploymentConstraints+=DeploymentConstraint)*
