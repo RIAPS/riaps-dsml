@@ -2,3 +2,10 @@
 
 # riapsml
 RIAPS Modeling Language
+# To start with the development
+- import the git repository
+- run the mvn build once
+
+```
+pushd edu.vanderbilt.riaps.system.parent && mvn clean install &&
+```
