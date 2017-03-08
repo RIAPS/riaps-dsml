@@ -89,7 +89,7 @@ FEnumerator returns FEnumerator:
 
  
 FField:
-	type=FTypeRef  name=ID (list?='['  ']')?;
+	name=ID ':' type=FTypeRef (list?='['  ']')?;
 	
 
 	
