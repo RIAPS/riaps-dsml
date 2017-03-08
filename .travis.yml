@@ -19,4 +19,4 @@ deploy:
   #local_dir: edu.vanderbilt.riaps.system.parent/edu.vanderbilt.riaps.system.repository/target
   skip_cleanup: true
   on:
-    repo: RIAPS/riapsml
+    tags: true
