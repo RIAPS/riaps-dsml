@@ -11,3 +11,9 @@ buildNumber.properties
 .mvn/timing.properties
 *._trace
 *.jar
+/edu.vanderbilt.riaps.app.parent/edu.vanderbilt.riaps.app/model/generated/App.ecore
+/edu.vanderbilt.riaps.app.parent/edu.vanderbilt.riaps.app/model/generated/App.genmodel
+/edu.vanderbilt.riaps.datatypes.parent/edu.vanderbilt.riaps.datatypes/model/generated/Datatypes.ecore
+/edu.vanderbilt.riaps.datatypes.parent/edu.vanderbilt.riaps.datatypes/model/generated/Datatypes.genmodel
+/edu.vanderbilt.riaps.system.parent/edu.vanderbilt.riaps.system/model/generated/System.ecore
+/edu.vanderbilt.riaps.system.parent/edu.vanderbilt.riaps.system/model/generated/System.genmodel
