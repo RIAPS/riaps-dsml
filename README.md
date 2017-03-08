@@ -9,3 +9,10 @@ RIAPS Modeling Language
 ```
 pushd edu.vanderbilt.riaps.system.parent && mvn clean install && popd
 ```
+
+- Then you have to import the workspace into eclipse. Ensure that you select the option for searching for nested projects.
+![import](docs/media/eclipse_import.png)
+- Once you have imported the project into workspace, start compiling the projects in the following sequence 
+  # edu.vanderbilt.riaps.datatypes. To compile the project. Exapnd the project selecion, edu.vanderbilt.riaps.datatypes->src->edu.vanderbilt.riaps->GenerateDatatypes.mwe2, rightclick on the mwe2 file, select run as MWE2 workflow.
+  # edu.vanderbilt.riaps.app. Compile similarly/
+  # edu.vanderbilt.riaps.system . Compile Similarly
