@@ -1,0 +1,12 @@
+package riapsex
+import riapsex.mymessage
+app name {
+	message m1: mymessage
+	component test {
+		
+		pub p1: m1
+		sub p2: m1
+		
+		
+	}
+}

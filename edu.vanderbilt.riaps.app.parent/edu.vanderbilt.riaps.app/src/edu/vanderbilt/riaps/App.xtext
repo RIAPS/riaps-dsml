@@ -42,9 +42,9 @@ terminal BOOL:
 
 	// These are the real FCO
 Collection:
-	Message
-	| Component
-	| Application;
+	//Message
+	//| Component
+	 Application;
 
 //ComponentCollection returns ComponentCollection:
 //	{ComponentCollection}
