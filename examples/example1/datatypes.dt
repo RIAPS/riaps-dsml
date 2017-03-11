@@ -1,5 +1,5 @@
 package riapsex
 struct mymessage
 {
-	content: String
+	content: String 
 }

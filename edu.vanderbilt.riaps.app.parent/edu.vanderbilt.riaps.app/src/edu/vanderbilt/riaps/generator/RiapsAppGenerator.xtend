@@ -9,8 +9,6 @@ import java.util.logging.Logger
 import java.util.logging.Level
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
-import org.eclipse.ui.console.MessageConsole
-import org.eclipse.ui.console.MessageConsoleStream
 import edu.vanderbilt.riaps.Console
 import edu.vanderbilt.riaps.app.Application
 import edu.vanderbilt.riaps.app.Actor
@@ -56,7 +54,7 @@ class RiapsAppGenerator extends AbstractGenerator {
 				e.fullyQualifiedName.toString("/") + ".json",
 				messageString
 			)
-			
+			 
 			/*
 			var builder = new GsonBuilder;
         	var gson = builder.create();

@@ -99,10 +99,6 @@
 					</filesets>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.eclipse.ui</groupId>
-				<artifactId>console</artifactId>
-			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
