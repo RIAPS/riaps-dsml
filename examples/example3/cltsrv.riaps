@@ -1,0 +1,33 @@
+package t1
+import t1.mystruct
+
+
+ 
+app CltSrv {
+    message CltReq : mystruct 
+    message SrvRep: mystruct
+     
+    // Client
+    component Client {
+    	clt cltReqPort : (CltReq,SrvRep)
+    	timer clock 1000 ms
+    }
+    
+    // Server
+    component Server {
+    	srv srvRepPort : (CltReq, SrvRep)
+    }
+    
+    actor ClientActor {
+    	{ 
+    		client : Client;
+    	}
+    }
+    
+    actor ServerActor {
+    	{
+    		server : Server;
+    	}
+    }
+    
+}
