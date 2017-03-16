@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.com/RIAPS/riapsml.svg?token=pyUEeBLkG7FqiYPhyfxp&branch=master)](https://travis-ci.com/RIAPS/riapsml)
-
+[![Build Status](https://travis-ci.com/RIAPS/riaps-dsml.svg?token=pyUEeBLkG7FqiYPhyfxp&branch=master)](https://travis-ci.com/RIAPS/riaps-dsml)
 # riapsml
 RIAPS Modeling Language
 # To start with the development
