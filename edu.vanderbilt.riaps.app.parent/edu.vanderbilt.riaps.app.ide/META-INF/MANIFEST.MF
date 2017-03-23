@@ -7,7 +7,8 @@ Bundle-SymbolicName: edu.vanderbilt.riaps.app.ide; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: edu.vanderbilt.riaps.app,
  org.eclipse.xtext.ide,
- org.eclipse.xtext.xbase.ide
+ org.eclipse.xtext.xbase.ide,
+ org.antlr.runtime
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: edu.vanderbilt.riaps.ide.contentassist.antlr.internal,
  edu.vanderbilt.riaps.ide.contentassist.antlr
