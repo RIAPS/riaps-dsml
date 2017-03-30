@@ -28,7 +28,7 @@ public class RiapsAppGenerator extends AbstractGenerator {
 				e.fullyQualifiedName.toString("/") + ".json",
 				formattedString
 			)
-			Console.instance.log(java.util.logging.Level.INFO,e.fullyQualifiedName.toString("/") + ".json generated");
+			Console.instance.log(java.util.logging.Level.INFO, e.fullyQualifiedName.toString("/") + ".json generated");
 		}
 
 	}
