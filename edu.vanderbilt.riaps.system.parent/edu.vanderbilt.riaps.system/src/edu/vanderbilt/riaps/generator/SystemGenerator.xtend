@@ -7,7 +7,7 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
-
+import com.google.inject.Inject
 /**
  * Generates code from your model files on save.
  * 
@@ -15,7 +15,9 @@ import org.eclipse.xtext.generator.IGeneratorContext
  */
 class SystemGenerator extends AbstractGenerator {
 
+	@Inject RiapsSystemGenerator g1
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
+		g1.doGenerate(resource, fsa, context)
 //		fsa.generateFile('greetings.txt', 'People to greet: ' + 
 //			resource.allContents
 //				.filter(typeof(Greeting))

@@ -14,8 +14,8 @@ import com.google.inject.Inject
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#code-generation
  */
 class AppGenerator extends AbstractGenerator {
-@Inject RiapsAppGenerator g1
 
+	@Inject RiapsAppGenerator g1
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		g1.doGenerate(resource, fsa, context)
 //		fsa.generateFile('greetings.txt', 'People to greet: ' + 
