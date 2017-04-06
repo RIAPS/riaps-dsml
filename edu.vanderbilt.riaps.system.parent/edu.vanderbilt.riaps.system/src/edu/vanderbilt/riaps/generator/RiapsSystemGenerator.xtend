@@ -31,7 +31,7 @@ class RiapsSystemGenerator extends AbstractGenerator{
 
 		var formattedString = gson.toJson(container);
 		fsa.generateFile(fileName, formattedString);
-		Console.getInstance().log(java.util.logging.Level.INFO, fileName + "generated");
+		Console.getInstance().log(java.util.logging.Level.INFO, fileName + " generated");
 	
 	}
 }

@@ -30,7 +30,9 @@ public class ActorDepl {
 		if (loc instanceof LocationNodes){
 			LocationNodes locs = (LocationNodes)loc;
 			for (KnownNodes kn : locs.getHosts()){
-				target.add(kn.getNetinterface().get(0).getIp());
+				if (kn.getNetinterface().size() > 0){
+					target.add(kn.getNetinterface().get(0).getIp());
+				}
 			}
 		}
 	}
