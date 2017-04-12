@@ -9,6 +9,7 @@ import edu.vanderbilt.riaps.app.Actor;
 import edu.vanderbilt.riaps.app.ComponentFormal;
 import edu.vanderbilt.riaps.app.ActorFormal;
 import edu.vanderbilt.riaps.app.Message;
+import edu.vanderbilt.riaps.app.Instance;
 
 @SuppressWarnings({"unused", "unchecked", "rawtypes"})
 public class JsonActor {
@@ -29,6 +30,7 @@ public class JsonActor {
 		this.criticals = new ArrayList<>();		
 		this.formals = new ArrayList<>();
 		this.wires = new ArrayList<>();
+		this.instances = new HashMap<String, Object>();
 		
 		for (ActorFormal af : a.getFormals()){
 			this.formals.add(new Argument(af));
@@ -50,6 +52,11 @@ public class JsonActor {
 			HashMap<String, String> critical = new HashMap<String, String>();
 			critical.put("type", l.getName());
 			this.locals.add(critical);
+		}
+		
+		for (Instance i: a.getCompsection().getInstances()){
+			JsonInstance instance = new JsonInstance(i);
+			this.instances.put(instance.getName(), instance);
 		}
 	}
 
