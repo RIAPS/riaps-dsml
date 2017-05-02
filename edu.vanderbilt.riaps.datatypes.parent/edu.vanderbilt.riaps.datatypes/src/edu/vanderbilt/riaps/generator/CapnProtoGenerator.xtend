@@ -21,6 +21,7 @@ import java.util.logging.Level
 import edu.vanderbilt.riaps.datatypes.FField
 import edu.vanderbilt.riaps.datatypes.FEnumerationType
 import java.util.Random
+import java.util.ArrayList
 
 class CapnProtoGenerator extends AbstractGenerator {
 	@Inject extension IQualifiedNameProvider
@@ -115,8 +116,9 @@ class CapnProtoGenerator extends AbstractGenerator {
 		«var s = x.getSegmentCount»		
 		@0x«createRandomString(8)»;	
 		enum «message.name» {
-			«FOR j : message.enumerators»
-				«j.name»	@0;
+			«var fields = createEnumFields(message)»
+			«FOR j : fields»
+				«j»
 			«ENDFOR»
 			};
 	'''
@@ -139,13 +141,10 @@ class CapnProtoGenerator extends AbstractGenerator {
 		
 			struct «message.name»
 			{
-			«FOR j : message.elements»	
-				«IF j.isList»
-					«j.name» @0: List(«j.idlType»);
-				«ELSE»					
-					«j.name» @0: «j.idlType»;									
-				«ENDIF»	
-			«ENDFOR»
+				«var fieldList = createStructFields(message)»
+				«FOR field : fieldList»
+					«field»
+				«ENDFOR»
 			};
 	'''
 
@@ -170,4 +169,32 @@ class CapnProtoGenerator extends AbstractGenerator {
 
 	}
 
+	def ArrayList<String> createStructFields(FStructType struct) {
+		val fieldList = new ArrayList<String>()
+		for (var i = 0; i < struct.elements.length; i++) {
+				if (struct.elements.get(i).isList)	{
+					val field = '''
+					«struct.elements.get(i).name» @«i»: List(«struct.elements.get(i).idlType»);
+					'''
+					fieldList.add(field)
+				}
+				else {
+					val field = '''
+					«struct.elements.get(i).name» @«i»: «struct.elements.get(i).idlType»;
+					'''
+					fieldList.add(field)
+				}
+		}
+		return fieldList
+	}
+	
+	def ArrayList<String> createEnumFields(FEnumerationType enumeration) {
+		val fieldList = new ArrayList<String>()
+		for (var i = 0; i < enumeration.enumerators.length; i++) {
+			val field = '''
+			«enumeration.enumerators.get(i).name»	@«i»;
+			'''
+		}
+		return fieldList
+	}
 }
