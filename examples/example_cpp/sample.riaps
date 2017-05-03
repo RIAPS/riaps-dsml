@@ -1,0 +1,46 @@
+package riapsex 
+
+import riapsex.*
+
+app DistributedEstimator {
+	message sensorReady: SensorReady; 
+    message sensorQuery: SensorQuery; 
+    message sensorValue: SensorValue; 
+    message sensorEstimate: Estimate;
+	// Sensor component
+    component Sensor {
+      timer clock 1000 s; 							// Periodic timer trigger to trigger sensor every 1 sec
+      pub ready : sensorReady ;						// Publish port for SensorReady messages 
+//      rep request : ( SensorQuery , SensorValue ) ;	// Reply port to query the sensor and retrieve its value
+    }
+  
+ 
+        // Local estimator component
+    component LocalEstimator (iArg="",fArg="",sArg="",bArg="") {
+      sub ready : sensorReady ;						// Subscriber port to trigger component with SensorReady messages
+      req query : (sensorQuery , sensorValue ) ;	// causing eclipse to crash!!!!!!
+      pub estimate : sensorEstimate ;						// Publish port to publish estimated value messages
+    } 
+    
+        // Global estimator
+    component GlobalEstimator (iArg=123,fArg=4.56,sArg="string",bArg=true) {
+      sub estimate : sensorEstimate ;						// Subscriber port to receive the local estimates
+      timer wakeup 3000 s; 							// Periodic timer to wake up estimator every 3 sec
+    }
+    
+        // Estimator actor
+    actor Estimator {
+
+       {  // Sensor component
+          sensor : Sensor;								
+          // Local estimator, publishes global message 'Estimate'
+		  filter : LocalEstimator(iArg=789,fArg=0.12,sArg="text",bArg=false);
+       }
+     }
+       
+       actor Aggregator (posArg="",optArg="optString") {
+       {  // Global estimator, subscribes to 'Estimate' messages
+          aggr : GlobalEstimator(iArg=posArg,sArg=optArg,bArg=true);	
+       }
+    }
+} 
