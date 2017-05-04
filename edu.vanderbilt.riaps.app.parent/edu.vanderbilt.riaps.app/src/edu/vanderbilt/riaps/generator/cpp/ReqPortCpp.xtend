@@ -31,8 +31,7 @@ class ReqPortCpp extends PortCppBase {
     
     override String generateBaseCpp() {
     	val content = '''
-	        bool «componentName»Base::Send«portName»(capnp::MallocMessageBuilder &messageBuilder,
-	                                           messages::«reqType»::Builder &message) {
+	        bool «componentName»Base::Send«portName»(capnp::MallocMessageBuilder &messageBuilder, messages::«reqType»::Builder &message) {
 	            return SendMessageOnPort(messageBuilder, «macroName»);
 	        }
 	

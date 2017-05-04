@@ -100,13 +100,11 @@ class CompCpp {
 	namespace «applicationName.toLowerCase» {
 	    namespace components {
 	    	
-	    	«componentName»Base::«componentName»Base(_component_conf_j &config, riaps::Actor &actor) : ComponentBase(config,
-	    	                                                                                                         actor) {
+	    	«componentName»Base::«componentName»Base(_component_conf_j &config, riaps::Actor &actor) : ComponentBase(config, actor) {
 	    	
 	    	}
 	    	
-	    	void «componentName»Base::DispatchMessage(capnp::FlatArrayMessageReader* capnpreader,
-	    						riaps::ports::PortBase *port) {
+	    	void «componentName»Base::DispatchMessage(capnp::FlatArrayMessageReader* capnpreader, riaps::ports::PortBase *port) {
 	    		auto portName = port->GetPortName();
 				«FOR PortCppBase p: ports»
 				«p.generateBaseDispatch()»
@@ -167,7 +165,7 @@ class CompCpp {
 		extern "C" void destroy_component(riaps::ComponentBase*);
 		
 		
-		#endif //RIAPS_FW_«componentName.toUpperCase»_H
+		#endif //RIAPS_FW_«componentName.toUpperCase»_H		
 	'''
 	
 	def generateFW_Cpp() '''

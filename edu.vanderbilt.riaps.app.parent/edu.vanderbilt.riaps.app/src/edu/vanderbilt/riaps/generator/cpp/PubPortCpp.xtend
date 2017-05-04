@@ -20,7 +20,7 @@ class PubPortCpp extends PortCppBase {
 	
 	override String generateBaseH() {   
 		 var content =	'''
-		 				virtual bool Send«portName»(capnp::MallocMessageBuilder&    messageBuilder, messages::«msgType»::Builder& message);
+		 				virtual bool Send«portName»(capnp::MallocMessageBuilder& messageBuilder, messages::«msgType»::Builder& message);
 		 				'''
          return content
 	}
@@ -28,8 +28,7 @@ class PubPortCpp extends PortCppBase {
 	
 	override String generateBaseCpp() {
 		var content = '''
-	        bool «componentName»Base::Send«portName»(capnp::MallocMessageBuilder &messageBuilder,
-	                                              messages::«msgType»::Builder &message) {
+	        bool «componentName»Base::Send«portName»(capnp::MallocMessageBuilder &messageBuilder, messages::«msgType»::Builder &message) {
 	            return SendMessageOnPort(messageBuilder, «portMacroName»);
 	        }
 		'''

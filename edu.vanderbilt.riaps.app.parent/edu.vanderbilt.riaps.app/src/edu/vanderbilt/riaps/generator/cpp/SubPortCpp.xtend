@@ -40,16 +40,14 @@ class SubPortCpp extends PortCppBase {
 	
 	override String generateFW_H() {
 		val content = '''
-			virtual void On«portName»(const messages::«msgType»::Reader &message,
-			                                 riaps::ports::PortBase *port);
+			virtual void On«portName»(const messages::«msgType»::Reader &message, riaps::ports::PortBase *port);
 			'''      
 		return content	
 	}
 	
 	override String generateFW_Cpp() {
 		val content = '''
-	        void «componentName»::On«portName»(messages::«msgType»::Reader &message,
-	                                         riaps::ports::PortBase *port) {
+	        void «componentName»::On«portName»(const messages::«msgType»::Reader &message, riaps::ports::PortBase *port) {
 	            //PrintMessageOnPort(port);	
 	            std::cout << "«componentName»::On«portName»(): " << message.getMsg().cStr() << std::endl;	
 	        }
