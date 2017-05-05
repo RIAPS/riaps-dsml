@@ -24,6 +24,7 @@ class ReqPortCpp extends PortCppBase {
 	override String generateBaseH() {   
 		val content = '''
 			bool Send«portName»(capnp::MallocMessageBuilder&    messageBuilder, messages::«reqType»::Builder& message);
+			
 			bool Recv«portName»(messages::«repType»::Reader &message);
         '''
         return content                    

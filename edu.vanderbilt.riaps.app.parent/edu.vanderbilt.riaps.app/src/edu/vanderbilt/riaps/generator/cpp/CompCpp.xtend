@@ -14,6 +14,7 @@ import edu.vanderbilt.riaps.app.ReqPort
 import edu.vanderbilt.riaps.app.TimPort
 import edu.vanderbilt.riaps.app.Application
 import edu.vanderbilt.riaps.app.Message
+import edu.vanderbilt.riaps.app.RepPort
 
 @SuppressWarnings("unused", "unchecked")
 class CompCpp {
@@ -43,6 +44,9 @@ class CompCpp {
 			}
 			else if (port instanceof ReqPort) {
 				ports.add(new ReqPortCpp(port, riapsComponent.name, portMsgTypeMap))
+			}
+			else if (port instanceof RepPort) {
+				ports.add(new RepPortCpp(port, riapsComponent.name, portMsgTypeMap))
 			}
 			else if (port instanceof TimPort) {
 				ports.add(new TimerPortCpp(port, riapsComponent.name))
@@ -80,6 +84,7 @@ class CompCpp {
 	    		
 	    		«FOR PortCppBase p: ports»
 	    			«p.generateBaseH»
+	    			
 	    		«ENDFOR»
 	    		
 	    	    virtual ~«componentName»Base();
@@ -108,6 +113,7 @@ class CompCpp {
 	    		auto portName = port->GetPortName();
 				«FOR PortCppBase p: ports»
 				«p.generateBaseDispatch()»
+				
 				«ENDFOR»
 	    	}
 	    	
@@ -147,6 +153,7 @@ class CompCpp {
 		
 		            «FOR p: ports»
 		            «p.generateFW_H()»
+		            
 					«ENDFOR»
 		
 					virtual void OnOneShotTimer(const std::string& timerid);
@@ -180,6 +187,7 @@ class CompCpp {
 		
 				«FOR p: ports»
 				«p.generateFW_Cpp()»
+				
 				«ENDFOR»
 
 				void «componentName»::OnOneShotTimer(const std::string& timerid){

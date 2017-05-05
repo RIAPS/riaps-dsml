@@ -26,9 +26,9 @@ class TimerPortCpp extends PortCppBase {
 
 	override String generateBaseDispatch() {
 		val content = '''
-		if (portName == «macroName») {
-			On«portName»(port);
-		}
+			if (portName == «macroName») {
+				On«portName»(port);
+			}
 		'''
 		return content
 	}

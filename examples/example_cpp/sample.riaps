@@ -11,9 +11,9 @@ app DistributedEstimator {
     component Sensor {
       timer clock 1000 s; 							// Periodic timer trigger to trigger sensor every 1 sec
       pub ready : sensorReady ;						// Publish port for SensorReady messages 
-//      rep request : ( SensorQuery , SensorValue ) ;	// Reply port to query the sensor and retrieve its value
+      rep request : ( sensorQuery , sensorValue ) ;	// Reply port to query the sensor and retrieve its value
     }
-  
+
  
         // Local estimator component
     component LocalEstimator (iArg="",fArg="",sArg="",bArg="") {

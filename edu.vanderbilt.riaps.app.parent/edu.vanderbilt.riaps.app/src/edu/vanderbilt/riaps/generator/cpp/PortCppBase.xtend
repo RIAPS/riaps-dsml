@@ -8,6 +8,7 @@ import edu.vanderbilt.riaps.app.SubPort
 import edu.vanderbilt.riaps.app.PubPort
 import edu.vanderbilt.riaps.app.InsPort
 import edu.vanderbilt.riaps.app.TimPort
+import edu.vanderbilt.riaps.app.RepPort
 
 @SuppressWarnings("unused", "unchecked")
 class PortCppBase {
@@ -47,6 +48,9 @@ class PortCppBase {
 		}
 		else if (port instanceof TimPort) {
 			return "tim"
+		}
+		else if (port instanceof RepPort) {
+			return "rep"
 		}
 	} 
 	
