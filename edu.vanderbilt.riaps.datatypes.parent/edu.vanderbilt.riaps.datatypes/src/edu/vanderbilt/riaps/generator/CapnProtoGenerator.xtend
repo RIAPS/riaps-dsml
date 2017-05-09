@@ -24,6 +24,8 @@ import java.util.Random
 import java.util.ArrayList
 import edu.vanderbilt.riaps.datatypes.Model
 import java.util.regex.Pattern
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
 class CapnProtoGenerator extends AbstractGenerator {
 	@Inject extension IQualifiedNameProvider
@@ -36,6 +38,17 @@ class CapnProtoGenerator extends AbstractGenerator {
 			sb.append(Integer.toHexString(random.nextInt()));
 		}
 		return sb.toString();
+	}
+	
+	def static String createCapnpID() {
+		var rt = Runtime.getRuntime();
+		var pr = rt.exec("capnp id");
+
+		var stdInput = new BufferedReader(new InputStreamReader(pr.getInputStream()))
+	    var s = ""
+		s = stdInput.readLine()
+		
+		return s
 	}
 	
 	static class SequenceDefinition {
@@ -124,8 +137,9 @@ class CapnProtoGenerator extends AbstractGenerator {
 
 	def String compileToString(FEnumerationType message) ''' 
 		«var x= message.fullyQualifiedName»
-		«var s = x.getSegmentCount»		
-		@0x«createRandomString(16)»;	
+		«var s = x.getSegmentCount»
+		«createCapnpID()»;
+		
 		enum «message.name» {
 			«var fields = createEnumFields(message)»
 			«FOR j : fields»
@@ -138,8 +152,9 @@ class CapnProtoGenerator extends AbstractGenerator {
 		«var z= new HashSet<String>»
 		«var listz= new HashSet<String>»
 		«var x= message.fullyQualifiedName»
-		«var s = x.getSegmentCount»	
-		@0x«createRandomString(16)»;	
+		«var s = x.getSegmentCount»
+		«createCapnpID()»;
+		
 		«FOR j : message.elements»
 			«IF j.type.derived != null»
 				«var result=z.add(j.type.derived.name)»
