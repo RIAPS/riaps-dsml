@@ -16,7 +16,7 @@ import edu.vanderbilt.riaps.app.InsPort;
 import edu.vanderbilt.riaps.app.Port;
 import edu.vanderbilt.riaps.app.ComponentFormal;
 
-@SuppressWarnings({"unused", "unchecked", "rawtypes"})
+@SuppressWarnings({"unchecked", "rawtypes"})
 public class Comp {
 
 	private String name;
@@ -33,19 +33,19 @@ public class Comp {
 		this.ports.put("reqs", new HashMap<String, ClntSrvPort>());
 		this.ports.put("pubs", new HashMap<String, PubSubPort>());
 		this.ports.put("subs", new HashMap<String, PubSubPort>());
-		this.ports.put("tims", new HashMap<String, PubSubPort>());
-		this.ports.put("inss", new HashMap<String, PubSubPort>());
+		this.ports.put("tims", new HashMap<String, TimePort>());
+		this.ports.put("inss", new HashMap<String, BoolPort>());
 		
 		for (Port p : c.getPorts()){
 			if (p instanceof ClntPort){
 				ClntSrvPort port = new ClntSrvPort((ClntPort)p);
-				this.getPortMap("clts").put(p.getName(), p);
+				this.getPortMap("clts").put(p.getName(), port);
 			} else if (p instanceof SrvPort){
 				ClntSrvPort port = new ClntSrvPort((SrvPort)p);
-				this.getPortMap("srvs").put(p.getName(), p);
+				this.getPortMap("srvs").put(p.getName(), port);
 			} else if (p instanceof ReqPort){
 				ClntSrvPort port = new ClntSrvPort((ReqPort)p);
-				this.getPortMap("reqs").put(p.getName(), p);
+				this.getPortMap("reqs").put(p.getName(), port);
 			} else if (p instanceof PubPort){
 				PubSubPort port = new PubSubPort((PubPort)p);
 				this.getPortMap("pubs").put(p.getName(), port);
