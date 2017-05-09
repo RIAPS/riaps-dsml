@@ -4,6 +4,9 @@ import edu.vanderbilt.riaps.app.Application
 import java.util.HashMap
 import edu.vanderbilt.riaps.app.Message
 import java.util.ArrayList
+import java.lang.Runtime
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
 class AppCpp {
 	public var String applicationName
@@ -43,4 +46,44 @@ class AppCpp {
 		«ENDFOR»
 	'''
 	
+	def createCapnp() {
+		// create id
+		var rt = Runtime.getRuntime();
+		var pr = rt.exec("capnp id");
+
+		var stdInput = new BufferedReader(new InputStreamReader(pr.getInputStream()))
+	    var s = new String()
+	    s = null
+		s = stdInput.readLine()
+
+		var msgTypes = portMsgTypeMap.values.toSet
+		if (s == null) {
+			var content = '''
+			«FOR msgType: msgTypes»
+			struct «msgType» {
+				
+			}
+			
+			«ENDFOR»
+			'''
+			return content
+		}
+		else
+		{
+			var content = '''
+			«s»;
+			
+			«FOR msgType: msgTypes»
+			struct «msgType» {
+				
+			}
+			
+			«ENDFOR»
+			'''
+			return content	
+		}
+	
+	}
+	
+
 }
