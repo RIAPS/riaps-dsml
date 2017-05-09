@@ -1,0 +1,82 @@
+package transen_nm
+
+import transen.include.messages.*
+
+// RIAPS Transactive Energy
+// 
+  
+app transen {
+    message genSensorData: GenSensorData; 
+    message genActuatorCommand: GenActuatorCommand;
+    message custSensorData: CustSensorData; 
+    message custActuatorCommand: CustActuatorCommand;
+    
+    component GenGridlabD(gldServer = "",
+    					  sensorObject="",
+    					  sensorParameter="",
+    					  sensorUnit="",
+                 		  actuatorObject="",
+                 		  actuatorParameter="",
+                 		  actuatorUnit="") {
+    	timer clock 3000 s;
+    	pub sensor : genSensorData;
+    	sub actuator : genActuatorCommand;
+    }
+    
+    component GenController(upperThreshold = "",
+    						upperValue = "",
+                 		 	lowerThreshold = "",
+                 		 	lowerValue = "",
+                 		 	initialValue = "") {
+    	sub sensor : genSensorData;
+    	pub actuator : genActuatorCommand;
+    }
+
+    component CustGridlabD(gldServer = "",
+    					  sensorObject = "",
+    					  sensorParameter = "",
+    					  sensorUnit = "",
+                 		  actuatorObject = "",
+                 		  actuatorParameter = "",
+                 		  actuatorUnit = "") {
+    	timer clock 3000 s;
+    	pub sensor : custSensorData;
+    	sub actuator : custActuatorCommand;
+    }
+    
+    component CustController(upperThreshold = "",
+    						upperValue = "",
+                 		 	lowerThreshold = "",
+                 		 	lowerValue = "",
+                 		 	initialValue = "") {
+    	sub sensor : custSensorData;
+    	pub actuator : custActuatorCommand;
+    }
+
+    // Actors
+    actor GenPriceControl {
+       local genSensorData,genActuatorCommand;	// Local message types
+       {
+       	  grid : GenGridlabD(gldServer='http://localhost:6267',
+       	  					 sensorObject='house15',sensorParameter='heating_setpoint',sensorUnit='degF',
+    					  	 actuatorObject='Market_1',actuatorParameter='fixed_price',actuatorUnit='MW');
+    				
+          controller : GenController(upperThreshold=65,upperValue=150,
+                 		 			 lowerThreshold=65,lowerValue=50,
+                 		 		  	 initialValue=50);
+       }
+    }
+    
+    actor CustDemandControl {
+       local custSensorData,custActuatorCommand;	// Local message types
+       {
+       	  grid : CustGridlabD(gldServer='http://localhost:6267',
+       	      				 sensorObject='Market_1',sensorParameter='fixed_price',sensorUnit='MW',
+       	  					 actuatorObject='house15',actuatorParameter='heating_setpoint',actuatorUnit='degF');
+       	  					 
+          controller : CustController(upperThreshold=100,upperValue=70,
+                 		 			 lowerThreshold=100,lowerValue=60,
+                 		 		  	 initialValue=70);
+       }
+    }
+}
