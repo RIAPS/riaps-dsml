@@ -20,8 +20,8 @@ class PortCppBase {
 	protected String macroName
 	protected String componentName
 	
-	new (Port port, String appName) {
-		portName = port.name		
+	new (Port port, String appName) {		
+		portName = port.name.substring(0, 1).toUpperCase() + port.name.substring(1)	
 		portType = getPortType(port)
 		macroName = getPortMacroName()	
 		componentName = appName

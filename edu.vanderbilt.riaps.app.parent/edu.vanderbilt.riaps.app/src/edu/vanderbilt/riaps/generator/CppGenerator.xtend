@@ -11,6 +11,7 @@ import edu.vanderbilt.riaps.Console
 import edu.vanderbilt.riaps.generator.cpp.CompCpp
 import java.util.ArrayList
 import edu.vanderbilt.riaps.generator.cpp.CMake
+import edu.vanderbilt.riaps.generator.cpp.AppCpp
 
 public class CppGenerator extends AbstractGenerator {
 	
@@ -19,14 +20,12 @@ public class CppGenerator extends AbstractGenerator {
 		for (e : resource.allContents.toIterable.filter(Application)) {
 			
 			var componentNames = new ArrayList<String>()			
-			
-			for (c: e.components)
-			{
-				componentNames.add(c.name)
+		
+			var appCpp = new AppCpp(e)
+			for (comp : appCpp.compList) {
 				
-				var comp = new CompCpp(c, e)
 				var base_h = comp.generateBaseH()
-				var base_h_path = e.name + "//include//base//" + c.name + "Base.h"
+				var base_h_path = e.name + "//include//base//" + comp.componentName + "Base.h"
 				fsa.generateFile(
 					base_h_path,
 					base_h
@@ -34,7 +33,7 @@ public class CppGenerator extends AbstractGenerator {
 				Console.instance.log(java.util.logging.Level.INFO, base_h_path + " generated");
 				
 				var base_cpp = comp.generateBaseCpp()
-				var base_cpp_path = e.name + "//src//base//" + c.name + "Base.cc"
+				var base_cpp_path = e.name + "//src//base//" + comp.componentName + "Base.cc"
 				fsa.generateFile(
 					base_cpp_path,
 					base_cpp
@@ -42,7 +41,7 @@ public class CppGenerator extends AbstractGenerator {
 				Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
 				
 				var fw_h = comp.generateFW_H()
-				var fw_h_path = e.name + "//include//" + c.name + ".h"
+				var fw_h_path = e.name + "//include//" + comp.componentName + ".h"
 				fsa.generateFile(
 					fw_h_path,
 					fw_h
@@ -51,7 +50,7 @@ public class CppGenerator extends AbstractGenerator {
 				
 				
 				var fw_cpp = comp.generateFW_Cpp()
-				var fw_cpp_path = e.name + "//src//" + c.name + ".cc"
+				var fw_cpp_path = e.name + "//src//" + comp.componentName + ".cc"
 				fsa.generateFile(
 					fw_cpp_path,
 					fw_cpp
@@ -60,8 +59,8 @@ public class CppGenerator extends AbstractGenerator {
 			
 			}
 			
-			var cmake = CMake::generateCMake(e.name, componentNames)
-			var cmake_path = e.name + "//CMakeLists.txt"
+			var cmake = appCpp.createCMakeList
+			var cmake_path = appCpp.applicationName + "//CMakeLists.txt"
 				fsa.generateFile(
 					cmake_path,
 					cmake

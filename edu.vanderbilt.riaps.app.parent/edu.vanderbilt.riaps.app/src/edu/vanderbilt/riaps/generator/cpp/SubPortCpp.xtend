@@ -5,7 +5,7 @@ import edu.vanderbilt.riaps.app.SubPort
 import java.util.HashMap
 
 class SubPortCpp extends PortCppBase {
-	String msgType
+	public String msgType
 	
 	new (Port port, String compName, HashMap<String, String> portMsgTypeMap) {
 		super(port, compName)
@@ -48,8 +48,7 @@ class SubPortCpp extends PortCppBase {
 	override String generateFW_Cpp() {
 		val content = '''
 	        void «componentName»::On«portName»(const messages::«msgType»::Reader &message, riaps::ports::PortBase *port) {
-	            //PrintMessageOnPort(port);	
-	            std::cout << "«componentName»::On«portName»(): " << message.getMsg().cStr() << std::endl;	
+	            std::cout << "«componentName»::On«portName»(): " << std::endl;	
 	        }
 			'''      
 		return content	

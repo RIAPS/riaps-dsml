@@ -22,6 +22,8 @@ import edu.vanderbilt.riaps.datatypes.FField
 import edu.vanderbilt.riaps.datatypes.FEnumerationType
 import java.util.Random
 import java.util.ArrayList
+import edu.vanderbilt.riaps.datatypes.Model
+import java.util.regex.Pattern
 
 class CapnProtoGenerator extends AbstractGenerator {
 	@Inject extension IQualifiedNameProvider
@@ -35,7 +37,7 @@ class CapnProtoGenerator extends AbstractGenerator {
 		}
 		return sb.toString();
 	}
-
+	
 	static class SequenceDefinition {
 		String typename
 		String suffix
@@ -55,26 +57,35 @@ class CapnProtoGenerator extends AbstractGenerator {
 	}
 
 	static var typedefs = new HashMap<String, SequenceDefinition>
+	static var packageNameMap = new HashMap<String, String>
 
 	override doGenerate(Resource input, IFileSystemAccess2 fsa, IGeneratorContext context) {
-		for (e : input.allContents.toIterable.filter(FStructType)) {
-
-			var messageString = e.compileToString
-			fsa.generateFile(
-				e.fullyQualifiedName.toString("/") + ".capnp",
-				messageString.beautify
-			)
-			Console.instance.log(java.util.logging.Level.INFO, e.fullyQualifiedName.toString("/") + ".idl generated");
-		}
-
-		for (e : input.allContents.toIterable.filter(FEnumerationType)) {
-
-			var messageString = e.compileToString
-			fsa.generateFile(
-				e.fullyQualifiedName.toString("/") + ".idl",
-				messageString.beautify
-			)
-			Console.instance.log(java.util.logging.Level.INFO, e.fullyQualifiedName.toString("/") + ".idl generated");
+		for (e: input.allContents.toIterable.filter(Model)) {
+			var packageNameArray = e.name.split(Pattern.quote("."))
+			
+			for (type : e.types) {
+				if (type instanceof FStructType) {
+					packageNameMap.put(type.name, packageNameArray.get(0))
+					var aStruct = type as FStructType
+					var messageString = aStruct.compileToString
+					fsa.generateFile(
+						aStruct.fullyQualifiedName.toString("/") + ".capnp",
+						messageString.beautify
+					)
+					Console.instance.log(java.util.logging.Level.INFO, aStruct.fullyQualifiedName.toString("/") + ".idl generated");
+				}
+				
+				if (type instanceof FEnumerationType) {
+					packageNameMap.put(type.name, packageNameArray.get(0))
+					var anEnum = type as FEnumerationType 
+					var messageString = anEnum.compileToString
+					fsa.generateFile(
+						anEnum.fullyQualifiedName.toString("/") + ".idl",
+						messageString.beautify
+					)
+					Console.instance.log(java.util.logging.Level.INFO, anEnum.fullyQualifiedName.toString("/") + ".idl generated");
+				}
+			}
 		}
 	}
 
@@ -114,7 +125,7 @@ class CapnProtoGenerator extends AbstractGenerator {
 	def String compileToString(FEnumerationType message) ''' 
 		«var x= message.fullyQualifiedName»
 		«var s = x.getSegmentCount»		
-		@0x«createRandomString(8)»;	
+		@0x«createRandomString(16)»;	
 		enum «message.name» {
 			«var fields = createEnumFields(message)»
 			«FOR j : fields»
@@ -128,7 +139,7 @@ class CapnProtoGenerator extends AbstractGenerator {
 		«var listz= new HashSet<String>»
 		«var x= message.fullyQualifiedName»
 		«var s = x.getSegmentCount»	
-		@0x«createRandomString(8)»;	
+		@0x«createRandomString(16)»;	
 		«FOR j : message.elements»
 			«IF j.type.derived != null»
 				«var result=z.add(j.type.derived.name)»
@@ -139,13 +150,16 @@ class CapnProtoGenerator extends AbstractGenerator {
 			«ENDIF»
 		«ENDFOR»
 		
+		using Cxx = import "/capnp/c++.capnp";
+		$Cxx.namespace("«packageNameMap.get(message.name)»::messages");		
+		
 			struct «message.name»
 			{
 				«var fieldList = createStructFields(message)»
 				«FOR field : fieldList»
 					«field»
 				«ENDFOR»
-			};
+			}
 	'''
 
 	def String getIdlType(FField field) {

@@ -5,8 +5,8 @@ import edu.vanderbilt.riaps.app.RepPort
 import java.util.HashMap
 
 class RepPortCpp extends PortCppBase{
-	String reqType
-	String repType
+	public String reqType
+	public String repType
 	
 	new(Port port, String appName, HashMap<String, String> portMsgTypeMap) {
 		super(port, appName)
@@ -32,6 +32,7 @@ class RepPortCpp extends PortCppBase{
 	override String generateBaseCpp() {
 		val content = '''
 	        bool «componentName»Base::Send«portName»(capnp::MallocMessageBuilder& messageBuilder, messages::«repType»::Builder& message) {
+	        	std::cout<< "«componentName»Base::Send«portName»()"<< std::endl;
 	            return SendMessageOnPort(messageBuilder, «macroName»);
 	        }
 		'''
@@ -47,8 +48,8 @@ class RepPortCpp extends PortCppBase{
 	
 	override String generateFW_Cpp() {
 		val content = '''
-	        void «componentName»::On«portName»(const messages::«reqType»::Reader &message,
-	                                    riaps::ports::PortBase *port) {
+	        void «componentName»::On«portName»(const messages::«reqType»::Reader &message, riaps::ports::PortBase *port) {
+	        	std::cout<< "«componentName»::On«portName»()"<< std::endl;
 	        }
 		'''
 		return content

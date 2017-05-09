@@ -5,7 +5,7 @@ import java.util.HashMap
 import edu.vanderbilt.riaps.app.PubPort
 
 class PubPortCpp extends PortCppBase {
-	String msgType
+	public String msgType
 	
 	new(Port port, String appName, HashMap<String, String> portMsgTypeMap) {
 		super(port, appName)
@@ -29,6 +29,7 @@ class PubPortCpp extends PortCppBase {
 	override String generateBaseCpp() {
 		var content = '''
 	        bool «componentName»Base::Send«portName»(capnp::MallocMessageBuilder &messageBuilder, messages::«msgType»::Builder &message) {
+	        	std::cout<< "«componentName»Base::Send«portName»()"<< std::endl;
 	            return SendMessageOnPort(messageBuilder, «portMacroName»);
 	        }
 		'''

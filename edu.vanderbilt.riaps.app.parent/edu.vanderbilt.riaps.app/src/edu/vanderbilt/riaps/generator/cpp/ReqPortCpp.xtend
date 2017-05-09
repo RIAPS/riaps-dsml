@@ -6,8 +6,8 @@ import java.util.HashMap
 
 @SuppressWarnings("unused", "unchecked")
 class ReqPortCpp extends PortCppBase {
-	String reqType
-	String repType
+	public String reqType
+	public String repType
 	
 	new(Port port, String compName, HashMap<String, String> portMsgTypeMap) {
 		super(port, compName)
@@ -33,10 +33,12 @@ class ReqPortCpp extends PortCppBase {
     override String generateBaseCpp() {
     	val content = '''
 	        bool «componentName»Base::Send«portName»(capnp::MallocMessageBuilder &messageBuilder, messages::«reqType»::Builder &message) {
+	        	std::cout<< "«componentName»Base::Send«portName»()"<< std::endl;
 	            return SendMessageOnPort(messageBuilder, «macroName»);
 	        }
 	
 	        bool «componentName»Base::Recv«portName»(messages::«repType»::Reader &message) {
+	        	std::cout<< "«componentName»Base::Recv«portName»()"<< std::endl;
 	            auto port = GetRequestPortByName(«macroName»);
 	            if (port == NULL) return false;
 	

@@ -15,45 +15,51 @@ import edu.vanderbilt.riaps.app.TimPort
 import edu.vanderbilt.riaps.app.Application
 import edu.vanderbilt.riaps.app.Message
 import edu.vanderbilt.riaps.app.RepPort
+import java.util.HashSet
 
 @SuppressWarnings("unused", "unchecked")
 class CompCpp {
-	protected String componentName
+	public String componentName
 	protected String applicationName
 	protected var ports = new ArrayList<PortCppBase>
-	protected var portMsgTypeMap = new HashMap<String, String>
+	protected var msgIncludes = new HashSet<String>
 	
-	new (Component comp, Application app) {
+	new (Component comp, String appName, HashMap<String, String> portMsgType) {
 		componentName = comp.name
-		applicationName = app.name
+		applicationName = appName
 		
-		for (Message msg: app.messages) {
-			portMsgTypeMap.put(msg.name, msg.type.name)
-		}
-		
-		createPorts(comp)		
+		createPorts(comp, portMsgType)
 	}
 	
-	def void createPorts(Component riapsComponent) {
+	def void createPorts(Component riapsComponent, HashMap<String, String> portMsgTypeMap) {
 		for(Port port : riapsComponent.getPorts()) {
 			if (port instanceof PubPort) {
-				ports.add(new PubPortCpp(port, riapsComponent.name, portMsgTypeMap))
+				var pubPort = new PubPortCpp(port, riapsComponent.name, portMsgTypeMap)
+				ports.add(pubPort)
+				msgIncludes.add(pubPort.msgType)
 			}
 			else if (port instanceof SubPort) {
-				ports.add(new SubPortCpp(port, riapsComponent.name, portMsgTypeMap))			
+				var subPort = new SubPortCpp(port, riapsComponent.name, portMsgTypeMap)
+				ports.add(subPort)	
+				msgIncludes.add(subPort.msgType)		
 			}
 			else if (port instanceof ReqPort) {
-				ports.add(new ReqPortCpp(port, riapsComponent.name, portMsgTypeMap))
+				var reqPort = new ReqPortCpp(port, riapsComponent.name, portMsgTypeMap)
+				ports.add(reqPort)
+				msgIncludes.add(reqPort.repType)
+				msgIncludes.add(reqPort.reqType)
 			}
 			else if (port instanceof RepPort) {
-				ports.add(new RepPortCpp(port, riapsComponent.name, portMsgTypeMap))
+				var repPort = new RepPortCpp(port, riapsComponent.name, portMsgTypeMap)
+				ports.add(repPort)
+				msgIncludes.add(repPort.repType)
+				msgIncludes.add(repPort.reqType)
 			}
 			else if (port instanceof TimPort) {
 				ports.add(new TimerPortCpp(port, riapsComponent.name))
 			}
 		}	
 	}
-	
 	
 	//////////////////////////////////////////////////////////////////////////////
 	// Base Gen Functions
@@ -67,7 +73,10 @@ class CompCpp {
 	#define RIAPS_CORE_«componentName.toUpperCase»_H
 	
 	#include "componentmodel/r_componentbase.h"
-	#include "messages/«this.applicationName.toLowerCase».capnp.h"
+	//#include "messages/«this.applicationName.toLowerCase».capnp.h"
+	«FOR include: msgIncludes»
+	#include "messages/«include».capnp.h"
+	«ENDFOR»
 	
 	// Name of the ports from the model file
 	«FOR PortCppBase p: ports»
@@ -85,8 +94,7 @@ class CompCpp {
 	    		«FOR PortCppBase p: ports»
 	    			«p.generateBaseH»
 	    			
-	    		«ENDFOR»
-	    		
+	    		«ENDFOR»	    		
 	    	    virtual ~«componentName»Base();
 	    	protected:
 	    		virtual void DispatchMessage(capnp::FlatArrayMessageReader* capnpreader, riaps::ports::PortBase *port);
@@ -148,14 +156,12 @@ class CompCpp {
 		
 		        public:
 		
-		            «componentName»(_component_conf_j &config, riaps::Actor &actor);
-		
+		            «componentName»(_component_conf_j &config, riaps::Actor &actor);		
 		
 		            «FOR p: ports»
 		            «p.generateFW_H()»
 		            
-					«ENDFOR»
-		
+					«ENDFOR»		
 					virtual void OnOneShotTimer(const std::string& timerid);
 					
 		            virtual ~«componentName»();
@@ -189,7 +195,6 @@ class CompCpp {
 				«p.generateFW_Cpp()»
 				
 				«ENDFOR»
-
 				void «componentName»::OnOneShotTimer(const std::string& timerid){
 				
 				}
