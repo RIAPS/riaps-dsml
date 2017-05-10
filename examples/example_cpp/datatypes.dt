@@ -1,0 +1,27 @@
+package riapsex 
+struct mymessage
+{ 
+	content: String 
+}
+
+struct SensorValue
+{
+	msg: String
+}
+
+struct SensorReady
+{
+	msg: String
+}
+
+struct SensorQuery
+{
+	msg: String
+}
+
+struct Estimate
+{
+	msg: String
+	values: ByteBuffer 
+}
+ 
