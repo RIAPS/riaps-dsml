@@ -27,24 +27,39 @@ class AppCpp {
 		
 	}
 	
-	def createCMakeList() '''
+	def String createCMakeList() {
+		val capnpMsgs = portMsgTypeMap.values.toSet
+	
+		val content = '''
 		include_directories(include)
 		
-		«FOR c: compList»
-			add_library(«c.componentName.toLowerCase» SHARED src/«c.componentName».cc
-			                                   src/base/«c.componentName»Base.cc
-			                                   «FOR i: c.msgIncludes»
-			                                   include/messages/«i».capnp.c++
-			                                   «ENDFOR»
-			)
-			
+		«FOR m: capnpMsgs»
+       	add_custom_command(
+       			OUTPUT  include/messages/«m».capnp.c++ include/messages/«m».capnp.h
+       			DEPENDS include/messages/«m».capnp
+       			COMMAND capnp compile -oc++ include/messages/«m».capnp
+       			VERBATIM
+       	)
+
 		«ENDFOR»
-	
+		
+		«FOR c: compList»
+		add_library(«c.componentName.toLowerCase» SHARED src/«c.componentName».cc
+				                                  src/base/«c.componentName»Base.cc
+				                                  «FOR i: c.msgIncludes»
+				                                  include/messages/«i».capnp.c++
+				                 				  «ENDFOR»
+		)
+		
+		«ENDFOR»
+		
 		«FOR c: compList»
 		target_link_libraries(«c.componentName.toLowerCase» czmq riaps dl capnp kj )
 		
 		«ENDFOR»
-	'''
+		'''
+		return content
+	}
 	
 	def createCapnp() {
 		// create id
