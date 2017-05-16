@@ -142,6 +142,7 @@ Port:
 	| ClntPort
 	| SrvPort
 	| ReqPort
+	| RepPort
 	| TimPort
 	| InsPort;
 
@@ -171,6 +172,8 @@ SrvPort:
 ReqPort:
 	'req' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] (deadline=Deadline)?')' (ratelimit=RateLimit)? (';')?;
 
+RepPort:
+	'rep' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] (deadline=Deadline)?')' (ratelimit=RateLimit)? (';')?;
 
 /*
  * Rule that defines different supported time units.

@@ -1,0 +1,17 @@
+package transen.include.messages
+
+struct GenSensorData {
+	dummy: String
+}
+
+struct GenActuatorCommand {
+	dummy: String
+}
+
+struct CustSensorData {
+	dummy: String	
+} 
+ 
+struct CustActuatorCommand {
+	dummy: String
+}

@@ -21,6 +21,11 @@ import java.util.logging.Level
 import edu.vanderbilt.riaps.datatypes.FField
 import edu.vanderbilt.riaps.datatypes.FEnumerationType
 import java.util.Random
+import java.util.ArrayList
+import edu.vanderbilt.riaps.datatypes.Model
+import java.util.regex.Pattern
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
 class CapnProtoGenerator extends AbstractGenerator {
 	@Inject extension IQualifiedNameProvider
@@ -34,7 +39,18 @@ class CapnProtoGenerator extends AbstractGenerator {
 		}
 		return sb.toString();
 	}
+	
+	def static String createCapnpID() {
+		var rt = Runtime.getRuntime();
+		var pr = rt.exec("capnp id");
 
+		var stdInput = new BufferedReader(new InputStreamReader(pr.getInputStream()))
+	    var s = ""
+		s = stdInput.readLine()
+		
+		return s
+	}
+	
 	static class SequenceDefinition {
 		String typename
 		String suffix
@@ -54,26 +70,35 @@ class CapnProtoGenerator extends AbstractGenerator {
 	}
 
 	static var typedefs = new HashMap<String, SequenceDefinition>
+	static var packageNameMap = new HashMap<String, String>
 
 	override doGenerate(Resource input, IFileSystemAccess2 fsa, IGeneratorContext context) {
-		for (e : input.allContents.toIterable.filter(FStructType)) {
-
-			var messageString = e.compileToString
-			fsa.generateFile(
-				e.fullyQualifiedName.toString("/") + ".capnp",
-				messageString.beautify
-			)
-			Console.instance.log(java.util.logging.Level.INFO, e.fullyQualifiedName.toString("/") + ".idl generated");
-		}
-
-		for (e : input.allContents.toIterable.filter(FEnumerationType)) {
-
-			var messageString = e.compileToString
-			fsa.generateFile(
-				e.fullyQualifiedName.toString("/") + ".idl",
-				messageString.beautify
-			)
-			Console.instance.log(java.util.logging.Level.INFO, e.fullyQualifiedName.toString("/") + ".idl generated");
+		for (e: input.allContents.toIterable.filter(Model)) {
+			var packageNameArray = e.name.split(Pattern.quote("."))
+			
+			for (type : e.types) {
+				if (type instanceof FStructType) {
+					packageNameMap.put(type.name, packageNameArray.get(0))
+					var aStruct = type as FStructType
+					var messageString = aStruct.compileToString
+					fsa.generateFile(
+						aStruct.fullyQualifiedName.toString("/") + ".capnp",
+						messageString.beautify
+					)
+					Console.instance.log(java.util.logging.Level.INFO, aStruct.fullyQualifiedName.toString("/") + ".idl generated");
+				}
+				
+				if (type instanceof FEnumerationType) {
+					packageNameMap.put(type.name, packageNameArray.get(0))
+					var anEnum = type as FEnumerationType 
+					var messageString = anEnum.compileToString
+					fsa.generateFile(
+						anEnum.fullyQualifiedName.toString("/") + ".idl",
+						messageString.beautify
+					)
+					Console.instance.log(java.util.logging.Level.INFO, anEnum.fullyQualifiedName.toString("/") + ".idl generated");
+				}
+			}
 		}
 	}
 
@@ -112,11 +137,13 @@ class CapnProtoGenerator extends AbstractGenerator {
 
 	def String compileToString(FEnumerationType message) ''' 
 		«var x= message.fullyQualifiedName»
-		«var s = x.getSegmentCount»		
-		@0x«createRandomString(8)»;	
+		«var s = x.getSegmentCount»
+		«createCapnpID()»;
+		
 		enum «message.name» {
-			«FOR j : message.enumerators»
-				«j.name»	@0;
+			«var fields = createEnumFields(message)»
+			«FOR j : fields»
+				«j»
 			«ENDFOR»
 			};
 	'''
@@ -125,8 +152,9 @@ class CapnProtoGenerator extends AbstractGenerator {
 		«var z= new HashSet<String>»
 		«var listz= new HashSet<String>»
 		«var x= message.fullyQualifiedName»
-		«var s = x.getSegmentCount»	
-		@0x«createRandomString(8)»;	
+		«var s = x.getSegmentCount»
+		«createCapnpID()»;
+		
 		«FOR j : message.elements»
 			«IF j.type.derived != null»
 				«var result=z.add(j.type.derived.name)»
@@ -137,16 +165,16 @@ class CapnProtoGenerator extends AbstractGenerator {
 			«ENDIF»
 		«ENDFOR»
 		
+		using Cxx = import "/capnp/c++.capnp";
+		$Cxx.namespace("«packageNameMap.get(message.name)»::messages");		
+		
 			struct «message.name»
 			{
-			«FOR j : message.elements»	
-				«IF j.isList»
-					«j.name» @0: List(«j.idlType»);
-				«ELSE»					
-					«j.name» @0: «j.idlType»;									
-				«ENDIF»	
-			«ENDFOR»
-			};
+				«var fieldList = createStructFields(message)»
+				«FOR field : fieldList»
+					«field»
+				«ENDFOR»
+			}
 	'''
 
 	def String getIdlType(FField field) {
@@ -170,4 +198,32 @@ class CapnProtoGenerator extends AbstractGenerator {
 
 	}
 
+	def ArrayList<String> createStructFields(FStructType struct) {
+		val fieldList = new ArrayList<String>()
+		for (var i = 0; i < struct.elements.length; i++) {
+				if (struct.elements.get(i).isList)	{
+					val field = '''
+					«struct.elements.get(i).name» @«i»: List(«struct.elements.get(i).idlType»);
+					'''
+					fieldList.add(field)
+				}
+				else {
+					val field = '''
+					«struct.elements.get(i).name» @«i»: «struct.elements.get(i).idlType»;
+					'''
+					fieldList.add(field)
+				}
+		}
+		return fieldList
+	}
+	
+	def ArrayList<String> createEnumFields(FEnumerationType enumeration) {
+		val fieldList = new ArrayList<String>()
+		for (var i = 0; i < enumeration.enumerators.length; i++) {
+			val field = '''
+			«enumeration.enumerators.get(i).name»	@«i»;
+			'''
+		}
+		return fieldList
+	}
 }

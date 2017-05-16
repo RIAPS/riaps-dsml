@@ -17,8 +17,10 @@ class AppGenerator extends AbstractGenerator {
 
 	@Inject RiapsAppGenerator g1
 	@Inject ComponentTypeGenerator g2
+	@Inject CppGenerator g3
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		g1.doGenerate(resource, fsa, context);
 		g2.doGenerate(resource, fsa, context);
+		g3.doGenerate(resource, fsa, context);
 	}
 }
