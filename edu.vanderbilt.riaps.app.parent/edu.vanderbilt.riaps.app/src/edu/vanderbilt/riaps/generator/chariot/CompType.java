@@ -23,6 +23,8 @@ public class CompType {
 	private Map<String, Object> requiredStorage;
 	private List<String> requiredDevices;
 	private List<String> requiredArtifacts;
+	private String startScript;
+	private String stopScript;
 	
 	public CompType(Component c) {
 		this.name = c.getName();
@@ -31,6 +33,8 @@ public class CompType {
 		this.requiredMemory = new HashMap<String, Object>();
 		this.requiredStorage = new HashMap<String, Object>();
 		this.javaClass = "edu.vanderbilt.isis.chariot.datamodel.ComponentType.DM_ComponentType";
+		this.startScript = c.getName() + "Start.sh";
+		this.stopScript = c.getName() + "Stop.sh";
 		
 		for (Requirement r : c.getRequirements()){
 			if (r.getMemoryRequirement() != 0 && r.getMemoryunit() != null){
