@@ -39,8 +39,8 @@ public class CompType {
 		this.requiredMemory = new HashMap<String, Object>();
 		this.requiredStorage = new HashMap<String, Object>();
 		this.javaClass = "edu.vanderbilt.isis.chariot.datamodel.ComponentType.DM_ComponentType";
-		this.startScript = c.getName() + "Start.sh";
-		this.stopScript = c.getName() + "Stop.sh";
+		this.startScript = "sh " + c.getName() + "Start.sh";
+		this.stopScript = "sh " + c.getName() + "Stop.sh";
 		this.providedFunctionality = a.getName();
 		this.period = new HashMap<String, Object>();
 		this.period.put("JavaClass", "edu.vanderbilt.isis.chariot.datamodel.ComponentType.DM_Time");
@@ -51,13 +51,18 @@ public class CompType {
 		this.deadline.put("time", 0.0);
 		this.deadline.put("unit", "");
 		
-		for (Requirement r : c.getRequirements()){
-			this.requiredMemory.put(
-					"JavaClass", 
-					"edu.vanderbilt.isis.chariot.datamodel.NodeCategory.DM_Memory");
-			this.requiredMemory.put("memory", 0);
-			this.requiredMemory.put("unit", "");
-			
+		this.requiredMemory.put(
+				"JavaClass", 
+				"edu.vanderbilt.isis.chariot.datamodel.NodeCategory.DM_Memory");
+		this.requiredMemory.put("memory", 0);
+		this.requiredMemory.put("unit", "");
+		this.requiredStorage.put(
+				"JavaClass", 
+				"edu.vanderbilt.isis.chariot.datamodel.NodeCategory.DM_Storage");
+		this.requiredStorage.put("storage", 0);
+		this.requiredStorage.put("unit", "");
+		
+		for (Requirement r : c.getRequirements()){			
 			if (r.getMemoryRequirement() != 0 && r.getMemoryunit() != null){
 				this.requiredMemory.put("memory", r.getMemoryRequirement());
 				String unit = "KB";
@@ -68,11 +73,6 @@ public class CompType {
 				}
 				this.requiredMemory.put("unit", unit);
 			}
-			this.requiredStorage.put(
-					"JavaClass", 
-					"edu.vanderbilt.isis.chariot.datamodel.NodeCategory.DM_Storage");
-			this.requiredStorage.put("storage", 0);
-			this.requiredStorage.put("unit", "");
 			
 			if (r.getStorageRequirement() != 0 && r.getStorageunit() != null){
 				this.requiredStorage.put("storage", r.getStorageRequirement());
