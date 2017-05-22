@@ -5,7 +5,7 @@ import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
 import edu.vanderbilt.riaps.Console
-import edu.vanderbilt.riaps.app.Component
+import edu.vanderbilt.riaps.app.Actor
 
 import edu.vanderbilt.riaps.generator.chariot.CompType
 import com.google.gson.GsonBuilder;
@@ -16,9 +16,12 @@ public class ComponentTypeGenerator extends AbstractGenerator {
 		var gson = new GsonBuilder().setPrettyPrinting().create();
 		var formattedString = "";
 		
-		for (c : resource.allContents.toIterable.filter(Component)) {
-			var compType = new CompType(c);
-			formattedString += gson.toJson(compType);
+		for (a : resource.allContents.toIterable.filter(Actor)) {
+			for (i : a.compsection.instances){
+				var compType = new CompType(a, i.type);
+				formattedString += gson.toJson(compType);
+			}
+			
 		}
 		fsa.generateFile(
 			"ComponentTypes.json",

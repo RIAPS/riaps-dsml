@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import edu.vanderbilt.riaps.app.Component;
 import edu.vanderbilt.riaps.app.Requirement;
+import edu.vanderbilt.riaps.app.Actor;
 
 @SuppressWarnings("unused")
 public class CompType {
@@ -29,8 +30,9 @@ public class CompType {
 	private String requiredMiddleware = "";
 	private Map<String, Object> period;
 	private Map<String, Object> deadline;
+	private String providedFunctionality;
 	
-	public CompType(Component c) {
+	public CompType(Actor a, Component c) {
 		this.name = c.getName();
 		this.requiredArtifacts = new ArrayList<String>();
 		this.requiredDevices = new ArrayList<String>();
@@ -39,6 +41,7 @@ public class CompType {
 		this.javaClass = "edu.vanderbilt.isis.chariot.datamodel.ComponentType.DM_ComponentType";
 		this.startScript = c.getName() + "Start.sh";
 		this.stopScript = c.getName() + "Stop.sh";
+		this.providedFunctionality = a.getName();
 		this.period = new HashMap<String, Object>();
 		this.period.put("JavaClass", "edu.vanderbilt.isis.chariot.datamodel.ComponentType.DM_Time");
 		this.period.put("time", 0.0);
@@ -49,10 +52,13 @@ public class CompType {
 		this.deadline.put("unit", "");
 		
 		for (Requirement r : c.getRequirements()){
+			this.requiredMemory.put(
+					"JavaClass", 
+					"edu.vanderbilt.isis.chariot.datamodel.NodeCategory.DM_Memory");
+			this.requiredMemory.put("memory", 0);
+			this.requiredMemory.put("unit", "");
+			
 			if (r.getMemoryRequirement() != 0 && r.getMemoryunit() != null){
-				this.requiredMemory.put(
-						"JavaClass", 
-						"edu.vanderbilt.isis.chariot.datamodel.NodeCategory.DM_Memory");
 				this.requiredMemory.put("memory", r.getMemoryRequirement());
 				String unit = "KB";
 				if (r.getMemoryunit().isMb()){
@@ -62,10 +68,13 @@ public class CompType {
 				}
 				this.requiredMemory.put("unit", unit);
 			}
+			this.requiredStorage.put(
+					"JavaClass", 
+					"edu.vanderbilt.isis.chariot.datamodel.NodeCategory.DM_Storage");
+			this.requiredStorage.put("storage", 0);
+			this.requiredStorage.put("unit", "");
+			
 			if (r.getStorageRequirement() != 0 && r.getStorageunit() != null){
-				this.requiredStorage.put(
-						"JavaClass", 
-						"edu.vanderbilt.isis.chariot.datamodel.NodeCategory.DM_Storage");
 				this.requiredStorage.put("storage", r.getStorageRequirement());
 				String unit = "KB";
 				if (r.getStorageunit().isMb()){

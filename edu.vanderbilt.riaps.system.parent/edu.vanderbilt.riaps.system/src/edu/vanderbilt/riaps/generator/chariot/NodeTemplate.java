@@ -25,6 +25,9 @@ public class NodeTemplate {
 	private Map<String, Object> availableMemory;
 	private Map<String, Object> availableStorage;
 	private List<Object> devices;
+	private String OS = "";
+	private String middleware = "";
+	private List<Object> artifacts;
 	
 	public NodeTemplate(NodeType nt){
 		this.javaClass = "edu.vanderbilt.isis.chariot.datamodel.NodeCategory.DM_NodeTemplate";
@@ -32,6 +35,7 @@ public class NodeTemplate {
 		this.availableMemory = new HashMap<String, Object>();
 		this.availableStorage = new HashMap<String, Object>();
 		this.devices = new ArrayList<Object>();
+		this.artifacts = new ArrayList<Object>();
 		
 		this.setMemory(nt.getMemory());
 		this.setStorage(nt.getStorage());
