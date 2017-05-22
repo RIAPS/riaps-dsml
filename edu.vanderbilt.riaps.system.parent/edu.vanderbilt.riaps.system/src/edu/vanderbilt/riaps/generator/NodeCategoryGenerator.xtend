@@ -10,22 +10,18 @@ import edu.vanderbilt.riaps.system.KnownNodes
 
 import edu.vanderbilt.riaps.generator.chariot.NodeCategory
 import com.google.gson.GsonBuilder;
-import java.util.List
-import java.util.ArrayList
 
 
 class NodeCategoryGenerator extends AbstractGenerator  {
 	
 	override doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		var gson = new GsonBuilder().setPrettyPrinting().create();
-		var List<NodeCategory> container = new ArrayList<NodeCategory>();
 		
 		var NodeCategory nc = new NodeCategory(
 			"EdgeNode",
 			resource.allContents.toIterable.filter(NodeType),
 			resource.allContents.toIterable.filter(KnownNodes));
-		container.add(nc);
-		var formattedString = gson.toJson(container);
+		var formattedString = gson.toJson(nc);
 		fsa.generateFile(
 			"NodeCategories.json",
 			formattedString

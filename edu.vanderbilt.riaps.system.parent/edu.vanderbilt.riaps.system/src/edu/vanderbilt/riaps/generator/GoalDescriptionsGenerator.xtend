@@ -9,22 +9,18 @@ import edu.vanderbilt.riaps.system.AppDeployment
 
 import edu.vanderbilt.riaps.generator.chariot.GoalDescription
 import com.google.gson.GsonBuilder;
-import java.util.List
-import java.util.ArrayList
 
 
 class GoalDescriptionsGenerator extends AbstractGenerator  {
 	
 	override doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		var gson = new GsonBuilder().setPrettyPrinting().create();
-		var List<GoalDescription> container = new ArrayList<GoalDescription>();
+		var formattedString = "";
 		
 		for (e : resource.allContents.toIterable.filter(AppDeployment)) {
 			var GoalDescription gd = new GoalDescription(e);
-			container.add(gd);
+			formattedString += gson.toJson(gd);
 		}
-		
-		var formattedString = gson.toJson(container);
 		fsa.generateFile(
 			"GoalDescriptions.json",
 			formattedString
