@@ -23,13 +23,15 @@ public class ReplicationConstraint {
 	private int minInstances = 0;
 	private List<String> nodeCategories;
 	private String kind;
+	private String serviceComponentType = "";
 	
 	public ReplicationConstraint(ActorDeployment ad, ActorAssignment aa){
 		this.javaClass = "edu.vanderbilt.isis.chariot.datamodel.GoalDescription.DM_ReplicationConstraint";
 		this.functionality = aa.getActor().getName();
 		this.nodeCategories = new ArrayList<String>();
-		Location loc = ad.getLocation();
+		this.kind = "PER_NODE_REPLICATION"; // For now since VOTER_REPLICATION is not implemented in Chariot
 		
+		Location loc = ad.getLocation();
 		if (loc instanceof LocationNodeTypes){
 			LocationNodeTypes lnt = (LocationNodeTypes)loc;
 			if (lnt.getUp() == 0){

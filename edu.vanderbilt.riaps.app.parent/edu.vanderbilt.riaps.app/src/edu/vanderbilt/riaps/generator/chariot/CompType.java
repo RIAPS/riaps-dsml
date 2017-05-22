@@ -25,6 +25,10 @@ public class CompType {
 	private List<String> requiredArtifacts;
 	private String startScript;
 	private String stopScript;
+	private String requiredOS = "";
+	private String requiredMiddleware = "";
+	private Map<String, Object> period;
+	private Map<String, Object> deadline;
 	
 	public CompType(Component c) {
 		this.name = c.getName();
@@ -35,6 +39,14 @@ public class CompType {
 		this.javaClass = "edu.vanderbilt.isis.chariot.datamodel.ComponentType.DM_ComponentType";
 		this.startScript = c.getName() + "Start.sh";
 		this.stopScript = c.getName() + "Stop.sh";
+		this.period = new HashMap<String, Object>();
+		this.period.put("JavaClass", "edu.vanderbilt.isis.chariot.datamodel.ComponentType.DM_Time");
+		this.period.put("time", 0.0);
+		this.period.put("unit", "");
+		this.deadline = new HashMap<String, Object>();
+		this.deadline.put("JavaClass", "edu.vanderbilt.isis.chariot.datamodel.ComponentType.DM_Time");
+		this.deadline.put("time", 0.0);
+		this.deadline.put("unit", "");
 		
 		for (Requirement r : c.getRequirements()){
 			if (r.getMemoryRequirement() != 0 && r.getMemoryunit() != null){
@@ -70,6 +82,7 @@ public class CompType {
 				this.requiredArtifacts.add(r.getArtifactrequirement().getName());
 			}
 		}
+		
 		
 	}
 }

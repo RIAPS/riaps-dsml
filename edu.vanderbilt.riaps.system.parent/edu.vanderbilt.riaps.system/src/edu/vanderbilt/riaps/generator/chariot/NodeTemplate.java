@@ -51,10 +51,12 @@ public class NodeTemplate {
 	}
 	
 	private void setMemory(MemoryProvision mp){
+		this.availableMemory.put(
+				"JavaClass", 
+				"edu.vanderbilt.isis.chariot.datamodel.NodeCategory.DM_Memory");
+		this.availableMemory.put("memory", 0);
+		this.availableMemory.put("unit", "");
 		if (mp != null){
-			this.availableMemory.put(
-					"JavaClass", 
-					"edu.vanderbilt.isis.chariot.datamodel.NodeCategory.DM_Memory");
 			this.availableMemory.put("memory", mp.getValue());
 			String unit = "KB";
 			if (mp.getUnit().isMb()){
@@ -67,10 +69,12 @@ public class NodeTemplate {
 	}
 	
 	private void setStorage(StorageProvision sp){
+		this.availableStorage.put(
+				"JavaClass", 
+				"edu.vanderbilt.isis.chariot.datamodel.NodeCategory.DM_Storage");
+		this.availableStorage.put("storage", 0);
+		this.availableStorage.put("unit", "");
 		if (sp != null){
-			this.availableStorage.put(
-					"JavaClass", 
-					"edu.vanderbilt.isis.chariot.datamodel.NodeCategory.DM_Storage");
 			this.availableStorage.put("storage", sp.getStorage());
 			String unit = "KB";
 			if (sp.getUnit().isMb()){

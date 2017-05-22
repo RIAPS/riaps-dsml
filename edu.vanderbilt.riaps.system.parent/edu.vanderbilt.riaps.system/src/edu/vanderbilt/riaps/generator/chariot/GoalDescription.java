@@ -17,16 +17,24 @@ public class GoalDescription {
 	private String name;
 	
 	private List<ReplicationConstraint> replicationConstraints;
+	private List<Objective> objectives;
 	
 	public GoalDescription(AppDeployment ad){
 		this.javaClass = "edu.vanderbilt.isis.chariot.datamodel.GoalDescription.DM_GoalDescription";
 		this.name = ad.getApp().getName();
 		this.replicationConstraints = new ArrayList<ReplicationConstraint>();
+		this.objectives = new ArrayList<Objective>();
 		
 		for (ActorDeployment acd : ad.getActorDeployments()){
 			for (ActorAssignment aa: acd.getActors()){
 				ReplicationConstraint rc = new ReplicationConstraint(acd, aa);
 				this.replicationConstraints.add(rc);
+			}
+		}
+		for (ActorDeployment acd : ad.getActorDeployments()){
+			for (ActorAssignment aa: acd.getActors()){
+				Objective ob = new Objective(aa);
+				this.objectives.add(ob);
 			}
 		}
 	}
