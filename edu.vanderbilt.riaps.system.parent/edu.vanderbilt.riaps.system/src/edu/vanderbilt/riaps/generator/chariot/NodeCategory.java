@@ -15,20 +15,13 @@ public class NodeCategory {
 	private String name; 
 	private List<NodeTemplate> nodeTemplates;
 	
-	public NodeCategory(String name, Iterable<NodeType> nts, Iterable<KnownNodes> kns){
-		this.name = name;
+	public NodeCategory(NodeType nt){
+		this.name = nt.getName();
 		this.javaClass = "edu.vanderbilt.isis.chariot.datamodel.NodeCategory.DM_NodeCategory";
 		this.nodeTemplates = new ArrayList<NodeTemplate>();
 		
-		for (NodeType nt : nts){
-			NodeTemplate nodeTemplate = new NodeTemplate(nt);
-			this.nodeTemplates.add(nodeTemplate);
-		}
-		
-		for (KnownNodes kn : kns){
-			NodeTemplate nodeTemplate = new NodeTemplate(kn);
-			this.nodeTemplates.add(nodeTemplate);
-		}
+		NodeTemplate nodeTemplate = new NodeTemplate(nt);
+		this.nodeTemplates.add(nodeTemplate);
 	}
 
 }
