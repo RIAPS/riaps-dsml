@@ -20,7 +20,7 @@ class SubPortCpp extends PortCppBase {
 	
 	override String generateBaseH() {
 		val content = '''
-			virtual void On«portName» (const messages::«msgType»::Reader &message, riaps::ports::PortBase *port)=0;
+			virtual void On«portFcnName» (const messages::«msgType»::Reader &message, riaps::ports::PortBase *port)=0;
 		'''
 		return content
 	}
@@ -31,24 +31,24 @@ class SubPortCpp extends PortCppBase {
 	
 	override String generateBaseDispatch() {
 		val content = '''            
-			if (port->GetPortName() == «macroName») {
-				messages::«msgType»::Reader «portName» = capnpreader->getRoot<messages::«msgType»>();
-				On«portName»(«portName», port);
+			if (portName == «macroName») {
+				messages::«msgType»::Reader «portFcnName» = capnpreader->getRoot<messages::«msgType»>();
+				On«portFcnName»(«portFcnName», port);
 			}'''
 	    return content
 	}
 	
 	override String generateFW_H() {
 		val content = '''
-			virtual void On«portName»(const messages::«msgType»::Reader &message, riaps::ports::PortBase *port);
+			virtual void On«portFcnName»(const messages::«msgType»::Reader &message, riaps::ports::PortBase *port);
 			'''      
 		return content	
 	}
 	
 	override String generateFW_Cpp() {
 		val content = '''
-	        void «componentName»::On«portName»(const messages::«msgType»::Reader &message, riaps::ports::PortBase *port) {
-	            std::cout << "«componentName»::On«portName»(): " << std::endl;	
+	        void «componentName»::On«portFcnName»(const messages::«msgType»::Reader &message, riaps::ports::PortBase *port) {
+	            std::cout << "«componentName»::On«portFcnName»(): " << std::endl;	
 	        }
 			'''      
 		return content	

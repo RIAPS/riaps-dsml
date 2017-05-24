@@ -17,11 +17,13 @@ class PortCppBase {
 	// pub ready : sensorReady		(portType portName : msgType)
 	protected String portType
 	protected String portName
+	protected String portFcnName
 	protected String macroName
 	protected String componentName
 	
-	new (Port port, String appName) {		
-		portName = port.name.substring(0, 1).toUpperCase() + port.name.substring(1)	
+	new (Port port, String appName) {
+		portName = port.name	
+		portFcnName = port.name.substring(0, 1).toUpperCase() + port.name.substring(1)	
 		portType = getPortType(port)
 		macroName = getPortMacroName()	
 		componentName = appName
@@ -56,7 +58,7 @@ class PortCppBase {
 	
 	
 	def public String getPortMacroName() {
-		return "PORT_" + portType.toUpperCase + "_" + portName.toUpperCase
+		return "PORT_" + portType.toUpperCase + "_" + portFcnName.toUpperCase
 	}
 	
 	def public String generateBaseH() {
