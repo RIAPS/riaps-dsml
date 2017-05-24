@@ -31,7 +31,7 @@ class SubPortCpp extends PortCppBase {
 	
 	override String generateBaseDispatch() {
 		val content = '''            
-			if (port->GetPortName() == «macroName») {
+			if (portName == «macroName») {
 				messages::«msgType»::Reader «portFcnName» = capnpreader->getRoot<messages::«msgType»>();
 				On«portFcnName»(«portFcnName», port);
 			}'''
