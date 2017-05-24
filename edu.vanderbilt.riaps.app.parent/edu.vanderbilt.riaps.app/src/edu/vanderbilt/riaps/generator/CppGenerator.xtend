@@ -59,7 +59,7 @@ public class CppGenerator extends AbstractGenerator {
 			
 			}
 			
-			var cmake = appCpp.createCMakeList
+			var cmake = appCpp.createCMakeList()
 			var cmake_path = appCpp.applicationName + "//CMakeLists.txt"
 				fsa.generateFile(
 					cmake_path,

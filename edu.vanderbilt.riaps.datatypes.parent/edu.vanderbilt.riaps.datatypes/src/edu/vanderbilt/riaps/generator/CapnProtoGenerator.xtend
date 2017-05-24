@@ -166,7 +166,7 @@ class CapnProtoGenerator extends AbstractGenerator {
 		«ENDFOR»
 		
 		using Cxx = import "/capnp/c++.capnp";
-		$Cxx.namespace("«packageNameMap.get(message.name)»::messages");		
+		$Cxx.namespace("«packageNameMap.get(message.name).toLowerCase»::messages");		
 		
 			struct «message.name»
 			{

@@ -1,6 +1,13 @@
 [![Build Status](https://travis-ci.com/RIAPS/riaps-dsml.svg?token=pyUEeBLkG7FqiYPhyfxp&branch=master)](https://travis-ci.com/RIAPS/riaps-dsml)
 # riapsml
 RIAPS Modeling Language
+# Setup system before development
+- export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
+- apt-get install maven
+- Eclipse Plugins to install
+	- Eclipse Xtext
+	- Eclipse Xtend
+	- m2e – Extensions Development Support
 # To start with the development
 - clone the git repository
 - run the mvn build once inside edu.vanderbilt.riaps.system.parent project. This step is necessary to create the src-gen and xtend-gen folders. These folders are not tracked in the git repository because they are generated.
