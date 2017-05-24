@@ -23,22 +23,22 @@ class ReqPortCpp extends PortCppBase {
 	
 	override String generateBaseH() {   
 		val content = '''
-			bool Send«portName»(capnp::MallocMessageBuilder&    messageBuilder, messages::«reqType»::Builder& message);
+			bool Send«portFcnName»(capnp::MallocMessageBuilder&    messageBuilder, messages::«reqType»::Builder& message);
 			
-			bool Recv«portName»(messages::«repType»::Reader &message);
+			bool Recv«portFcnName»(messages::«repType»::Reader &message);
         '''
         return content                    
     }
     
     override String generateBaseCpp() {
     	val content = '''
-	        bool «componentName»Base::Send«portName»(capnp::MallocMessageBuilder &messageBuilder, messages::«reqType»::Builder &message) {
-	        	std::cout<< "«componentName»Base::Send«portName»()"<< std::endl;
+	        bool «componentName»Base::Send«portFcnName»(capnp::MallocMessageBuilder &messageBuilder, messages::«reqType»::Builder &message) {
+	        	std::cout<< "«componentName»Base::Send«portFcnName»()"<< std::endl;
 	            return SendMessageOnPort(messageBuilder, «macroName»);
 	        }
 	
-	        bool «componentName»Base::Recv«portName»(messages::«repType»::Reader &message) {
-	        	std::cout<< "«componentName»Base::Recv«portName»()"<< std::endl;
+	        bool «componentName»Base::Recv«portFcnName»(messages::«repType»::Reader &message) {
+	        	std::cout<< "«componentName»Base::Recv«portFcnName»()"<< std::endl;
 	            auto port = GetRequestPortByName(«macroName»);
 	            if (port == NULL) return false;
 	

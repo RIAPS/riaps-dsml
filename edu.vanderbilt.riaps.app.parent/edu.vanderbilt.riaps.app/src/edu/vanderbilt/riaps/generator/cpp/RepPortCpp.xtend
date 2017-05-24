@@ -22,17 +22,17 @@ class RepPortCpp extends PortCppBase{
 	
 	override String generateBaseH() { 
 		val content = '''
-            virtual void On«portName»(const messages::«reqType»::Reader &message, riaps::ports::PortBase *port)=0;
+            virtual void On«portFcnName»(const messages::«reqType»::Reader &message, riaps::ports::PortBase *port)=0;
                         
-            virtual bool Send«portName»(capnp::MallocMessageBuilder& messageBuilder, messages::«repType»::Builder& message);
+            virtual bool Send«portFcnName»(capnp::MallocMessageBuilder& messageBuilder, messages::«repType»::Builder& message);
 		'''
 		return content
 	}
 	
 	override String generateBaseCpp() {
 		val content = '''
-	        bool «componentName»Base::Send«portName»(capnp::MallocMessageBuilder& messageBuilder, messages::«repType»::Builder& message) {
-	        	std::cout<< "«componentName»Base::Send«portName»()"<< std::endl;
+	        bool «componentName»Base::Send«portFcnName»(capnp::MallocMessageBuilder& messageBuilder, messages::«repType»::Builder& message) {
+	        	std::cout<< "«componentName»Base::Send«portFcnName»()"<< std::endl;
 	            return SendMessageOnPort(messageBuilder, «macroName»);
 	        }
 		'''
@@ -41,15 +41,15 @@ class RepPortCpp extends PortCppBase{
 	
 	override String generateFW_H() {
 		val content = '''
-			virtual void On«portName»(const messages::«reqType»::Reader &message, riaps::ports::PortBase *port);
+			virtual void On«portFcnName»(const messages::«reqType»::Reader &message, riaps::ports::PortBase *port);
 			'''
 		return content
 	}
 	
 	override String generateFW_Cpp() {
 		val content = '''
-	        void «componentName»::On«portName»(const messages::«reqType»::Reader &message, riaps::ports::PortBase *port) {
-	        	std::cout<< "«componentName»::On«portName»()"<< std::endl;
+	        void «componentName»::On«portFcnName»(const messages::«reqType»::Reader &message, riaps::ports::PortBase *port) {
+	        	std::cout<< "«componentName»::On«portFcnName»()"<< std::endl;
 	        }
 		'''
 		return content
@@ -59,7 +59,7 @@ class RepPortCpp extends PortCppBase{
 		val content = '''
 			if (portName == PORT_REP_REQUEST) {
 			                auto reader = capnpreader->getRoot<messages::«reqType»>();
-			                On«portName»(reader, port);
+			                On«portFcnName»(reader, port);
 			}
 		'''
 		return content
