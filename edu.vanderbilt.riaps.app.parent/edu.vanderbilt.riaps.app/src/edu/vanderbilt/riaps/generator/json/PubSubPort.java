@@ -11,11 +11,11 @@ public class PubSubPort {
 	
 	public PubSubPort(PubPort p) {
 		this.name = p.getName();
-		this.type = p.getType().getName();
+		this.type = p.getType().getType().getName();
 	}
 
 	public PubSubPort(SubPort p) {
 		this.name = p.getName();
-		this.type = p.getType().getName();
+		this.type = p.getType().getType().getName();
 	}
 }

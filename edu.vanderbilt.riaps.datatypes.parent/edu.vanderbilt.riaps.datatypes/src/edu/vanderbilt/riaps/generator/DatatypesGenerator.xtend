@@ -17,10 +17,10 @@ import com.google.inject.Inject
 class DatatypesGenerator extends AbstractGenerator {
 
     @Inject IDLGenerator g2
-    @Inject CapnProtoGenerator g1
+    //@Inject CapnProtoGenerator g1
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		g2.doGenerate(resource,fsa,context)
-		g1.doGenerate(resource,fsa,context)
+		//g1.doGenerate(resource,fsa,context)
 //		fsa.generateFile('greetings.txt', 'People to greet: ' + 
 //			resource.allContents
 //				.filter(typeof(Greeting))

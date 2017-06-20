@@ -12,6 +12,7 @@ import edu.vanderbilt.riaps.app.PubPort;
 import edu.vanderbilt.riaps.app.ClntPort;
 import edu.vanderbilt.riaps.app.TimPort;
 import edu.vanderbilt.riaps.app.ReqPort;
+import edu.vanderbilt.riaps.app.RepPort;
 import edu.vanderbilt.riaps.app.InsPort;
 import edu.vanderbilt.riaps.app.Port;
 import edu.vanderbilt.riaps.app.ComponentFormal;
@@ -31,6 +32,7 @@ public class Comp {
 		this.ports.put("clts", new HashMap<String, ClntSrvPort>());
 		this.ports.put("srvs", new HashMap<String, ClntSrvPort>());
 		this.ports.put("reqs", new HashMap<String, ClntSrvPort>());
+		this.ports.put("reps", new HashMap<String, ClntSrvPort>());
 		this.ports.put("pubs", new HashMap<String, PubSubPort>());
 		this.ports.put("subs", new HashMap<String, PubSubPort>());
 		this.ports.put("tims", new HashMap<String, TimePort>());
@@ -46,6 +48,9 @@ public class Comp {
 			} else if (p instanceof ReqPort){
 				ClntSrvPort port = new ClntSrvPort((ReqPort)p);
 				this.getPortMap("reqs").put(p.getName(), port);
+			} else if (p instanceof RepPort){
+				ClntSrvPort port = new ClntSrvPort((RepPort)p);
+				this.getPortMap("reps").put(p.getName(), port);
 			} else if (p instanceof PubPort){
 				PubSubPort port = new PubSubPort((PubPort)p);
 				this.getPortMap("pubs").put(p.getName(), port);

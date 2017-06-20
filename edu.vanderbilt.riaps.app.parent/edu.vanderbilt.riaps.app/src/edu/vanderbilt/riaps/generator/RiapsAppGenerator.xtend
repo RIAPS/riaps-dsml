@@ -21,9 +21,7 @@ public class RiapsAppGenerator extends AbstractGenerator {
 		for (e : resource.allContents.toIterable.filter(Application)) {
 			var gson = new GsonBuilder().setPrettyPrinting().create();
 			var app = new App(e);
-			var Map<String, App> container = new HashMap<String, App>();
-			container.put(app.getName(), app);
-			var formattedString = gson.toJson(container);
+			var formattedString = gson.toJson(app);
 			fsa.generateFile(
 				e.fullyQualifiedName.toString("/") + ".json",
 				formattedString
