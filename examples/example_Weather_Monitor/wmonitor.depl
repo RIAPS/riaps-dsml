@@ -1,0 +1,19 @@
+package WeatherMonitor.depl
+
+import WeatherMonitor.*
+
+nodeType WeatherNode{
+	device "someSensor"
+	memory 16 MB
+	storage 200 MB
+}
+
+node node1 : WeatherNode{
+	memory 32 MB
+	net eth0 address 129.59.129.1
+}
+
+app WeatherMonitor{
+	on all WeatherNode WeatherMonitor.WeatherIndicator
+	on node1 WeatherMonitor.WeatherReceiver
+}

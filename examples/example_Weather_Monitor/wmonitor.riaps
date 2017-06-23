@@ -9,7 +9,7 @@ app WeatherMonitor {
      
 	// TempSensor component
     component TempSensor {
-      timer clock 5000;	
+      timer clock 5000;
       pub ready : tempData ;	// Publish port for Temperature messages 
     }
     
