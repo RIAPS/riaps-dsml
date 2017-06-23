@@ -12,7 +12,7 @@ import edu.vanderbilt.riaps.app.Model
 import edu.vanderbilt.riaps.services.AppGrammarAccess
 import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.IFormattableDocument
-import edu.vanderbilt.riaps.app.Message
+import edu.vanderbilt.riaps.app.MessageRef
 import edu.vanderbilt.riaps.app.Application
 import edu.vanderbilt.riaps.app.Actor
 import edu.vanderbilt.riaps.app.Artifact
@@ -32,8 +32,8 @@ class AppFormatter extends AbstractFormatter2 {
 		model.prepend[noSpace].append[noSpace; newLine]
 
 		for (collection : model.getCollections()) {
-			if (collection instanceof Message)
-				(collection as Message).format
+			if (collection instanceof MessageRef)
+				(collection as MessageRef).format
 			if (collection instanceof Component)
 				(collection as Component).format
 			if (collection instanceof Application)
@@ -69,7 +69,7 @@ class AppFormatter extends AbstractFormatter2 {
 			artifact.prepend[noSpace; newLine].append[noSpace; newLine]
 
 		}
-		for (Message elements : app.getMessages()) {
+		for (MessageRef elements : app.getMessages()) {
 			elements.format;
 			elements.prepend[noSpace; newLine].append[noSpace; newLine]
 		}

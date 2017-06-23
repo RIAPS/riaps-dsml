@@ -5,7 +5,7 @@ package edu.vanderbilt.riaps.scoping
 
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
 import org.eclipse.xtext.scoping.IScope
-import edu.vanderbilt.riaps.datatypes.FMessage
+//import edu.vanderbilt.riaps.datatypes.FMessage
 import org.eclipse.emf.ecore.EReference
 import edu.vanderbilt.riaps.datatypes.FStructType
 import org.eclipse.xtext.scoping.Scopes
@@ -18,8 +18,8 @@ import org.eclipse.xtext.scoping.Scopes
  */
 class DatatypesScopeProvider extends AbstractDeclarativeScopeProvider {
 
- def  IScope scope_FMessage_key(FMessage mes, EReference ereference){
+ /*def  IScope scope_FMessage_key(FMessage mes, EReference ereference){
   	 	   var x= mes;	  	
            return Scopes::scopeFor ((mes.derived as FStructType).elements)  
-   }
+   }*/
 }

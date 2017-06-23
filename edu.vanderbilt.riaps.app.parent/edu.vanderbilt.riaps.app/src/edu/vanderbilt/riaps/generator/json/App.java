@@ -11,7 +11,8 @@ import edu.vanderbilt.riaps.app.AppComponent;
 import edu.vanderbilt.riaps.app.Actor;
 import edu.vanderbilt.riaps.app.Artifact;
 import edu.vanderbilt.riaps.app.DeploymentConstraint;
-import edu.vanderbilt.riaps.app.Message;
+import edu.vanderbilt.riaps.app.MessageRef;
+import edu.vanderbilt.riaps.datatypes.Message;
 
 import edu.vanderbilt.riaps.generator.json.Comp;
 
@@ -54,9 +55,9 @@ public class App {
 			// TODO: Fill in
 		}
 		
-		for (Message m : a.getMessages()){
+		for (MessageRef m : a.getMessages()){
 			HashMap<String,String> mm = new HashMap<String,String>();
-			mm.put("name", m.getName());
+			mm.put("name", m.getType().getName());
 			this.messages.add(mm);
 		}
 		

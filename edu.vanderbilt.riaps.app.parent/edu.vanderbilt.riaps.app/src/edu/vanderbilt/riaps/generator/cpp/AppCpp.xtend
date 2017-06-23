@@ -2,7 +2,7 @@ package edu.vanderbilt.riaps.generator.cpp
 
 import edu.vanderbilt.riaps.app.Application
 import java.util.HashMap
-import edu.vanderbilt.riaps.app.Message
+import edu.vanderbilt.riaps.app.MessageRef
 import java.util.ArrayList
 import java.lang.Runtime
 import java.io.BufferedReader
@@ -16,7 +16,8 @@ class AppCpp {
 	new (Application app) {
 		applicationName = app.name
 		
-		for (Message msg: app.messages) {
+		for (MessageRef msgRef: app.messages) {
+			var msg = msgRef.type
 			portMsgTypeMap.put(msg.name, msg.type.name)
 		}
 		

@@ -5,27 +5,27 @@ package WeatherMonitor
 import WeatherMonitor.include.messages.*
 
 app WeatherMonitor {
-    message tempData: TempData; 
+    message tempData;
      
 	// TempSensor component
     component TempSensor {
-      timer clock 5000 s; 							
+      timer clock 5000;	
       pub ready : tempData ;	// Publish port for Temperature messages 
     }
     
     // TempMonitor component
-    component TempMonitor {
+    component TempMonitor() {
       sub tempupdate : tempData;	// Subscriber port to trigger component with Temperature messages
     }
 
     // WeatherIndicator actor
-    actor WeatherIndicator {
+    actor WeatherIndicator() {
        {  // TempSensor publishes 'TempData' messages
           sensor : TempSensor;				
        }
     }
     
-    actor WeatherReceiver {
+    actor WeatherReceiver() {
        {  // TempMonitor subscribes to 'TempData' messages
           monitor : TempMonitor;	
        }

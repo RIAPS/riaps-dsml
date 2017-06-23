@@ -1,5 +1,7 @@
 package WeatherMonitor.include.messages
 
 struct TempData{
-	tempature:Double
+	temperature:Double
 }
+
+message tempData: TempData;

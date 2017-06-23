@@ -8,7 +8,7 @@ import java.util.Map;
 import edu.vanderbilt.riaps.app.Actor;
 import edu.vanderbilt.riaps.app.ComponentFormal;
 import edu.vanderbilt.riaps.app.ActorFormal;
-import edu.vanderbilt.riaps.app.Message;
+import edu.vanderbilt.riaps.datatypes.Message;
 import edu.vanderbilt.riaps.app.Instance;
 
 @SuppressWarnings({"unused", "unchecked", "rawtypes"})

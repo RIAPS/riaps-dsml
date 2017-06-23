@@ -13,7 +13,7 @@ import edu.vanderbilt.riaps.services.DatatypesGrammarAccess
 import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.IFormattableDocument
 import edu.vanderbilt.riaps.datatypes.FType
-import edu.vanderbilt.riaps.datatypes.FMessage
+//import edu.vanderbilt.riaps.datatypes.FMessage
 import edu.vanderbilt.riaps.datatypes.FStructType
 import edu.vanderbilt.riaps.datatypes.FField
 

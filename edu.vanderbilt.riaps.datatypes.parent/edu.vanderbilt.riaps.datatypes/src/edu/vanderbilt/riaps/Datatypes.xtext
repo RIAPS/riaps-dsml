@@ -9,6 +9,7 @@ Model returns Mdodel:
 	'package' name=FQN
 	(imports+=Import)*
 	( types+=FType)*
+	( messages+=Message)*
 	;
 // **************************************************************
 // general
@@ -27,20 +28,8 @@ FQN:
 	ID ('.' ID)*;
 
 
-	
-
-
-
-FMessage returns FMessage:
-	{FMessage}
-	derived=[FStructType|FQN] name=ID ('key' key=[FField|FQN])?;
-
-FVersion returns FVersion:
-	{FVersion}
-	'{'
-		'major' major=INT
-		'minor' minor=INT
-    '}';
+Message:
+	'message' name=ID ':' type=[FStructType|FQN] ('key' key=[FField|FQN])? (';')?;
 	
 
 FTypeRef returns FTypeRef:

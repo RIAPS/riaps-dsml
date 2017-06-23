@@ -42,7 +42,7 @@ terminal BOOL:
 
 	// These are the real FCO
 Collection:
-	Message
+	MessageRef
 	|Component
 	|Application;
 
@@ -57,7 +57,7 @@ Application returns Application:
 	{Application}
 	'app' (name=ID)
 	'{'
-	((artifacts+=Artifact) | (actors+=Actor) | (components+=Component) | (messages+=Message))*
+	((artifacts+=Artifact) | (actors+=Actor) | (components+=Component) | (messages+=MessageRef))*
 	(deploymentConstraints+=DeploymentConstraint)*
 	'}';
 
@@ -91,8 +91,8 @@ FQN:
 //	(messages+=Message)*
 //	'}';
 
-Message:
-	'message' name=ID ':' type=[DataTypes::FStructType|FQN] ('key' key=[DataTypes::FField|FQN])? (';')?;
+MessageRef:
+	'message' type=[DataTypes::Message|FQN] (';')?;
 
 	/*
  * Rule to create (software) artifact. Artifacts can have dependencies. 
@@ -107,7 +107,7 @@ Component:
 
 DeviceComponent:
 	'device' name=ID
-	('(' formals+=ComponentFormal (',' formals+=ComponentFormal)* ')')?
+	('()' | ('(' formals+=ComponentFormal (',' formals+=ComponentFormal)* ')')?)
 	'{'
 	((requirements+=Requirement) |
 	(ports+=Port))+
@@ -116,7 +116,7 @@ DeviceComponent:
 	// Component types used in the application
 AppComponent:
 	'component' name=ID
-	('(' formals+=ComponentFormal (',' formals+=ComponentFormal)* ')')?
+	('()' | ('(' formals+=ComponentFormal (',' formals+=ComponentFormal)* ')')?)
 	'{'
 	((requirements+=Requirement) |
 	(ports+=Port))+
@@ -150,10 +150,10 @@ RateLimit:
 	'Hz' '[' (lower=INT|nolower?='-')','(upper=INT|noupper?='-')']'
 ;
 PubPort:
-	'pub' name=ID ':' type=[Message|FQN] (ratelimit=RateLimit)? (';')?;
+	'pub' name=ID ':' type=[DataTypes::Message|FQN] (ratelimit=RateLimit)? (';')?;
 
 SubPort:
-	'sub' name=ID ':' type=[Message|FQN] (ratelimit=RateLimit)? (';')?;
+	'sub' name=ID ':' type=[DataTypes::Message|FQN] (ratelimit=RateLimit)? (';')?;
 
 
 Deadline:
@@ -164,16 +164,16 @@ Deadline:
 	// Client port (request and reply message types) - Owned by an SMI client
 // Client operation is expected to send on the port and then receive on the same port
 ClntPort:
-	'clt' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] (deadline=Deadline)?')' (ratelimit=RateLimit)? (';')?;
+	'clt' name=ID ':' '(' req_type=[DataTypes::Message|FQN] ',' rep_type=[DataTypes::Message|FQN] (deadline=Deadline)?')' (ratelimit=RateLimit)? (';')?;
 
 SrvPort:
-	'srv' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' (ratelimit=RateLimit)? (';')?;
+	'srv' name=ID ':' '(' req_type=[DataTypes::Message|FQN] ',' rep_type=[DataTypes::Message|FQN] ')' (ratelimit=RateLimit)? (';')?;
 
 ReqPort:
-	'req' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] (deadline=Deadline)?')' (ratelimit=RateLimit)? (';')?;
+	'req' name=ID ':' '(' req_type=[DataTypes::Message|FQN] ',' rep_type=[DataTypes::Message|FQN] (deadline=Deadline)?')' (ratelimit=RateLimit)? (';')?;
 
 RepPort:
-	'rep' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] (deadline=Deadline)?')' (ratelimit=RateLimit)? (';')?;
+	'rep' name=ID ':' '(' req_type=[DataTypes::Message|FQN] ',' rep_type=[DataTypes::Message|FQN] (deadline=Deadline)?')' (ratelimit=RateLimit)? (';')?;
 
 /*
  * Rule that defines different supported time units.
@@ -187,7 +187,7 @@ TimeUnit:
 	|	microseconds ?= 'mus';	
 
 TimPort:
-	'timer' name=ID (spec=Number unit=TimeUnit) (';')?;
+	'timer' name=ID (spec=Number (unit=TimeUnit)?) (';')?;
 
 
 
@@ -202,9 +202,9 @@ ActorFormal:
 	name=ID ('=' argDefault=FormalDefault);
 
 Actor:
-	'actor' name=ID ('(' formals+=ActorFormal (',' formals+=ActorFormal)* ')')?
+	'actor' name=ID ('()' | ('(' formals+=ActorFormal (',' formals+=ActorFormal)* ')')?)
 	'{'
-	(('local' locals+=[Message|FQN] (',' locals+=[Message|FQN])* (';')?)|('internal' internals+=[Message|FQN] (',' internals+=[Message|FQN])* (';')?) |('critical' criticals+=[Message|FQN] (',' criticals+=[Message|FQN])* (';')?)  )*
+	(('local' locals+=[DataTypes::Message|FQN] (',' locals+=[DataTypes::Message|FQN])* (';')?)|('internal' internals+=[DataTypes::Message|FQN] (',' internals+=[DataTypes::Message|FQN])* (';')?) |('critical' criticals+=[DataTypes::Message|FQN] (',' criticals+=[DataTypes::Message|FQN])* (';')?)  )*
 	compsection=InstanceSection
 	wires+=Wire*
 	'}';
