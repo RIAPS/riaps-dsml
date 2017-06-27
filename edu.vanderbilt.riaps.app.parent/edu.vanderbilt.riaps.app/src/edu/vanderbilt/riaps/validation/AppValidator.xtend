@@ -3,6 +3,19 @@
  */
 package edu.vanderbilt.riaps.validation
 
+import org.eclipse.xtext.validation.Check
+import edu.vanderbilt.riaps.app.AppPackage
+import edu.vanderbilt.riaps.app.PubPort
+import edu.vanderbilt.riaps.app.Application
+import org.eclipse.emf.ecore.EObject
+import edu.vanderbilt.riaps.app.SubPort
+import edu.vanderbilt.riaps.app.ClntPort
+import edu.vanderbilt.riaps.app.SrvPort
+import edu.vanderbilt.riaps.app.ReqPort
+import edu.vanderbilt.riaps.app.RepPort
+import edu.vanderbilt.riaps.app.Actor
+
+import edu.vanderbilt.riaps.Console
 
 /**
  * This class contains custom validation rules. 
@@ -11,17 +24,101 @@ package edu.vanderbilt.riaps.validation
  */
 class AppValidator extends AbstractAppValidator {
 	
-//	public static val INVALID_NAME = 'invalidName'
-//
-//	@Check
-//	def checkGreetingStartsWithCapital(Greeting greeting) {
-//		if (!Character.isUpperCase(greeting.name.charAt(0))) {
-//			warning('Name should start with a capital', 
-//					AppPackage.Literals.GREETING__NAME,
-//					INVALID_NAME)
-//		}
-//	}
+	def boolean msgDeclared(EObject obj, String msgName){
+		var Application app = obj as Application
+		
+		for (m: app.messages){
+			if (m.type.name == msgName){
+				return true
+			}
+		}
+		return false
+	}
 	
+	// Message not referenced
+	@Check
+	def checkPubPortMsgDeclared(PubPort pPort){
+		if (!msgDeclared(pPort.eContainer().eContainer(), pPort.type.name)){
+			warning('Message is not declared', AppPackage.Literals.PUB_PORT__TYPE)	
+		}
+	}
 	
+	@Check
+	def checkSubPortMsgDeclared(SubPort sPort){
+		if (!msgDeclared(sPort.eContainer().eContainer(), sPort.type.name)){
+			warning('Message is not declared', AppPackage.Literals.SUB_PORT__TYPE)	
+		}
+	}
 	
+	@Check
+	def checkClntPortMsgDeclared(ClntPort cPort){
+		if (!msgDeclared(cPort.eContainer().eContainer(), cPort.req_type.name)){
+			warning('Message is not declared', AppPackage.Literals.CLNT_PORT__REQ_TYPE)	
+		}
+		if (!msgDeclared(cPort.eContainer().eContainer(), cPort.rep_type.name)){
+			warning('Message is not declared', AppPackage.Literals.CLNT_PORT__REP_TYPE)	
+		}
+
+	}
+	
+	@Check
+	def checkSrvPortMsgDeclared(SrvPort sPort){
+		if (!msgDeclared(sPort.eContainer().eContainer(), sPort.req_type.name)){
+			warning('Message is not declared', AppPackage.Literals.SRV_PORT__REQ_TYPE)	
+		}
+		if (!msgDeclared(sPort.eContainer().eContainer(), sPort.rep_type.name)){
+			warning('Message is not declared', AppPackage.Literals.SRV_PORT__REP_TYPE)	
+		}
+
+	}
+	
+	@Check
+	def checkReqPortMsgDeclared(ReqPort rPort){
+		if (!msgDeclared(rPort.eContainer().eContainer(), rPort.req_type.name)){
+			warning('Message is not declared', AppPackage.Literals.REQ_PORT__REQ_TYPE)	
+		}
+		if (!msgDeclared(rPort.eContainer().eContainer(), rPort.rep_type.name)){
+			warning('Message is not declared', AppPackage.Literals.REQ_PORT__REP_TYPE)	
+		}
+
+	}
+	
+	@Check
+	def checkRepPortMsgDeclared(RepPort rPort){
+		if (!msgDeclared(rPort.eContainer().eContainer(), rPort.req_type.name)){
+			warning('Message is not declared', AppPackage.Literals.REP_PORT__REQ_TYPE)	
+		}
+		if (!msgDeclared(rPort.eContainer().eContainer(), rPort.rep_type.name)){
+			warning('Message is not declared', AppPackage.Literals.REP_PORT__REP_TYPE)	
+		}
+
+	}
+	
+	@Check
+	def checkActorMsgsDeclared(Actor actor){
+		var i = 0;
+		for (m: actor.getLocals()){
+			Console.instance.log(java.util.logging.Level.INFO, m.name);
+			if (!msgDeclared(actor.eContainer(), m.name)){
+				warning('Message is not declared', AppPackage.Literals.ACTOR__LOCALS, i)	
+			}
+			i += 1
+		}
+		i = 0;
+		for (m: actor.getInternals()){
+			Console.instance.log(java.util.logging.Level.INFO, m.name);
+			if (!msgDeclared(actor.eContainer(), m.name)){
+				warning('Message is not declared', AppPackage.Literals.ACTOR__INTERNALS, i)	
+			}
+			i += 1
+		}
+		i = 0;
+		for (m: actor.getCriticals()){
+			Console.instance.log(java.util.logging.Level.INFO, m.name);
+			if (!msgDeclared(actor.eContainer(), m.name)){
+				warning('Message is not declared', AppPackage.Literals.ACTOR__CRITICALS, i)	
+			}
+			i += 1
+		}
+	}
 }
