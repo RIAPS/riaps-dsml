@@ -11,8 +11,7 @@ RIAPS Modeling Language
     - Using Help --> Install New Software ...
     	- m2e – Extensions Development Support
     - Using Help --> Eclipse Marketplace ...
-    	- Eclipse Xtext 2.11.0
-	- Eclipse Xtend 2.11.0 
+    	- Eclipse Xtext 2.11.0 and Eclipse Xtend 2.11.0 
 	
 # To start with the development
 - Clone the git repository
