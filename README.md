@@ -27,8 +27,15 @@ RIAPS Modeling Language
 
 - Once you have imported the project into workspace, start compiling the projects in the following sequence 
     1. edu.vanderbilt.riaps.datatypes
-    	- To compile the project. Expand the project selection, edu.vanderbilt.riaps.datatypes->src->edu.vanderbilt.riaps->GenerateDatatypes.mwe2, then right click on the mwe2 file and select "Run As --> MWE2 Workflow"
+    	To compile the project. 
+	- Expand the project selection to 
+	edu.vanderbilt.riaps.datatypes->src->edu.vanderbilt.riaps->GenerateDatatypes.mwe2
+	- Then right click on the mwe2 file and select "Run As --> MWE2 Workflow"
     2. edu.vanderbilt.riaps.app 
-    	- Compile as above
+	- Expand the project selection to 
+	edu.vanderbilt.riaps.datatypes->src->edu.vanderbilt.riaps->GenerateApp.mwe2
+	- Then right click on the mwe2 file and select "Run As --> MWE2 Workflow"
     3. edu.vanderbilt.riaps.system 
-    	- Compile as above
+	- Expand the project selection to 
+	edu.vanderbilt.riaps.datatypes->src->edu.vanderbilt.riaps->GenerateSystem.mwe2
+	- Then right click on the mwe2 file and select "Run As --> MWE2 Workflow"
