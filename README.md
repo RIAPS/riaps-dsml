@@ -9,7 +9,7 @@ RIAPS Modeling Language
     
 - Eclipse Plugins to install
     - Using Help --> Install New Software ...
-	- m2e – Extensions Development Support
+    	- m2e – Extensions Development Support
     - Using Help --> Eclipse Marketplace ...
     	- Eclipse Xtext 2.11.0
 	- Eclipse Xtend 2.11.0
