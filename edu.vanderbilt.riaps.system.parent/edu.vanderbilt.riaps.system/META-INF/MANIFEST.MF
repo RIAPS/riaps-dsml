@@ -1,15 +1,15 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: edu.vanderbilt.riaps.system
-Bundle-Vendor: My Company
-Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: Institute for Software Integrated Systems, Vanderbilt University
+Bundle-Version: 0.7.3.qualifier
 Bundle-SymbolicName: edu.vanderbilt.riaps.system; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext,
  org.eclipse.xtext.xbase,
  org.eclipse.equinox.common;bundle-version="3.5.0",
- edu.vanderbilt.riaps.app;bundle-version="1.0.0",
- edu.vanderbilt.riaps.datatypes;bundle-version="1.0.0",
+ edu.vanderbilt.riaps.app,
+ edu.vanderbilt.riaps.datatypes,
  org.eclipse.emf.ecore,
  org.eclipse.xtext.xbase.lib,
  org.antlr.runtime,

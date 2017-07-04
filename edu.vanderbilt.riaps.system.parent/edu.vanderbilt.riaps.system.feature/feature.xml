@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="edu.vanderbilt.riaps.system.feature"
-      label="RIAPS System"
-      version="1.0.0.qualifier">
+      label="RIAPS Domain Specific Modeling Environment"
+      version="0.7.3.qualifier"
+      provider-name="Institute for Software Integrated Systems, Vanderbilt University">
 
    <plugin
          id="edu.vanderbilt.riaps.system"

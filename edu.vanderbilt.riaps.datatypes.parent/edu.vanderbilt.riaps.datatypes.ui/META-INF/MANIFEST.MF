@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: edu.vanderbilt.riaps.datatypes.ui
-Bundle-Vendor: My Company
-Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: Institute for Software Integrated Systems, Vanderbilt University
+Bundle-Version: 0.7.3.qualifier
 Bundle-SymbolicName: edu.vanderbilt.riaps.datatypes.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: edu.vanderbilt.riaps.datatypes,
