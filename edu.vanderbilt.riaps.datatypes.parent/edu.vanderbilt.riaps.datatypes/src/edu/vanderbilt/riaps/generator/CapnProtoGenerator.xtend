@@ -42,7 +42,7 @@ class CapnProtoGenerator extends AbstractGenerator {
 	
 	def static String createCapnpID() {
 		var rt = Runtime.getRuntime();
-		var pr = rt.exec("capnp id");
+		var pr = rt.exec("/opt/riaps/amd64/bin/capnp id");
 
 		var stdInput = new BufferedReader(new InputStreamReader(pr.getInputStream()))
 	    var s = ""
