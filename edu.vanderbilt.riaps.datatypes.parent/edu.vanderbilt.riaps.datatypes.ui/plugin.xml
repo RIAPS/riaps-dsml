@@ -14,6 +14,52 @@
 		</editor>
 	</extension>
 	<extension
+        point="org.eclipse.ui.commands">
+     <command
+           defaultHandler="edu.vanderbilt.riaps.datatypes.MenuHandler"
+           id="tld.domain.yourcodegencommand"
+           name="Create Your Code">
+     </command>
+  </extension>
+  <extension
+        point="org.eclipse.ui.menus">
+     <menuContribution
+           allPopups="false"
+           locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+        <menu
+              id="RIAPS"
+              label="RIAPS">
+           <command
+                 commandId="edu.vanderbilt.riaps.datatypes.capnp"
+                 label="Capnp Generator"
+                 style="push"
+                 tooltip="Generate Captainproto files.">
+           </command>
+           <visibleWhen
+                 checkEnabled="false">
+              <with
+                    variable="activeMenuSelection">
+                 <iterate>
+                 <adapt type="org.eclipse.core.resources.IResource">
+             <or>
+                <test
+                      property="org.eclipse.core.resources.name"
+                      value="*.dt">
+                </test>
+                <test
+                      property="org.eclipse.core.resources.name"
+                      value="*.dt">
+                </test>
+             </or>
+                 </adapt>
+                 </iterate>
+              </with>
+           </visibleWhen>
+        </menu>
+     </menuContribution>
+  </extension>
+	
+	<extension
 		point="org.eclipse.ui.handlers">
 		<handler
 			class="edu.vanderbilt.riaps.ui.DatatypesExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
