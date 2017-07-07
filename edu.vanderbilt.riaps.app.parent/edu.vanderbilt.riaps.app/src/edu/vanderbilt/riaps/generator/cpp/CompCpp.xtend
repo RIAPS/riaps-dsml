@@ -92,6 +92,7 @@ class CompCpp {
 	    	    virtual ~«componentName»Base();
 	    	protected:
 	    		virtual void DispatchMessage(capnp::FlatArrayMessageReader* capnpreader, riaps::ports::PortBase *port);
+	    		virtual void DispatchInsideMessage(zmsg_t* zmsg, riaps::ports::PortBase* port);
 	        };
 	    }
 	}
@@ -118,6 +119,10 @@ class CompCpp {
 				
 				«ENDFOR»
 	    	}
+	    	
+	    	void «componentName»Base::DispatchInsideMessage(zmsg_t* zmsg, riaps::ports::PortBase* port) {
+	    		    		//empty the header
+	    		    	}
 	    	
 	    	«FOR PortCppBase p: ports»
 	    	«p.generateBaseCpp()»

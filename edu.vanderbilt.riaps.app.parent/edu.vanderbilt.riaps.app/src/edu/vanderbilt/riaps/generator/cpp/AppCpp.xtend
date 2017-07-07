@@ -33,17 +33,12 @@ class AppCpp {
 	
 		val content = '''
 		
-		cmake_minimum_required(VERSION 3.7)
+		cmake_minimum_required(VERSION 3.0)
 		
 		option(arch "amd64/armhf" "amd64")
 		set(CMAKE_SYSTEM_NAME Linux)
 		
 		set(riaps_prefix "/opt/riaps/" CACHE STRING "the riaps prefix")
-		
-		
-		
-		
-		
 		#Set the platform
 		if (${arch} STREQUAL "armhf")
 			set(TOOLCHAIN_PREFIX arm-linux-gnueabihf)
