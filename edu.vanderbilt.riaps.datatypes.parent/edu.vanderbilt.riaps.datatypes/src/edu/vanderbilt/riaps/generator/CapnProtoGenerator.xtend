@@ -26,6 +26,8 @@ import edu.vanderbilt.riaps.datatypes.Model
 import java.util.regex.Pattern
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.io.IOException
+import java.security.SecureRandom
 
 class CapnProtoGenerator extends AbstractGenerator {
 	@Inject extension IQualifiedNameProvider
@@ -39,18 +41,26 @@ class CapnProtoGenerator extends AbstractGenerator {
 		}
 		return sb.toString();
 	}
-	
-	def static String createCapnpID() {
-		var rt = Runtime.getRuntime();
-		var pr = rt.exec("/opt/riaps/amd64/bin/capnp id");
 
-		var stdInput = new BufferedReader(new InputStreamReader(pr.getInputStream()))
-	    var s = ""
-		s = stdInput.readLine()
-		
-		return s
+	def static String createCapnpID() {
+		try {
+			var rt = Runtime.getRuntime();
+			var pr = rt.exec("/opt/riaps/amd64/bin/capnp id");
+
+			var stdInput = new BufferedReader(new InputStreamReader(pr.getInputStream()))
+			var s = ""
+			s = stdInput.readLine() 
+
+			return s
+
+		} catch (IOException e) {
+			var SecureRandom random = new SecureRandom(); 
+			var  challenge = random.nextLong();
+			return "@0x"+Long.toHexString(challenge)
+		}
+
 	}
-	
+
 	static class SequenceDefinition {
 		String typename
 		String suffix
@@ -73,30 +83,35 @@ class CapnProtoGenerator extends AbstractGenerator {
 	static var packageNameMap = new HashMap<String, String>
 
 	override doGenerate(Resource input, IFileSystemAccess2 fsa, IGeneratorContext context) {
-		for (e: input.allContents.toIterable.filter(Model)) {
+		for (e : input.allContents.toIterable.filter(Model)) {
 			var packageNameArray = e.name.split(Pattern.quote("."))
-			
+
 			for (type : e.types) {
 				if (type instanceof FStructType) {
 					packageNameMap.put(type.name, packageNameArray.get(0))
+					
 					var aStruct = type as FStructType
+					Console.instance.log(java.util.logging.Level.INFO,aStruct.name+" mgenerating") 
 					var messageString = aStruct.compileToString
+					
 					fsa.generateFile(
 						aStruct.fullyQualifiedName.toString("/") + ".capnp",
 						messageString.beautify
 					)
-					Console.instance.log(java.util.logging.Level.INFO, aStruct.fullyQualifiedName.toString("/") + ".idl generated");
+					Console.instance.log(java.util.logging.Level.INFO,
+						aStruct.fullyQualifiedName.toString("/") + ".capnp generated");
 				}
-				
+
 				if (type instanceof FEnumerationType) {
 					packageNameMap.put(type.name, packageNameArray.get(0))
-					var anEnum = type as FEnumerationType 
+					var anEnum = type as FEnumerationType
 					var messageString = anEnum.compileToString
 					fsa.generateFile(
-						anEnum.fullyQualifiedName.toString("/") + ".idl",
+						anEnum.fullyQualifiedName.toString("/") + ".capnp",
 						messageString.beautify
 					)
-					Console.instance.log(java.util.logging.Level.INFO, anEnum.fullyQualifiedName.toString("/") + ".idl generated");
+					Console.instance.log(java.util.logging.Level.INFO,
+						anEnum.fullyQualifiedName.toString("/") + ".capnp generated");
 				}
 			}
 		}
@@ -191,7 +206,7 @@ class CapnProtoGenerator extends AbstractGenerator {
 			return "Data"
 		if (field.type.predefined.literal == "char")
 			return "UInt8"
-			if (field.type.predefined.literal == "String")
+		if (field.type.predefined.literal == "String")
 			return "Text"
 
 		return field.type.predefined.literal
@@ -201,27 +216,26 @@ class CapnProtoGenerator extends AbstractGenerator {
 	def ArrayList<String> createStructFields(FStructType struct) {
 		val fieldList = new ArrayList<String>()
 		for (var i = 0; i < struct.elements.length; i++) {
-				if (struct.elements.get(i).isList)	{
-					val field = '''
+			if (struct.elements.get(i).isList) {
+				val field = '''
 					«struct.elements.get(i).name» @«i»: List(«struct.elements.get(i).idlType»);
-					'''
-					fieldList.add(field)
-				}
-				else {
-					val field = '''
+				'''
+				fieldList.add(field)
+			} else {
+				val field = '''
 					«struct.elements.get(i).name» @«i»: «struct.elements.get(i).idlType»;
-					'''
-					fieldList.add(field)
-				}
+				'''
+				fieldList.add(field)
+			}
 		}
 		return fieldList
 	}
-	
+
 	def ArrayList<String> createEnumFields(FEnumerationType enumeration) {
 		val fieldList = new ArrayList<String>()
 		for (var i = 0; i < enumeration.enumerators.length; i++) {
 			val field = '''
-			«enumeration.enumerators.get(i).name»	@«i»;
+				«enumeration.enumerators.get(i).name»	@«i»;
 			'''
 		}
 		return fieldList
