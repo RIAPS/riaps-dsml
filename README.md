@@ -2,6 +2,15 @@
 # riaps-dsml
 RIAPS Modeling Language
 
+
+# Updating version
+
+Edit the updateversion.sh and execute to set the version correctly.
+
+# How to use the releases?
+
+Download the release tar ball to your machine. Add the local folder as an update site to your eclipse. Then you can install the plugins.
+
 # Setup system before development
     '''
     $ export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
