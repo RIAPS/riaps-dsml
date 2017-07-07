@@ -2,6 +2,9 @@
 # riaps-dsml
 RIAPS Modeling Language
 
+
+# Edit the updateversion.sh and execute to set the version correctly.
+
 # Setup system before development
     '''
     $ export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
