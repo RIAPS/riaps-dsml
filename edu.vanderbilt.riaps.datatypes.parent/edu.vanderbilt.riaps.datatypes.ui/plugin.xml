@@ -16,11 +16,20 @@
 	<extension
         point="org.eclipse.ui.commands">
      <command
-           defaultHandler="edu.vanderbilt.riaps.datatypes.MenuHandler"
-           id="tld.domain.yourcodegencommand"
-           name="Create Your Code">
+           defaultHandler="edu.vanderbilt.riaps.ui.DatatypesExecutableExtensionFactory:edu.vanderbilt.riaps.datatypes.CapnpHandler"
+           id="edu.vanderbilt.riaps.datatypes.capnp"
+           name="Generate">
      </command>
   </extension>
+  	<extension
+        point="org.eclipse.ui.commands">
+     <command
+           defaultHandler="edu.vanderbilt.riaps.ui.DatatypesExecutableExtensionFactory:edu.vanderbilt.riaps.datatypes.IDLHandler"
+           id="edu.vanderbilt.riaps.datatypes.idl"
+           name="Generate">
+     </command>
+  </extension>
+  
   <extension
         point="org.eclipse.ui.menus">
      <menuContribution
@@ -31,9 +40,15 @@
               label="RIAPS">
            <command
                  commandId="edu.vanderbilt.riaps.datatypes.capnp"
-                 label="Capnp Generator"
+                 label="Generate-Capnp"
                  style="push"
-                 tooltip="Generate Captainproto files.">
+                 tooltip="Generate capnproto files.">
+           </command>
+              <command
+                 commandId="edu.vanderbilt.riaps.datatypes.idl"
+                 label="Generate-IDL Files"
+                 style="push"
+                 tooltip="Generate IDL files.">
            </command>
            <visibleWhen
                  checkEnabled="false">
