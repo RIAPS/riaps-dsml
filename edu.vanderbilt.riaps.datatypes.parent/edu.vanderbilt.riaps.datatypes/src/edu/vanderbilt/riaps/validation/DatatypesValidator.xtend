@@ -3,23 +3,25 @@
  */
 package edu.vanderbilt.riaps.validation
 
+import edu.vanderbilt.riaps.datatypes.DatatypesPackage
+import edu.vanderbilt.riaps.datatypes.FStructType
+import org.eclipse.xtext.validation.Check
 
 /**
  * This class contains custom validation rules. 
- *
+ * 
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
 class DatatypesValidator extends AbstractDatatypesValidator {
-	
-//	public static val INVALID_NAME = 'invalidName'
-//
-//	@Check
-//	def checkGreetingStartsWithCapital(Greeting greeting) {
-//		if (!Character.isUpperCase(greeting.name.charAt(0))) {
-//			warning('Name should start with a capital', 
-//					DatatypesPackage.Literals.GREETING__NAME,
-//					INVALID_NAME)
-//		}
-//	}
-	
+
+	public static val INVALID_NAME = 'invalidName'
+
+	@Check
+	def checkFStructTypeStartsWithCapital(FStructType message) {
+		if (!Character.isUpperCase(message.name.charAt(0))) {
+			error('Name should start with a capital', DatatypesPackage.Literals.FTYPE__NAME)
+		}
+
+	}
+
 }

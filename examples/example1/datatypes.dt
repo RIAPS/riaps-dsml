@@ -1,5 +1,7 @@
 package riapsex
-struct mymessage
+struct Mymessage
 {
 	content: String 
+	data: Int16
 }
+   
