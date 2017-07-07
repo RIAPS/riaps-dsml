@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>edu.vanderbilt.riaps.app</groupId>
 		<artifactId>edu.vanderbilt.riaps.app.parent</artifactId>
-		<version>0.7.3-SNAPSHOT</version>
+		<version>0.7.4-SNAPSHOT</version>
 	</parent>
 	<artifactId>edu.vanderbilt.riaps.app.target</artifactId>
 	<packaging>eclipse-target-definition</packaging>
