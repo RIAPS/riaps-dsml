@@ -86,7 +86,7 @@ class CapnProtoGenerator extends AbstractGenerator {
 		for (e : input.allContents.toIterable.filter(Model)) {
 			var packageNameArray = e.name.split(Pattern.quote("."))
 
-			for (type : e.types) {
+			for (type : e.collection) {
 				if (type instanceof FStructType) {
 					packageNameMap.put(type.name, packageNameArray.get(0))
 					
@@ -237,6 +237,7 @@ class CapnProtoGenerator extends AbstractGenerator {
 			val field = '''
 				«enumeration.enumerators.get(i).name»	@«i»;
 			'''
+			fieldList.add(field)
 		}
 		return fieldList
 	}
