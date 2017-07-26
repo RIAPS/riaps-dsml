@@ -9,5 +9,5 @@ enumeration DAYS
 {
 	alpha, beta, gamma;
 }
-device pmu;
+
 

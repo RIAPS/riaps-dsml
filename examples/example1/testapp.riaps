@@ -1,6 +1,8 @@
 package riapsex
 import riapsex.mymessage
 import riapsex.pmu
+
+device pmu;
 device pmuhandler()
 {
 	requires device pmu tag north.alpha // tags are optional
