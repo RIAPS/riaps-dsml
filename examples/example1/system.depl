@@ -1,0 +1,20 @@
+package riapsex
+import riapsex.pmu
+import riapsex.pmuhandler
+import riapsex.myapp.testactor
+import riapsex.myapp.testpmu
+
+nodeType regularNode{
+	device pmu
+	memory 16 MB
+	storage 200 MB
+}
+
+node node1: regularNode{
+	net eth0 address 129.59.129.1
+}
+
+app riapsex.myapp {
+	on all regularNode testpmu
+	on node1 testactor 
+} 

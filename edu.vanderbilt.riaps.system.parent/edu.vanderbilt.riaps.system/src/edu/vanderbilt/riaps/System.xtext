@@ -50,30 +50,47 @@ Number hidden():
 	(INT | DECIMAL) ('.' (INT | DECIMAL))?;
 	
 
+//Node type captures a class of nodes. Specific nodes of the class can be added at runtime
+//enabling dynamic deployment.
 NodeType returns NodeType:
 	{NodeType}
 	'nodeType' (name=ID)
 	'{'
+		//(provision+=Provision)+
 		(deviceSupport+=DeviceSupported)*
 		(memory=MemoryProvision)?
-		(storage=StorageProvision)?
+		(storage=StorageProvision)?		
 	'}';
 
+Provision:
+	DeviceSupported
+	|MemoryProvision
+	|StorageProvision
+;
 
-
+//Devices can be specifically tagged read hierarchically from left to right
 DeviceSupported:
-	'device' name=STRING	
+	'device' device=[App::DeviceType] ('tag' tag=DeviceTagSequence)? ('using' devicecomponent=[App::DeviceComponent])? (';')?
+;
+
+
+DeviceTagSequence:
+	tag+=DeviceTag ('.' tag+=DeviceTag)*
+;	
+
+DeviceTag:
+	name=ID
 ;
 	
 MemoryProvision:
-	'memory' value=INT unit = MemoryUnits
+	'memory' value=INT unit = MemoryUnits (';')?
 ;
 
 /*
  * Rule to specify storage provision.
  */
 StorageProvision:
-	'storage' storage = INT unit = MemoryUnits;
+	'storage' storage = INT unit = MemoryUnits (';')?;
 	
 /*
  * Rule that defines different supported memory units. 

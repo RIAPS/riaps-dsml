@@ -1,7 +1,13 @@
 package riapsex
 struct Mymessage
 {
-	content: String 
+	content: String
 	data: Int16
 }
-   
+message mymessage: Mymessage;
+enumeration DAYS
+{
+	alpha, beta, gamma;
+}
+device pmu;
+

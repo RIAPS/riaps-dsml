@@ -85,7 +85,7 @@ public class CompType {
 				this.requiredStorage.put("unit", unit);
 			}
 			if (r.getDeviceRequirement() != null){
-				this.requiredDevices.add(r.getDeviceRequirement());
+				this.requiredDevices.add(r.getDeviceRequirement().getName());
 			}
 			if (r.getArtifactrequirement() != null){
 				this.requiredArtifacts.add(r.getArtifactrequirement().getName());

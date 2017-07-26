@@ -19,9 +19,10 @@ class DatatypesValidator extends AbstractDatatypesValidator {
 	@Check
 	def checkFStructTypeStartsWithCapital(FStructType message) {
 		if (!Character.isUpperCase(message.name.charAt(0))) {
-			error('Name should start with a capital', DatatypesPackage.Literals.FTYPE__NAME)
+			error('Name should start with a capital', DatatypesPackage.Literals.MODEL_COLLECTION__NAME)
 		}
 
 	}
 
 }
+ 
