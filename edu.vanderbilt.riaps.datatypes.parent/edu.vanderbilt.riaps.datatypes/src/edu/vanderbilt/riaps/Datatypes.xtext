@@ -1,84 +1,83 @@
 /********************************************************************************/
+//these are top level declarations. The Terminals describe the base datatypes as strings and integers
 grammar edu.vanderbilt.riaps.Datatypes with org.eclipse.xtext.common.Terminals
 generate datatypes "http://www.vanderbilt.edu/riaps/Datatypes"
+//xtext requires us to import ecore primitives.
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 // **************************************************************
+// All models start with the keyword Model. The package definition is not optional.
+// package names can be nested. For example package edu.vanderbilt.isis 
 // model root
 Model returns Mdodel:
 	{Model}
-	'package' name=FQN
+	('package' name=FQN (';')?)
 	(imports+=Import)*
-	( types+=FType)*
-	( messages+=Message)*
+	(collection+=ModelCollection)*
+	//(types+=FType)*
+	//(messages+=Message)*
 	;
-// **************************************************************
-// general
-
-//Package:
-//	'package' name=FQN
-//;
-
-Import :
+	// **************************************************************
+Import:
 	'import' (importedNamespace=ImportedFQN);
-
-ImportedFQN:
-	FQN ('.' '*')?;
-
 FQN:
 	ID ('.' ID)*;
-
-
+	//An imported FQN is pulled from a different file.
+ImportedFQN:
+	FQN ('.' '*')?;
 Message:
-	'message' name=ID ':' type=[FStructType|FQN] ('key' key=[FField|FQN])? (';')?;
-	
+	'message' name=ID ':' type=[FStructType|FQN] (';')?;
+ModelCollection:
+    FType
+	|Message
+;	
 
+	//This is the top level type declaration.	
+FType returns FType:
+	FEnumerationType |
+	FStructType;
+
+	//A message can only refer to a structure.
+FStructType returns FStructType:
+	{FStructType}
+	'struct' name=ID
+	'{'
+	(elements+=FField)*
+	'}';
+
+	//the [] declares a filed to be an array
+FField:
+	name=ID ':' type=FTypeRef (list?='[' ']')? (';')?;
+
+	//These are references to types.
 FTypeRef returns FTypeRef:
 	predefined=FBasicTypeId | derived=[FType|FQN];
 
+	//These are the basic types that are supported by the datatypes language
 enum FBasicTypeId returns FBasicTypeId:
-	Int8 = 'Int8' |
-	UInt8 = 'UInt8' |
-	Int16 = 'Int16' |
-	UInt16 = 'UInt16' |
-	Int32 = 'Int32' |
-	UInt32 = 'UInt32' |
-	Int64 = 'Int64' |
-	UInt64 = 'UInt64' |
-	Boolean = 'Boolean' |
-	String = 'String' |
-	Float = 'Float' |
-	Double = 'Double' |
-	Char = 'Char' |
-	ByteBuffer = 'ByteBuffer' ;
-	
-	
-FType returns FType:
-	FEnumerationType |
-	FStructType ;
-	
-	
-FStructType returns FStructType:
-	{FStructType}
-	'struct' name=ID		
-	'{'
-		(elements+=FField)*
-    '}';
+	Int8='Int8' |
+	UInt8='UInt8' |
+	Int16='Int16' |
+	UInt16='UInt16' |
+	Int32='Int32' |
+	UInt32='UInt32' |
+	Int64='Int64' |
+	UInt64='UInt64' |
+	Boolean='Boolean' |
+	String='String' |
+	Float='Float' |
+	Double='Double' |
+	Char='Char' |
+	ByteBuffer='ByteBuffer';
 
+	//We support enumerations as well. A structure can have a field that is an enumeration.	
 FEnumerationType returns FEnumerationType:
 	{FEnumerationType}
-	'enumeration' name=ID	
+	'enumeration' name=ID
 	'{'
-		(enumerators+=FEnumerator (','? enumerators+=FEnumerator)*)?
-    '}';
-    
+	(enumerators+=FEnumerator (','? enumerators+=FEnumerator)*)(';')?
+	'}';
+
 FEnumerator returns FEnumerator:
 	{FEnumerator}
-	name=ID ('=' value=STRING)?
-    ;
+	name=ID ('=' value=STRING)?;
 
- 
-FField:
-	name=ID ':' type=FTypeRef (list?='['  ']')?;
-	
-
-	

@@ -16,6 +16,7 @@ import edu.vanderbilt.riaps.datatypes.FType
 //import edu.vanderbilt.riaps.datatypes.FMessage
 import edu.vanderbilt.riaps.datatypes.FStructType
 import edu.vanderbilt.riaps.datatypes.FField
+import edu.vanderbilt.riaps.datatypes.ModelCollection
 
 class DatatypesFormatter extends AbstractFormatter2 {
 
@@ -30,7 +31,7 @@ class DatatypesFormatter extends AbstractFormatter2 {
 		model.prepend[noSpace].append[noSpace; newLine]
 		
 		
-		for (FType Type : model.types) {
+		for (ModelCollection Type : model.collection) {
 			Type.format;
 		}
 //		for (FMessageCollection messageCollections : model.getMessageCollections()) {
@@ -42,7 +43,7 @@ class DatatypesFormatter extends AbstractFormatter2 {
 
 
 
-	def dispatch void format(FType collection, extension IFormattableDocument document) {
+	def dispatch void format(ModelCollection collection, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 		val open = collection.regionFor.keyword("{").prepend[noSpace; newLine].append[noSpace; newLine]
 		val close = collection.regionFor.keyword("}").prepend[noSpace; newLine].append[noSpace; newLine]

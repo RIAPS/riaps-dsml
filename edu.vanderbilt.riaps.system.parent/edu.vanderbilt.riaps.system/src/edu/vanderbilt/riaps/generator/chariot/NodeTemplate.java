@@ -97,7 +97,7 @@ public class NodeTemplate {
 				device.put(
 						"JavaClass",
 						"edu.vanderbilt.isis.chariot.datamodel.NodeCategory.DM_Device");
-				device.put("name", ds.getName());
+				device.put("name", ds.getDevice().getName());
 				this.devices.add(device);
 			}
 			
