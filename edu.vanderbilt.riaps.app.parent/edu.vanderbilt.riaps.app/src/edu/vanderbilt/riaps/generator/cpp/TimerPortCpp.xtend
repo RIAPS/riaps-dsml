@@ -49,4 +49,13 @@ class TimerPortCpp extends PortCppBase {
 		return content
 	}
 	
+	override String generate_python() {
+		val content = '''
+			    def on_«portName»(self):
+			        now = self.«portName».recv_pyobj()
+			        self.logger.info('PID(%s) - on_«portName»(): %s',str(self.pid),str(now))
+		'''
+		return content
+	}
+	
 }
