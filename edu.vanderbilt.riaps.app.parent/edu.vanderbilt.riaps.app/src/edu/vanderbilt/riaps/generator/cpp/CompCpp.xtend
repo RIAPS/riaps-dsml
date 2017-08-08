@@ -218,19 +218,14 @@ class CompCpp {
 	'''
 	
 	def generate_python() '''
-	\'\'\'
-	«componentName».py
-	\'\'\'
-	
+	#«componentName».py
 	from riaps.run.comp import Component
 	import os
 	import logging
 	
 	class «componentName»(Component):
 	    def __init__(«FOR p : initParams SEPARATOR ','»«ENDFOR»):
-	        super(«componentName», self).__init__()
-	        self.Ts = Ts
-	        self.uuid = uuid.uuid4().int
+	        super(«componentName», self).__init__()	        
 	        self.pid = os.getpid()
 	        self.logger.info("(PID %s) - starting «componentName», %s",str(self.pid),str(now))
 	        
@@ -238,8 +233,7 @@ class CompCpp {
 	    «p.generate_python()»
 	    «ENDFOR»    
 	        
-		def __destroy__(self):
-			now = time.time()
+		def __destroy__(self):			
 			self.logger.info("(PID %s) - stopping «componentName», %s",str(self.pid),now)   	        	        
 	'''
 	

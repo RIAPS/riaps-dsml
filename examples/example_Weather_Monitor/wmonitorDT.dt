@@ -5,3 +5,4 @@ struct TempData{
 }
 
 message tempData: TempData;
+message tempInternal: TempData; 

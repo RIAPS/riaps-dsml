@@ -3,7 +3,7 @@ package WeatherMonitor.depl
 import WeatherMonitor.*
 
 nodeType WeatherNode{
-	device "someSensor"
+	device thermostat tag north.alpha
 	memory 16 MB
 	storage 200 MB
 }

@@ -69,7 +69,7 @@ class RepPortCpp extends PortCppBase{
 		val content = '''
 		    def on_«portName»(self):
 		        msg = self.«portName».recv_pyobj()
-		        self.logger.info("PID (%s) - on_query():%s",str(self.pid),msg)
+		        self.logger.info("PID (%s) - on_query():%s",str(self.pid),str(msg))
 		'''		
 		return content
 	}
