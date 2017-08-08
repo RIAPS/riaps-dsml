@@ -10,6 +10,7 @@ import edu.vanderbilt.riaps.app.ReqPort
 import edu.vanderbilt.riaps.app.TimPort
 import edu.vanderbilt.riaps.app.RepPort
 import java.util.HashSet
+import edu.vanderbilt.riaps.app.ComponentFormal
 
 @SuppressWarnings("unused", "unchecked")
 class CompCpp {
@@ -17,12 +18,18 @@ class CompCpp {
 	protected String applicationName
 	protected var ports = new ArrayList<PortCppBase>
 	protected var msgIncludes = new HashSet<String>
+	protected var initParams = new ArrayList<String>
 	
 	new (Component comp, String appName, HashMap<String, String> portMsgType) {
 		componentName = comp.name
 		applicationName = appName
 		
 		createPorts(comp, portMsgType)
+		
+		initParams.add("self")
+		for(ComponentFormal formal: comp.getFormals()) {
+			initParams.add(formal.name)
+		}
 	}
 	
 	def void createPorts(Component riapsComponent, HashMap<String, String> portMsgTypeMap) {
@@ -210,5 +217,30 @@ class CompCpp {
 		}
 	'''
 	
+	def generate_python() '''
+	\'\'\'
+	«componentName».py
+	\'\'\'
+	
+	from riaps.run.comp import Component
+	import os
+	import logging
+	
+	class «componentName»(Component):
+	    def __init__(«FOR p : initParams SEPARATOR ','»«ENDFOR»):
+	        super(«componentName», self).__init__()
+	        self.Ts = Ts
+	        self.uuid = uuid.uuid4().int
+	        self.pid = os.getpid()
+	        self.logger.info("(PID %s) - starting «componentName», %s",str(self.pid),str(now))
+	        
+	    «FOR p: ports»
+	    «p.generate_python()»
+	    «ENDFOR»    
+	        
+		def __destroy__(self):
+			now = time.time()
+			self.logger.info("(PID %s) - stopping «componentName», %s",str(self.pid),now)   	        	        
+	'''
 	
 }

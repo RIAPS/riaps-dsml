@@ -55,7 +55,13 @@ public class CppGenerator extends AbstractGenerator {
 					fw_cpp_path,
 					fw_cpp
 				)
-				Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");			
+				Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
+				
+				var python_file_path = e.name + "//python_src//" + comp.componentName + ".py"
+				fsa.generateFile(
+					python_file_path,
+					comp.generate_python
+				)			
 			
 			}
 			
@@ -66,7 +72,7 @@ public class CppGenerator extends AbstractGenerator {
 					cmake
 				)
 			Console.instance.log(java.util.logging.Level.INFO, cmake_path + " generated");		
-			
+
 		}
 	}	
 }

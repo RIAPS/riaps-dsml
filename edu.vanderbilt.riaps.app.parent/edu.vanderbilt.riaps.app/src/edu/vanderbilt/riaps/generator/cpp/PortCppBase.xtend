@@ -80,5 +80,9 @@ class PortCppBase {
 	def public String generateFW_Cpp() {
 		return ""
 	}
+	
+	def public String generate_python() {
+		return ""	
+	}
 
 }

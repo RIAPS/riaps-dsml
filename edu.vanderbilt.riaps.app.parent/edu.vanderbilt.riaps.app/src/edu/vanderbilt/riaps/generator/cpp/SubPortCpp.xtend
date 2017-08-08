@@ -54,4 +54,13 @@ class SubPortCpp extends PortCppBase {
 		return content	
 	}
 	
+	override String generate_python() {
+		val content = '''
+		    def on_«portName»(self):
+		        msg = self.«portName».recv_pyobj()
+		        self.logger.info("PID (%s) - on_«portName»():%s",str(self.pid), msg)
+		'''
+		return content
+	}
+	
 }
