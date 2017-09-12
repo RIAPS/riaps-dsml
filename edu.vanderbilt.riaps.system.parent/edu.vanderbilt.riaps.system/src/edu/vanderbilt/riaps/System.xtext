@@ -83,14 +83,14 @@ DeviceTag:
 ;
 	
 MemoryProvision:
-	'memory' value=INT unit = MemoryUnits (';')?
+	'mem' value=INT unit = MemoryUnits (';')?
 ;
 
 /*
  * Rule to specify storage provision.
  */
 StorageProvision:
-	'storage' storage = INT unit = MemoryUnits (';')?;
+	'space' storage = INT unit = MemoryUnits (';')?;
 	
 /*
  * Rule that defines different supported memory units. 
