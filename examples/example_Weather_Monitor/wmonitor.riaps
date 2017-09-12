@@ -13,30 +13,41 @@ app WeatherMonitor
 	message tempInternal;
 	device tempio()
 	{
-		requires device thermostat
-		requires realtimecpu priority 34 class FIFO
-		requires memory 400 MB
-		pub p1: tempInternal
+		requires {
+		    cpu 25 % over 10 s
+		    device thermostat
+	    }
+	   pub p1: tempInternal Hz [-,10]
 	}
 	// TempSensor component 
-	component TempSensor 
+	rt component TempSensor
 	{
-		requires device thermostat tag north.alpha // tags are optional
-		timer clock 5000;
-		pub ready : tempData ; // Publish port for Temperature messages 
-		sub rawtemp: tempInternal
+		requires {
+		   device thermostat
+		    cap 25 MB over 10 s;
+	    }
+	   timer clock 5000;
+	   pub ready : tempData Hz [-,10]; // Publish port for Temperature messages ; No lower limit. But a max limit
+	   sub rawtemp: tempInternal Hz [-,10]
 	}
 	// TempMonitor component
 	component TempMonitor()
 	{
-		requires cpu period 200 us quota 50 us // should this be just percentage.
-		sub tempupdate : tempData; // Subscriber port to trigger component with Temperature messages
+		
+		sub tempupdate : tempData
+		; // Subscriber port to trigger component with Temperature messages
 	}
 	// WeatherIndicator actor
 	actor WeatherIndicator()
 	{
 		{ // TempSensor publishes 'TempData' messages
 			sensor : TempSensor;
+			
+		}
+		requires{
+			mem 512 KB
+			space 1024 KB
+			device thermostat tag north
 		}
 	}
 	actor WeatherReceiver()
