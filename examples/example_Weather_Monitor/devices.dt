@@ -1,0 +1,3 @@
+package WeatherMonitor.include.devices
+
+device thermostat;

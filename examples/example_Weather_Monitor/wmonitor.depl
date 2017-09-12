@@ -1,19 +1,27 @@
 package WeatherMonitor.depl
 
 import WeatherMonitor.*
+import WeatherMonitor.include.messages.*
+import WeatherMonitor.include.devices.*
+
 
 nodeType WeatherNode{
-	device thermostat tag north
+	
 	mem 16 MB
 	space 200 MB
 }
 
+//only one of the nodes has thermostat
 node node1 : WeatherNode{
+	device thermostat tag north
 	mem 32 MB
 	net eth0 address 129.59.129.1
 }
 
 app WeatherMonitor{
-	on all WeatherNode WeatherMonitor.WeatherIndicator
-	on node1 WeatherMonitor.WeatherReceiver
+	//All Nodes have weather displays
+	on all WeatherNode WeatherMonitor.WeatherDisplay
+	//this is correct because we only want one instance of WeatherSensor
+	on node1 WeatherMonitor.WeatherSensor
+	on node1 WeatherMonitor.TempDeviceActor
 }

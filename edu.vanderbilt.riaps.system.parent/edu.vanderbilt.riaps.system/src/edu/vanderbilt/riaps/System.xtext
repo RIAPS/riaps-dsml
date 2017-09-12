@@ -70,7 +70,7 @@ Provision:
 
 //Devices can be specifically tagged read hierarchically from left to right
 DeviceSupported:
-	'device' device=[App::DeviceType] ('tag' tag=DeviceTagSequence)? ('using' devicecomponent=[App::DeviceComponent])? (';')?
+	'device' device=[DataTypes::DeviceType] ('tag' tag=DeviceTagSequence)? ('using' devicecomponent=[App::DeviceComponent])? (';')?
 ;
 
 

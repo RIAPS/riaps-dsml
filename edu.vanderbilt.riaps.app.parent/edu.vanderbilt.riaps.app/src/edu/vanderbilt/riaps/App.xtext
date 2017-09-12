@@ -58,15 +58,10 @@ terminal BOOL:
 
 // These are the real FCO
 Collection:
-	DeviceType
-	| Component
+ Component
 	| Application;
 
-	//The device types and their tags will be captured in datatypes. A different place for them can be found later.
-//for crossreference 
-DeviceType returns DeviceType:
-	{DeviceType}
-	'device' name=ID (';')?;
+
 
 	// A component can be an application component or a device component.
 Component:
@@ -140,7 +135,7 @@ CPURequirement:
 ;
 
 DeviceRequirement:
-	('device' deviceRequirement=[DeviceType])   
+	('device' deviceRequirement=[DataTypes::DeviceType])   
 ;
 //('tag' tag=DeviceTagSequence)?
 	

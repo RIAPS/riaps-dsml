@@ -1,9 +1,9 @@
 // RIAPS WeatherMonitor
 package WeatherMonitor
 import WeatherMonitor.include.messages.*
-
+import WeatherMonitor.include.devices.*
 //devices are first class objects
-device thermostat;
+
 
 //The device components implement drivers/wrappers for devices.
 //nodes tell what device they have
@@ -42,8 +42,15 @@ app WeatherMonitor
 		
 		sub tempupdate : tempData // Subscriber port to trigger component with Temperature messages
 	}
+	
+	actor TempDeviceActor()
+	{
+		{
+			tempdevice:tempio
+		}
+	}
 	// WeatherIndicator actor
-	actor WeatherIndicator()
+	actor WeatherSensor()
 	{
 		{ 
 			sensor : TempSensor;// TempSensor publishes 'TempData' messages
@@ -57,7 +64,7 @@ app WeatherMonitor
 		}
 	}
 	
-	actor WeatherReceiver()
+	actor WeatherDisplay()
 	{
 		{ 
 			monitor : TempMonitor;// TempMonitor subscribes to 'TempData' messages
