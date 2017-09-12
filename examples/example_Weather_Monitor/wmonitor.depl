@@ -4,12 +4,12 @@ import WeatherMonitor.*
 
 nodeType WeatherNode{
 	device thermostat tag north
-	memory 16 MB
-	storage 200 MB
+	mem 16 MB
+	space 200 MB
 }
 
 node node1 : WeatherNode{
-	memory 32 MB
+	mem 32 MB
 	net eth0 address 129.59.129.1
 }
 
