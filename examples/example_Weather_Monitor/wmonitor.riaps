@@ -1,8 +1,10 @@
 // RIAPS WeatherMonitor
 package WeatherMonitor
 import WeatherMonitor.include.messages.*
+
 //devices are first class objects
 device thermostat;
+
 //The device components implement drivers/wrappers for devices.
 //nodes tell what device they have
 //A deployment must add one device component per device.
@@ -13,47 +15,53 @@ app WeatherMonitor
 	message tempInternal;
 	device tempio()
 	{
-		requires {
+		requires 
+		{
 		    cpu 25 % over 10 s
 		    device thermostat
 	    }
-	   pub p1: tempInternal Hz [-,10]
+	    pub p1: tempInternal Hz [-,10]
 	}
+	
 	// TempSensor component 
 	rt component TempSensor
 	{
-		requires {
+		requires 
+		{
 		   device thermostat
 		    cap 25 MB over 10 s;
 	    }
-	   timer clock 5000;
-	   pub ready : tempData Hz [-,10]; // Publish port for Temperature messages ; No lower limit. But a max limit
-	   sub rawtemp: tempInternal Hz [-,10]
+	    timer clock 5000;
+	    pub ready : tempData Hz [-,10]; // Publish port for Temperature messages ; No lower limit. But a max limit
+	    sub rawtemp: tempInternal Hz [-,10]
 	}
+	
 	// TempMonitor component
 	component TempMonitor()
 	{
 		
-		sub tempupdate : tempData
-		; // Subscriber port to trigger component with Temperature messages
+		sub tempupdate : tempData // Subscriber port to trigger component with Temperature messages
 	}
 	// WeatherIndicator actor
 	actor WeatherIndicator()
 	{
-		{ // TempSensor publishes 'TempData' messages
-			sensor : TempSensor;
+		{ 
+			sensor : TempSensor;// TempSensor publishes 'TempData' messages
 			
 		}
-		requires{
+		requires
+		{
 			mem 512 KB
 			space 1024 KB
-			device thermostat tag north
+			device thermostat tag north // this specifies that any component in this actor will require a node that has a device of type thermostat and tag north.
 		}
 	}
+	
 	actor WeatherReceiver()
 	{
-		{ // TempMonitor subscribes to 'TempData' messages
-			monitor : TempMonitor;
+		{ 
+			monitor : TempMonitor;// TempMonitor subscribes to 'TempData' messages
+		
 		}
 	}
 }
