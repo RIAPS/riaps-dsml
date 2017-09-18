@@ -49,7 +49,7 @@ app WeatherMonitor
 		requires
 		{
 			mem 512 KB;
-			storage 1024 KB;
+			space 1024 KB;
 			 // this specifies that any component in this actor will 
 			 // require a node that has a device of type thermostat and tag north.
 			device thermostat tag north;

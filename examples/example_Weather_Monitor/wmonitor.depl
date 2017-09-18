@@ -20,8 +20,8 @@ node node1 : WeatherNode{
 
 app WeatherMonitor{
 	//All Nodes have weather displays
-	on all WeatherNode WeatherMonitor.WeatherDisplay
+	on all WeatherNode WeatherMonitor.WeatherReceiver
 	//this is correct because we only want one instance of WeatherSensor
-	on node1 WeatherMonitor.WeatherSensor
+	on node1 WeatherMonitor.WeatherIndicator
 	on node1 WeatherMonitor.TempDeviceActor
 }
