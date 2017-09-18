@@ -254,7 +254,7 @@ Actor:
 	compsection=InstanceSection
 	wires+=Wire*
 	('requires' '{'
-		actorrequirement+=ActorRequirements*
+		(actorrequirement+=ActorRequirements (';'?))*
 		'}'
 	)?
 	'}';
@@ -271,7 +271,7 @@ MemoryRequirement:
 ;
 
 StorageRequirement:
-	'space' Number=INT (unit=MemoryUnits)? 
+	'storage' Number=INT (unit=MemoryUnits)? 
 ;
 	// Wiring of clients to servers (both SMI and AMI)
 InstanceSection returns InstanceSection:

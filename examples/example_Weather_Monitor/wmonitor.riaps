@@ -1,14 +1,6 @@
-// RIAPS WeatherMonitor
 package WeatherMonitor
 import WeatherMonitor.include.messages.*
 import WeatherMonitor.include.devices.*
-//devices are first class objects
-
-
-//The device components implement drivers/wrappers for devices.
-//nodes tell what device they have
-//A deployment must add one device component per device.
-
 app WeatherMonitor
 {
 	message tempData;
@@ -17,58 +9,57 @@ app WeatherMonitor
 	{
 		requires 
 		{
-		    cpu 25 % over 10 s
-		    device thermostat
+		    cpu 25 % over 10 s;
+		    device thermostat;
 	    }
 	    pub p1: tempInternal Hz [-,10]
-	}
-	
+	}	
 	// TempSensor component 
 	rt component TempSensor
 	{
 		requires 
 		{
-		   device thermostat
+		    device thermostat;
 		    cap 25 MB over 10 s;
 	    }
 	    timer clock 5000;
-	    pub ready : tempData Hz [-,10]; // Publish port for Temperature messages ; No lower limit. But a max limit
+	    // Publish port for Temperature messages ; No lower limit. But a max limit
+	    pub ready : tempData Hz [-,10]; 
 	    sub rawtemp: tempInternal Hz [-,10]
-	}
-	
+	}	
 	// TempMonitor component
 	component TempMonitor()
 	{
-		
-		sub tempupdate : tempData // Subscriber port to trigger component with Temperature messages
+		// Subscriber port to trigger component with Temperature messages
+		sub tempupdate : tempData; 
 	}
-	
 	actor TempDeviceActor()
 	{
 		{
-			tempdevice:tempio
+			iodevice: tempio
 		}
 	}
 	// WeatherIndicator actor
-	actor WeatherSensor()
+	actor WeatherIndicator()
 	{
 		{ 
-			sensor : TempSensor;// TempSensor publishes 'TempData' messages
-			
+			// TempSensor publishes 'TempData' messages
+			sensor : TempSensor;			
 		}
 		requires
 		{
-			mem 512 KB
-			space 1024 KB
-			device thermostat tag north // this specifies that any component in this actor will require a node that has a device of type thermostat and tag north.
+			mem 512 KB;
+			storage 1024 KB;
+			 // this specifies that any component in this actor will 
+			 // require a node that has a device of type thermostat and tag north.
+			device thermostat tag north;
 		}
-	}
-	
-	actor WeatherDisplay()
+	}	
+	actor WeatherReceiver()
 	{
 		{ 
-			monitor : TempMonitor;// TempMonitor subscribes to 'TempData' messages
-		
+			// TempMonitor subscribes to 'TempData' messages
+			monitor : TempMonitor;		
 		}
 	}
 }
