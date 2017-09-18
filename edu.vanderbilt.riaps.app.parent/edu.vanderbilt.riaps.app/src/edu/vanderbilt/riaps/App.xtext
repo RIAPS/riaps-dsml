@@ -25,12 +25,13 @@ FQN:
 //These are the terminal Rules	
 terminal INT returns ecore::EInt:
 	'0'..'9' ('0'..'9' | '_')*;
-	
-	
+
 terminal DECIMAL:
 	INT
 	(('e' | 'E') ('+' | '-')? INT)?
-	(('b' | 'B') ('i' | 'I' | 'd' | 'D') | ('l' | 'L' | 'd' | 'D' | 'f' | 'F'))?; FormalDefault:
+	(('b' | 'B') ('i' | 'I' | 'd' | 'D') | ('l' | 'L' | 'd' | 'D' | 'f' | 'F'))?;
+
+FormalDefault:
 	StringDefault
 	| NumberDefault
 	| BoolDefault;
@@ -57,17 +58,10 @@ terminal BOOL:
 
 // These are the real FCO
 Collection:
-	DeviceType
-	| Component
+ Component
 	| Application;
 
 
-//The device types and their tags will be captured in datatypes. A different place for them can be found later.
-//for crossreference 
-DeviceType returns DeviceType:
-	{DeviceType}
-	'device' name=ID(';')?
-;
 
 	// A component can be an application component or a device component.
 Component:
@@ -77,21 +71,29 @@ Component:
 // we capture its ports and its requirements.
 // Component types used in the application
 AppComponent:
-	'component' name=ID
+	(realtime?='rt')? 'component' name=ID
 	('()' | ('(' formals+=ComponentFormal (',' formals+=ComponentFormal)* ')')?)
 	'{'
-	// A component can first declarate several requirements. It then declares the ports that it provides.
-	(requirements+=Requirement)*
+	// A component can first declare several requirements. It then declares the ports that it provides.
+	('requires' 
+	     '{' 
+	       (requirements+=ComponentRequirement (';')?)* 
+	      '}'
+	 )?
 	// A component must have atleast one port 
 	(ports+=Port)+
 	'}';
 
 	// A device component is similar to an application component	
 DeviceComponent:
-	'device' name=ID
+	(realtime?='rt')?  'device' name=ID
 	('()' | ('(' formals+=ComponentFormal (',' formals+=ComponentFormal)* ')')?)
 	'{'
-	(requirements+=Requirement)*
+	('requires' 
+	     '{' 
+	       (requirements+=ComponentRequirement (';')?)* 
+	      '}'
+	 )?
 	// A component must have atleast one port 
 	(ports+=Port)+
 	'}';
@@ -105,34 +107,44 @@ MemoryUnits:
 	kb?='KB'
 	| mb?='MB'
 	| gb?="GB";
+	
+	
 
-	//An application component can request a specific device. But It will need to talk via a device component running on the same 
+//An application component can request a specific device. But It will need to talk via a device component running on the same 
 // node that also requires the same device. Here the requirement captures a device identifier that can be specialized to 
 // identify a subtag for a device for example PMU.north. In this case the device type is PMU. The north is a tag that can be hierarchically matched
 // against the computation node that supports that device.
 // TODO DeviceTypes might have to be defined in datatypes
 
-//TODO handle network requirements
-//TODO write validation rules
-Requirement:
-	'requires'
-	(('artifact' artifactrequirement=[Artifact|FQN])
-	| ('memory' memoryRequirement=INT memoryunit=MemoryUnits)
-	| ('realtimecpu') 'priority' priority=INT 'class' (fifo?='FIFO' | rr?='RR')
-	//This is the CFS parameter
-	| ('cpu') 'period' priority=INT 'us' 'quota' quota=INT 'us'
-	| ('storage' storageRequirement=INT storageunit=MemoryUnits)
-	//we refer to device types specified in the datatypes.
-	| ('device' deviceRequirement=[DeviceType]) ('tag' tag=DeviceTagSequence)?  ('using' devicecomponent=[DeviceComponent])?) (';')?;
+ComponentRequirement:
+	ArtifactRequirement|CPURequirement|DeviceRequirement| NetworkRequirement
+	;
+
+NetworkRequirement:
+	'cap' Number=INT (capunit=MemoryUnits)?  ('over' TimeInterval_Number=INT  (timeunit=TimeUnit)?)?
+;
+	
+ArtifactRequirement:
+	('artifact' artifactrequirement=[Artifact|FQN])
+;	
+
+CPURequirement:
+	'cpu' percentage=INT '%' ('over' TimeInterval_Number=INT unit=TimeUnit)?
+	// a percentage of CPU time (utilization) over  a given interval. If interval is missing, it defaults to 1 sec. If the interval unit is missing it defaults to second. 
+	
+;
+
+DeviceRequirement:
+	('device' deviceRequirement=[DataTypes::DeviceType])   
+;
+//('tag' tag=DeviceTagSequence)?
 	
 
 DeviceTagSequence:
-	tag+=DeviceTag ('.' tag+=DeviceTag)*
-;	
+	tag+=DeviceTag ('.' tag+=DeviceTag)*;
 
 DeviceTag:
-	name=ID
-;
+	name=ID;
 
 MessageRef:
 	'message' type=[DataTypes::Message|FQN] (';')?;
@@ -218,8 +230,7 @@ RepPort:
 TimeUnit:
 	seconds?='s'
 	| milliseconds?='ms'
-	| nanoseconds?='ns'
-	| microseconds?='mus';
+	| microseconds?='us';
 
 TimPort:
 	'timer' name=ID (spec=Number (unit=TimeUnit)?) (';')?;
@@ -242,8 +253,26 @@ Actor:
 	criticals+=[DataTypes::Message|FQN] (',' criticals+=[DataTypes::Message|FQN])* (';')?))*
 	compsection=InstanceSection
 	wires+=Wire*
+	('requires' '{'
+		(actorrequirement+=ActorRequirements (';'?))*
+		'}'
+	)?
 	'}';
 
+ActorRequirements:
+	MemoryRequirement|StorageRequirement|ActorDeviceRequirement
+;
+
+ActorDeviceRequirement:
+	requ=DeviceRequirement 'tag' tagsequence= DeviceTagSequence
+;
+MemoryRequirement:
+	'mem' Number=INT (unit=MemoryUnits)? 
+;
+
+StorageRequirement:
+	'storage' Number=INT (unit=MemoryUnits)? 
+;
 	// Wiring of clients to servers (both SMI and AMI)
 InstanceSection returns InstanceSection:
 	{InstanceSection}
