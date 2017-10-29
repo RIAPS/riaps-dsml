@@ -5,8 +5,6 @@ package edu.vanderbilt.riaps.formatting2
 
 import com.google.inject.Inject
 
-
-
 import edu.vanderbilt.riaps.datatypes.Import
 import edu.vanderbilt.riaps.datatypes.Model
 import edu.vanderbilt.riaps.services.DatatypesGrammarAccess
@@ -17,6 +15,14 @@ import edu.vanderbilt.riaps.datatypes.FType
 import edu.vanderbilt.riaps.datatypes.FStructType
 import edu.vanderbilt.riaps.datatypes.FField
 import edu.vanderbilt.riaps.datatypes.ModelCollection
+import edu.vanderbilt.riaps.datatypes.DeviceType
+import edu.vanderbilt.riaps.datatypes.DeviceUses
+import org.eclipse.xtext.formatting2.regionaccess.IComment
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.AbstractRule
+import org.eclipse.xtext.formatting2.internal.SinglelineDocCommentReplacer
+import org.eclipse.xtext.formatting2.internal.WhitespaceReplacer
+import org.eclipse.xtext.formatting2.internal.SinglelineCodeCommentReplacer
 
 class DatatypesFormatter extends AbstractFormatter2 {
 
@@ -29,8 +35,7 @@ class DatatypesFormatter extends AbstractFormatter2 {
 			imports.prepend[noSpace; newLine].append[noSpace; newLine]
 		}
 		model.prepend[noSpace].append[noSpace; newLine]
-		
-		
+
 		for (ModelCollection Type : model.collection) {
 			Type.format;
 		}
@@ -38,10 +43,6 @@ class DatatypesFormatter extends AbstractFormatter2 {
 //			messageCollections.format;
 //		}
 	}
-
-	
-
-
 
 	def dispatch void format(ModelCollection collection, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
@@ -51,12 +52,46 @@ class DatatypesFormatter extends AbstractFormatter2 {
 		collection.prepend[noSpace; newLine].append[noSpace; newLine]
 
 		if (collection instanceof FStructType) {
-
 			for (FField e : collection.elements) {
 				e.prepend[noSpace; newLine].append[noSpace; newLine]
-
 			}
 		}
+
+		if (collection instanceof DeviceType) {
+			collection.constraint.format
+		}
+
+	}
+
+	override createCommentReplacer(IComment comment) {
+		val EObject grammarElement = comment.getGrammarElement();
+		if (grammarElement instanceof AbstractRule) {
+			val String ruleName = grammarElement.getName();
+			if (ruleName.startsWith("SL")) {
+				if (comment.getLineRegions().get(0).getIndentation().getLength() > 0) {
+					return new SinglelineDocCommentReplacer(comment, "//") {
+						def defigureWhitespace(WhitespaceReplacer leading, WhitespaceReplacer trailing) {
+							leading.getFormatting().space = "            ";
+						}
+					};
+
+				} else {
+					return new SinglelineCodeCommentReplacer(comment, "//") {
+						def defeWhitespace(WhitespaceReplacer leading, WhitespaceReplacer trailing) {
+							leading.getFormatting().space = "            ";
+						}
+					}
+				}
+			}
+		}
+		super.createCommentReplacer(comment)
+	}
+
+	def dispatch void format(DeviceUses collection, extension IFormattableDocument document) {
+		val open = collection.regionFor.keyword("{").prepend[noSpace; newLine].append[noSpace; newLine]
+		val close = collection.regionFor.keyword("}").prepend[noSpace; newLine].append[noSpace; newLine]
+		interior(open, close)[indent]
+		collection.prepend[noSpace; newLine].append[noSpace; newLine]
 
 	}
 
@@ -78,6 +113,5 @@ class DatatypesFormatter extends AbstractFormatter2 {
 //		collection.prepend[noSpace; newLine].append[noSpace; newLine]
 //
 //	}
-
 // TODO: implement for FTypeCollection, , , FTypeDef, FStructType, FEnumerationType, FEnumerator, FMapType, FField
 }

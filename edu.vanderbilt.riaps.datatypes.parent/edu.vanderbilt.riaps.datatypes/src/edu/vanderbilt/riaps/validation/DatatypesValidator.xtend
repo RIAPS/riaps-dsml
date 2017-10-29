@@ -6,6 +6,9 @@ package edu.vanderbilt.riaps.validation
 import edu.vanderbilt.riaps.datatypes.DatatypesPackage
 import edu.vanderbilt.riaps.datatypes.FStructType
 import org.eclipse.xtext.validation.Check
+import edu.vanderbilt.riaps.datatypes.Library
+import edu.vanderbilt.riaps.datatypes.Configuration
+import org.eclipse.core.runtime.Path
 
 /**
  * This class contains custom validation rules. 
@@ -22,6 +25,23 @@ class DatatypesValidator extends AbstractDatatypesValidator {
 			error('Name should start with a capital', DatatypesPackage.Literals.MODEL_COLLECTION__NAME)
 		}
 
+	}
+	
+	
+	// Message not referenced
+	@Check
+	def checkLibraryName(Library lib){
+		if (!lib.name.startsWith("lib")){
+			error('library name must start with lib', DatatypesPackage.Literals.LIBRARY__NAME)	
+		}
+	}
+	
+		// Message not referenced
+	@Check
+	def checkConfigurationName(Configuration f){
+		if (!Path.isValidPosixPath(f.name)){
+			error('not a valid path', DatatypesPackage.Literals.CONFIGURATION__NAME)	
+		}
 	}
 
 }

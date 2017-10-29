@@ -1,6 +1,7 @@
 /********************************************************************************/
 //these are top level declarations. The Terminals describe the base datatypes as strings and integers
 grammar edu.vanderbilt.riaps.Datatypes with org.eclipse.xtext.common.Terminals
+
 generate datatypes "http://www.vanderbilt.edu/riaps/Datatypes"
 //xtext requires us to import ecore primitives.
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
@@ -12,48 +13,48 @@ Model returns Mdodel:
 	{Model}
 	('package' name=FQN (';')?)
 	(imports+=Import)*
-	(collection+=ModelCollection)*
-	//(types+=FType)*
-	//(messages+=Message)*
-	;
-	// **************************************************************
+	(collection+=ModelCollection)*;
+
 Import:
 	'import' (importedNamespace=ImportedFQN);
+
 FQN:
 	ID ('.' ID)*;
 	//An imported FQN is pulled from a different file.
 ImportedFQN:
 	FQN ('.' '*')?;
-Message:
-	'message' name=ID ':' type=[FStructType|FQN] (';')?;
-ModelCollection:
-    FType
-	|Message
-;	
 
-	//This is the top level type declaration.	
+ModelCollection:
+	FType
+	| Message
+	| DeviceType;
+
 FType returns FType:
 	FEnumerationType |
 	FStructType;
 
-	//A message can only refer to a structure.
+	
 FStructType returns FStructType:
+//A message can only refer to a structure.	
 	{FStructType}
 	'struct' name=ID
 	'{'
 	(elements+=FField)*
 	'}';
 
-	//the [] declares a filed to be an array
+
 FField:
+	//the [] declares a filed to be an array
 	name=ID ':' type=FTypeRef (list?='[' ']')? (';')?;
 
-	//These are references to types.
+
 FTypeRef returns FTypeRef:
+		//These are references to types.
 	predefined=FBasicTypeId | derived=[FType|FQN];
 
-	//These are the basic types that are supported by the datatypes language
+
 enum FBasicTypeId returns FBasicTypeId:
+//These are the basic types that are supported by the datatypes language
 	Int8='Int8' |
 	UInt8='UInt8' |
 	Int16='Int16' |
@@ -74,10 +75,127 @@ FEnumerationType returns FEnumerationType:
 	{FEnumerationType}
 	'enumeration' name=ID
 	'{'
-	(enumerators+=FEnumerator (','? enumerators+=FEnumerator)*)(';')?
+	(enumerators+=FEnumerator (','? enumerators+=FEnumerator)*) (';')?
 	'}';
 
 FEnumerator returns FEnumerator:
 	{FEnumerator}
 	name=ID ('=' value=STRING)?;
 
+Message:
+	'message' name=ID ':' type=[FStructType|FQN] (';')?;
+
+	/* Device Type declares a device wrapper that uses a particular protocol
+// Example device type definition
+package weathermonitor.devices;
+device Thermostat()	{               // Defines a 'thermostat' device type
+	uses {                          // Resources the device component uses
+        cpu 25 % over 10 sec;       // CPU at 25% over a 10 second interval
+		io "UART";                  // I/O protocol
+	}
+    pub p1: tempInternal [-,10];    // One publisher port for tempInternal messages, 
+                                    // with data rate limits: no lower limit, 10 message/sec 
+}	
+* 
+*/
+
+//The device types and their tags will be captured in datatypes. A different place for them can be found later.
+//for crossreference 
+DeviceType returns DeviceType:
+	{DeviceType}
+	'device' name=ID '()'
+	'{'
+	  (constraint=DeviceUses)?
+	  (ports+=Port)+
+	'}';
+
+DeviceUses:
+	{DeviceUses}
+	'uses'
+	'{'
+		(requirements+=DeviceRequirement (';')?)*
+	'}'
+;
+DeviceRequirement:
+	Library|Configuration|CPURequirement|IORequirement
+;		
+
+CPURequirement:
+	'cpu' percentage=INT '%' ('over' TimeInterval_Number=INT unit=TimeUnit)?	
+;
+
+IORequirement:
+	'io' type=STRING
+;
+	/*
+ * Rule that defines different supported time units.
+ */
+TimeUnit:
+	seconds?='s'
+	| milliseconds?='ms'
+	| microseconds?='us';
+	
+
+terminal libraryName  		: 'lib'('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*('.so');
+//terminal fileName  		: ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*(('.')('a'..'z'|'A'..'Z'|'_'|'0'..'9')*);
+	
+Library:
+	'library' (name=libraryName)
+;
+
+Configuration:
+	'file' (name=STRING)
+;		
+
+
+	// Rate limits can be specified on ports.
+Port:
+	PubPort
+	| SubPort
+	| ClntPort
+	| SrvPort
+	| ReqPort
+	| RepPort
+	| TimPort
+	| InsPort;
+
+RateLimit:
+	'[' (lower=INT | nolower?='-') ',' (upper=INT | noupper?='-') ']';
+
+	//Rate limits are optional
+PubPort:
+	'pub' name=ID ':' type=[Message|FQN] (ratelimit=RateLimit)? (';')?;
+
+SubPort:
+	'sub' name=ID ':' type=[Message|FQN] (ratelimit=RateLimit)? (';')?;
+
+	//deadlines can be specified for client server ports.
+Deadline:
+	'within' deadline=INT units=TimeUnit;
+
+	// Client port (request and reply message types) - Owned by an SMI client
+// Client operation is expected to send on the port and then receive on the same port
+ClntPort:
+	'clt' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN]  ')'(deadline=Deadline)?
+	(ratelimit=RateLimit)? (';')?;
+
+SrvPort:
+	'srv' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')'
+	(ratelimit=RateLimit)? (';')?;
+
+ReqPort:
+	'req' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' (deadline=Deadline)?
+	(ratelimit=RateLimit)? (';')?;
+
+RepPort:
+	'rep' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN]')'
+	(ratelimit=RateLimit)? (';')?;
+
+
+
+TimPort:
+	'timer' name=ID (spec=INT (unit=TimeUnit)?) (';')?;
+
+	//Inside port
+InsPort:
+	'inside' name=ID (spec?='default')? (';')?;

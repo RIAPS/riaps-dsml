@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.ArrayList;
 
 import edu.vanderbilt.riaps.app.Component;
-import edu.vanderbilt.riaps.app.Requirement;
+//import edu.vanderbilt.riaps.app.Requirement;
 import edu.vanderbilt.riaps.app.Actor;
 
 @SuppressWarnings("unused")
@@ -62,35 +62,35 @@ public class CompType {
 		this.requiredStorage.put("storage", 0);
 		this.requiredStorage.put("unit", "");
 		
-		for (Requirement r : c.getRequirements()){			
-			if (r.getMemoryRequirement() != 0 && r.getMemoryunit() != null){
-				this.requiredMemory.put("memory", r.getMemoryRequirement());
-				String unit = "KB";
-				if (r.getMemoryunit().isMb()){
-					unit = "MB";
-				} else if (r.getMemoryunit().isGb()){
-					unit = "GB";
-				}
-				this.requiredMemory.put("unit", unit);
-			}
+//		for (Requirement r : c.getRequirements()){			
+//			if (r.getMemoryRequirement() != 0 && r.getMemoryunit() != null){
+//				this.requiredMemory.put("memory", r.getMemoryRequirement());
+//				String unit = "KB";
+//				if (r.getMemoryunit().isMb()){
+//					unit = "MB";
+//				} else if (r.getMemoryunit().isGb()){
+//					unit = "GB";
+//				}
+//				this.requiredMemory.put("unit", unit);
+//			}
 			
-			if (r.getStorageRequirement() != 0 && r.getStorageunit() != null){
-				this.requiredStorage.put("storage", r.getStorageRequirement());
-				String unit = "KB";
-				if (r.getStorageunit().isMb()){
-					unit = "MB";
-				} else if (r.getStorageunit().isGb()){
-					unit = "GB";
-				}
-				this.requiredStorage.put("unit", unit);
-			}
-			if (r.getDeviceRequirement() != null){
-				this.requiredDevices.add(r.getDeviceRequirement().getName());
-			}
-			if (r.getArtifactrequirement() != null){
-				this.requiredArtifacts.add(r.getArtifactrequirement().getName());
-			}
-		}
+//			if (r.getStorageRequirement() != 0 && r.getStorageunit() != null){
+//				this.requiredStorage.put("storage", r.getStorageRequirement());
+//				String unit = "KB";
+//				if (r.getStorageunit().isMb()){
+//					unit = "MB";
+//				} else if (r.getStorageunit().isGb()){
+//					unit = "GB";
+//				}
+//				this.requiredStorage.put("unit", unit);
+//			}
+//			if (r.getDeviceRequirement() != null){
+//				this.requiredDevices.add(r.getDeviceRequirement().getName());
+//			}
+//			if (r.getArtifactrequirement() != null){
+//				this.requiredArtifacts.add(r.getArtifactrequirement().getName());
+//			}
+	//	}
 		
 		
 	}
