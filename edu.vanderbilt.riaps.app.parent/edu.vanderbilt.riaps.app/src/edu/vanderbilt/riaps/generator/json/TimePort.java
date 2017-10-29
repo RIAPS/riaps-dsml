@@ -10,7 +10,7 @@ public class TimePort {
 	
 	public TimePort(TimPort p) {
 		this.name = p.getName();
-		this.period = Integer.parseInt(p.getSpec());
+		this.period = p.getSpec();
 	}
 
 }

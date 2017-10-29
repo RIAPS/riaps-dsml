@@ -58,7 +58,7 @@ class DatatypesFormatter extends AbstractFormatter2 {
 		}
 
 		if (collection instanceof DeviceType) {
-			collection.constraint.format
+			if(collection.constraint!==null) collection.constraint.format
 		}
 
 	}

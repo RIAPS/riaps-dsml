@@ -10,7 +10,7 @@ class TimerPortCpp extends PortCppBase {
 		super(port, compName)
 		
 		val timPort = port as TimPort
-		spec = timPort.spec
+		spec = timPort.spec.toString
 	}
 	
 	override String getPortType(Port port) {

@@ -11,8 +11,7 @@ import edu.vanderbilt.riaps.app.Application
 
 import edu.vanderbilt.riaps.generator.json.App
 import com.google.gson.GsonBuilder;
-import java.util.Map
-import java.util.HashMap
+
 
 public class RiapsAppGenerator extends AbstractGenerator {
 	
@@ -23,7 +22,8 @@ public class RiapsAppGenerator extends AbstractGenerator {
 			var app = new App(e);
 			var formattedString = gson.toJson(app);
 			fsa.generateFile(
-				e.fullyQualifiedName.toString("/") + ".json",
+				//e.fullyQualifiedName.toString("/") + ".json",
+				e.name + ".json",
 				formattedString
 			)
 			Console.instance.log(java.util.logging.Level.INFO, e.fullyQualifiedName.toString("/") + ".json generated");
