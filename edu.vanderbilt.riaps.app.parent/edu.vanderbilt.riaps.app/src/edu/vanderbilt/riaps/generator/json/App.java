@@ -10,7 +10,7 @@ import edu.vanderbilt.riaps.app.Application;
 import edu.vanderbilt.riaps.app.Component;
 //import edu.vanderbilt.riaps.app.AppComponent;
 import edu.vanderbilt.riaps.app.Actor;
-import edu.vanderbilt.riaps.app.Artifact;
+
 import edu.vanderbilt.riaps.app.ClntPort;
 import edu.vanderbilt.riaps.app.DeploymentConstraint;
 import edu.vanderbilt.riaps.app.Port;
@@ -100,9 +100,7 @@ public class App {
 			actors.put(jac.getName(), jac);
 		}
 		
-		for (Artifact af : a.getArtifacts()){
-			// TODO: Fill in
-		}
+	
 		
 		for (DeploymentConstraint dc : a.getDeploymentConstraints()){
 			// TODO: Fill in

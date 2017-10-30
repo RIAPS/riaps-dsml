@@ -91,9 +91,7 @@ CPURequirement:
 	'cpu' percentage=INT '%' ('over' TimeInterval_Number=INT unit=TimeUnit)?	
 ;
 
-IORequirement:
-	'io' type=STRING
-;
+
 	/*
  * Rule that defines different supported time units.
  */
@@ -172,7 +170,7 @@ ComponentUses:
 	{ComponentUses}
 	'uses'
 	'{'
-		(requirements+=ComponentRequirement (';')?)*
+		(requirements+=ComponentRequirement (';')?)+
 	'}'
 ;
 
@@ -201,9 +199,6 @@ NetworkRequirement:
 	'net' Number=INT (capunit=MemoryUnits)?  ('over' TimeInterval_Number=INT  (timeunit=TimeUnit))?
 ;
 	
-ArtifactRequirement:
-	('artifact' artifactrequirement=[Artifact|FQN])
-;	
 
 
 
@@ -226,7 +221,7 @@ Application returns Application:
 	'app' (name=ID)
 	'{'
 	//declare the libraries, actors, components (app-specific components - an app's actor can use components described in a non-app namespace)
-	((artifacts+=Artifact) | (actors+=Actor) | (components+=Component))*
+	( (actors+=Actor) | (components+=Component))*
 
 	//Optionally deployment constraints can be specified to control how an app is deployed.
 	// the constraints are specified by the app developer
@@ -244,14 +239,6 @@ DistributeConstraint:
 	'distribute' actordistributelist+=[Actor|FQN] ',' actordistributelist+=[Actor|FQN] (','
 	actordistributelist+=[Actor|FQN])* (';'?);
 
-	/*
- * Rule to create (software) artifact. Artifacts can have dependencies. 
- * All artifacts are always found in RIAPSAPPS/artifacts folder
- * 
- */
-Artifact:
-	(jar?='jar' | sharedObject?='library' | configurationFile?='file') name=ID ('path' (path=STRING)
-	/* optionally path can be pre-specified */)? (';')?;
 
 
 ComponentFormal:

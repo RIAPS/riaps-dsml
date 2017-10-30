@@ -13,7 +13,7 @@ import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.IFormattableDocument
 import edu.vanderbilt.riaps.app.Application
 import edu.vanderbilt.riaps.app.Actor
-import edu.vanderbilt.riaps.app.Artifact
+
 import edu.vanderbilt.riaps.app.InstanceSection
 import edu.vanderbilt.riaps.app.DeploymentConstraint
 import edu.vanderbilt.riaps.app.ComponentUses
@@ -47,11 +47,7 @@ class AppFormatter extends AbstractFormatter2 {
 			component.format;
 			component.prepend[noSpace; newLine].append[noSpace; newLine]
 		}
-		for (Artifact artifact : app.getArtifacts()) {
-			artifact.format
-			artifact.prepend[noSpace; newLine].append[noSpace; newLine]
-
-		}
+	
 		for (Actor actor : app.getActors()) {
 			actor.format;
 			actor.prepend[noSpace; newLine].append[noSpace; newLine]
