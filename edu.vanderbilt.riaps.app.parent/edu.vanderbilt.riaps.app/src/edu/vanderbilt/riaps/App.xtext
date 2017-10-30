@@ -10,7 +10,7 @@ Model returns Mdodel:
 	(imports+=Import)*
 	(collections+=Collection)*;
 Import:
-	'import' (importedNamespace=ImportedFQN);
+	'import' (importedNamespace=ImportedFQN) (';')?;
 ImportedFQN:
 	FQN ('.' '*')?;
 FQN:

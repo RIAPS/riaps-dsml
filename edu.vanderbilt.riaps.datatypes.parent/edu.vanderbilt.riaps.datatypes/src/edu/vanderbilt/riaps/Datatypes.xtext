@@ -16,7 +16,7 @@ Model returns Mdodel:
 	(collection+=ModelCollection)*;
 
 Import:
-	'import' (importedNamespace=ImportedFQN);
+	'import' (importedNamespace=ImportedFQN) (';')?;
 
 FQN:
 	ID ('.' ID)*;

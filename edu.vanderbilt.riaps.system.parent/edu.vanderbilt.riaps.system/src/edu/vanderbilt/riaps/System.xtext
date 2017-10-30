@@ -13,7 +13,7 @@ Model returns Mdodel:
 	(collections+=Collection)*;
 	
 Import:
-	'import' (importedNamespace=ImportedFQN);
+	'import' (importedNamespace=ImportedFQN) (';')?;
 
 ImportedFQN:
 	FQN ('.' '*')?;
@@ -70,7 +70,7 @@ Provision:
 
 //Devices can be specifically tagged read hierarchically from left to right
 DeviceSupported:
-	'device' device=[DataTypes::DeviceType] ('tag' tag=DeviceTagSequence)? ('using' devicecomponent=[App::DeviceComponent])? (';')?
+	'device' device=[DataTypes::DeviceType] ('tag' tag=DeviceTagSequence)?(';')?
 ;
 
 
@@ -102,7 +102,7 @@ MemoryUnits:
 	
 	
 KnownNodes:
-	'node' (name=ID) (':' kind=[NodeType|FQN])?
+	'host' (name=ID) (':' kind=[NodeType|FQN])?
 	'{'
 		(deviceSupport+=DeviceSupported)*
 		(memory=MemoryProvision)?
@@ -117,7 +117,7 @@ IP returns  ecore::EString:   (INT '.' INT '.' INT '.' INT)	;
 
 
 NetworkInterface:
-	'net' name=ID 'address' ip=IP 	
+	'net' name=ID 'address' ip=IP 	(';')?
 ;
 
 AppDeployment:
