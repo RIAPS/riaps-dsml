@@ -49,7 +49,7 @@ public class Comp {
 		this.libraries = new ArrayList<String>();
 		this.files = new ArrayList<String>();
 		
-		this.exceptHandler="None";
+		this.exceptHandler="";
 		
 		if(c.getHandler()!=null)
 		{

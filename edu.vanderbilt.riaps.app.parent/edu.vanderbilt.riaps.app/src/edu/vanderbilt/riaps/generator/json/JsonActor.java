@@ -41,7 +41,7 @@ public class JsonActor {
 
 	public JsonActor(Actor a) {
 		this.name = a.getName();
-		this.exceptHandler = "None";
+		this.exceptHandler = "";
 		this.internals = new ArrayList<>();
 		this.locals = new ArrayList<>();
 		this.criticals = new ArrayList<>();
