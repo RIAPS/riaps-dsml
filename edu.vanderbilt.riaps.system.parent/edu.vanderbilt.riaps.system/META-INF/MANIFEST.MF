@@ -11,10 +11,10 @@ Require-Bundle: org.eclipse.xtext,
  edu.vanderbilt.riaps.app,
  edu.vanderbilt.riaps.datatypes,
  org.eclipse.emf.ecore,
- org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtext.xbase.lib;bundle-version="2.13.0",
  org.antlr.runtime,
  org.eclipse.xtext.util,
- org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib;bundle-version="2.13.0",
  org.eclipse.emf.common,
  com.google.gson;bundle-version="2.2.4"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

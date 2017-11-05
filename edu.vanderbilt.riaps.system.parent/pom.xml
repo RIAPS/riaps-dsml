@@ -8,7 +8,7 @@
 
 	<properties>
 		<tycho-version>0.23.1</tycho-version>
-		<xtextVersion>2.10.0</xtextVersion>
+		<xtextVersion>2.13.0</xtextVersion>
 		<project.build.sourceEncoding>windows-1252</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -20,7 +20,7 @@
 		<module>edu.vanderbilt.riaps.system.target</module>
 		<module>edu.vanderbilt.riaps.system.feature</module>
 		<module>edu.vanderbilt.riaps.system.repository</module>
-		<module>edu.vanderbilt.riaps.system.tests</module>		
+				
 		<module>../edu.vanderbilt.riaps.app.parent</module>
 	</modules>
 	<build>
