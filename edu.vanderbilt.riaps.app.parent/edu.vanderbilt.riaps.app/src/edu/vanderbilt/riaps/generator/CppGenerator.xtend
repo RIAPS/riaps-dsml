@@ -12,6 +12,9 @@ import org.eclipse.xtext.generator.IFileSystemAccess
 //import java.util.ArrayList
 import edu.vanderbilt.riaps.generator.cpp.AppCpp
 import edu.vanderbilt.riaps.RiapsOutputConfigurationProvider
+import edu.vanderbilt.riaps.datatypes.FStructType
+import java.util.HashSet
+import edu.vanderbilt.riaps.datatypes.FType
 
 public class CppGenerator extends AbstractGenerator {
 
@@ -22,7 +25,7 @@ public class CppGenerator extends AbstractGenerator {
 		for (e : resource.allContents.toIterable.filter(Application)) {
 
 			// var componentNames = new ArrayList<String>()
-			var appCpp = new AppCpp(e)
+			var appCpp = new AppCpp(e,this)
 			for (comp : appCpp.compList) {
 
 				var base_h = comp.generateBaseH()
@@ -76,38 +79,117 @@ public class CppGenerator extends AbstractGenerator {
 				cmake_path,RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_APPCODE,
 				cmake
 			)
+			
+			fsa.generateFile(
+				appCpp.applicationName + "//toolchain.host.cmake",
+				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_APPCODE,createx86ToolChain
+			)
+			
+			fsa.generateFile(
+				appCpp.applicationName + "//toolchain.arm-linux-gnueabihf.cmake",
+				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_APPCODE,createArmhfToolChain
+			)
 			Console.instance.log(java.util.logging.Level.INFO, cmake_path + " generated");
 
 		}
 	}
 	
-	def String createCMakeList(AppCpp app) {		
-		val content = '''		
+	def String StructQualifiedName(FStructType x)
+	{
+		return x.fullyQualifiedName.toString("/");
+	}
+	
+	def String createArmhfToolChain(){
+		'''
+		set(CMAKE_SYSTEM_NAME Linux)
+		set(RIAPS_PREFIX /opt/riaps/armhf/)
+		set(TOOLCHAIN_PREFIX arm-linux-gnueabihf)
+		set(CMAKE_C_COMPILER ${TOOLCHAIN_PREFIX}-gcc)
+		set(CMAKE_CXX_COMPILER ${TOOLCHAIN_PREFIX}-g++)
+		set(CMAKE_FIND_ROOT_PATH /usr/${TOOLCHAIN_PREFIX})
+		set (CMAKE_CXX_FLAGS "-std=c++11")
+		set (CMAKE_C_FLAGS "-std=c99")
+		include_directories(${RIAPS_PREFIX}/include)
+		'''
+	}
+	
+		def String createx86ToolChain(){
+		'''
+		set(CMAKE_SYSTEM_NAME Linux)
+		set(RIAPS_PREFIX /opt/riaps/amd64/)
+		set(CMAKE_C_COMPILER gcc)
+		set(CMAKE_CXX_COMPILER g++)
+		set(CMAKE_FIND_ROOT_PATH /usr/)
+		set (CMAKE_CXX_FLAGS "-std=c++11")
+		set (CMAKE_C_FLAGS "-std=c99")
+		include_directories(${RIAPS_PREFIX}/include)			
+		'''
+	}
+	def String createCMakeList(AppCpp app) {	
+		val capnpMsgs = new HashSet<FType>
+		val content = '''
+		#Initial Setup		
 		cmake_minimum_required(VERSION 3.0)
 		project («app.applicationName»)
+		
 		set(CMAKE_SYSTEM_NAME Linux)
-		set(DEPENDENCIES ${riaps_prefix})
+		set (CMAKE_CXX_FLAGS "-std=c++11")
+		set (CMAKE_C_FLAGS "-std=c99")
+		set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_HOME_DIRECTORY}/debug/bin)
+		set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG ${CMAKE_HOME_DIRECTORY}/debug/bin)
+		set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_HOME_DIRECTORY}/release/bin)
+		set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${CMAKE_HOME_DIRECTORY}/release/bin)
+				
+		#Library Dependencies
+		set(DEPENDENCIES ${RIAPS_PREFIX})
 		set (LIBALLPATH_INCLUDE ${DEPENDENCIES}/${arch}/include)
 		set (LIBALLPATH_LIB ${DEPENDENCIES}/${arch}/lib)
-		include_directories(${LIBALLPATH_INCLUDE})
 		link_directories(${LIBALLPATH_LIB})
-		# Debug binaries are to be copied into "./bin" directory
-		set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_HOME_DIRECTORY}/bin)
-		set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG ${CMAKE_HOME_DIRECTORY}/bin)
-		include_directories(include)
-		«FOR c: app.compList»
-		add_library(«c.componentName.toLowerCase» SHARED src/«c.componentName».cc
-				                                  src/«c.componentName»Base.cc
-				                                  «FOR i: c.msgIncludes»
-				                                   «i.fullyQualifiedName.toString("/")».capnp.c++
-				                 				  «ENDFOR»
-		)
 		
+		
+		#include directories
+		include_directories(${CMAKE_HOME_DIRECTORY}/include)
+		include_directories(${CMAKE_HOME_DIRECTORY}/../../basecode/«app.applicationName»/include)
+		include_directories(${CMAKE_HOME_DIRECTORY}/../../messages/)
+				
+		
+		#capnproto files		
+		«FOR c: app.compList»
+		«FOR i: c.msgIncludes»
+		«{capnpMsgs.add(i);""}»
+		«FOR el: i.elements»
+		«IF el.type.derived!==null»
+		«{capnpMsgs.add(el.type.derived);""}»
+		«ENDIF»
+		«ENDFOR»
+		«ENDFOR»
+        «ENDFOR»
+		«FOR i: capnpMsgs»		
+		add_custom_command(OUTPUT  "${CMAKE_HOME_DIRECTORY}/../../messages/«i.fullyQualifiedName.toString("/")».capnp.c++"
+		                   DEPENDS "${CMAKE_HOME_DIRECTORY}/../../messages/«i.fullyQualifiedName.toString("/")».capnp" 
+		                   WORKING_DIRECTORY "${CMAKE_HOME_DIRECTORY}/../../messages"  
+		                   COMMAND capnp compile -oc++ "${CMAKE_HOME_DIRECTORY}/../../messages/«i.fullyQualifiedName.toString("/")».capnp" --import-path="${CMAKE_HOME_DIRECTORY}/../../messages"
+		                   )
 		«ENDFOR»
 		
+		#component libraries
 		«FOR c: app.compList»
-		target_link_libraries(«c.componentName.toLowerCase» czmq riaps dl capnp kj )
 		
+		# «c.componentName»
+		add_library(«c.componentName.toLowerCase» 
+					SHARED src/«c.componentName».cc
+					${CMAKE_HOME_DIRECTORY}/../../basecode/«app.applicationName»/src/«c.componentName»Base.cc
+					«FOR i: c.msgIncludes»
+					${CMAKE_HOME_DIRECTORY}/../../messages/«i.fullyQualifiedName.toString("/")».capnp.c++
+					«FOR el: i.elements»
+					«IF el.type.derived!==null»
+					${CMAKE_HOME_DIRECTORY}/../../messages/«el.type.derived.fullyQualifiedName.toString("/")».capnp.c++					
+					«ENDIF»
+					«ENDFOR»
+					«ENDFOR»
+					)
+					
+		target_link_libraries(«c.componentName.toLowerCase» czmq riaps dl capnp kj )
 		«ENDFOR»
 		'''
 		return content

@@ -14,14 +14,17 @@ import edu.vanderbilt.riaps.app.RepPort
 import edu.vanderbilt.riaps.app.PubPort
 import edu.vanderbilt.riaps.app.Port
 import edu.vanderbilt.riaps.app.SrvPort
+import edu.vanderbilt.riaps.generator.CppGenerator
 
 class AppCpp {	
 	public var String applicationName
 	public var portMsgTypeMap = new HashMap<String, String>
 	public var compList = new ArrayList<CompCpp>
+	public var CppGenerator generator
 	
-	new (Application app) {
+	new (Application app, CppGenerator gen) {
 		applicationName = app.name
+		generator=gen
 		for (Component c : app.components){			
 				for (Port p : c.getPorts())
 				{
@@ -70,7 +73,7 @@ class AppCpp {
 	//	}
 		
 		for (comp: app.components) {
-			var compCpp = new CompCpp(comp, app.name, portMsgTypeMap)
+			var compCpp = new CompCpp(comp, app.name, portMsgTypeMap,gen)
 			compList.add(compCpp)
 		}
 		
