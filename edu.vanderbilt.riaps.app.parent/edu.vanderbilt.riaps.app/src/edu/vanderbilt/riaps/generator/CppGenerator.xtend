@@ -103,6 +103,7 @@ public class CppGenerator extends AbstractGenerator {
 		'''
 		set(CMAKE_SYSTEM_NAME Linux)
 		set(RIAPS_PREFIX /opt/riaps/armhf/)
+		set(ARCH armhf)
 		set(TOOLCHAIN_PREFIX arm-linux-gnueabihf)
 		set(CMAKE_C_COMPILER ${TOOLCHAIN_PREFIX}-gcc)
 		set(CMAKE_CXX_COMPILER ${TOOLCHAIN_PREFIX}-g++)
@@ -117,6 +118,7 @@ public class CppGenerator extends AbstractGenerator {
 		'''
 		set(CMAKE_SYSTEM_NAME Linux)
 		set(RIAPS_PREFIX /opt/riaps/amd64/)
+		set(ARCH amd64)
 		set(CMAKE_C_COMPILER gcc)
 		set(CMAKE_CXX_COMPILER g++)
 		set(CMAKE_FIND_ROOT_PATH /usr/)
@@ -135,15 +137,16 @@ public class CppGenerator extends AbstractGenerator {
 		set(CMAKE_SYSTEM_NAME Linux)
 		set (CMAKE_CXX_FLAGS "-std=c++11")
 		set (CMAKE_C_FLAGS "-std=c99")
-		set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_HOME_DIRECTORY}/debug/bin)
-		set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG ${CMAKE_HOME_DIRECTORY}/debug/bin)
-		set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_HOME_DIRECTORY}/release/bin)
-		set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${CMAKE_HOME_DIRECTORY}/release/bin)
-				
+		
+		
+		set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/${ARCH}/bin)		
+		set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/${ARCH}/bin)		
+		set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY  ${CMAKE_HOME_DIRECTORY}/${ARCH}/bin)
+		
 		#Library Dependencies
 		set(DEPENDENCIES ${RIAPS_PREFIX})
-		set (LIBALLPATH_INCLUDE ${DEPENDENCIES}/${arch}/include)
-		set (LIBALLPATH_LIB ${DEPENDENCIES}/${arch}/lib)
+		set (LIBALLPATH_INCLUDE ${DEPENDENCIES}/include)
+		set (LIBALLPATH_LIB ${DEPENDENCIES}/lib)
 		link_directories(${LIBALLPATH_LIB})
 		
 		
