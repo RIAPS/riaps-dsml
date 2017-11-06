@@ -13,6 +13,7 @@ import edu.vanderbilt.riaps.generator.json.ActorDepl
 import java.util.ArrayList
 import edu.vanderbilt.riaps.system.ActorDeployment
 import java.io.File
+import edu.vanderbilt.riaps.RiapsOutputConfigurationProvider
 
 class RiapsSystemGenerator extends AbstractGenerator{
 
@@ -30,7 +31,7 @@ class RiapsSystemGenerator extends AbstractGenerator{
 		}
 
 		var formattedString = gson.toJson(container);
-		fsa.generateFile(fileName, formattedString);
+		fsa.generateFile('/deployments/'+fileName, RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_JSON, formattedString);
 		Console.getInstance().log(java.util.logging.Level.INFO, fileName + " generated");
 	}
 }

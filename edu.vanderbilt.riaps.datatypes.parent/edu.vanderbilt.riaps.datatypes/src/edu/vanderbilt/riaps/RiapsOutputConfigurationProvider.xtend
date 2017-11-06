@@ -17,7 +17,7 @@ class RiapsOutputConfigurationProvider implements IOutputConfigurationProvider {
 	override Set<OutputConfiguration> getOutputConfigurations() {
 		var OutputConfiguration defaultOutput = new OutputConfiguration(IFileSystemAccess::DEFAULT_OUTPUT)
 		defaultOutput.setDescription("Output Folder")
-		defaultOutput.setOutputDirectory("./apps/")
+		defaultOutput.setOutputDirectory("./apps/basecode")
 		defaultOutput.setOverrideExistingResources(true)
 		defaultOutput.setCreateOutputDirectory(true)
 		defaultOutput.setCleanUpDerivedResources(true)
@@ -25,7 +25,7 @@ class RiapsOutputConfigurationProvider implements IOutputConfigurationProvider {
 		
 		var OutputConfiguration onceOutput = new OutputConfiguration(DEFAULT_OUTPUT_APPCODE)
 		onceOutput.setDescription("Output Folder (once)")
-		onceOutput.setOutputDirectory("./apps/")
+		onceOutput.setOutputDirectory("./apps/devcode")
 		onceOutput.setOverrideExistingResources(false)
 		onceOutput.setCreateOutputDirectory(true)
 		onceOutput.setCleanUpDerivedResources(false)
