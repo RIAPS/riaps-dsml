@@ -139,9 +139,9 @@ public class CppGenerator extends AbstractGenerator {
 		set (CMAKE_C_FLAGS "-std=c99")
 		
 		
-		set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/${ARCH}/bin)		
-		set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/${ARCH}/bin)		
-		set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY  ${CMAKE_HOME_DIRECTORY}/${ARCH}/bin)
+		set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${ARCH}/bin)		
+		set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${ARCH}/bin)		
+		set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY  ${CMAKE_CURRENT_SOURCE_DIR}/${ARCH}/bin)
 		
 		#Library Dependencies
 		set(DEPENDENCIES ${RIAPS_PREFIX})
@@ -151,9 +151,9 @@ public class CppGenerator extends AbstractGenerator {
 		
 		
 		#include directories
-		include_directories(${CMAKE_HOME_DIRECTORY}/include)
-		include_directories(${CMAKE_HOME_DIRECTORY}/../../basecode/«app.applicationName»/include)
-		include_directories(${CMAKE_HOME_DIRECTORY}/../../messages/)
+		include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+		include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../basecode/«app.applicationName»/include)
+		include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../messages/)
 				
 		
 		#capnproto files		
@@ -168,10 +168,10 @@ public class CppGenerator extends AbstractGenerator {
 		«ENDFOR»
         «ENDFOR»
 		«FOR i: capnpMsgs»		
-		add_custom_command(OUTPUT  "${CMAKE_HOME_DIRECTORY}/../../messages/«i.fullyQualifiedName.toString("/")».capnp.c++"
-		                   DEPENDS "${CMAKE_HOME_DIRECTORY}/../../messages/«i.fullyQualifiedName.toString("/")».capnp" 
-		                   WORKING_DIRECTORY "${CMAKE_HOME_DIRECTORY}/../../messages"  
-		                   COMMAND capnp compile -oc++ "${CMAKE_HOME_DIRECTORY}/../../messages/«i.fullyQualifiedName.toString("/")».capnp" --import-path="${CMAKE_HOME_DIRECTORY}/../../messages"
+		add_custom_command(OUTPUT  "${CMAKE_CURRENT_SOURCE_DIR}/../../messages/«i.fullyQualifiedName.toString("/")».capnp.c++"
+		                   DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/../../messages/«i.fullyQualifiedName.toString("/")».capnp" 
+		                   WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../../messages"  
+		                   COMMAND capnp compile -oc++ "${CMAKE_CURRENT_SOURCE_DIR}/../../messages/«i.fullyQualifiedName.toString("/")».capnp" --import-path="${CMAKE_CURRENT_SOURCE_DIR}/../../messages"
 		                   )
 		«ENDFOR»
 		
@@ -181,12 +181,12 @@ public class CppGenerator extends AbstractGenerator {
 		# «c.componentName»
 		add_library(«c.componentName.toLowerCase» 
 					SHARED src/«c.componentName».cc
-					${CMAKE_HOME_DIRECTORY}/../../basecode/«app.applicationName»/src/«c.componentName»Base.cc
+					${CMAKE_CURRENT_SOURCE_DIR}/../../basecode/«app.applicationName»/src/«c.componentName»Base.cc
 					«FOR i: c.msgIncludes»
-					${CMAKE_HOME_DIRECTORY}/../../messages/«i.fullyQualifiedName.toString("/")».capnp.c++
+					${CMAKE_CURRENT_SOURCE_DIR}/../../messages/«i.fullyQualifiedName.toString("/")».capnp.c++
 					«FOR el: i.elements»
 					«IF el.type.derived!==null»
-					${CMAKE_HOME_DIRECTORY}/../../messages/«el.type.derived.fullyQualifiedName.toString("/")».capnp.c++					
+					${CMAKE_CURRENT_SOURCE_DIR}/../../messages/«el.type.derived.fullyQualifiedName.toString("/")».capnp.c++					
 					«ENDIF»
 					«ENDFOR»
 					«ENDFOR»
