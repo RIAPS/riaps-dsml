@@ -27,7 +27,8 @@ import java.util.regex.Pattern
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.IOException
-import java.security.SecureRandom
+
+import edu.vanderbilt.riaps.RiapsOutputConfigurationProvider
 
 class CapnProtoGenerator extends AbstractGenerator {
 	@Inject extension IQualifiedNameProvider
@@ -46,17 +47,15 @@ class CapnProtoGenerator extends AbstractGenerator {
 		try {
 			var rt = Runtime.getRuntime();
 			var pr = rt.exec("/opt/riaps/amd64/bin/capnp id");
-
 			var stdInput = new BufferedReader(new InputStreamReader(pr.getInputStream()))
 			var s = ""
-			s = stdInput.readLine() 
-
+			s = stdInput.readLine()
 			return s
 
 		} catch (IOException e) {
-			var SecureRandom random = new SecureRandom(); 
-			var  challenge = random.nextLong();
-			return "@0x"+Long.toHexString(challenge)
+			var result = randomNumber.Number()			
+			var uid=String.format("%016x",result)
+			return "@0x" + uid
 		}
 
 	}
@@ -77,7 +76,7 @@ class CapnProtoGenerator extends AbstractGenerator {
 		def String sequenceName() '''		 
 			typedef sequence<«typename»> «uniqueIdentifier»;		
 		'''
-	} 
+	}
 
 	static var typedefs = new HashMap<String, SequenceDefinition>
 	static var packageNameMap = new HashMap<String, String>
@@ -89,13 +88,14 @@ class CapnProtoGenerator extends AbstractGenerator {
 			for (type : e.collection) {
 				if (type instanceof FStructType) {
 					packageNameMap.put(type.name, packageNameArray.get(0))
-					
+
 					var aStruct = type as FStructType
-					Console.instance.log(java.util.logging.Level.INFO,aStruct.name+" mgenerating") 
+					Console.instance.log(java.util.logging.Level.INFO, aStruct.name + " generating")
 					var messageString = aStruct.compileToString
-					
+
 					fsa.generateFile(
 						aStruct.fullyQualifiedName.toString("/") + ".capnp",
+						RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_MESSAGE,
 						messageString.beautify
 					)
 					Console.instance.log(java.util.logging.Level.INFO,
@@ -108,6 +108,7 @@ class CapnProtoGenerator extends AbstractGenerator {
 					var messageString = anEnum.compileToString
 					fsa.generateFile(
 						anEnum.fullyQualifiedName.toString("/") + ".capnp",
+						RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_MESSAGE,
 						messageString.beautify
 					)
 					Console.instance.log(java.util.logging.Level.INFO,
@@ -153,8 +154,7 @@ class CapnProtoGenerator extends AbstractGenerator {
 	def String compileToString(FEnumerationType message) ''' 
 		«var x= message.fullyQualifiedName»
 		«var s = x.getSegmentCount»
-		«createCapnpID()»;
-		
+		«createCapnpID()»;		
 		enum «message.name» {
 			«var fields = createEnumFields(message)»
 			«FOR j : fields»
@@ -165,35 +165,30 @@ class CapnProtoGenerator extends AbstractGenerator {
 
 	def String compileToString(FStructType message) ''' 
 		«var z= new HashSet<String>»
-		«var listz= new HashSet<String>»
-		«var x= message.fullyQualifiedName»
-		«var s = x.getSegmentCount»
-		«createCapnpID()»;
-		
+		«createCapnpID()»;		
 		«FOR j : message.elements»
-			«IF j.type.derived != null»
+			«IF j.type.derived !== null»
 				«var result=z.add(j.type.derived.name)»
 				«IF (result)»
 					«var n = j.type.derived.fullyQualifiedName.toString("/")»
-					using import  "«n».capnp".«j.type.derived.name»
+					using import  "/«n».capnp".«j.type.derived.name»;
 				«ENDIF»
 			«ENDIF»
 		«ENDFOR»
-		
 		using Cxx = import "/capnp/c++.capnp";
 		$Cxx.namespace("«packageNameMap.get(message.name).toLowerCase»::messages");		
 		
-			struct «message.name»
-			{
-				«var fieldList = createStructFields(message)»
-				«FOR field : fieldList»
-					«field»
-				«ENDFOR»
-			}
+		struct «message.name»
+		{
+			«var fieldList = createStructFields(message)»
+			«FOR field : fieldList»
+			«field»
+		    «ENDFOR»
+		}
 	'''
 
 	def String getIdlType(FField field) {
-		if (field.type.derived != null)
+		if (field.type.derived !== null)
 			return field.type.derived.name;
 		Console.instance.log(java.util.logging.Level.INFO, field.type.predefined.literal)
 		if (field.type.predefined.literal == "Boolean")

@@ -84,35 +84,14 @@ class AppCpp {
 		val content = '''
 		
 		cmake_minimum_required(VERSION 3.0)
-		
-		option(arch "amd64/armhf" "amd64")
+		project («this.applicationName»)
 		set(CMAKE_SYSTEM_NAME Linux)
-		
-		set(riaps_prefix "/opt/riaps/" CACHE STRING "the riaps prefix")
-		#Set the platform
-		if (${arch} STREQUAL "armhf")
-			set(TOOLCHAIN_PREFIX arm-linux-gnueabihf)
-			set(CMAKE_C_COMPILER ${TOOLCHAIN_PREFIX}-gcc)
-			set(CMAKE_CXX_COMPILER ${TOOLCHAIN_PREFIX}-g++)
-			set(CMAKE_FIND_ROOT_PATH /usr/${TOOLCHAIN_PREFIX})
-			set (CMAKE_CXX_FLAGS "-std=c++11")
-			set (CMAKE_C_FLAGS "-std=c99")
-		else()
-			set(CMAKE_C_COMPILER gcc-5)
-			set(CMAKE_CXX_COMPILER g++-5)
-			set (CMAKE_CXX_FLAGS "-std=c++11 -D_GLIBCXX_USE_CXX11_ABI=0")
-			set (CMAKE_C_FLAGS "-std=c99")
-		endif()
-		
-		
-		set(CMAKE_INSTALL_PREFIX ${riaps_prefix}/${arch})
-		
+				
 		set(DEPENDENCIES ${riaps_prefix})
 		set (LIBALLPATH_INCLUDE ${DEPENDENCIES}/${arch}/include)
 		set (LIBALLPATH_LIB ${DEPENDENCIES}/${arch}/lib)
 		include_directories(${LIBALLPATH_INCLUDE})
 		link_directories(${LIBALLPATH_LIB})
-		
 		
 		# Debug binaries are to be copied into "./bin" directory
 		set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_HOME_DIRECTORY}/bin)
@@ -127,7 +106,6 @@ class AppCpp {
        			COMMAND capnp compile -oc++ include/messages/«m».capnp
        			VERBATIM
        	)
-
 		«ENDFOR»
 		
 		«FOR c: compList»
