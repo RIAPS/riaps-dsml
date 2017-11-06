@@ -15,6 +15,7 @@ import edu.vanderbilt.riaps.RiapsOutputConfigurationProvider
 
 public class CppGenerator extends AbstractGenerator {
 
+	
 	@Inject extension IQualifiedNameProvider
 
 	override doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
@@ -69,7 +70,7 @@ public class CppGenerator extends AbstractGenerator {
 			// }		
 			}
 
-			var cmake = appCpp.createCMakeList()
+			var cmake = createCMakeList(appCpp)
 			var cmake_path = appCpp.applicationName + "//CMakeLists.txt"
 			fsa.generateFile(
 				cmake_path,RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_APPCODE,
@@ -78,5 +79,37 @@ public class CppGenerator extends AbstractGenerator {
 			Console.instance.log(java.util.logging.Level.INFO, cmake_path + " generated");
 
 		}
+	}
+	
+	def String createCMakeList(AppCpp app) {		
+		val content = '''		
+		cmake_minimum_required(VERSION 3.0)
+		project («app.applicationName»)
+		set(CMAKE_SYSTEM_NAME Linux)
+		set(DEPENDENCIES ${riaps_prefix})
+		set (LIBALLPATH_INCLUDE ${DEPENDENCIES}/${arch}/include)
+		set (LIBALLPATH_LIB ${DEPENDENCIES}/${arch}/lib)
+		include_directories(${LIBALLPATH_INCLUDE})
+		link_directories(${LIBALLPATH_LIB})
+		# Debug binaries are to be copied into "./bin" directory
+		set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_HOME_DIRECTORY}/bin)
+		set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG ${CMAKE_HOME_DIRECTORY}/bin)
+		include_directories(include)
+		«FOR c: app.compList»
+		add_library(«c.componentName.toLowerCase» SHARED src/«c.componentName».cc
+				                                  src/«c.componentName»Base.cc
+				                                  «FOR i: c.msgIncludes»
+				                                   «i.fullyQualifiedName.toString("/")».capnp.c++
+				                 				  «ENDFOR»
+		)
+		
+		«ENDFOR»
+		
+		«FOR c: app.compList»
+		target_link_libraries(«c.componentName.toLowerCase» czmq riaps dl capnp kj )
+		
+		«ENDFOR»
+		'''
+		return content
 	}
 }

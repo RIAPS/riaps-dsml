@@ -1,5 +1,4 @@
 package edu.vanderbilt.riaps.generator.cpp
-
 import edu.vanderbilt.riaps.app.Component
 import edu.vanderbilt.riaps.app.Port
 import java.util.HashMap
@@ -11,13 +10,14 @@ import edu.vanderbilt.riaps.app.TimPort
 import edu.vanderbilt.riaps.app.RepPort
 import java.util.HashSet
 import edu.vanderbilt.riaps.app.ComponentFormal
+import edu.vanderbilt.riaps.datatypes.FStructType
 
 @SuppressWarnings("unused", "unchecked")
 class CompCpp {
 	public String componentName
 	protected String applicationName
 	protected var ports = new ArrayList<PortCppBase>
-	protected var msgIncludes = new HashSet<String>
+	public var msgIncludes = new HashSet<FStructType>
 	protected var initParams = new ArrayList<String>
 	
 	new (Component comp, String appName, HashMap<String, String> portMsgType) {
@@ -37,24 +37,25 @@ class CompCpp {
 			if (port instanceof PubPort) {
 				var pubPort = new PubPortCpp(port, riapsComponent.name, portMsgTypeMap)
 				ports.add(pubPort)
-				msgIncludes.add(pubPort.msgType)
+				var aStruct=port.type.type
+				msgIncludes.add(aStruct)
 			}
 			else if (port instanceof SubPort) {
 				var subPort = new SubPortCpp(port, riapsComponent.name, portMsgTypeMap)
 				ports.add(subPort)	
-				msgIncludes.add(subPort.msgType)		
+				msgIncludes.add((port as SubPort).type.type) 
 			}
 			else if (port instanceof ReqPort) {
 				var reqPort = new ReqPortCpp(port, riapsComponent.name, portMsgTypeMap)
-				ports.add(reqPort)
-				msgIncludes.add(reqPort.repType)
-				msgIncludes.add(reqPort.reqType)
+				ports.add(reqPort)				
+				msgIncludes.add((port as ReqPort).req_type.type)
+				msgIncludes.add((port as ReqPort).rep_type.type)				
 			}
 			else if (port instanceof RepPort) {
 				var repPort = new RepPortCpp(port, riapsComponent.name, portMsgTypeMap)
 				ports.add(repPort)
-				msgIncludes.add(repPort.repType)
-				msgIncludes.add(repPort.reqType)
+				msgIncludes.add((port as RepPort).req_type.type)
+				msgIncludes.add((port as RepPort).rep_type.type)
 			}
 			else if (port instanceof TimPort) {
 				ports.add(new TimerPortCpp(port, riapsComponent.name))
