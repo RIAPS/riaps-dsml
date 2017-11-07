@@ -36,7 +36,7 @@ public class CppGenerator extends AbstractGenerator {
 				fsa.generateFile(
 					base_h_path,
 					IFileSystemAccess::DEFAULT_OUTPUT,
-					base_h
+					base_h.beautify
 				)
 				Console.instance.log(java.util.logging.Level.INFO, base_h_path + " generated");
 
@@ -45,7 +45,7 @@ public class CppGenerator extends AbstractGenerator {
 				fsa.generateFile(
 					base_cpp_path,
 					IFileSystemAccess::DEFAULT_OUTPUT,
-					base_cpp
+					base_cpp.beautify
 				)
 				Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
 
@@ -54,7 +54,7 @@ public class CppGenerator extends AbstractGenerator {
 				fsa.generateFile(
 					fw_h_path,
 					RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_APPCODE,
-					fw_h
+					fw_h.beautify
 				)
 				Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
 
@@ -63,7 +63,7 @@ public class CppGenerator extends AbstractGenerator {
 				fsa.generateFile(
 					fw_cpp_path,
 					RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_APPCODE,
-					fw_cpp
+					fw_cpp.beautify
 				)
 				Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
 
@@ -106,6 +106,44 @@ public class CppGenerator extends AbstractGenerator {
 				IFileSystemAccess::DEFAULT_OUTPUT,
 				createTopCmakeLists
 			)
+	}
+	
+	def CharSequence beautify(CharSequence sequence){
+		beautifyString(sequence.toString())
+	}
+	
+	
+	
+	def beautifyString(String code) {
+		var indent = 0;
+		var temp = new StringBuilder
+		var contents = code.split("\n")
+		var SEPARATOR = "   "
+		for (line : contents) {
+
+			if (line.contains("{")) {
+				for (var i = 0; i < indent; i++) {
+					temp.append(SEPARATOR)
+				}
+				temp.append(line.trim)
+				temp.append("\n")
+				indent++
+			} else if (line.contains("}")) {
+				indent--
+				for (var i = 0; i < indent; i++) {
+					temp.append(SEPARATOR)
+				}
+				temp.append(line.trim)
+				temp.append("\n")
+			} else {
+				for (var i = 0; i < indent; i++) {
+					temp.append(SEPARATOR)
+				}
+				temp.append(line.trim)
+				temp.append("\n")
+			}
+		}
+		return temp.toString
 	}
 	
 	def createTopCmakeLists() {

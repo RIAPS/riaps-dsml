@@ -97,7 +97,6 @@ class IDLGenerator extends AbstractGenerator {
 			}
 		}
 		return temp.toString
-
 	}
 	
 	def String compileToString(FEnumerationType message) ''' 
