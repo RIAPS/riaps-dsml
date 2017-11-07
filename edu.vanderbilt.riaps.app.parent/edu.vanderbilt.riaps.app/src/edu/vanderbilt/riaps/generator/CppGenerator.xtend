@@ -149,7 +149,11 @@ public class CppGenerator extends AbstractGenerator {
 	def createTopCmakeLists() {
 		'''
 		cmake_minimum_required(VERSION 3.0)
+		include_directories(${CMAKE_SOURCE_DIR}/messages/)
 		«FOR a : Appname»
+		include_directories(${CMAKE_SOURCE_DIR}/basecode/«a»/include)		
+		«ENDFOR»
+		«FOR a : Appname»		
 		add_subdirectory(devcode/«a»)
 		«ENDFOR»
 		'''
@@ -218,8 +222,7 @@ public class CppGenerator extends AbstractGenerator {
 			
 			#include directories
 			include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
-			include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../basecode/«app.applicationName»/include)
-			include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../messages/)
+
 					
 			
 			#capnproto files		
@@ -234,10 +237,10 @@ public class CppGenerator extends AbstractGenerator {
 				«ENDFOR»
 			      «ENDFOR»
 			«FOR i : capnpMsgs»		
-				add_custom_command(OUTPUT  "${CMAKE_CURRENT_SOURCE_DIR}/../../messages/«i.fullyQualifiedName.toString("/")».capnp.c++"
-				                   DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/../../messages/«i.fullyQualifiedName.toString("/")».capnp" 
-				                   WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../../messages"  
-				                   COMMAND capnp compile -oc++ "${CMAKE_CURRENT_SOURCE_DIR}/../../messages/«i.fullyQualifiedName.toString("/")».capnp" --import-path="${CMAKE_CURRENT_SOURCE_DIR}/../../messages"
+				add_custom_command(OUTPUT  "${CMAKE_SOURCE_DIR}/messages/«i.fullyQualifiedName.toString("/")».capnp.c++"
+				                   DEPENDS "${CMAKE_SOURCE_DIR}/messages/«i.fullyQualifiedName.toString("/")».capnp" 
+				                   WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/messages"  
+				                   COMMAND capnp compile -oc++ "${CMAKE_SOURCE_DIR}/messages/«i.fullyQualifiedName.toString("/")».capnp" --import-path="${CMAKE_SOURCE_DIR}/messages"
 				                   )
 			«ENDFOR»
 			
@@ -247,12 +250,12 @@ public class CppGenerator extends AbstractGenerator {
 				# «c.componentName»
 				add_library(«c.componentName.toLowerCase» 
 							SHARED src/«c.componentName».cc
-							${CMAKE_CURRENT_SOURCE_DIR}/../../basecode/«app.applicationName»/src/«c.componentName»Base.cc
+							${CMAKE_SOURCE_DIR}/basecode/«app.applicationName»/src/«c.componentName»Base.cc
 							«FOR i: c.msgIncludes»
-								${CMAKE_CURRENT_SOURCE_DIR}/../../messages/«i.fullyQualifiedName.toString("/")».capnp.c++
+								${CMAKE_SOURCE_DIR}/messages/«i.fullyQualifiedName.toString("/")».capnp.c++
 								«FOR el: i.elements»
 									«IF el.type.derived!==null»
-										${CMAKE_CURRENT_SOURCE_DIR}/../../messages/«el.type.derived.fullyQualifiedName.toString("/")».capnp.c++					
+										${CMAKE_SOURCE_DIR}/messages/«el.type.derived.fullyQualifiedName.toString("/")».capnp.c++					
 									«ENDIF»
 								«ENDFOR»
 							«ENDFOR»
