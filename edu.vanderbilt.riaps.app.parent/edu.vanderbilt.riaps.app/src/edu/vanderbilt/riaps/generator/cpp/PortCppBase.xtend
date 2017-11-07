@@ -9,6 +9,7 @@ import edu.vanderbilt.riaps.app.PubPort
 import edu.vanderbilt.riaps.app.InsPort
 import edu.vanderbilt.riaps.app.TimPort
 import edu.vanderbilt.riaps.app.RepPort
+import edu.vanderbilt.riaps.generator.CppGenerator
 
 @SuppressWarnings("unused", "unchecked")
 class PortCppBase {
@@ -21,12 +22,14 @@ class PortCppBase {
 	protected String macroName
 	protected String componentName
 	
+	
 	new (Port port, String appName) {
 		portName = port.name	
 		portFcnName = port.name.substring(0, 1).toUpperCase() + port.name.substring(1)	
 		portType = getPortType(port)
 		macroName = getPortMacroName()	
 		componentName = appName
+	
 	}
 	
 	def String getPortType(Port port) {

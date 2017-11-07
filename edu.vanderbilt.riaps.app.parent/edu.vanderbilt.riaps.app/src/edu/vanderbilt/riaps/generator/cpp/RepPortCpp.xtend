@@ -3,17 +3,20 @@ package edu.vanderbilt.riaps.generator.cpp
 import edu.vanderbilt.riaps.app.Port
 import edu.vanderbilt.riaps.app.RepPort
 import java.util.HashMap
+import edu.vanderbilt.riaps.generator.CppGenerator
+import edu.vanderbilt.riaps.datatypes.FStructType
 
 class RepPortCpp extends PortCppBase{
-	public String reqType
-	public String repType
+	public FStructType reqType
+	public FStructType repType
+	public  CppGenerator gen
 	
-	new(Port port, String appName, HashMap<String, String> portMsgTypeMap) {
+	new(Port port, String appName, HashMap<String, String> portMsgTypeMap, CppGenerator generator) {
 		super(port, appName)
-		
-		val reqPort = port as RepPort
-		reqType = portMsgTypeMap.get(reqPort.req_type.name)
-		repType = portMsgTypeMap.get(reqPort.rep_type.name)
+		gen=generator
+		val repPort = port as RepPort
+		reqType = (repPort.req_type.type)
+		repType = (repPort.rep_type.type)
 	}
 	
 	override String getPortType(Port port) {
@@ -22,16 +25,19 @@ class RepPortCpp extends PortCppBase{
 	
 	override String generateBaseH() { 
 		val content = '''
-            virtual void On«portFcnName»(const messages::«reqType»::Reader &message, riaps::ports::PortBase *port)=0;
+            virtual void On«portFcnName»(const «gen.StructQualifiedName(reqType,"::")»::Reader &message,
+             riaps::ports::PortBase *port)=0;
                         
-            virtual bool Send«portFcnName»(capnp::MallocMessageBuilder& messageBuilder, messages::«repType»::Builder& message);
+            virtual bool Send«portFcnName»(capnp::MallocMessageBuilder& messageBuilder,
+            «gen.StructQualifiedName(reqType,"::")»::Builder& message);
 		'''
 		return content
 	}
 	
 	override String generateBaseCpp() {
 		val content = '''
-	        bool «componentName»Base::Send«portFcnName»(capnp::MallocMessageBuilder& messageBuilder, messages::«repType»::Builder& message) {
+	        bool «componentName»Base::Send«portFcnName»(capnp::MallocMessageBuilder& messageBuilder,
+	         «gen.StructQualifiedName(repType,"::")»::Builder& message) {
 	        	std::cout<< "«componentName»Base::Send«portFcnName»()"<< std::endl;
 	            return SendMessageOnPort(messageBuilder, «macroName»);
 	        }
@@ -41,14 +47,17 @@ class RepPortCpp extends PortCppBase{
 	
 	override String generateFW_H() {
 		val content = '''
-			virtual void On«portFcnName»(const messages::«reqType»::Reader &message, riaps::ports::PortBase *port);
+			virtual void On«portFcnName»(const 
+			messages::«reqType»::Reader &message, riaps::ports::PortBase *port);
 			'''
 		return content
 	}
 	
 	override String generateFW_Cpp() {
 		val content = '''
-	        void «componentName»::On«portFcnName»(const messages::«reqType»::Reader &message, riaps::ports::PortBase *port) {
+	        void «componentName»::On«portFcnName»(const «gen.StructQualifiedName(reqType,"::")»::Reader &message, 
+	        riaps::ports::PortBase *port) 
+	        {
 	        	std::cout<< "«componentName»::On«portFcnName»()"<< std::endl;
 	        }
 		'''
@@ -58,7 +67,7 @@ class RepPortCpp extends PortCppBase{
 	override String generateBaseDispatch() {
 		val content = '''
 			if (portName == PORT_REP_REQUEST) {
-			                auto reader = capnpreader->getRoot<messages::«reqType»>();
+			                auto reader = capnpreader->getRoot<«gen.StructQualifiedName(reqType,"::")»>();
 			                On«portFcnName»(reader, port);
 			}
 		'''

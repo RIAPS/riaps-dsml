@@ -37,24 +37,24 @@ class CompCpp {
 	def void createPorts(Component riapsComponent, HashMap<String, String> portMsgTypeMap) {
 		for(Port port : riapsComponent.getPorts()) {
 			if (port instanceof PubPort) {
-				var pubPort = new PubPortCpp(port, riapsComponent.name, portMsgTypeMap)
+				var pubPort = new PubPortCpp(port, riapsComponent.name, portMsgTypeMap,generator)
 				ports.add(pubPort)
 				var aStruct=port.type.type
 				msgIncludes.add(aStruct)
 			}
 			else if (port instanceof SubPort) {
-				var subPort = new SubPortCpp(port, riapsComponent.name, portMsgTypeMap)
+				var subPort = new SubPortCpp(port, riapsComponent.name, portMsgTypeMap,generator)
 				ports.add(subPort)	
 				msgIncludes.add((port as SubPort).type.type) 
 			}
 			else if (port instanceof ReqPort) {
-				var reqPort = new ReqPortCpp(port, riapsComponent.name, portMsgTypeMap)
+				var reqPort = new ReqPortCpp(port, riapsComponent.name, portMsgTypeMap,generator)
 				ports.add(reqPort)				
 				msgIncludes.add((port as ReqPort).req_type.type)
 				msgIncludes.add((port as ReqPort).rep_type.type)				
 			}
 			else if (port instanceof RepPort) {
-				var repPort = new RepPortCpp(port, riapsComponent.name, portMsgTypeMap)
+				var repPort = new RepPortCpp(port, riapsComponent.name, portMsgTypeMap,generator)
 				ports.add(repPort)
 				msgIncludes.add((port as RepPort).req_type.type)
 				msgIncludes.add((port as RepPort).rep_type.type)

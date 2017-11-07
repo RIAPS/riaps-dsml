@@ -3,15 +3,19 @@ package edu.vanderbilt.riaps.generator.cpp
 import edu.vanderbilt.riaps.app.Port
 import edu.vanderbilt.riaps.app.SubPort
 import java.util.HashMap
+import edu.vanderbilt.riaps.datatypes.FStructType
+import edu.vanderbilt.riaps.generator.CppGenerator
 
 class SubPortCpp extends PortCppBase {
-	public String msgType
+	public var FStructType msgType
+	public  CppGenerator gen
 	
-	new (Port port, String compName, HashMap<String, String> portMsgTypeMap) {
+	new (Port port, String compName, HashMap<String, String> portMsgTypeMap, CppGenerator generator ) {
 		super(port, compName)
+		gen=generator
 		
 		var subPort = port as SubPort
-		msgType = portMsgTypeMap.get(subPort.type.name)
+		msgType = subPort.type.type
 	}
 	
 	override String getPortType(Port port) {
@@ -20,7 +24,8 @@ class SubPortCpp extends PortCppBase {
 	
 	override String generateBaseH() {
 		val content = '''
-			virtual void On«portFcnName» (const messages::«msgType»::Reader &message, riaps::ports::PortBase *port)=0;
+			virtual void On«portFcnName» (const «gen.StructQualifiedName(msgType,"::")»::Reader &message, 
+			riaps::ports::PortBase *port)=0;
 		'''
 		return content
 	}
@@ -32,7 +37,8 @@ class SubPortCpp extends PortCppBase {
 	override String generateBaseDispatch() {
 		val content = '''            
 			if (portName == «macroName») {
-				messages::«msgType»::Reader «portFcnName» = capnpreader->getRoot<messages::«msgType»>();
+				«gen.StructQualifiedName(msgType,"::")»::Reader «portFcnName» = 
+					capnpreader->getRoot<«gen.StructQualifiedName(msgType,"::")»>();
 				On«portFcnName»(«portFcnName», port);
 			}'''
 	    return content
@@ -40,14 +46,17 @@ class SubPortCpp extends PortCppBase {
 	
 	override String generateFW_H() {
 		val content = '''
-			virtual void On«portFcnName»(const messages::«msgType»::Reader &message, riaps::ports::PortBase *port);
+			virtual void On«portFcnName»(const «gen.StructQualifiedName(msgType,"::")»::Reader &message, 
+										 riaps::ports::PortBase *port);
 			'''      
 		return content	
 	}
 	
 	override String generateFW_Cpp() {
 		val content = '''
-	        void «componentName»::On«portFcnName»(const messages::«msgType»::Reader &message, riaps::ports::PortBase *port) {
+	        void «componentName»::On«portFcnName»(const «gen.StructQualifiedName(msgType,"::")»::Reader &message,
+	        									  riaps::ports::PortBase *port)
+	        {
 	            std::cout << "«componentName»::On«portFcnName»(): " << std::endl;	
 	        }
 			'''      

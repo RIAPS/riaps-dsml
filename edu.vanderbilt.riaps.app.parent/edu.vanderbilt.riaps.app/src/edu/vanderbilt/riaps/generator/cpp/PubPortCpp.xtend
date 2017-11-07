@@ -3,15 +3,19 @@ package edu.vanderbilt.riaps.generator.cpp
 import edu.vanderbilt.riaps.app.Port
 import java.util.HashMap
 import edu.vanderbilt.riaps.app.PubPort
+import edu.vanderbilt.riaps.generator.CppGenerator
+import edu.vanderbilt.riaps.datatypes.FStructType
 
 class PubPortCpp extends PortCppBase {
-	public String msgType
+	public FStructType msgType
+	public CppGenerator gen
 	
-	new(Port port, String appName, HashMap<String, String> portMsgTypeMap) {
+	new(Port port, String appName, HashMap<String, String> portMsgTypeMap, CppGenerator generator) {
 		super(port, appName)
 		
 		var pubPort = port as PubPort
-		msgType = portMsgTypeMap.get(pubPort.type.name)
+		msgType = pubPort.type.type
+		gen=generator
 	}
 	
 	override String getPortType(Port port) {
@@ -20,7 +24,8 @@ class PubPortCpp extends PortCppBase {
 	
 	override String generateBaseH() {   
 		 var content =	'''
-			virtual bool Send«portFcnName»(capnp::MallocMessageBuilder& messageBuilder, messages::«msgType»::Builder& message);
+			virtual bool Send«portFcnName»(capnp::MallocMessageBuilder& messageBuilder, 
+											«gen.StructQualifiedName(msgType,"::")»::Builder& message);
 			'''
          return content
 	}
@@ -28,7 +33,8 @@ class PubPortCpp extends PortCppBase {
 	
 	override String generateBaseCpp() {
 		var content = '''
-	        bool «componentName»Base::Send«portFcnName»(capnp::MallocMessageBuilder &messageBuilder, messages::«msgType»::Builder &message) {
+	        bool «componentName»Base::Send«portFcnName»(capnp::MallocMessageBuilder &messageBuilder, 
+	        											«gen.StructQualifiedName(msgType,"::")»::Builder &message) {
 	        	std::cout<< "«componentName»Base::Send«portFcnName»()"<< std::endl;
 	            return SendMessageOnPort(messageBuilder, «portMacroName»);
 	        }

@@ -176,7 +176,7 @@ class CapnProtoGenerator extends AbstractGenerator {
 			«ENDIF»
 		«ENDFOR»
 		using Cxx = import "/capnp/c++.capnp";
-		$Cxx.namespace("«packageNameMap.get(message.name).toLowerCase»::messages");		
+		$Cxx.namespace("«message.fullyQualifiedName.skipLast(1).toString("::")»");		
 		
 		struct «message.name»
 		{
@@ -186,6 +186,9 @@ class CapnProtoGenerator extends AbstractGenerator {
 		    «ENDFOR»
 		}
 	'''
+	
+
+		
 
 	def String getIdlType(FField field) {
 		if (field.type.derived !== null)
