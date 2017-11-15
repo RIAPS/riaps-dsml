@@ -48,7 +48,7 @@ Edit the updateversion.sh and execute to set the version correctly.
 	- Then right click on the mwe2 file and select "Run As --> MWE2 Workflow"
     2. edu.vanderbilt.riaps.app 
 	- Expand the project selection to 
-	edu.vanderbilt.riaps.datatypes->src->edu.vanderbilt.riaps->GenerateApp.mwe2
+	edu.vanderbilt.riaps.app->src->edu.vanderbilt.riaps->GenerateApp.mwe2
 	- Then right click on the mwe2 file and select "Run As --> MWE2 Workflow"
     3. edu.vanderbilt.riaps.system 
 	- Expand the project selection to 
