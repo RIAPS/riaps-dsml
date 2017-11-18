@@ -16,13 +16,66 @@ import edu.vanderbilt.riaps.app.RepPort
 import edu.vanderbilt.riaps.app.Actor
 
 import edu.vanderbilt.riaps.Console
+import edu.vanderbilt.riaps.app.Group
+import edu.vanderbilt.riaps.app.Leader
+import edu.vanderbilt.riaps.app.Consensus
+import java.util.HashSet
+import edu.vanderbilt.riaps.datatypes.Message
+import edu.vanderbilt.riaps.app.GMessageBlock
+import edu.vanderbilt.riaps.app.UsesBlock
 
 /**
  * This class contains custom validation rules. 
- *
+ * 
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
 class AppValidator extends AbstractAppValidator {
 
+	@Check
+	def checkGroupProperties(UsesBlock group) {
+		var leaders = group.property.filter(Leader)
+		var consensus = group.property.filter(Consensus)		
+		if (leaders.size() > 1 || consensus.size() > 1) {
+			error('only one uses clause with leader or consensus is allowed', null)
+		}
+	}
 	
+	
+	@Check
+	def checkGroupUsesBlock(Group group) {
+		var messageblock = group.useclauses				
+		if (messageblock.size() > 1 ) {
+			error('only one message block is allowed in a group', AppPackage.Literals.GROUP__NAME)
+		}
+	}
+	
+	@Check
+	def checkGroupMessageBlock(Group group) {
+		var messageblock = group.gmessageblock				
+		if (messageblock.size() > 1 ) {
+			error('only one message block is allowed in a group', AppPackage.Literals.GROUP__NAME)
+		}
+	}
+	@Check
+	def checkGroupConsensusMessageUnique(GMessageBlock group) {
+		var consensusMessage = group.consensusMessages
+		var consensusMessageunique = new HashSet<Message>()
+		for (Message x : consensusMessage) {
+			if( !consensusMessageunique.add(x))
+			{
+					error('duplicate entry ' +x.name+ ' found in consensus Messages', null)
+			}
+		}
+	}
+	@Check
+	def checkGroupGroupMessageUnique(GMessageBlock group) {
+		var consensusMessage = group.groupMessages
+		var consensusMessageunique = new HashSet<Message>()
+		for (Message x : consensusMessage) {
+			if( !consensusMessageunique.add(x))
+			{
+					error('duplicate entry ' +x.name+ ' found in group Messages', null)
+			}
+		}	
+	}
 }

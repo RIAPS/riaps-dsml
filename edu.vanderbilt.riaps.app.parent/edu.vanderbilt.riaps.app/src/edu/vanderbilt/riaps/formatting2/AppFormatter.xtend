@@ -17,6 +17,8 @@ import edu.vanderbilt.riaps.app.Actor
 import edu.vanderbilt.riaps.app.InstanceSection
 import edu.vanderbilt.riaps.app.DeploymentConstraint
 import edu.vanderbilt.riaps.app.ComponentUses
+import edu.vanderbilt.riaps.app.Group
+import edu.vanderbilt.riaps.app.GMessageBlock
 
 class AppFormatter extends AbstractFormatter2 {
 
@@ -47,6 +49,11 @@ class AppFormatter extends AbstractFormatter2 {
 			component.format;
 			component.prepend[noSpace; newLine].append[noSpace; newLine]
 		}
+		for (Group group : app.getGroups()) {
+			group.format;
+			group.prepend[noSpace; newLine].append[noSpace; newLine]
+		}
+	
 	
 		for (Actor actor : app.getActors()) {
 			actor.format;
@@ -57,6 +64,23 @@ class AppFormatter extends AbstractFormatter2 {
 			c.prepend[noSpace; newLine].append[noSpace; newLine]
 		}
 
+	}
+	
+	def dispatch void format(Group component, extension IFormattableDocument document) {
+		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+		val open = component.regionFor.keyword("{").prepend[noSpace; newLine].append[noSpace; newLine]
+		val close = component.regionFor.keyword("}").prepend[noSpace; newLine].append[noSpace; newLine]
+		interior(open, close)[indent]
+		for (GMessageBlock components : component.gmessageblock) {
+			components.format;
+		}
+	}
+	
+	def dispatch void format(GMessageBlock component, extension IFormattableDocument document) {
+		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+		val open = component.regionFor.keyword("{").prepend[noSpace; newLine].append[noSpace; newLine]
+		val close = component.regionFor.keyword("}").prepend[noSpace; newLine].append[noSpace; newLine]
+		interior(open, close)[indent]
 	}
 
 //	def dispatch void format(ComponentCollection collection, extension IFormattableDocument document) {

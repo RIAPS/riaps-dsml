@@ -156,6 +156,8 @@ Port:
 	| ReqPort
 	| RepPort
 	| TimPort
+	| QueryPort 
+	| AnswerPort
 	| InsPort;
 
 RateLimit:
@@ -185,6 +187,14 @@ SrvPort:
 ReqPort:
 	'req' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' (deadline=Deadline)?
 	(ratelimit=RateLimit)? (';')?;
+	
+QueryPort:
+	'qry' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' (deadline=Deadline)?
+	(ratelimit=RateLimit)? (';')?;	
+
+AnswerPort:
+	'ans' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' (deadline=Deadline)?
+	(ratelimit=RateLimit)? (';')?;		
 
 RepPort:
 	'rep' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN]')'
