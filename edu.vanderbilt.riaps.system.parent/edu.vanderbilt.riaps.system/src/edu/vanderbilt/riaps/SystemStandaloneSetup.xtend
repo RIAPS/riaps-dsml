@@ -11,18 +11,30 @@ import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.validation.CheckMode
 import org.eclipse.xtext.util.CancelIndicator
+import org.eclipse.xtext.generator.GeneratorContext
+import org.eclipse.emf.ecore.resource.Resource
+import edu.vanderbilt.riaps.generator.SystemGenerator
+import org.eclipse.xtext.generator.InMemoryFileSystemAccess
+import org.eclipse.xtext.xbase.formatting2.Entry
+import org.eclipse.xtext.generator.JavaIoFileSystemAccess
+import com.google.inject.Guice
+import org.eclipse.xtext.service.AbstractGenericModule
+import org.eclipse.xtext.parser.IEncodingProvider
+import edu.vanderbilt.riaps.generator.StandAloneFileSystemAccess
 
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
  */
 class SystemStandaloneSetup extends SystemStandaloneSetupGenerated {
 
-	private static Injector injector;
-	private static Injector inject2;
+	private static Injector injectorSystem;
+	private static Injector injectorApp;
+	private static Injector injectorData;
 
 	def static void doSetup() {
-		injector = new SystemStandaloneSetup().createInjectorAndDoEMFRegistration()
-		inject2 = new AppStandaloneSetup().createInjectorAndDoEMFRegistration()
+		injectorSystem = new SystemStandaloneSetup().createInjectorAndDoEMFRegistration()
+		injectorApp = new AppStandaloneSetup().createInjectorAndDoEMFRegistration()
+		injectorData = new DatatypesStandaloneSetup().createInjectorAndDoEMFRegistration()
 	}
 
 	public def static void main(String[] args) {
@@ -31,7 +43,7 @@ class SystemStandaloneSetup extends SystemStandaloneSetupGenerated {
 			System.exit(1)
 		}
 		var url = args.get(0)
-		System.out.println("Generating for the file " + url)
+		// System.out.println("Generating for the file " + url)
 		var file = new File(url)
 		if (!file.exists()) {
 			System.out.println("file does not exist " + url)
@@ -39,38 +51,49 @@ class SystemStandaloneSetup extends SystemStandaloneSetupGenerated {
 		}
 		doSetup();
 
-		var resourceSet = injector.getInstance(typeof(XtextResourceSet))
-		var resourceSet2 = inject2.getInstance(typeof(XtextResourceSet))
-		var resource = resourceSet.getResource(URI.createFileURI(url), true);
+		var resourceSetSystem = injectorSystem.getInstance(typeof(XtextResourceSet))
+//		var resourceSetApp = injectorApp.getInstance(typeof(XtextResourceSet))
+//		var resourceSetDataType = injectorData.getInstance(typeof(XtextResourceSet))
+		var resource = resourceSetSystem.getResource(URI.createFileURI(url), true);
 		for (arg : args) {
 			var uril = URI.createFileURI(arg)
 			var segments = uril.segments
 			var filename = segments.get(segments.size - 1)
-			System.out.println(filename)
+			System.out.println('loaded file ' + filename)
 			var extlist = filename.split('\\.')
 			if (extlist.size == 2) {
 				var ext = extlist.get(1)
-				System.out.println(ext)
-				if(ext=="depl")
-				{
-					resourceSet.getResource(URI.createFileURI(arg), true)
-					
+				// System.out.println(ext)
+				if (ext == "depl") {
+					resourceSetSystem.getResource(URI.createFileURI(arg), true)
+
+				} else if (ext == "riaps") {
+					resourceSetSystem.getResource(URI.createFileURI(arg), true)
+				} else if (ext == "dt") {
+					resourceSetSystem.getResource(URI.createFileURI(arg), true)
 				}
-				else if (ext=="riaps")
-				{
-					resourceSet.getResource(URI.createFileURI(arg), true)
-				}				
 
 			}
-			
-			
-
-			
 		}
 		var validator = (resource as XtextResource).resourceServiceProvider.resourceValidator
 		var issues = validator.validate(resource, CheckMode.ALL, CancelIndicator.NullImpl)
+
 		for (issue : issues) {
 			System.out.println(issue.getMessage());
+		}
+		if (issues.size() == 0) {
+
+			val generator = injectorSystem.getInstance(SystemGenerator);
+			var fsa = new StandAloneFileSystemAccess();
+			fsa.setOutputPath(".");
+			Guice.createInjector(new AbstractGenericModule() {
+				def Class<? extends IEncodingProvider> bindIEncodingProvider() {
+					return IEncodingProvider.Runtime
+				}
+			}).injectMembers(fsa)
+
+			generator.doGenerate(resource, fsa, null);
+
 		}
 	}
 }
