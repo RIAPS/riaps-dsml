@@ -5,17 +5,6 @@ package edu.vanderbilt.riaps.validation
 
 import org.eclipse.xtext.validation.Check
 import edu.vanderbilt.riaps.app.AppPackage
-import edu.vanderbilt.riaps.app.PubPort
-import edu.vanderbilt.riaps.app.Application
-import org.eclipse.emf.ecore.EObject
-import edu.vanderbilt.riaps.app.SubPort
-import edu.vanderbilt.riaps.app.ClntPort
-import edu.vanderbilt.riaps.app.SrvPort
-import edu.vanderbilt.riaps.app.ReqPort
-import edu.vanderbilt.riaps.app.RepPort
-import edu.vanderbilt.riaps.app.Actor
-
-import edu.vanderbilt.riaps.Console
 import edu.vanderbilt.riaps.app.Group
 import edu.vanderbilt.riaps.app.Leader
 import edu.vanderbilt.riaps.app.Consensus
@@ -23,6 +12,10 @@ import java.util.HashSet
 import edu.vanderbilt.riaps.datatypes.Message
 import edu.vanderbilt.riaps.app.GMessageBlock
 import edu.vanderbilt.riaps.app.UsesBlock
+import edu.vanderbilt.riaps.generator.json.App
+import edu.vanderbilt.riaps.app.Component
+import edu.vanderbilt.riaps.app.Actor
+import edu.vanderbilt.riaps.app.Application
 
 /**
  * This class contains custom validation rules. 
@@ -34,48 +27,77 @@ class AppValidator extends AbstractAppValidator {
 	@Check
 	def checkGroupProperties(UsesBlock group) {
 		var leaders = group.property.filter(Leader)
-		var consensus = group.property.filter(Consensus)		
-		if (leaders.size() > 1 || consensus.size() > 1) {
-			error('only one uses clause with leader or consensus is allowed', null)
+
+		if (leaders.size() > 1) {
+			error('duplicate leader definition found', null)
 		}
 	}
-	
-	
+
+	@Check
+	def checkGroupPropertiesConsensus(UsesBlock group) {
+
+		var consensus = group.property.filter(Consensus)
+		if (consensus.size() > 1) {
+			error('duplicate consensus definition found', null)
+		}
+	}
+
+	@Check
+	def checkAppNameStartsWithCapital(Application message) {
+		if (!Character.isUpperCase(message.name.charAt(0))) {
+			error('Name should start with a capital', AppPackage.Literals.APPLICATION__NAME)
+		}
+	}
+
+	@Check
+	def checkComponentNameStartsWithCapital(Component message) {
+		if (!Character.isUpperCase(message.name.charAt(0))) {
+			error('Name should start with a capital', AppPackage.Literals.COMPONENT__NAME)
+		}
+	}
+
+	@Check
+	def checkActorNameStartsWithCapital(Actor message) {
+		if (!Character.isUpperCase(message.name.charAt(0))) {
+			error('Name should start with a capital', AppPackage.Literals.ACTOR__NAME)
+		}
+	}
+
 	@Check
 	def checkGroupUsesBlock(Group group) {
-		var messageblock = group.useclauses				
-		if (messageblock.size() > 1 ) {
+		var messageblock = group.useclauses
+		if (messageblock.size() > 1) {
 			error('only one message block is allowed in a group', AppPackage.Literals.GROUP__NAME)
 		}
 	}
-	
+
 	@Check
 	def checkGroupMessageBlock(Group group) {
-		var messageblock = group.gmessageblock				
-		if (messageblock.size() > 1 ) {
+		var messageblock = group.gmessageblock
+		if (messageblock.size() > 1) {
 			error('only one message block is allowed in a group', AppPackage.Literals.GROUP__NAME)
 		}
 	}
+
 	@Check
 	def checkGroupConsensusMessageUnique(GMessageBlock group) {
 		var consensusMessage = group.consensusMessages
 		var consensusMessageunique = new HashSet<Message>()
 		for (Message x : consensusMessage) {
-			if( !consensusMessageunique.add(x))
-			{
-					error('duplicate entry ' +x.name+ ' found in consensus Messages', null)
+			if (!consensusMessageunique.add(x)) {
+				error('duplicate entry ' + x.name + ' found in consensus Messages', null)
 			}
 		}
 	}
+
 	@Check
 	def checkGroupGroupMessageUnique(GMessageBlock group) {
 		var consensusMessage = group.groupMessages
 		var consensusMessageunique = new HashSet<Message>()
 		for (Message x : consensusMessage) {
-			if( !consensusMessageunique.add(x))
-			{
-					error('duplicate entry ' +x.name+ ' found in group Messages', null)
+			if (!consensusMessageunique.add(x)) {
+				error('duplicate entry ' + x.name + ' found in group Messages', null)
 			}
-		}	
+		}
 	}
 }

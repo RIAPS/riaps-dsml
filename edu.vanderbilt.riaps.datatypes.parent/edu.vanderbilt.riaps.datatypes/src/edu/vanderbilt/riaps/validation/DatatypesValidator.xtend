@@ -9,6 +9,8 @@ import org.eclipse.xtext.validation.Check
 import edu.vanderbilt.riaps.datatypes.Library
 import edu.vanderbilt.riaps.datatypes.Configuration
 import org.eclipse.core.runtime.Path
+import edu.vanderbilt.riaps.datatypes.Message
+import edu.vanderbilt.riaps.datatypes.DeviceType
 
 /**
  * This class contains custom validation rules. 
@@ -25,6 +27,20 @@ class DatatypesValidator extends AbstractDatatypesValidator {
 			error('Name should start with a capital', DatatypesPackage.Literals.MODEL_COLLECTION__NAME)
 		}
 
+	}
+	
+	@Check
+	def checkMessageDeclarationStartsWithCapital(Message message) {
+		if (!Character.isUpperCase(message.name.charAt(0))) {
+			error('Name should start with a capital', DatatypesPackage.Literals.MODEL_COLLECTION__NAME)
+		}
+	}
+	
+	@Check
+	def checkDeviceTypeStartsWithCapital(DeviceType message) {
+		if (!Character.isUpperCase(message.name.charAt(0))) {
+			error('Name should start with a capital', DatatypesPackage.Literals.MODEL_COLLECTION__NAME)
+		}
 	}
 	
 	
