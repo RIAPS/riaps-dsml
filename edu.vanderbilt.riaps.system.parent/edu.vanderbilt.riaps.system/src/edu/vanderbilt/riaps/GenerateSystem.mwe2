@@ -6,7 +6,7 @@ import org.eclipse.xtext.xtext.generator.model.project.*
 var rootPath = ".."
 
 Workflow {
-	
+
 	component = XtextGenerator {
 		configuration = {
 			project = StandardProjectConfig {
@@ -39,9 +39,12 @@ Workflow {
 			formatter = {
 				generateStub = true
 			}
+			generator = {
+				generateXtendMain = true
+			}
 			validator = {
 				composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
-				generateStub=true
+				generateStub = true
 			}
 		}
 	}

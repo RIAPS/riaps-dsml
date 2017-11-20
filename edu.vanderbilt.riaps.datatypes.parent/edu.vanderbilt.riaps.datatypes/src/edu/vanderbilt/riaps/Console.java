@@ -24,7 +24,11 @@ public class Console {
 	static private FileHandler fileHTML;
 	static private Formatter formatterHTML;
 
-	protected Console() {
+	protected Console(Boolean ineclipse ) {
+		
+		if(!ineclipse)
+			return;
+		
 		String name = "RIAPS";
 
 		ConsolePlugin plugin = ConsolePlugin.getDefault();
@@ -45,14 +49,33 @@ public class Console {
 		return;
 	}
 
+	
+	public static synchronized Console getHeadlessInstance() {
+		if (instance == null) {
+			instance = new Console(false);
+		}
+		return instance;
+	}
+
+	
 	public static synchronized Console getInstance() {
 		if (instance == null) {
-			instance = new Console();
+			instance = new Console(true);
 		}
 		return instance;
 	}
 
 	public void log(java.util.logging.Level level, String m) {
-		mstream.println(m);
+		if(mstream!=null)
+		{
+			mstream.println(m);
+			
+		}
+		else
+		{
+			System.console().writer().println(m);
+			
+		}
+		
 	}
 }

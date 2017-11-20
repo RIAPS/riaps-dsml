@@ -27,73 +27,77 @@ import edu.vanderbilt.riaps.generator.StandAloneFileSystemAccess
  */
 class SystemStandaloneSetup extends SystemStandaloneSetupGenerated {
 
-	private static Injector injectorSystem;
-	private static Injector injectorApp;
-	private static Injector injectorData;
+//	private static Injector injectorSystem;
+//	private static Injector injectorApp;
+//	private static Injector injectorData;
 
 	def static void doSetup() {
-		injectorSystem = new SystemStandaloneSetup().createInjectorAndDoEMFRegistration()
-		injectorApp = new AppStandaloneSetup().createInjectorAndDoEMFRegistration()
-		injectorData = new DatatypesStandaloneSetup().createInjectorAndDoEMFRegistration()
+		new SystemStandaloneSetup().createInjectorAndDoEMFRegistration()
 	}
+	
+//	def static void doSetup() {
+//		injectorSystem = new SystemStandaloneSetup().createInjectorAndDoEMFRegistration()
+//		injectorApp = new AppStandaloneSetup().createInjectorAndDoEMFRegistration()
+//		injectorData = new DatatypesStandaloneSetup().createInjectorAndDoEMFRegistration()
+//	}
 
-	public def static void main(String[] args) {
-		if (args.size <= 0) {
-			System.out.println("specify the file containing the model, args.size is " + args.size)
-			System.exit(1)
-		}
-		var url = args.get(0)
-		// System.out.println("Generating for the file " + url)
-		var file = new File(url)
-		if (!file.exists()) {
-			System.out.println("file does not exist " + url)
-			System.exit(1)
-		}
-		doSetup();
-
-		var resourceSetSystem = injectorSystem.getInstance(typeof(XtextResourceSet))
-//		var resourceSetApp = injectorApp.getInstance(typeof(XtextResourceSet))
-//		var resourceSetDataType = injectorData.getInstance(typeof(XtextResourceSet))
-		var resource = resourceSetSystem.getResource(URI.createFileURI(url), true);
-		for (arg : args) {
-			var uril = URI.createFileURI(arg)
-			var segments = uril.segments
-			var filename = segments.get(segments.size - 1)
-			System.out.println('loaded file ' + filename)
-			var extlist = filename.split('\\.')
-			if (extlist.size == 2) {
-				var ext = extlist.get(1)
-				// System.out.println(ext)
-				if (ext == "depl") {
-					resourceSetSystem.getResource(URI.createFileURI(arg), true)
-
-				} else if (ext == "riaps") {
-					resourceSetSystem.getResource(URI.createFileURI(arg), true)
-				} else if (ext == "dt") {
-					resourceSetSystem.getResource(URI.createFileURI(arg), true)
-				}
-
-			}
-		}
-		var validator = (resource as XtextResource).resourceServiceProvider.resourceValidator
-		var issues = validator.validate(resource, CheckMode.ALL, CancelIndicator.NullImpl)
-
-		for (issue : issues) {
-			System.out.println(issue.getMessage());
-		}
-		if (issues.size() == 0) {
-
-			val generator = injectorSystem.getInstance(SystemGenerator);
-			var fsa = new StandAloneFileSystemAccess();
-			fsa.setOutputPath(".");
-			Guice.createInjector(new AbstractGenericModule() {
-				def Class<? extends IEncodingProvider> bindIEncodingProvider() {
-					return IEncodingProvider.Runtime
-				}
-			}).injectMembers(fsa)
-
-			generator.doGenerate(resource, fsa, null);
-
-		}
-	}
+//	public def static void main(String[] args) {
+//		if (args.size <= 0) {
+//			System.out.println("specify the file containing the model, args.size is " + args.size)
+//			System.exit(1)
+//		}
+//		var url = args.get(0)
+//		// System.out.println("Generating for the file " + url)
+//		var file = new File(url)
+//		if (!file.exists()) {
+//			System.out.println("file does not exist " + url)
+//			System.exit(1)
+//		}
+//		doSetup();
+//
+//		var resourceSetSystem = injectorSystem.getInstance(typeof(XtextResourceSet))
+////		var resourceSetApp = injectorApp.getInstance(typeof(XtextResourceSet))
+////		var resourceSetDataType = injectorData.getInstance(typeof(XtextResourceSet))
+//		var resource = resourceSetSystem.getResource(URI.createFileURI(url), true);
+//		for (arg : args) {
+//			var uril = URI.createFileURI(arg)
+//			var segments = uril.segments
+//			var filename = segments.get(segments.size - 1)
+//			System.out.println('loaded file ' + filename)
+//			var extlist = filename.split('\\.')
+//			if (extlist.size == 2) {
+//				var ext = extlist.get(1)
+//				// System.out.println(ext)
+//				if (ext == "depl") {
+//					resourceSetSystem.getResource(URI.createFileURI(arg), true)
+//
+//				} else if (ext == "riaps") {
+//					resourceSetSystem.getResource(URI.createFileURI(arg), true)
+//				} else if (ext == "dt") {
+//					resourceSetSystem.getResource(URI.createFileURI(arg), true)
+//				}
+//
+//			}
+//		}
+//		var validator = (resource as XtextResource).resourceServiceProvider.resourceValidator
+//		var issues = validator.validate(resource, CheckMode.ALL, CancelIndicator.NullImpl)
+//
+//		for (issue : issues) {
+//			System.out.println(issue.getMessage());
+//		}
+//		if (issues.size() == 0) {
+//
+//			val generator = injectorSystem.getInstance(SystemGenerator);
+//			var fsa = new StandAloneFileSystemAccess();
+//			fsa.setOutputPath(".");
+//			Guice.createInjector(new AbstractGenericModule() {
+//				def Class<? extends IEncodingProvider> bindIEncodingProvider() {
+//					return IEncodingProvider.Runtime
+//				}
+//			}).injectMembers(fsa)
+//
+//			generator.doGenerate(resource, fsa, null);
+//
+//		}
+//	}
 }
