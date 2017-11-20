@@ -18,6 +18,9 @@ import edu.vanderbilt.riaps.RiapsOutputConfigurationProvider
 class RiapsSystemGenerator extends AbstractGenerator{
 
 	override doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
+		
+		if (resource.allContents.toIterable.filter(AppDeployment).size()==0) return
+		
 		var gson = new GsonBuilder().setPrettyPrinting().create();
 		var ArrayList<ActorDepl> container = new ArrayList<ActorDepl>();
 		
