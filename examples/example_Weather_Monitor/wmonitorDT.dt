@@ -1,8 +1,8 @@
-package WeatherMonitor.include.messages
+package WeatherMonitor.include.datatypes
 
 struct TempData{
 	temperature:Double
 }
 
-message tempData: TempData;
-message tempInternal: TempData; 
+message TempData: TempData;
+message TempInternal: TempData; 

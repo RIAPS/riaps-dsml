@@ -12,16 +12,15 @@ nodeType WeatherNode{
 }
 
 //only one of the nodes has thermostat
-node node1 : WeatherNode{
-	device thermostat tag north
+host node1 : WeatherNode{
+	device Thermostat tag north
 	mem 32 MB
 	net eth0 address 129.59.129.1
 }
 
 app WeatherMonitor{
 	//All Nodes have weather displays
-	on all WeatherNode WeatherMonitor.WeatherReceiver
+	on all WeatherNode WeatherMonitor.WeatherIndicator	
 	//this is correct because we only want one instance of WeatherSensor
-	on node1 WeatherMonitor.WeatherIndicator
-	on node1 WeatherMonitor.TempDeviceActor
+	on node1  WeatherMonitor.WeatherReceiver
 }

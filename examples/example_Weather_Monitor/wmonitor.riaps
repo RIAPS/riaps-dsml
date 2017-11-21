@@ -1,65 +1,48 @@
 package WeatherMonitor
-import WeatherMonitor.include.messages.*
+import WeatherMonitor.include.datatypes.*
 import WeatherMonitor.include.devices.*
 app WeatherMonitor
 {
-	message tempData;
-	message tempInternal;
-	device tempio()
-	{
-		requires 
-		{
-		    cpu 25 % over 10 s;
-		    device thermostat;
-	    }
-	    pub p1: tempInternal Hz [-,10]
-	}	
 	// TempSensor component 
 	rt component TempSensor
 	{
-		requires 
+		uses
 		{
-		    device thermostat;
-		    cap 25 MB over 10 s;
-	    }
-	    timer clock 5000;
+			device Thermostat;
+		    net 25 MB over 10 s;
+		}
+		timer clock 5000;
 	    // Publish port for Temperature messages ; No lower limit. But a max limit
-	    pub ready : tempData Hz [-,10]; 
-	    sub rawtemp: tempInternal Hz [-,10]
-	}	
+	    pub ready : TempData  [-,10]; 
+	    sub rawtemp: TempInternal  [-,10]
+	}
 	// TempMonitor component
 	component TempMonitor()
 	{
 		// Subscriber port to trigger component with Temperature messages
-		sub tempupdate : tempData; 
-	}
-	actor TempDeviceActor()
-	{
-		{
-			iodevice: tempio
-		}
+		sub tempupdate : TempData;
 	}
 	// WeatherIndicator actor
 	actor WeatherIndicator()
 	{
-		{ 
+		{
 			// TempSensor publishes 'TempData' messages
-			sensor : TempSensor;			
+			sensor : TempSensor;
 		}
-		requires
+		uses
 		{
 			mem 512 KB;
 			space 1024 KB;
 			 // this specifies that any component in this actor will 
 			 // require a node that has a device of type thermostat and tag north.
-			device thermostat tag north;
+			device Thermostat tag north;
 		}
-	}	
+	}
 	actor WeatherReceiver()
 	{
-		{ 
+		{
 			// TempMonitor subscribes to 'TempData' messages
-			monitor : TempMonitor;		
+			monitor : TempMonitor;
 		}
 	}
 }
