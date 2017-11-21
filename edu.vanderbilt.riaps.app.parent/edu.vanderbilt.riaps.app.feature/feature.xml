@@ -2,7 +2,7 @@
 <feature
       id="edu.vanderbilt.riaps.app.feature"
       label="App Feature "
-      version="0.8.2.qualifier">
+      version="0.8.3.qualifier">
 
    <plugin
          id="edu.vanderbilt.riaps.app"
