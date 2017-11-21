@@ -18,7 +18,7 @@ import edu.vanderbilt.riaps.app.ReqPort
 import edu.vanderbilt.riaps.app.SrvPort
 import edu.vanderbilt.riaps.app.SubPort
 //import edu.vanderbilt.riaps.app.MessageRef;
-import edu.vanderbilt.riaps.datatypes.Message
+import edu.vanderbilt.riaps.app.Message
 import edu.vanderbilt.riaps.generator.json.Comp
 
 @SuppressWarnings("unused") class App {

@@ -14,7 +14,7 @@ import org.eclipse.xtext.util.CancelIndicator
 import org.eclipse.xtext.validation.CheckMode
 import org.eclipse.xtext.validation.IResourceValidator
 import edu.vanderbilt.riaps.AppStandaloneSetup
-import edu.vanderbilt.riaps.DatatypesStandaloneSetup
+
 import java.util.HashSet
 import org.eclipse.emf.ecore.resource.Resource
 
@@ -29,12 +29,10 @@ class Main {
 		val cons= edu.vanderbilt.riaps.Console.getHeadlessInstance()
 		//cons.log(java.util.logging.Level.INFO, "starting the interpreter")
 		val injector = new SystemStandaloneSetup().createInjectorAndDoEMFRegistration
-		val injectorApp = new AppStandaloneSetup().createInjectorAndDoEMFRegistration()
-		val injectorData = new DatatypesStandaloneSetup().createInjectorAndDoEMFRegistration()
+		val injectorApp = new AppStandaloneSetup().createInjectorAndDoEMFRegistration()	
 		val main = injector.getInstance(Main)
 		val generatorApp = injectorApp.getInstance(AppGenerator);
-		val generatorData = injectorData.getInstance(DatatypesGenerator);
-		main.runGenerator(args,generatorApp,generatorData)
+		main.runGenerator(args,generatorApp)
 	}
 
 	@Inject Provider<ResourceSet> resourceSetProvider
@@ -42,7 +40,7 @@ class Main {
 	@Inject GeneratorDelegate generator
 	@Inject StandAloneFileSystemAccess fileAccess
 
-	def protected runGenerator(String [] strings, AppGenerator appgenerator, DatatypesGenerator generatorData)  {
+	def protected runGenerator(String [] strings, AppGenerator appgenerator)  {
 		// Load the resource
 		val set = resourceSetProvider.get
 		var rX = new HashSet<Resource>()
@@ -76,7 +74,7 @@ class Main {
 		for (resource : rX) {
 			generator.generate(resource, fileAccess, context)
 			appgenerator.doGenerate(resource, fileAccess, context)
-			generatorData.doGenerate(resource, fileAccess, context)
+			
 		}
 		System.out.println('Code generation finished.')
 	}

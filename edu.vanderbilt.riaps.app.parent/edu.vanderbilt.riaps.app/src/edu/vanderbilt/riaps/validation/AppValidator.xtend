@@ -9,7 +9,6 @@ import edu.vanderbilt.riaps.app.Group
 import edu.vanderbilt.riaps.app.Leader
 import edu.vanderbilt.riaps.app.Consensus
 import java.util.HashSet
-import edu.vanderbilt.riaps.datatypes.Message
 import edu.vanderbilt.riaps.app.GMessageBlock
 import edu.vanderbilt.riaps.app.UsesBlock
 import edu.vanderbilt.riaps.app.Component
@@ -19,6 +18,8 @@ import edu.vanderbilt.riaps.app.DeviceType
 import edu.vanderbilt.riaps.app.Library
 import edu.vanderbilt.riaps.app.Configuration
 import org.eclipse.core.runtime.Path
+import edu.vanderbilt.riaps.app.FStructType
+import edu.vanderbilt.riaps.app.Message
 
 /**
  * This class contains custom validation rules. 
@@ -27,6 +28,24 @@ import org.eclipse.core.runtime.Path
  */
 class AppValidator extends AbstractAppValidator {
 
+
+public static val INVALID_NAME = 'invalidName'
+
+	@Check
+	def checkFStructTypeStartsWithCapital(FStructType message) {
+		if (!Character.isUpperCase(message.name.charAt(0))) {
+			error('Name should start with a capital', AppPackage.Literals.COLLECTION__NAME)
+		}
+
+	}
+	
+	@Check
+	def checkMessageDeclarationStartsWithCapital(Message message) {
+		if (!Character.isUpperCase(message.name.charAt(0))) {
+			error('Name should start with a capital', AppPackage.Literals.COLLECTION__NAME)
+		}
+	}
+	
 	@Check
 	def checkGroupProperties(UsesBlock group) {
 		var leaders = group.property.filter(Leader)

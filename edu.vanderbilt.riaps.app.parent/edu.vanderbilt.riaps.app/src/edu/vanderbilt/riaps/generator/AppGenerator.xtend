@@ -8,6 +8,8 @@ import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
 import com.google.inject.Inject
+import edu.vanderbilt.riaps.RiapsOutputConfigurationProvider
+
 /**
  * Generates code from your model files on save.
  * 
@@ -16,10 +18,30 @@ import com.google.inject.Inject
 class AppGenerator extends AbstractGenerator {
 
 	@Inject RiapsAppGenerator g1
-	//@Inject ComponentTypeGenerator g2
+	// @Inject ComponentTypeGenerator g2
 	@Inject CppGenerator g3
+	@Inject CapnProtoGenerator g4
+
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		g1.doGenerate(resource, fsa, context);
 		g3.doGenerate(resource, fsa, context);
+		g4.doGenerate(resource, fsa, context);
+		var topdatacmake = '''
+cmake_minimum_required(VERSION 3.0)
+file(GLOB_RECURSE CAPNP_SRCS     RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.capnp)
+SET(messagesrc "")
+foreach(capnpfile ${CAPNP_SRCS})
+  message (${capnpfile})
+  LIST(APPEND messagesrc "${capnpfile}.c++" "${capnpfile}.h")
+  add_custom_command(OUTPUT  "${capnpfile}.c++" "${capnpfile}.h" DEPENDS "${capnpfile}" WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"  COMMAND capnp compile -oc++ "${capnpfile}" --import-path="${CMAKE_CURRENT_SOURCE_DIR}")
+endforeach(capnpfile)
+
+add_custom_target(
+    messages ALL
+    DEPENDS ${messagesrc}
+    )
+'''
+		fsa.generateFile("CMakeLists.txt", RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_MESSAGE, topdatacmake)
+
 	}
 }

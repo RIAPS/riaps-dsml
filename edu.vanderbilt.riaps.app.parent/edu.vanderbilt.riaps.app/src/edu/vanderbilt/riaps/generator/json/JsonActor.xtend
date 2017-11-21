@@ -14,7 +14,7 @@ import edu.vanderbilt.riaps.app.ActorFormal
 import edu.vanderbilt.riaps.app.ActorRequirement
 import edu.vanderbilt.riaps.app.CPURequirement
 import edu.vanderbilt.riaps.app.CompDeviceRequirement
-import edu.vanderbilt.riaps.datatypes.Message
+import edu.vanderbilt.riaps.app.Message
 import edu.vanderbilt.riaps.app.Instance
 import edu.vanderbilt.riaps.app.MemoryRequirement
 import edu.vanderbilt.riaps.app.NAMEDHANDLER

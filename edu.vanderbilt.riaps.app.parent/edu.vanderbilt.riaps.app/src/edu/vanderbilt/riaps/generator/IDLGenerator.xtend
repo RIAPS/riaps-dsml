@@ -11,15 +11,13 @@ import java.util.HashSet
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IGeneratorContext
 import org.eclipse.xtext.generator.IFileSystemAccess2
-import edu.vanderbilt.riaps.datatypes.FStructType
-import edu.vanderbilt.riaps.datatypes.FType
+import edu.vanderbilt.riaps.app.FStructType
+import edu.vanderbilt.riaps.app.FType
 import edu.vanderbilt.riaps.Console
-import org.eclipse.ui.console.MessageConsole
-import org.eclipse.ui.console.MessageConsoleStream
 import java.util.logging.Logger
 import java.util.logging.Level
-import edu.vanderbilt.riaps.datatypes.FField
-import edu.vanderbilt.riaps.datatypes.FEnumerationType
+import edu.vanderbilt.riaps.app.FField
+import edu.vanderbilt.riaps.app.FEnumerationType
 
 class IDLGenerator extends AbstractGenerator {
 	@Inject extension IQualifiedNameProvider

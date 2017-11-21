@@ -31,7 +31,7 @@ Workflow {
 		language = StandardLanguage {
 			name = "edu.vanderbilt.riaps.System"
 			fileExtensions = "depl"
-			referencedResource = "platform:/resource/edu.vanderbilt.riaps.datatypes/model/generated/Datatypes.genmodel"
+			//referencedResource = "platform:/resource/edu.vanderbilt.riaps.datatypes/model/generated/Datatypes.genmodel"
 			referencedResource = "platform:/resource/edu.vanderbilt.riaps.app/model/generated/App.genmodel"
 			serializer = {
 				generateStub = false

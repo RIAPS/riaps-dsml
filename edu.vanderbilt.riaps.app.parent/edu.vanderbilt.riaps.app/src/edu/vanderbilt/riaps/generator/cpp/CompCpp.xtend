@@ -10,7 +10,7 @@ import edu.vanderbilt.riaps.app.TimPort
 import edu.vanderbilt.riaps.app.RepPort
 import java.util.HashSet
 import edu.vanderbilt.riaps.app.ComponentFormal
-import edu.vanderbilt.riaps.datatypes.FStructType
+import edu.vanderbilt.riaps.app.FStructType
 import edu.vanderbilt.riaps.generator.CppGenerator
 
 @SuppressWarnings("unused", "unchecked")

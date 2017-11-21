@@ -21,6 +21,15 @@ import edu.vanderbilt.riaps.app.Group
 import edu.vanderbilt.riaps.app.GMessageBlock
 import edu.vanderbilt.riaps.app.DeviceType
 import edu.vanderbilt.riaps.app.DeviceUses
+import edu.vanderbilt.riaps.app.FStructType
+import edu.vanderbilt.riaps.app.FField
+import org.eclipse.xtext.formatting2.internal.SinglelineDocCommentReplacer
+import org.eclipse.xtext.formatting2.internal.WhitespaceReplacer
+import org.eclipse.xtext.AbstractRule
+import org.eclipse.xtext.formatting2.regionaccess.IComment
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.formatting2.internal.SinglelineCodeCommentReplacer
+import edu.vanderbilt.riaps.app.Message
 
 class AppFormatter extends AbstractFormatter2 {
 
@@ -37,13 +46,40 @@ class AppFormatter extends AbstractFormatter2 {
 		for (collection : model.getCollections()) {
 			if (collection instanceof Application)
 				(collection as Application).format
+
+			if (collection instanceof DeviceType) {
+				collection.format
 				
-				if (collection instanceof DeviceType) {
-			if(collection.constraint!==null) collection.constraint.format
-		}
+			}
+
+			if (collection instanceof FStructType) {
+				collection.format
+			}
+			
+			if (collection instanceof Message) {
+				collection.format
+			}
+
 		}
 	}
+	
+	def dispatch void format(FStructType collection, extension IFormattableDocument document) {
+		val open = collection.regionFor.keyword("{").prepend[noSpace; newLine].append[noSpace; newLine]
+		val close = collection.regionFor.keyword("}").prepend[noSpace; newLine].append[noSpace; newLine]
+		interior(open, close)[indent]
+		collection.prepend[noSpace; newLine].append[noSpace; newLine]
 
+	}
+	
+	def dispatch void format(DeviceType collection, extension IFormattableDocument document) {
+		val open = collection.regionFor.keyword("{").prepend[noSpace; newLine].append[noSpace; newLine]
+		val close = collection.regionFor.keyword("}").prepend[noSpace; newLine].append[noSpace; newLine]
+		interior(open, close)[indent]
+		
+		if(collection.constraint !== null) collection.constraint.format
+		collection.prepend[noSpace; newLine].append[noSpace; newLine]
+
+	}
 
 	def dispatch void format(DeviceUses collection, extension IFormattableDocument document) {
 		val open = collection.regionFor.keyword("{").prepend[noSpace; newLine].append[noSpace; newLine]
@@ -66,19 +102,18 @@ class AppFormatter extends AbstractFormatter2 {
 			group.format;
 			group.prepend[noSpace; newLine].append[noSpace; newLine]
 		}
-	
-	
+
 		for (Actor actor : app.getActors()) {
 			actor.format;
 			actor.prepend[noSpace; newLine].append[noSpace; newLine]
 		}
-		for(DeploymentConstraint c: app.deploymentConstraints){
+		for (DeploymentConstraint c : app.deploymentConstraints) {
 			c.format;
 			c.prepend[noSpace; newLine].append[noSpace; newLine]
 		}
 
 	}
-	
+
 	def dispatch void format(Group component, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 		val open = component.regionFor.keyword("{").prepend[noSpace; newLine].append[noSpace; newLine]
@@ -88,7 +123,7 @@ class AppFormatter extends AbstractFormatter2 {
 			components.format;
 		}
 	}
-	
+
 	def dispatch void format(GMessageBlock component, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 		val open = component.regionFor.keyword("{").prepend[noSpace; newLine].append[noSpace; newLine]
@@ -105,26 +140,22 @@ class AppFormatter extends AbstractFormatter2 {
 //			components.format;
 //		}
 //	}
-
 	def dispatch void format(Component component, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 		val open = component.regionFor.keyword("{").prepend[noSpace; newLine].append[noSpace; newLine]
 		val close = component.regionFor.keyword("}").prepend[noSpace; newLine].append[noSpace; newLine]
 		interior(open, close)[indent]
 		component.constraint.format
-		
 
 	}
-	
-	
-		def dispatch void format(ComponentUses collection, extension IFormattableDocument document) {
+
+	def dispatch void format(ComponentUses collection, extension IFormattableDocument document) {
 		val open = collection.regionFor.keyword("{").prepend[noSpace; newLine].append[noSpace; newLine]
 		val close = collection.regionFor.keyword("}").prepend[noSpace; newLine].append[noSpace; newLine]
 		interior(open, close)[indent]
 		collection.prepend[noSpace; newLine].append[noSpace; newLine]
 
 	}
-	
 
 	def dispatch void format(InstanceSection actor, extension IFormattableDocument document) {
 		val open = actor.regionFor.keyword("{").prepend[noSpace; newLine].append[noSpace; newLine]
@@ -134,6 +165,30 @@ class AppFormatter extends AbstractFormatter2 {
 			instance.format
 			instance.prepend[noSpace; newLine].append[noSpace; newLine]
 		}
+	}
+	
+	override createCommentReplacer(IComment comment) {
+		val EObject grammarElement = comment.getGrammarElement();
+		if (grammarElement instanceof AbstractRule) {
+			val String ruleName = grammarElement.getName();
+			if (ruleName.startsWith("SL")) {
+				if (comment.getLineRegions().get(0).getIndentation().getLength() > 0) {
+					return new SinglelineDocCommentReplacer(comment, "//") {
+						def defigureWhitespace(WhitespaceReplacer leading, WhitespaceReplacer trailing) {
+							leading.getFormatting().space = "            ";
+						}
+					};
+
+				} else {
+					return new SinglelineCodeCommentReplacer(comment, "//") {
+						def defeWhitespace(WhitespaceReplacer leading, WhitespaceReplacer trailing) {
+							leading.getFormatting().space = "            ";
+						}
+					}
+				}
+			}
+		}
+		super.createCommentReplacer(comment)
 	}
 
 	def dispatch void format(Actor actor, extension IFormattableDocument document) {
@@ -153,7 +208,7 @@ class AppFormatter extends AbstractFormatter2 {
 			entry.format
 			entry.prepend[noSpace; newLine].append[noSpace; newLine]
 		}
-		
+
 		for (entry : actor.criticals) {
 			entry.format
 			entry.prepend[noSpace; newLine].append[noSpace; newLine]

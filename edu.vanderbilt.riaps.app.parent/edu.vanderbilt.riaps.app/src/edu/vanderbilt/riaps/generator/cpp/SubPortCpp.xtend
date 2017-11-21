@@ -3,7 +3,7 @@ package edu.vanderbilt.riaps.generator.cpp
 import edu.vanderbilt.riaps.app.Port
 import edu.vanderbilt.riaps.app.SubPort
 import java.util.HashMap
-import edu.vanderbilt.riaps.datatypes.FStructType
+import edu.vanderbilt.riaps.app.FStructType
 import edu.vanderbilt.riaps.generator.CppGenerator
 
 class SubPortCpp extends PortCppBase {

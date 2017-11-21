@@ -1,8 +1,7 @@
 grammar edu.vanderbilt.riaps.App with org.eclipse.xtext.common.Terminals
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
-//The compaonents and application definition use Messages from Datatypes
-import "http://www.vanderbilt.edu/riaps/Datatypes" as DataTypes
+
 generate app "http://www.vanderbilt.edu/riaps/App"
 //This is the main model rule
 Model returns Mdodel:
@@ -56,8 +55,66 @@ terminal BOOL:
 // These are the real FCO
 Collection:
 	Application
-	|DeviceType;
+	|DeviceType
+	|FType
+	| Message;
+	
 
+FType returns FType:
+	FEnumerationType |
+	FStructType;
+
+	
+FStructType returns FStructType:
+//A message can only refer to a structure.	
+	{FStructType}
+	'struct' name=ID
+	'{'
+	(elements+=FField)*
+	'}';
+
+
+FField:
+	//the [] declares a filed to be an array
+	name=ID ':' type=FTypeRef (list?='[' ']')? (';')?;
+
+
+FTypeRef returns FTypeRef:
+		//These are references to types.
+	predefined=FBasicTypeId | derived=[FType|FQN];
+
+
+enum FBasicTypeId returns FBasicTypeId:
+//These are the basic types that are supported by the datatypes language
+	Int8='Int8' |
+	UInt8='UInt8' |
+	Int16='Int16' |
+	UInt16='UInt16' |
+	Int32='Int32' |
+	UInt32='UInt32' |
+	Int64='Int64' |
+	UInt64='UInt64' |
+	Boolean='Boolean' |
+	String='String' |
+	Float='Float' |
+	Double='Double' |
+	Char='Char' |
+	ByteBuffer='ByteBuffer';
+
+	//We support enumerations as well. A structure can have a field that is an enumeration.	
+FEnumerationType returns FEnumerationType:
+	{FEnumerationType}
+	'enumeration' name=ID
+	'{'
+	(enumerators+=FEnumerator (','? enumerators+=FEnumerator)*) (';')?
+	'}';
+
+FEnumerator returns FEnumerator:
+	{FEnumerator}
+	name=ID ('=' value=STRING)?;
+
+Message:
+	'message' name=ID ':' type=[FStructType|FQN] (';')?;
 //The device types and their tags will be captured in datatypes. A different place for them can be found later.
 //for crossreference 
 DeviceType :
@@ -149,11 +206,11 @@ Port:
 	| InsPort;
 
 QueryPort:
-	'qry' name=ID ':' '(' req_type=[DataTypes::Message|FQN] ',' rep_type=[DataTypes::Message|FQN] ')' (deadline=Deadline)?
+	'qry' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' (deadline=Deadline)?
 	(ratelimit=RateLimit)? (';')?;
 
 AnswerPort:
-	'ans' name=ID ':' '(' req_type=[DataTypes::Message|FQN] ',' rep_type=[DataTypes::Message|FQN] ')' (deadline=Deadline)?
+	'ans' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' (deadline=Deadline)?
 	(ratelimit=RateLimit)? (';')?;
 
 RateLimit:
@@ -161,10 +218,10 @@ RateLimit:
 
 	//Rate limits are optional
 PubPort:
-	'pub' name=ID ':' type=[DataTypes::Message|FQN] (ratelimit=RateLimit)? (';')?;
+	'pub' name=ID ':' type=[Message|FQN] (ratelimit=RateLimit)? (';')?;
 
 SubPort:
-	'sub' name=ID ':' type=[DataTypes::Message|FQN] (ratelimit=RateLimit)? (';')?;
+	'sub' name=ID ':' type=[Message|FQN] (ratelimit=RateLimit)? (';')?;
 
 	//deadlines can be specified for client server ports.
 Deadline:
@@ -173,19 +230,19 @@ Deadline:
 	// Client port (request and reply message types) - Owned by an SMI client
 // Client operation is expected to send on the port and then receive on the same port
 ClntPort:
-	'clt' name=ID ':' '(' req_type=[DataTypes::Message|FQN] ',' rep_type=[DataTypes::Message|FQN] ')' (deadline=Deadline)?
+	'clt' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' (deadline=Deadline)?
 	(ratelimit=RateLimit)? (';')?;
 
 SrvPort:
-	'srv' name=ID ':' '(' req_type=[DataTypes::Message|FQN] ',' rep_type=[DataTypes::Message|FQN] ')'
+	'srv' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')'
 	(ratelimit=RateLimit)? (';')?;
 
 ReqPort:
-	'req' name=ID ':' '(' req_type=[DataTypes::Message|FQN] ',' rep_type=[DataTypes::Message|FQN] ')' (deadline=Deadline)?
+	'req' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' (deadline=Deadline)?
 	(ratelimit=RateLimit)? (';')?;
 
 RepPort:
-	'rep' name=ID ':' '(' req_type=[DataTypes::Message|FQN] ',' rep_type=[DataTypes::Message|FQN] ')'
+	'rep' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')'
 	(ratelimit=RateLimit)? (';')?;
 
 TimPort:
@@ -235,7 +292,7 @@ Application returns Application:
 	'app' (name=ID)
 	'{'
 	//declare the libraries, actors, components (app-specific components - an app's actor can use components described in a non-app namespace)
-	((actors+=Actor) | (components+=Component) | (groups+=Group))*
+	((actors+=Actor) | (components+=Component) | (groups+=Group) | messages+=Message)+
 
 	//Optionally deployment constraints can be specified to control how an app is deployed.
 	// the constraints are specified by the app developer
@@ -259,9 +316,9 @@ UsesBlock:
 
 GMessageBlock:
 	'messages' '{'
-		(('group'':' groupMessages+=[DataTypes::Message|FQN] (',' groupMessages+=[DataTypes::Message|FQN])* (';')?)
+		(('group'':' groupMessages+=[Message|FQN] (',' groupMessages+=[Message|FQN])* (';')?)
 		|
-		('consensus'':' consensusMessages+=[DataTypes::Message|FQN] (',' consensusMessages+=[DataTypes::Message|FQN])* (';')?)
+		('consensus'':' consensusMessages+=[Message|FQN] (',' consensusMessages+=[Message|FQN])* (';')?)
 		)+
 	'}'
 ;	
@@ -299,9 +356,9 @@ ActorFormal:
 Actor:
 	'actor' name=ID ('()' | ('(' formals+=ActorFormal (',' formals+=ActorFormal)* ')')?)
 	'{'
-	(('local' locals+=[DataTypes::Message|FQN] (',' locals+=[DataTypes::Message|FQN])* (';')?) | ('internal'
-	internals+=[DataTypes::Message|FQN] (',' internals+=[DataTypes::Message|FQN])* (';')?) | ('critical'
-	criticals+=[DataTypes::Message|FQN] (',' criticals+=[DataTypes::Message|FQN])* (';')?))*
+	(('local' locals+=[Message|FQN] (',' locals+=[Message|FQN])* (';')?) | ('internal'
+	internals+=[Message|FQN] (',' internals+=[Message|FQN])* (';')?) | ('critical'
+	criticals+=[Message|FQN] (',' criticals+=[Message|FQN])* (';')?))*
 	compsection=InstanceSection
 	wires+=Wire*
 	((constraint=ActorUses)?)

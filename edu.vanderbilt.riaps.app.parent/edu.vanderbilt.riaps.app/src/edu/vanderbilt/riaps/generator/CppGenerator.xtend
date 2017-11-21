@@ -12,9 +12,9 @@ import org.eclipse.xtext.generator.IFileSystemAccess
 //import java.util.ArrayList
 import edu.vanderbilt.riaps.generator.cpp.AppCpp
 import edu.vanderbilt.riaps.RiapsOutputConfigurationProvider
-import edu.vanderbilt.riaps.datatypes.FStructType
+import edu.vanderbilt.riaps.app.FStructType
 import java.util.HashSet
-import edu.vanderbilt.riaps.datatypes.FType
+import edu.vanderbilt.riaps.app.FType
 
 
 public class CppGenerator extends AbstractGenerator {

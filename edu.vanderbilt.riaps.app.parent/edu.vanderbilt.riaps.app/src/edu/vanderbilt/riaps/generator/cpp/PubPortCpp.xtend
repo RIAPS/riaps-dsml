@@ -4,7 +4,7 @@ import edu.vanderbilt.riaps.app.Port
 import java.util.HashMap
 import edu.vanderbilt.riaps.app.PubPort
 import edu.vanderbilt.riaps.generator.CppGenerator
-import edu.vanderbilt.riaps.datatypes.FStructType
+import edu.vanderbilt.riaps.app.FStructType
 
 class PubPortCpp extends PortCppBase {
 	public FStructType msgType

@@ -4,7 +4,7 @@ import edu.vanderbilt.riaps.app.Port
 import edu.vanderbilt.riaps.app.RepPort
 import java.util.HashMap
 import edu.vanderbilt.riaps.generator.CppGenerator
-import edu.vanderbilt.riaps.datatypes.FStructType
+import edu.vanderbilt.riaps.app.FStructType
 
 class RepPortCpp extends PortCppBase{
 	public FStructType reqType
