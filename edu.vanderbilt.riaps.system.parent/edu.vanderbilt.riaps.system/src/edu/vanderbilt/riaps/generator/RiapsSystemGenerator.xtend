@@ -22,19 +22,21 @@ class RiapsSystemGenerator extends AbstractGenerator{
 		if (resource.allContents.toIterable.filter(AppDeployment).size()==0) return
 		
 		var gson = new GsonBuilder().setPrettyPrinting().create();
-		var ArrayList<ActorDepl> container = new ArrayList<ActorDepl>();
+		
 		
 		var File file = new File(resource.URI.toString);
 		var String fileName = file.getName().replaceFirst("[.][^.]+$", "") + ".json";
 		for (e : resource.allContents.toIterable.filter(AppDeployment)) {
+			var ArrayList<ActorDepl> container = new ArrayList<ActorDepl>();
 			for (ActorDeployment ad: e.actorDeployments ){
 				var ActorDepl actorDepl = new ActorDepl(ad);
 				container.add(actorDepl);
+				var formattedString = gson.toJson(container);
+				fsa.generateFile('/deployments/'+e.app.name+'.json', RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_JSON, formattedString);
 			}
 		}
 
-		var formattedString = gson.toJson(container);
-		fsa.generateFile('/deployments/'+fileName, RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_JSON, formattedString);
+		
 		//Console.getInstance().log(java.util.logging.Level.INFO, fileName + " generated");
 	}
 }
