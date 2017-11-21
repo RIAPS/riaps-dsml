@@ -40,15 +40,5 @@ public class RiapsAppGenerator extends AbstractGenerator {
 
 	}
 	
-	// Questions:
-	// Artifact, DeploymentConstraint
-	// Actor:Wires - new grammar different than the existing grammar see sample.riaps file
-	// OpalIO has a "libraries" keyword, what's the equivalent in the new grammar?
-	//    "libraries":[
-   	//   {
-   	//     "name":"pypmu"
-   	//   }
-   	// ],
-   	// repPort is missing in new grammar
 	
 }

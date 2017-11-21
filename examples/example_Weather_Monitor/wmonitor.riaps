@@ -9,7 +9,12 @@ app WeatherMonitor
 		uses
 		{
 			device Thermostat;
-		    net 25 MB over 10 s;
+			library libmath.so 
+			cpu 10%  
+			library libam.so
+			file 'config.ini'
+			file 'second.txt'
+		    net 25 MB over 10 us;
 		}
 		timer clock 5000;
 	    // Publish port for Temperature messages ; No lower limit. But a max limit
@@ -31,8 +36,8 @@ app WeatherMonitor
 		}
 		uses
 		{
-			mem 512 KB;
-			space 1024 KB;
+			mem 512 MB;
+			space 1024 MB;
 			 // this specifies that any component in this actor will 
 			 // require a node that has a device of type thermostat and tag north.
 			device Thermostat tag north;

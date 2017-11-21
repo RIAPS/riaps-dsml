@@ -27,13 +27,13 @@ class Main {
 			return
 		}
 		val cons= edu.vanderbilt.riaps.Console.getHeadlessInstance()
-		cons.log(java.util.logging.Level.INFO, "starting the interpreter")
+		//cons.log(java.util.logging.Level.INFO, "starting the interpreter")
 		val injector = new SystemStandaloneSetup().createInjectorAndDoEMFRegistration
 		val injectorApp = new AppStandaloneSetup().createInjectorAndDoEMFRegistration()
 		val injectorData = new DatatypesStandaloneSetup().createInjectorAndDoEMFRegistration()
 		val main = injector.getInstance(Main)
 		val generatorApp = injectorApp.getInstance(AppGenerator);
-		val generatorData = injectorApp.getInstance(DatatypesGenerator);
+		val generatorData = injectorData.getInstance(DatatypesGenerator);
 		main.runGenerator(args,generatorApp,generatorData)
 	}
 

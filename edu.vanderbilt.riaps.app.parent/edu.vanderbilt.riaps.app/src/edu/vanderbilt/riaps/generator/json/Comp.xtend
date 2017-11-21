@@ -31,10 +31,8 @@ import edu.vanderbilt.riaps.app.IGNORE
 	List libraries
 	List files
 	List devices
-	int cpu = -1
-	int cpuinterval = -1
-	int net = -1
-	int netinterval = -1
+	CPUConstraint cpu
+	NetConstraint net
 	String exceptHandler
 	Map<String, Map> ports
 
@@ -60,12 +58,19 @@ import edu.vanderbilt.riaps.app.IGNORE
 			if (c.getConstraint().getRequirements() !== null) {
 				for (ComponentRequirement x : c.getConstraint().getRequirements()) {
 					if (x instanceof CPURequirement) {
-						this.cpuinterval = ((x as CPURequirement)).getTimeInterval_Number()
-						this.cpu = ((x as CPURequirement)).getPercentage()
+						if (this.cpu===null) this.cpu= new CPUConstraint
+						
+						this.cpu.period = ((x as CPURequirement)).getTimeInterval_Number()
+						if(this.cpu.period==0) this.cpu.period=1000000
+						this.cpu.quota = ((x as CPURequirement)).getPercentage()
+						var double tmp=this.cpu.period
+						tmp=tmp/100.0
+						this.cpu.quota=(this.cpu.quota*tmp).intValue
 					}
 					if (x instanceof NetworkRequirement) {
-						this.netinterval = ((x as NetworkRequirement)).getTimeInterval_Number()
-						this.net = ((x as NetworkRequirement)).getNumber()
+						if (this.net===null) this.net= new NetConstraint
+						this.net.period = ((x as NetworkRequirement)).getTimeInterval_Number()
+						this.net.quota = ((x as NetworkRequirement)).getNumber()
 					}
 					if (x instanceof Library) {
 						this.libraries.add(((x as Library)).getName())
@@ -131,4 +136,14 @@ import edu.vanderbilt.riaps.app.IGNORE
 	def void setName(String name) {
 		this.name = name
 	}
+}
+
+class NetConstraint {
+	public int quota
+	public int period
+}
+
+class CPUConstraint {
+	public int quota
+	public int period
 }
