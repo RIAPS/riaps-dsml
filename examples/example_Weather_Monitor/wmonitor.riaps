@@ -6,7 +6,7 @@ struct TempData
 }
 message TempData: TempData;
 message TempInternal: TempData;
-device Thermostat()
+device Thermostat(a=1)
 {
 // Defines a 'thermostat' device type
 	uses
@@ -28,7 +28,7 @@ app WeatherMonitor
 	{
 		uses
 		{
-			device Thermostat;
+			device Thermostat (Thermostat.a =1);
 			library libmath.so 
 			cpu 10%  
 			library libam.so

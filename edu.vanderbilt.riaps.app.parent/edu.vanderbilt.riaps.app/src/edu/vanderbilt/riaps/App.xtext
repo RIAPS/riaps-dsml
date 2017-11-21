@@ -6,7 +6,7 @@ generate app "http://www.vanderbilt.edu/riaps/App"
 //This is the main model rule
 Model returns Mdodel:
 	{Model}
-	'package' name=FQN
+	'package' name=FQN (';')?
 	(imports+=Import)*
 	(collections+=Collection)*;
 
@@ -119,7 +119,7 @@ Message:
 //for crossreference 
 DeviceType :
 	'device' name=ID 
-	'()'| ('(' formals+=ComponentFormal (',' formals+=ComponentFormal)* ')')?
+	('()' | ('(' formals+=ComponentFormal (',' formals+=ComponentFormal)* ')')?)
 	'{'
 	  (constraint=DeviceUses)?
 	  (ports+=Port)+
@@ -279,7 +279,7 @@ NetworkRequirement:
 	'net' Number=INT 'MB' ('over' TimeInterval_Number=INT 'us')?;
 
 CompDeviceRequirement:
-	('device' deviceRequirement=[DeviceType]);
+	('device' deviceRequirement=[DeviceType] ('(' actuals+=Actual (',' (actuals+=Actual))* ')')?);
 	//('tag' tag=DeviceTagSequence)?
 DeviceTagSequence:
 	tag+=DeviceTag ('.' tag+=DeviceTag)*;
