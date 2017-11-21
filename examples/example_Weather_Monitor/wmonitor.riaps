@@ -2,8 +2,8 @@ package WeatherMonitor
 import WeatherMonitor.include.datatypes.*
 struct TempData
 {
-	temperature:Double
-}
+	temperature:Double 
+} 
 message TempData: TempData;
 message TempInternal: TempData;
 device Thermostat(a=1)

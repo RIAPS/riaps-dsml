@@ -348,7 +348,7 @@ DistributeConstraint:
 	actordistributelist+=[Actor|FQN])* (';'?);
 
 ComponentFormal:
-	name=ID ('=' argDefault=FormalDefault);
+	name=ID (('=' argDefault=FormalDefault)?);
 
 ActorFormal:
 	name=ID ('=' argDefault=FormalDefault);

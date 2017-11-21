@@ -1,0 +1,3 @@
+[submodule "examples/riaps-apps"]
+	path = examples/riaps-apps
+	url = git@github.com:RIAPS/riaps-apps.git

@@ -18,21 +18,21 @@ import edu.vanderbilt.riaps.AppStandaloneSetup
 import java.util.HashSet
 import org.eclipse.emf.ecore.resource.Resource
 
-
 class Main {
 
 	def static main(String[] args) {
 		if (args.empty) {
-			System::err.println('Aborting: no path to EMF resource provided!')
+			System::err.println(
+				'Aborting: no path to EMF resource provided!. Please provide all model files as command line argument')
 			return
 		}
-		val cons= edu.vanderbilt.riaps.Console.getHeadlessInstance()
-		//cons.log(java.util.logging.Level.INFO, "starting the interpreter")
+		val cons = edu.vanderbilt.riaps.Console.getHeadlessInstance()
+		// cons.log(java.util.logging.Level.INFO, "starting the interpreter")
 		val injector = new SystemStandaloneSetup().createInjectorAndDoEMFRegistration
-		val injectorApp = new AppStandaloneSetup().createInjectorAndDoEMFRegistration()	
+		val injectorApp = new AppStandaloneSetup().createInjectorAndDoEMFRegistration()
 		val main = injector.getInstance(Main)
 		val generatorApp = injectorApp.getInstance(AppGenerator);
-		main.runGenerator(args,generatorApp)
+		main.runGenerator(args, generatorApp)
 	}
 
 	@Inject Provider<ResourceSet> resourceSetProvider
@@ -40,7 +40,7 @@ class Main {
 	@Inject GeneratorDelegate generator
 	@Inject StandAloneFileSystemAccess fileAccess
 
-	def protected runGenerator(String [] strings, AppGenerator appgenerator)  {
+	def protected runGenerator(String [] strings, AppGenerator appgenerator) {
 		// Load the resource
 		val set = resourceSetProvider.get
 		var rX = new HashSet<Resource>()
@@ -63,8 +63,6 @@ class Main {
 		if (!noIssues) {
 			return
 		}
-		
-	
 
 		// Configure and start the generator
 		fileAccess.outputPath = '.'
@@ -74,7 +72,7 @@ class Main {
 		for (resource : rX) {
 			generator.generate(resource, fileAccess, context)
 			appgenerator.doGenerate(resource, fileAccess, context)
-			
+
 		}
 		System.out.println('Code generation finished.')
 	}
