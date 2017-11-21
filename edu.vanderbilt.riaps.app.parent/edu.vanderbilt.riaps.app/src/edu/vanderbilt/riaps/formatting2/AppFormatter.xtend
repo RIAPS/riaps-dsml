@@ -19,6 +19,8 @@ import edu.vanderbilt.riaps.app.DeploymentConstraint
 import edu.vanderbilt.riaps.app.ComponentUses
 import edu.vanderbilt.riaps.app.Group
 import edu.vanderbilt.riaps.app.GMessageBlock
+import edu.vanderbilt.riaps.app.DeviceType
+import edu.vanderbilt.riaps.app.DeviceUses
 
 class AppFormatter extends AbstractFormatter2 {
 
@@ -35,10 +37,21 @@ class AppFormatter extends AbstractFormatter2 {
 		for (collection : model.getCollections()) {
 			if (collection instanceof Application)
 				(collection as Application).format
+				
+				if (collection instanceof DeviceType) {
+			if(collection.constraint!==null) collection.constraint.format
+		}
 		}
 	}
 
 
+	def dispatch void format(DeviceUses collection, extension IFormattableDocument document) {
+		val open = collection.regionFor.keyword("{").prepend[noSpace; newLine].append[noSpace; newLine]
+		val close = collection.regionFor.keyword("}").prepend[noSpace; newLine].append[noSpace; newLine]
+		interior(open, close)[indent]
+		collection.prepend[noSpace; newLine].append[noSpace; newLine]
+
+	}
 
 	def dispatch void format(Application app, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 

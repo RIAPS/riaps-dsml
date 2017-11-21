@@ -23,14 +23,7 @@ public class RiapsAppGenerator extends AbstractGenerator {
 			var gson = new GsonBuilder().setPrettyPrinting().create();
 			var app = new App(e);
 			var formattedString = gson.toJson(app);
-			
-		
-			// final EclipseResourceFileSystemAccess fsa = fileAccessProvider.get();
-			
-			//fsa.setoutputpath
-		//	fsa.setOutputPath
 			fsa.generateFile(
-				//e.fullyQualifiedName.toString("/") + ".json",
 				e.name + "_app.json", RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_JSON,
 				formattedString
 			)

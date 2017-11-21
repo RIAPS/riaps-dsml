@@ -15,8 +15,6 @@ import edu.vanderbilt.riaps.datatypes.FType
 import edu.vanderbilt.riaps.datatypes.FStructType
 import edu.vanderbilt.riaps.datatypes.FField
 import edu.vanderbilt.riaps.datatypes.ModelCollection
-import edu.vanderbilt.riaps.datatypes.DeviceType
-import edu.vanderbilt.riaps.datatypes.DeviceUses
 import org.eclipse.xtext.formatting2.regionaccess.IComment
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.AbstractRule
@@ -57,9 +55,7 @@ class DatatypesFormatter extends AbstractFormatter2 {
 			}
 		}
 
-		if (collection instanceof DeviceType) {
-			if(collection.constraint!==null) collection.constraint.format
-		}
+	
 
 	}
 
@@ -87,13 +83,6 @@ class DatatypesFormatter extends AbstractFormatter2 {
 		super.createCommentReplacer(comment)
 	}
 
-	def dispatch void format(DeviceUses collection, extension IFormattableDocument document) {
-		val open = collection.regionFor.keyword("{").prepend[noSpace; newLine].append[noSpace; newLine]
-		val close = collection.regionFor.keyword("}").prepend[noSpace; newLine].append[noSpace; newLine]
-		interior(open, close)[indent]
-		collection.prepend[noSpace; newLine].append[noSpace; newLine]
-
-	}
 
 //	def dispatch void format(FMessageCollection collection, extension IFormattableDocument document) {
 //		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 

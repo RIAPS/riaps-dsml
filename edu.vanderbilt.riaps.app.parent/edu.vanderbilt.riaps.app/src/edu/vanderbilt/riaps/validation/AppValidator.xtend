@@ -12,10 +12,13 @@ import java.util.HashSet
 import edu.vanderbilt.riaps.datatypes.Message
 import edu.vanderbilt.riaps.app.GMessageBlock
 import edu.vanderbilt.riaps.app.UsesBlock
-import edu.vanderbilt.riaps.generator.json.App
 import edu.vanderbilt.riaps.app.Component
 import edu.vanderbilt.riaps.app.Actor
 import edu.vanderbilt.riaps.app.Application
+import edu.vanderbilt.riaps.app.DeviceType
+import edu.vanderbilt.riaps.app.Library
+import edu.vanderbilt.riaps.app.Configuration
+import org.eclipse.core.runtime.Path
 
 /**
  * This class contains custom validation rules. 
@@ -45,7 +48,32 @@ class AppValidator extends AbstractAppValidator {
 	@Check
 	def checkAppNameStartsWithCapital(Application message) {
 		if (!Character.isUpperCase(message.name.charAt(0))) {
-			error('Name should start with a capital', AppPackage.Literals.APPLICATION__NAME)
+			error('Name should start with a capital', AppPackage.Literals.MODEL__NAME)
+		}
+	}
+	
+	
+		@Check
+	def checkDeviceTypeStartsWithCapital(DeviceType message) {
+		if (!Character.isUpperCase(message.name.charAt(0))) {
+			error('Name should start with a capital', AppPackage.Literals.MODEL__NAME)
+		}
+	}
+	
+	
+	// Message not referenced
+	@Check
+	def checkLibraryName(Library lib){
+		if (!lib.name.startsWith("lib")){
+			error('library name must start with lib', AppPackage.Literals.LIBRARY__NAME)	
+		}
+	}
+	
+		// Message not referenced
+	@Check
+	def checkConfigurationName(Configuration f){
+		if (!Path.isValidPosixPath(f.name)){
+			error('not a valid path', AppPackage.Literals.CONFIGURATION__NAME)	
 		}
 	}
 

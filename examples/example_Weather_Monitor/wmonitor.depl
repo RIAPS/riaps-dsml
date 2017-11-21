@@ -2,14 +2,14 @@ package WeatherMonitor.depl
 
 import WeatherMonitor.*
 import WeatherMonitor.include.messages.*
-import WeatherMonitor.include.devices.*
+
 
 
 nodeType WeatherNode{
 	
-	mem 16 MB
+	mem 16 MB  
 	space 200 MB
-}
+} 
 
 //only one of the nodes has thermostat
 host node1 : WeatherNode{

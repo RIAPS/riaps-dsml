@@ -65,8 +65,8 @@ public class NodeTemplate {
 			String unit = "KB";
 			if (mp.getUnit().isMb()){
 				unit = "MB";
-			} else if (mp.getUnit().isGb()){
-				unit = "GB";
+			} else if (mp.getUnit().isMb()){
+				unit = "MB";
 			}
 			this.availableMemory.put("unit", unit);
 		}
@@ -83,7 +83,7 @@ public class NodeTemplate {
 			String unit = "KB";
 			if (sp.getUnit().isMb()){
 				unit = "MB";
-			} else if (sp.getUnit().isGb()){
+			} else if (sp.getUnit().isMb()){
 				unit = "GB";
 			}
 			this.availableStorage.put("unit", unit);

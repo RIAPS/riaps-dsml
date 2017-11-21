@@ -1,12 +1,29 @@
 package WeatherMonitor
 import WeatherMonitor.include.datatypes.*
-import WeatherMonitor.include.devices.*
+
+device Thermostat()
+{
+	// Defines a 'thermostat' device type
+	uses
+	{
+		// Resources the device component uses
+		cpu 25 % over 10 us;       // CPU at 25% over a 10 second interval
+		io "UART"; // I/O protocol
+		library libhome.so;
+		file "1xt.f"
+	}
+	// One publisher port for tempInternal messages,
+	// with data rate limits: no lower limit, 10 message/sec 
+	pub p1: TempInternal [-,10];
+}
+
+
 app WeatherMonitor
 {
 	// TempSensor component 
 	rt component TempSensor
 	{
-		uses
+		uses  
 		{
 			device Thermostat;
 			library libmath.so 
@@ -15,7 +32,7 @@ app WeatherMonitor
 			file 'config.ini'
 			file 'second.txt'
 		    net 25 MB over 10 us;
-		}
+		} 
 		timer clock 5000;
 	    // Publish port for Temperature messages ; No lower limit. But a max limit
 	    pub ready : TempData  [-,10]; 
