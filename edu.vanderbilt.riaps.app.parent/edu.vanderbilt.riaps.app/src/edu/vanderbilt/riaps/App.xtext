@@ -61,7 +61,8 @@ Collection:
 //The device types and their tags will be captured in datatypes. A different place for them can be found later.
 //for crossreference 
 DeviceType :
-	'device' name=ID '()'
+	'device' name=ID 
+	'()'| ('(' formals+=ComponentFormal (',' formals+=ComponentFormal)* ')')?
 	'{'
 	  (constraint=DeviceUses)?
 	  (ports+=Port)+
