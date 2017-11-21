@@ -31,7 +31,7 @@ public class RiapsAppGenerator extends AbstractGenerator {
 		//	fsa.setOutputPath
 			fsa.generateFile(
 				//e.fullyQualifiedName.toString("/") + ".json",
-				e.name + ".json", RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_JSON,
+				e.name + "_app.json", RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_JSON,
 				formattedString
 			)
 			Console.instance.log(java.util.logging.Level.INFO, e.fullyQualifiedName.toString("/") + 
