@@ -132,7 +132,7 @@ ActorDeployment:
 ;
 
 ActorAssignment:
- actor=[App::Actor|FQN] ('(' formals+=ActorFormalAssignment (',' formals+=ActorFormalAssignment)* ')')?	
+{ActorAssignment} actor=[App::Actor|FQN] ('(' formals+=ActorFormalAssignment (',' formals+=ActorFormalAssignment)* ')')?	
 ;
 
 ActorFormalAssignment returns ActorFormalAssignment :

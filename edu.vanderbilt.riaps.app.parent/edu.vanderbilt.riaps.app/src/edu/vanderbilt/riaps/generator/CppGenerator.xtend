@@ -26,8 +26,18 @@ public class CppGenerator extends AbstractGenerator {
 		
 		for (e : resource.allContents.toIterable.filter(Application)) {
 
+			// check and return if e contains messages that do not have a type
+		
+			
 			// var componentNames = new ArrayList<String>()
-			var appCpp = new AppCpp(e, this)	
+			var AppCpp appCpp;
+			try{
+			 appCpp = new AppCpp(e, this)
+			}
+			catch (NullPointerException except){
+				return
+			}
+			
 			Appname.add(e.name)
 			for (comp : appCpp.compList) {
 

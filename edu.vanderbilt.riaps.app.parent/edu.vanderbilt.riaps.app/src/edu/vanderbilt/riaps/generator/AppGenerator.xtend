@@ -9,6 +9,8 @@ import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
 import com.google.inject.Inject
 import edu.vanderbilt.riaps.RiapsOutputConfigurationProvider
+import edu.vanderbilt.riaps.app.Model
+import edu.vanderbilt.riaps.app.FStructType
 
 /**
  * Generates code from your model files on save.
@@ -26,6 +28,10 @@ class AppGenerator extends AbstractGenerator {
 		g1.doGenerate(resource, fsa, context);
 		g3.doGenerate(resource, fsa, context);
 		g4.doGenerate(resource, fsa, context);
+		
+		for (e : resource.allContents.toIterable.filter(Model)) {
+			if(e.collections.filter(FStructType).size()==0) return
+		}
 		var topdatacmake = '''
 cmake_minimum_required(VERSION 3.0)
 file(GLOB_RECURSE CAPNP_SRCS     RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.capnp)

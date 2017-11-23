@@ -114,7 +114,7 @@ FEnumerator returns FEnumerator:
 	name=ID ('=' value=STRING)?;
 
 Message:
-	'message' name=ID ':' type=[FStructType|FQN] (';')?;
+	'message' name=ID (':' type=[FStructType|FQN])? (';')?;
 //The device types and their tags will be captured in datatypes. A different place for them can be found later.
 //for crossreference 
 DeviceType :
@@ -292,7 +292,7 @@ Application returns Application:
 	'app' (name=ID)
 	'{'
 	//declare the libraries, actors, components (app-specific components - an app's actor can use components described in a non-app namespace)
-	((actors+=Actor) | (components+=Component) | (groups+=Group) | messages+=Message)+
+	((actors+=Actor) | (components+=Component) | (devices+=DeviceType)| (groups+=Group) | messages+=Message)+
 
 	//Optionally deployment constraints can be specified to control how an app is deployed.
 	// the constraints are specified by the app developer
@@ -381,7 +381,7 @@ ActorRequirement:
 	MemoryRequirement | StorageRequirement | ActorDeviceRequirement;
 
 ActorDeviceRequirement:
-	requ=CompDeviceRequirement 'tag' tagsequence=DeviceTagSequence;
+	requ=CompDeviceRequirement ('tag' tagsequence=DeviceTagSequence)?  ;
 
 MemoryRequirement:
 	'mem' Number=INT 'MB'?;
@@ -406,7 +406,7 @@ Actual returns Actual:
 	//ActualValue:
 //	(stringdefault=StringDefault | numberdefault=NumberDefault | boolDefault=BoolDefault | param=[ActorFormal|FQN]);
 Instance:
-	name=ID ':' type=[Component|FQN] ('(' actuals+=Actual (',' (actuals+=Actual))* ')')? (';')?;
+	name=ID ':' type=[Component|FQN]   ('()'|('(' actuals+=Actual (',' (actuals+=Actual))* ')'))? (';')?;
 
 
 	

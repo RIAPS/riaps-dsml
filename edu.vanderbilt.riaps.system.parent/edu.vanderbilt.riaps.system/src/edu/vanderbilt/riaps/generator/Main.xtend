@@ -14,6 +14,7 @@ import org.eclipse.xtext.util.CancelIndicator
 import org.eclipse.xtext.validation.CheckMode
 import org.eclipse.xtext.validation.IResourceValidator
 import edu.vanderbilt.riaps.AppStandaloneSetup
+import edu.vanderbilt.riaps.app.ComponentFormal;
 
 import java.util.HashSet
 import org.eclipse.emf.ecore.resource.Resource
@@ -26,6 +27,7 @@ class Main {
 				'Aborting: no path to EMF resource provided!. Please provide all model files as command line argument')
 			return
 		}
+		val ComponentFormal f=null;
 		val cons = edu.vanderbilt.riaps.Console.getHeadlessInstance()
 		// cons.log(java.util.logging.Level.INFO, "starting the interpreter")
 		val injector = new SystemStandaloneSetup().createInjectorAndDoEMFRegistration
@@ -33,6 +35,7 @@ class Main {
 		val main = injector.getInstance(Main)
 		val generatorApp = injectorApp.getInstance(AppGenerator);
 		main.runGenerator(args, generatorApp)
+		
 	}
 
 	@Inject Provider<ResourceSet> resourceSetProvider

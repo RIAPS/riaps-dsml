@@ -20,6 +20,7 @@ import edu.vanderbilt.riaps.app.SubPort
 //import edu.vanderbilt.riaps.app.MessageRef;
 import edu.vanderbilt.riaps.app.Message
 import edu.vanderbilt.riaps.generator.json.Comp
+import edu.vanderbilt.riaps.app.DeviceType
 
 @SuppressWarnings("unused") class App {
 	String name
@@ -27,9 +28,11 @@ import edu.vanderbilt.riaps.generator.json.Comp
 	Map<String, Comp> components
 	Map<String, JsonActor> actors
 	List<HashMap<String, String>> messages
+	List <String> libraries
 
 	new(Application a) {
 		this.name = a.getName()
+		this.libraries = new ArrayList <String>()
 		this.devices = new HashMap<String, Comp>()
 		this.components = new HashMap<String, Comp>()
 		this.actors = new HashMap<String, JsonActor>()
@@ -76,6 +79,12 @@ import edu.vanderbilt.riaps.generator.json.Comp
 				var Comp dc = new Comp(c)
 				this.devices.put(dc.getName(), dc)
 			}
+		}
+		
+		for (DeviceType c : a.devices) {
+				var Comp dc = new Comp(c)
+				this.devices.put(dc.getName(), dc)
+			
 		}
 		for (Actor ac : a.getActors()) {
 			var JsonActor jac = new JsonActor(ac)

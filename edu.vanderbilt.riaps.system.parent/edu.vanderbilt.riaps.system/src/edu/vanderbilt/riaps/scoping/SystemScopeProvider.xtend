@@ -12,6 +12,12 @@ import org.eclipse.xtext.scoping.Scopes
 import edu.vanderbilt.riaps.system.ActorFormalAssignment
 import org.eclipse.xtext.EcoreUtil2
 import edu.vanderbilt.riaps.app.ActorFormal
+import edu.vanderbilt.riaps.system.ActorDeployment
+import edu.vanderbilt.riaps.system.AppDeployment
+import edu.vanderbilt.riaps.app.Actor
+import org.eclipse.xtext.scoping.IScope
+import org.eclipse.xtext.scoping.impl.FilteringScope
+import org.eclipse.xtext.scoping.impl.SimpleScope
 
 /**
  * This class contains custom scoping description.
@@ -20,16 +26,44 @@ import edu.vanderbilt.riaps.app.ActorFormal
  * on how and when to use it.
  */
 class SystemScopeProvider extends AbstractSystemScopeProvider {
+	
+	
+//	def IScope scope_ActorAssignment_actor(ActorDeployment context, EReference ref) {
+//		val rootElement = context.eContainer
+//		var app =rootElement.eContainer
+//		Console.instance.log(java.util.logging.Level.INFO, "scope_ActorAssignment_Actor " + app.toString)
+//		val topRoot = EcoreUtil2.getRootContainer(context)
+//        val candidates = EcoreUtil2.getAllContentsOfType(topRoot, Actor)
+//        val existingScope = Scopes.scopeFor(candidates)
+//		val realapp =(app as AppDeployment).app 
+//		val realcandidates = EcoreUtil2.getAllContentsOfType(realapp, Actor)
+//		return  Scopes.scopeFor(realcandidates)
+//	} 
+	
 	override getScope(EObject context, EReference reference) {
 
+		if (context instanceof ActorAssignment) {
+			val rootElement = context.eContainer
+			
+			if (rootElement instanceof ActorDeployment) {
+				var app =rootElement.eContainer
+				if(app instanceof AppDeployment)
+				{
+					var realapp =app.app 
+					
+					val candidates = EcoreUtil2.getAllContentsOfType(realapp, Actor)
+					return Scopes.scopeFor(candidates)
+				}				
+			}
+		}
 		if ((context instanceof ActorFormalAssignment &&
 			reference == SystemPackage.Literals.ACTOR_FORMAL_ASSIGNMENT__ARG_NAME)) {
 
 			val rootElement = context.eContainer
 
 			if (rootElement instanceof ActorAssignment) {
-			//	var a =EcoreU
-				//rootElement.getAllContentsOfType(Actor)
+				// var a =EcoreU
+				// rootElement.getAllContentsOfType(Actor)
 				var a = rootElement.actor
 				// Console.instance.log(java.util.logging.Level.INFO, "this is " + rootElement.actor.name)
 				val candidates = EcoreUtil2.getAllContentsOfType(a, ActorFormal)
@@ -40,6 +74,49 @@ class SystemScopeProvider extends AbstractSystemScopeProvider {
 		return super.getScope(context, reference);
 	}
 }
+//	override getScope(EObject context, EReference reference) {
+//		// We want to define the Scope for the Element's superElement cross-reference
+//		// Console.instance.log(java.util.logging.Level.INFO, "inscope rule")
+//		if ((context instanceof CollocateConstraint &&
+//			reference == AppPackage.Literals.COLLOCATE_CONSTRAINT__ACTORCOLLOCATELIST) ||
+//			(context instanceof DistributeConstraint &&
+//				reference == AppPackage.Literals.DISTRIBUTE_CONSTRAINT__ACTORDISTRIBUTELIST)) {
+//			// Collect a list of candidates by going through the model
+//			// EcoreUtil2 provides useful functionality to do that
+//			// For example searching for all elements within the root Object's tree    	
+//			val rootElement = context.eContainer
+//			if (rootElement instanceof Application) {
+//				// Console.instance.log(java.util.logging.Level.INFO, rootElement.name)
+//				val candidates = EcoreUtil2.getAllContentsOfType(rootElement, Actor)
+//				// Create IEObjectDescriptions and puts them into an IScope instance
+//				return Scopes.scopeFor(candidates)
+//			}
+//		} else if (context instanceof Actual && reference == AppPackage.Literals.ACTUAL__ARG_NAME) {
+//			val rootElement = context.eContainer
+//			if (rootElement instanceof Instance) {
+//				val candidates = EcoreUtil2.getAllContentsOfType(rootElement.type, ComponentFormal)
+//				return Scopes.scopeFor(candidates)
+//			}
+//		} else if (context instanceof Actual && reference == AppPackage.Literals.ACTUAL__ARG_VALUE) {
+//			Console.instance.log(java.util.logging.Level.INFO, "arg value reference")
+//			val rootElement = context.eContainer
+//			if (rootElement instanceof Instance) {
+//				val instanceSection = rootElement.eContainer
+//
+//				if (instanceSection instanceof InstanceSection) {
+//					val actor = instanceSection.eContainer
+//					Console.instance.log(java.util.logging.Level.INFO, actor.class.name)
+//					if (actor instanceof Actor) {
+//						val candidates = EcoreUtil2.getAllContentsOfType(actor, ActorFormal)
+//						return Scopes.scopeFor(candidates)
+//
+//					}
+//				}
+//			}
+//		}
+//
+//		return super.getScope(context, reference);
+//	}
 //override getScope(EObject context, EReference reference) {
 //		// We want to define the Scope for the Element's superElement cross-reference
 //		//Console.instance.log(java.util.logging.Level.INFO, "inscope rule")
@@ -63,4 +140,4 @@ class SystemScopeProvider extends AbstractSystemScopeProvider {
 //			}
 //
 //		}
-//		  
+//		   

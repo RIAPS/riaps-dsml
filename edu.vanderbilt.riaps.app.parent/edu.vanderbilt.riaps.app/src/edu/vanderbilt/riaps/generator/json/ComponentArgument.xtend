@@ -8,14 +8,14 @@ import edu.vanderbilt.riaps.app.BoolDefault
 import edu.vanderbilt.riaps.app.NumberDefault
 import com.google.gson.annotations.SerializedName
 
-@SuppressWarnings("unused") class Argument {
+@SuppressWarnings("unused") class ComponentArgument {
 	String name
 	@SerializedName("default") Object ^def
 
 	new(ComponentFormal f) {
 		this.name = f.getName()
 		this.setDefault(f.getArgDefault())
-	}
+	} 
 
 	new(ActorFormal f) {
 		this.name = f.getName()

@@ -74,7 +74,7 @@ import edu.vanderbilt.riaps.app.StorageRequirement
 			}
 		}
 		for (ActorFormal af : a.getFormals()) {
-			this.formals.add(new Argument(af))
+			this.formals.add(new ComponentArgument(af))
 		}
 		for (Message l : a.getInternals()) {
 			var HashMap<String, String> internal = new HashMap<String, String>()
@@ -95,6 +95,19 @@ import edu.vanderbilt.riaps.app.StorageRequirement
 			var JsonInstance instance = new JsonInstance(i)
 			this.instances.put(instance.getName(), instance)
 		}
+		if(a.constraint!=null)
+		{
+			for ( i : a.constraint.requirements) {
+				if(i instanceof ActorDeviceRequirement)
+				{
+					var JsonInstance instance = new JsonInstance(i.requ)
+					this.instances.put(instance.getName(), instance)
+				}
+				
+				
+			}
+		}		
+		
 	}
 
 	def String getName() {

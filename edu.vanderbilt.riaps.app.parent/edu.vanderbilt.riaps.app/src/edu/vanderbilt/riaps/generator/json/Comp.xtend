@@ -24,6 +24,8 @@ import edu.vanderbilt.riaps.app.ComponentRequirement
 import edu.vanderbilt.riaps.app.Configuration
 import edu.vanderbilt.riaps.app.EXIT
 import edu.vanderbilt.riaps.app.IGNORE
+import edu.vanderbilt.riaps.app.DeviceType
+import edu.vanderbilt.riaps.app.DeviceRequirement
 
 @SuppressWarnings(#["unchecked", "rawtypes"]) class Comp {
 	String name
@@ -36,39 +38,30 @@ import edu.vanderbilt.riaps.app.IGNORE
 	String exceptHandler
 	Map<String, Map> ports
 
-	new(Component c) {
+	new(DeviceType c) {
+
 		this.name = c.getName()
 		this.formals = new ArrayList<String>()
 		this.libraries = new ArrayList<String>()
 		this.files = new ArrayList<String>()
 		this.exceptHandler = ""
-		if (c.getHandler() !== null) {
-			if (c.getHandler() instanceof IGNORE) {
-				this.exceptHandler = "IGNORE"
-			}
-			if (c.getHandler() instanceof EXIT) {
-				this.exceptHandler = "EXIT"
-			}
-			if (c.getHandler() instanceof NAMEDHANDLER) {
-				this.exceptHandler = ((c.getHandler() as NAMEDHANDLER)).getName()
-			}
-		}
+
 		this.devices = new ArrayList<String>()
 		if (c.getConstraint() !== null) {
 			if (c.getConstraint().getRequirements() !== null) {
-				for (ComponentRequirement x : c.getConstraint().getRequirements()) {
+				for (DeviceRequirement x : c.getConstraint().getRequirements()) {
 					if (x instanceof CPURequirement) {
-						if (this.cpu===null) this.cpu= new CPUConstraint
-						
+						if(this.cpu === null) this.cpu = new CPUConstraint
+
 						this.cpu.period = ((x as CPURequirement)).getTimeInterval_Number()
-						if(this.cpu.period==0) this.cpu.period=1000000
+						if(this.cpu.period == 0) this.cpu.period = 1000000
 						this.cpu.quota = ((x as CPURequirement)).getPercentage()
-						var double tmp=this.cpu.period
-						tmp=tmp/100.0
-						this.cpu.quota=(this.cpu.quota*tmp).intValue
+						var double tmp = this.cpu.period
+						tmp = tmp / 100.0
+						this.cpu.quota = (this.cpu.quota * tmp).intValue
 					}
 					if (x instanceof NetworkRequirement) {
-						if (this.net===null) this.net= new NetConstraint
+						if(this.net === null) this.net = new NetConstraint
 						this.net.period = ((x as NetworkRequirement)).getTimeInterval_Number()
 						this.net.quota = ((x as NetworkRequirement)).getNumber()
 					}
@@ -121,7 +114,96 @@ import edu.vanderbilt.riaps.app.IGNORE
 			}
 		}
 		for (ComponentFormal cf : c.getFormals()) {
-			this.formals.add(new Argument(cf))
+			this.formals.add(new ComponentArgument(cf))
+		}
+	}
+
+	new(Component c) {
+		this.name = c.getName()
+		this.formals = new ArrayList<String>()
+		this.libraries = new ArrayList<String>()
+		this.files = new ArrayList<String>()
+		this.exceptHandler = ""
+		if (c.getHandler() !== null) {
+			if (c.getHandler() instanceof IGNORE) {
+				this.exceptHandler = "IGNORE"
+			}
+			if (c.getHandler() instanceof EXIT) {
+				this.exceptHandler = "EXIT"
+			}
+			if (c.getHandler() instanceof NAMEDHANDLER) {
+				this.exceptHandler = ((c.getHandler() as NAMEDHANDLER)).getName()
+			}
+		}
+		this.devices = new ArrayList<String>()
+		if (c.getConstraint() !== null) {
+			if (c.getConstraint().getRequirements() !== null) {
+				for (ComponentRequirement x : c.getConstraint().getRequirements()) {
+					if (x instanceof CPURequirement) {
+						if(this.cpu === null) this.cpu = new CPUConstraint
+
+						this.cpu.period = ((x as CPURequirement)).getTimeInterval_Number()
+						if(this.cpu.period == 0) this.cpu.period = 1000000
+						this.cpu.quota = ((x as CPURequirement)).getPercentage()
+						var double tmp = this.cpu.period
+						tmp = tmp / 100.0
+						this.cpu.quota = (this.cpu.quota * tmp).intValue
+					}
+					if (x instanceof NetworkRequirement) {
+						if(this.net === null) this.net = new NetConstraint
+						this.net.period = ((x as NetworkRequirement)).getTimeInterval_Number()
+						this.net.quota = ((x as NetworkRequirement)).getNumber()
+					}
+					if (x instanceof Library) {
+						this.libraries.add(((x as Library)).getName())
+					}
+					if (x instanceof Configuration) {
+						this.files.add(((x as Configuration)).getName())
+					}
+					if (x instanceof CompDeviceRequirement) {
+						this.devices.add(((x as CompDeviceRequirement)).getDeviceRequirement().getName())
+					}
+				}
+			}
+		}
+		this.ports = new HashMap<String, Map>()
+		this.ports.put("clts", new HashMap<String, ClntSrvPort>())
+		this.ports.put("srvs", new HashMap<String, ClntSrvPort>())
+		this.ports.put("reqs", new HashMap<String, ClntSrvPort>())
+		this.ports.put("reps", new HashMap<String, ClntSrvPort>())
+		this.ports.put("pubs", new HashMap<String, PubSubPort>())
+		this.ports.put("subs", new HashMap<String, PubSubPort>())
+		this.ports.put("tims", new HashMap<String, TimePort>())
+		this.ports.put("inss", new HashMap<String, BoolPort>())
+		for (Port p : c.getPorts()) {
+			if (p instanceof ClntPort) {
+				var ClntSrvPort port = new ClntSrvPort((p as ClntPort))
+				this.getPortMap("clts").put(p.getName(), port)
+			} else if (p instanceof SrvPort) {
+				var ClntSrvPort port = new ClntSrvPort((p as SrvPort))
+				this.getPortMap("srvs").put(p.getName(), port)
+			} else if (p instanceof ReqPort) {
+				var ClntSrvPort port = new ClntSrvPort((p as ReqPort))
+				this.getPortMap("reqs").put(p.getName(), port)
+			} else if (p instanceof RepPort) {
+				var ClntSrvPort port = new ClntSrvPort((p as RepPort))
+				this.getPortMap("reps").put(p.getName(), port)
+			} else if (p instanceof PubPort) {
+				var PubSubPort port = new PubSubPort((p as PubPort))
+				this.getPortMap("pubs").put(p.getName(), port)
+			} else if (p instanceof SubPort) {
+				var PubSubPort port = new PubSubPort((p as SubPort))
+				this.getPortMap("subs").put(p.getName(), port)
+			} else if (p instanceof TimPort) {
+				var TimePort port = new TimePort((p as TimPort))
+				this.getPortMap("tims").put(p.getName(), port)
+			} else if (p instanceof InsPort) {
+				var BoolPort port = new BoolPort((p as InsPort))
+				this.getPortMap("inss").put(p.getName(), port)
+			}
+		}
+		for (ComponentFormal cf : c.getFormals()) {
+			this.formals.add(new ComponentArgument(cf))
 		}
 	}
 

@@ -18,6 +18,7 @@ import edu.vanderbilt.riaps.app.Instance
 import edu.vanderbilt.riaps.app.ComponentFormal
 import edu.vanderbilt.riaps.app.ActorFormal
 import edu.vanderbilt.riaps.app.InstanceSection
+import edu.vanderbilt.riaps.app.CompDeviceRequirement
 
 /**
  * This class contains custom scoping description.
@@ -33,43 +34,46 @@ class AppScopeProvider extends AbstractAppScopeProvider {
 		if ((context instanceof CollocateConstraint &&
 			reference == AppPackage.Literals.COLLOCATE_CONSTRAINT__ACTORCOLLOCATELIST) ||
 			(context instanceof DistributeConstraint &&
-				reference == AppPackage.Literals.DISTRIBUTE_CONSTRAINT__ACTORDISTRIBUTELIST) ) {
-					// Collect a list of candidates by going through the model
-					// EcoreUtil2 provides useful functionality to do that
-					// For example searching for all elements within the root Object's tree    	
-					val rootElement = context.eContainer
-					if (rootElement instanceof Application) {
-						// Console.instance.log(java.util.logging.Level.INFO, rootElement.name)
-						val candidates = EcoreUtil2.getAllContentsOfType(rootElement, Actor)
-						// Create IEObjectDescriptions and puts them into an IScope instance
-						return Scopes.scopeFor(candidates)
-					}
-				} else if (context instanceof Actual && reference == AppPackage.Literals.ACTUAL__ARG_NAME) {
-					val rootElement = context.eContainer
-					if (rootElement instanceof Instance) {
-						val candidates = EcoreUtil2.getAllContentsOfType(rootElement.type, ComponentFormal)
-						return Scopes.scopeFor(candidates)
-					}
-				} else if (context instanceof Actual && reference == AppPackage.Literals.ACTUAL__ARG_VALUE) {
-					Console.instance.log(java.util.logging.Level.INFO, "arg value reference")
-					val rootElement = context.eContainer
-					if (rootElement instanceof Instance) {
-						val instanceSection = rootElement.eContainer
+				reference == AppPackage.Literals.DISTRIBUTE_CONSTRAINT__ACTORDISTRIBUTELIST)) {
+			// Collect a list of candidates by going through the model
+			// EcoreUtil2 provides useful functionality to do that
+			// For example searching for all elements within the root Object's tree    	
+			val rootElement = context.eContainer
+			if (rootElement instanceof Application) {
+				// Console.instance.log(java.util.logging.Level.INFO, rootElement.name)
+				val candidates = EcoreUtil2.getAllContentsOfType(rootElement, Actor)
+				// Create IEObjectDescriptions and puts them into an IScope instance
+				return Scopes.scopeFor(candidates)
+			}
+		} else if (context instanceof Actual && reference == AppPackage.Literals.ACTUAL__ARG_NAME) {
+			val rootElement = context.eContainer
+			if (rootElement instanceof Instance) {
+				val candidates = EcoreUtil2.getAllContentsOfType(rootElement.type, ComponentFormal)
+				return Scopes.scopeFor(candidates)
+			}
+			if (rootElement instanceof CompDeviceRequirement){
+				val candidates = EcoreUtil2.getAllContentsOfType(rootElement.deviceRequirement, ComponentFormal)
+				return Scopes.scopeFor(candidates)
+			}
+		} else if (context instanceof Actual && reference == AppPackage.Literals.ACTUAL__ARG_VALUE) {
+			Console.instance.log(java.util.logging.Level.INFO, "arg value reference")
+			val rootElement = context.eContainer
+			if (rootElement instanceof Instance) {
+				val instanceSection = rootElement.eContainer
 
-						if (instanceSection instanceof InstanceSection) {
-							val actor = instanceSection.eContainer
-							Console.instance.log(java.util.logging.Level.INFO, actor.class.name)
-							if (actor instanceof Actor) {
-								val candidates = EcoreUtil2.getAllContentsOfType(actor, ActorFormal)
-								return Scopes.scopeFor(candidates)
+				if (instanceSection instanceof InstanceSection) {
+					val actor = instanceSection.eContainer
+					Console.instance.log(java.util.logging.Level.INFO, actor.class.name)
+					if (actor instanceof Actor) {
+						val candidates = EcoreUtil2.getAllContentsOfType(actor, ActorFormal)
+						return Scopes.scopeFor(candidates)
 
-							}
-						}
 					}
 				}
-
-				return super.getScope(context, reference);
 			}
-
 		}
-		
+
+		return super.getScope(context, reference);
+	}
+
+}
