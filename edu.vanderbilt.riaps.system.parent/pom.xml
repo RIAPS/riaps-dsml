@@ -22,6 +22,7 @@
 		<module>edu.vanderbilt.riaps.system.repository</module>
 				
 		<module>../edu.vanderbilt.riaps.app.parent</module>
+		<module>edu.vanderbilt.riaps.system.model</module>
 	</modules>
 	<build>
 		<plugins>

@@ -20,7 +20,7 @@ host node1 : WeatherNode{
 
 app WeatherMonitor{
 	//All Nodes have weather displays
-	on all WeatherNode WeatherMonitor.WeatherIndicator	
+	on all WeatherNode WeatherIndicator	
 	//this is correct because we only want one instance of WeatherSensor
-	on node1  WeatherMonitor.WeatherReceiver
+	on node1  WeatherReceiver
 }

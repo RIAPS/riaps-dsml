@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-	<feature id="edu.vanderbilt.riaps.system.feature" version="0.0.0">
-		<category name="main"/>
-	</feature>
-	<feature id="edu.vanderbilt.riaps.system.feature.source" version="0.0.0">
-		<category name="main.source"/>
-	</feature>
-	<category-def name="main" label="System"/>
-	<category-def name="main.source" label="System (Sources)"/>
+   <feature id="edu.vanderbilt.riaps.system.feature" version="0.0.0">
+      <category name="main"/>
+   </feature>
+   <feature id="edu.vanderbilt.riaps.system.feature.source" version="0.0.0">
+      <category name="main.source"/>
+   </feature>
+   <category-def name="main" label="System"/>
+   <category-def name="main.source" label="System (Sources)"/>
 </site>

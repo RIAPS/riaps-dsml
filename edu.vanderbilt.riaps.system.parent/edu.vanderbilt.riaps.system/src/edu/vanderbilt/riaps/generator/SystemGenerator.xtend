@@ -8,6 +8,27 @@ import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
 import com.google.inject.Inject
+
+import com.google.inject.Provider
+import edu.vanderbilt.riaps.SystemStandaloneSetup
+import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.xtext.generator.GeneratorContext
+import org.eclipse.xtext.generator.GeneratorDelegate
+import org.eclipse.xtext.util.CancelIndicator
+import org.eclipse.xtext.validation.CheckMode
+import org.eclipse.xtext.validation.IResourceValidator
+import edu.vanderbilt.riaps.AppStandaloneSetup
+import edu.vanderbilt.riaps.app.ComponentFormal;
+
+import java.util.HashSet
+import org.eclipse.xtext.generator.JavaIoFileSystemAccess
+import org.eclipse.xtext.generator.OutputConfiguration
+import org.eclipse.xtext.generator.IFileSystemAccess
+import java.util.HashMap
+import java.util.Map
+import edu.vanderbilt.riaps.RiapsOutputConfigurationProvider
+
 /**
  * Generates code from your model files on save.
  * 
@@ -16,11 +37,127 @@ import com.google.inject.Inject
 class SystemGenerator extends AbstractGenerator {
 
 	@Inject RiapsSystemGenerator g1
-	//@Inject NodeCategoryGenerator g2
-	//@Inject GoalDescriptionsGenerator g3
+
+	// @Inject NodeCategoryGenerator g2
+	// @Inject GoalDescriptionsGenerator g3
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		g1.doGenerate(resource, fsa, context);
-	//	g2.doGenerate(resource, fsa, context);
-	//	g3.doGenerate(resource, fsa, context);
+	// g2.doGenerate(resource, fsa, context);
+	// g3.doGenerate(resource, fsa, context);
 	}
+
+	def static main(String[] args) {
+		if (args.empty) {
+			System::err.println(
+				'Aborting: no path to EMF resource provided!. Please provide all model files as command line argument')
+			return
+		}
+		val ComponentFormal f = null;
+		val cons = edu.vanderbilt.riaps.Console.getHeadlessInstance()
+		// cons.log(java.util.logging.Level.INFO, "starting the interpreter")
+		val injector = new SystemStandaloneSetup().createInjectorAndDoEMFRegistration
+		val injectorApp = new AppStandaloneSetup().createInjectorAndDoEMFRegistration()
+		val main = injector.getInstance(SystemGenerator)
+		val generatorApp = injectorApp.getInstance(AppGenerator);
+		main.runGenerator(args, generatorApp)
+
+	}
+
+	@Inject Provider<ResourceSet> resourceSetProvider
+	@Inject IResourceValidator validator
+	@Inject GeneratorDelegate generator
+	@Inject StandAloneFileSystemAccess fileAccess
+
+	def protected runGenerator(String [] strings, AppGenerator appgenerator) {
+		// Load the resource
+		val set = resourceSetProvider.get
+		var rX = new HashSet<Resource>()
+		for (x : strings) {
+			val resource2 = set.getResource(URI.createFileURI(x), true)
+			rX.add(resource2)
+		}
+
+		var noIssues = true
+		// Validate the resource
+		for (resource : rX) {
+			val issues = validator.validate(resource, CheckMode.ALL, CancelIndicator.NullImpl)
+			if (!issues.empty) {
+				issues.forEach[System.err.println(it)]
+				noIssues = false
+			// return
+			}
+		}
+
+		if (!noIssues) {
+			return
+		}
+
+		// Configure and start the generator
+		fileAccess.outputPath = '.'
+		val context = new GeneratorContext => [
+			cancelIndicator = CancelIndicator.NullImpl
+		]
+		for (resource : rX) {
+			generator.generate(resource, fileAccess, context)
+			appgenerator.doGenerate(resource, fileAccess, context)
+
+		}
+		System.out.println('Code generation finished.')
+	}
+}
+
+class StandAloneFileSystemAccess extends JavaIoFileSystemAccess {
+	override void generateFile(String fileName, String outputConfigName, CharSequence contents) {
+		var OutputConfiguration outputConfig = getOutputConfig(outputConfigName);
+		var file = getFile(fileName, outputConfigName);
+		// if (file.exists() && outputConfig.isOverrideExistingResources()) {
+		super.generateFile(fileName, outputConfigName, contents);
+	// }
+	}
+
+	override Map<String, OutputConfiguration> getOutputConfigurations() {
+		var Map<String, OutputConfiguration> hash1 = new HashMap<String, OutputConfiguration>()
+		var OutputConfiguration defaultOutput = new OutputConfiguration(IFileSystemAccess::DEFAULT_OUTPUT)
+		defaultOutput.setDescription("Output Folder")
+		defaultOutput.setOutputDirectory("./apps/basecode")
+		defaultOutput.setOverrideExistingResources(true)
+		defaultOutput.setCreateOutputDirectory(true)
+		defaultOutput.setCleanUpDerivedResources(true)
+		defaultOutput.setSetDerivedProperty(true)
+		hash1.put(IFileSystemAccess::DEFAULT_OUTPUT, defaultOutput)
+
+		var OutputConfiguration onceOutput = new OutputConfiguration(
+			RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_APPCODE)
+		onceOutput.setDescription("Output Folder (once)")
+		onceOutput.setOutputDirectory("./apps/devcode")
+		onceOutput.setOverrideExistingResources(false)
+		onceOutput.setCreateOutputDirectory(true)
+		onceOutput.setCleanUpDerivedResources(false)
+		onceOutput.setSetDerivedProperty(false)
+		hash1.put(RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_APPCODE, onceOutput)
+
+		var OutputConfiguration onceOutput2 = new OutputConfiguration(
+			RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_JSON)
+		onceOutput2.setDescription("Output JSON")
+		onceOutput2.setOutputDirectory("./apps/configs/")
+		onceOutput2.setOverrideExistingResources(true)
+		onceOutput2.setCreateOutputDirectory(true)
+		onceOutput2.setCleanUpDerivedResources(true)
+		onceOutput2.setSetDerivedProperty(true)
+
+		hash1.put(RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_JSON, onceOutput2)
+
+		var OutputConfiguration defaultOutputmessage = new OutputConfiguration(
+			RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_MESSAGE)
+		defaultOutputmessage.setDescription("Output Folder")
+		defaultOutputmessage.setOutputDirectory("./apps/messages/")
+		defaultOutputmessage.setOverrideExistingResources(true)
+		defaultOutputmessage.setCreateOutputDirectory(true)
+		defaultOutputmessage.setCleanUpDerivedResources(true)
+		defaultOutputmessage.setSetDerivedProperty(true)
+		hash1.put(RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_MESSAGE, defaultOutputmessage)
+
+		return hash1
+	}
+
 }

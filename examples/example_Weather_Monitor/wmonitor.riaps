@@ -28,7 +28,7 @@ app WeatherMonitor
 	{
 		uses
 		{
-			device Thermostat (Thermostat.a =1);
+			device Thermostat (a =1);
 			library libmath.so 
 			cpu 10%  
 			library libam.so
