@@ -63,6 +63,15 @@ class AppValidator extends AbstractAppValidator {
 		}
 	}
 
+
+@Check
+	def checkMessageTypeNull(Message message) {
+		
+		if (message.type ===null) {
+			warning('Only python applications can use this message type. c++ applications cannot.', AppPackage.Literals.COLLECTION__NAME)
+		}
+	}
+	
 	@Check
 	def checkGroupProperties(UsesBlock group) {
 		var leaders = group.property.filter(Leader)
