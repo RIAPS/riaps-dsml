@@ -112,51 +112,78 @@ class StandAloneFileSystemAccess extends JavaIoFileSystemAccess {
 		var file = getFile(fileName, outputConfigName);
 		// if (file.exists() && outputConfig.isOverrideExistingResources()) {
 		super.generateFile(fileName, outputConfigName, contents);
-	// }
+	// } 
 	}
 
 	override Map<String, OutputConfiguration> getOutputConfigurations() {
 		var Map<String, OutputConfiguration> hash1 = new HashMap<String, OutputConfiguration>()
-		var OutputConfiguration defaultOutput = new OutputConfiguration(IFileSystemAccess::DEFAULT_OUTPUT)
-		defaultOutput.setDescription("Output Folder")
-		defaultOutput.setOutputDirectory("./apps/basecode")
-		defaultOutput.setOverrideExistingResources(true)
-		defaultOutput.setCreateOutputDirectory(true)
-		defaultOutput.setCleanUpDerivedResources(true)
-		defaultOutput.setSetDerivedProperty(true)
-		hash1.put(IFileSystemAccess::DEFAULT_OUTPUT, defaultOutput)
 
-		var OutputConfiguration onceOutput = new OutputConfiguration(
-			RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_APPCODE)
-		onceOutput.setDescription("Output Folder (once)")
-		onceOutput.setOutputDirectory("./apps/devcode")
-		onceOutput.setOverrideExistingResources(false)
-		onceOutput.setCreateOutputDirectory(true)
-		onceOutput.setCleanUpDerivedResources(false)
-		onceOutput.setSetDerivedProperty(false)
-		hash1.put(RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_APPCODE, onceOutput)
+		var OutputConfiguration outputconfig = new OutputConfiguration(IFileSystemAccess::DEFAULT_OUTPUT)
+		outputconfig.setDescription("Output Folder")
+		outputconfig.setOutputDirectory("./apps")
+		outputconfig.setOverrideExistingResources(true)
+		outputconfig.setCreateOutputDirectory(true)
+		outputconfig.setCleanUpDerivedResources(true)
+		outputconfig.setSetDerivedProperty(true)
+		hash1.put(IFileSystemAccess::DEFAULT_OUTPUT, outputconfig)
 
-		var OutputConfiguration onceOutput2 = new OutputConfiguration(
-			RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_JSON)
-		onceOutput2.setDescription("Output JSON")
-		onceOutput2.setOutputDirectory("./apps/configs/")
-		onceOutput2.setOverrideExistingResources(true)
-		onceOutput2.setCreateOutputDirectory(true)
-		onceOutput2.setCleanUpDerivedResources(true)
-		onceOutput2.setSetDerivedProperty(true)
+		outputconfig = new OutputConfiguration(RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_BASE_INCLUDE)
+		outputconfig.setDescription("Output Folder")
+		outputconfig.setOutputDirectory("./apps/include/base")
+		outputconfig.setOverrideExistingResources(true)
+		outputconfig.setCreateOutputDirectory(true)
+		outputconfig.setCleanUpDerivedResources(true)
+		outputconfig.setSetDerivedProperty(true)
+		hash1.put(RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_BASE_INCLUDE, outputconfig)
 
-		hash1.put(RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_JSON, onceOutput2)
+		outputconfig = new OutputConfiguration(RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_BASE_SRC)
+		outputconfig.setDescription("Output Folder")
+		outputconfig.setOutputDirectory("./apps/src/base")
+		outputconfig.setOverrideExistingResources(true)
+		outputconfig.setCreateOutputDirectory(true)
+		outputconfig.setCleanUpDerivedResources(true)
+		outputconfig.setSetDerivedProperty(true)
 
-		var OutputConfiguration defaultOutputmessage = new OutputConfiguration(
-			RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_MESSAGE)
-		defaultOutputmessage.setDescription("Output Folder")
-		defaultOutputmessage.setOutputDirectory("./apps/messages/")
-		defaultOutputmessage.setOverrideExistingResources(true)
-		defaultOutputmessage.setCreateOutputDirectory(true)
-		defaultOutputmessage.setCleanUpDerivedResources(true)
-		defaultOutputmessage.setSetDerivedProperty(true)
-		hash1.put(RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_MESSAGE, defaultOutputmessage)
+		hash1.put(RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_BASE_SRC, outputconfig)
 
+		outputconfig = new OutputConfiguration(RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_DEV_INCLUDE)
+		outputconfig.setDescription("Output Folder")
+		outputconfig.setOutputDirectory("./apps/include/dev")
+		outputconfig.setOverrideExistingResources(false)
+		outputconfig.setCreateOutputDirectory(true)
+		outputconfig.setCleanUpDerivedResources(false)
+		outputconfig.setSetDerivedProperty(false)
+
+		hash1.put(RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_DEV_INCLUDE, outputconfig)
+
+		outputconfig = new OutputConfiguration(RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_DEV_SRC)
+		outputconfig.setDescription("Output Folder")
+		outputconfig.setOutputDirectory("./apps/src/dev")
+		outputconfig.setOverrideExistingResources(false)
+		outputconfig.setCreateOutputDirectory(true)
+		outputconfig.setCleanUpDerivedResources(false)
+		outputconfig.setSetDerivedProperty(false)
+
+		hash1.put(RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_DEV_SRC, outputconfig)
+
+		outputconfig = new OutputConfiguration(RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_JSON)
+		outputconfig.setDescription("Output JSON")
+		outputconfig.setOutputDirectory("./apps/configs/")
+		outputconfig.setOverrideExistingResources(true)
+		outputconfig.setCreateOutputDirectory(true)
+		outputconfig.setCleanUpDerivedResources(true)
+		outputconfig.setSetDerivedProperty(true)
+
+		hash1.put(RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_JSON, outputconfig)
+
+		outputconfig = new OutputConfiguration(RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_MESSAGE)
+		outputconfig.setDescription("Output Folder")
+		outputconfig.setOutputDirectory("./apps/messages/")
+		outputconfig.setOverrideExistingResources(true)
+		outputconfig.setCreateOutputDirectory(true)
+		outputconfig.setCleanUpDerivedResources(true)
+		outputconfig.setSetDerivedProperty(true)
+		hash1.put(RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_MESSAGE, outputconfig)
 		return hash1
 	}
 

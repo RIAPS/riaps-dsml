@@ -1,129 +1,131 @@
 package edu.vanderbilt.riaps.generator
 
-import org.eclipse.xtext.generator.AbstractGenerator
+import com.google.inject.Inject
+import edu.vanderbilt.riaps.Console
+import edu.vanderbilt.riaps.RiapsOutputConfigurationProvider
+import edu.vanderbilt.riaps.app.Application
+import edu.vanderbilt.riaps.app.FStructType
+import edu.vanderbilt.riaps.app.FType
+import edu.vanderbilt.riaps.generator.cpp.AppCpp
+import java.util.HashSet
 import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.xtext.generator.AbstractGenerator
+import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
 import org.eclipse.xtext.naming.IQualifiedNameProvider
-import com.google.inject.Inject
-import edu.vanderbilt.riaps.app.Application
-import edu.vanderbilt.riaps.Console
-import org.eclipse.xtext.generator.IFileSystemAccess
-//import java.util.ArrayList
-import edu.vanderbilt.riaps.generator.cpp.AppCpp
-import edu.vanderbilt.riaps.RiapsOutputConfigurationProvider
-import edu.vanderbilt.riaps.app.FStructType
-import java.util.HashSet
-import edu.vanderbilt.riaps.app.FType
-
+import org.eclipse.emf.common.util.EList
+import edu.vanderbilt.riaps.app.Component
+import edu.vanderbilt.riaps.app.DeviceType
+import edu.vanderbilt.riaps.app.Model
 
 public class CppGenerator extends AbstractGenerator {
 
 	@Inject extension IQualifiedNameProvider
-	var HashSet<String> Appname=new HashSet<String> 
+	var HashSet<String> Appname = new HashSet<String>
 
 	override doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
-		
 		for (e : resource.allContents.toIterable.filter(Application)) {
-
-			// check and return if e contains messages that do not have a type
-		
-			
-			// var componentNames = new ArrayList<String>()
-			var AppCpp appCpp;
-			try{
-			 appCpp = new AppCpp(e, this)
-			}
-			catch (NullPointerException except){
-				return
-			}
-			
-			Appname.add(e.name)
-			for (comp : appCpp.compList) {
-
-				var base_h = comp.generateBaseH()
-				var base_h_path = e.name + "/include/" + comp.componentName + "Base.h"
-				fsa.generateFile(
-					base_h_path,
-					IFileSystemAccess::DEFAULT_OUTPUT,
-					base_h.beautify
-				)
-				Console.instance.log(java.util.logging.Level.INFO, base_h_path + " generated");
-
-				var base_cpp = comp.generateBaseCpp()
-				var base_cpp_path = e.name + "/src/" + comp.componentName + "Base.cc"
-				fsa.generateFile(
-					base_cpp_path,
-					IFileSystemAccess::DEFAULT_OUTPUT,
-					base_cpp.beautify
-				)
-				Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
-
-				var fw_h = comp.generateFW_H()
-				var fw_h_path = e.name + "/include/" + comp.componentName + ".h"
-				fsa.generateFile(
-					fw_h_path,
-					RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_APPCODE,
-					fw_h.beautify
-				)
-				Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
-
-				var fw_cpp = comp.generateFW_Cpp()
-				var fw_cpp_path = e.name + "/src/" + comp.componentName + ".cc"
-				fsa.generateFile(
-					fw_cpp_path,
-					RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_APPCODE,
-					fw_cpp.beautify
-				)
-				Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
-
-				var python_file_path = e.name + "//python//" + comp.componentName + ".py"
-				// if (!fsa.isFile(python_file_path)) {
-				fsa.generateFile(
-					python_file_path,
-					RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_APPCODE,
-					comp.generate_python
-				)
-			// }	
-			// else{
-			// Console.instance.log(java.util.logging.Level.WARNING, python_file_path + " already exists. Please remove if you want to overwrite it.");
-			// }		
-			}
-
-			var cmake = createCMakeList(appCpp)
-			var cmake_path = appCpp.applicationName + "//CMakeLists.txt"
-			fsa.generateFile(
-				cmake_path,
-				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_APPCODE,
-				cmake
-			)
-
-			fsa.generateFile(
-				"..//toolchain.host.cmake",
-				IFileSystemAccess::DEFAULT_OUTPUT,
-				createx86ToolChain
-			)
-
-			fsa.generateFile(
-				"..//toolchain.arm-linux-gnueabihf.cmake",				
-				IFileSystemAccess::DEFAULT_OUTPUT,
-				createArmhfToolChain
-			)
-			Console.instance.log(java.util.logging.Level.INFO, cmake_path + " generated");
+			generateForApp(e, fsa, null, null)
 		}
+		for (model : resource.allContents.toIterable.filter(Model)) {
+			var globalDevices = model.collections.filter(DeviceType)
+			var globalcomponents = model.collections.filter(Component)
+			generateForApp(null, fsa, globalcomponents, globalDevices)
+		}
+
 		fsa.generateFile(
-				"..//CMakeLists.txt",				
-				IFileSystemAccess::DEFAULT_OUTPUT,
-				createTopCmakeLists
-			)
+			"toolchain.host.cmake",
+			IFileSystemAccess::DEFAULT_OUTPUT,
+			createx86ToolChain
+		)
+		fsa.generateFile(
+			"toolchain.arm-linux-gnueabihf.cmake",
+			IFileSystemAccess::DEFAULT_OUTPUT,
+			createArmhfToolChain
+		)
+		fsa.generateFile(
+			"CMakeLists.txt",
+			IFileSystemAccess::DEFAULT_OUTPUT,
+			createTopCmakeLists
+		)
 	}
-	
-	def CharSequence beautify(CharSequence sequence){
+
+	protected def void generateForApp(Application myapp, IFileSystemAccess2 fsa, Iterable<Component> globalcomponents,
+		Iterable<DeviceType> globalDevices) {
+
+		// check and return if e contains messages that do not have a type
+		var AppCpp appCpp;
+		try {
+			appCpp = new AppCpp(myapp, this, globalcomponents, globalDevices)
+		} catch (NullPointerException except) {
+//Console.instance.log(java.util.logging.Level.SEVERE, except.toString);
+			return
+		}
+
+		Appname.add(appCpp.applicationName)
+		for (comp : appCpp.compList) {
+
+			var base_h = comp.generateBaseH()
+			var base_h_path = appCpp.applicationName + "//" + comp.componentName + "Base.h"
+			fsa.generateFile(
+				base_h_path,
+				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_BASE_INCLUDE,
+				base_h.beautify
+			)
+			Console.instance.log(java.util.logging.Level.INFO, base_h_path + " generated");
+
+			var base_cpp = comp.generateBaseCpp()
+			var base_cpp_path = appCpp.applicationName + "//" + comp.componentName + "Base.cc"
+			fsa.generateFile(
+				base_cpp_path,
+				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_BASE_SRC,
+				base_cpp.beautify
+			)
+			Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
+
+			var fw_h = comp.generateFW_H()
+			var fw_h_path = appCpp.applicationName + "//" + comp.componentName + ".h"
+			fsa.generateFile(
+				fw_h_path,
+				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_DEV_INCLUDE,
+				fw_h.beautify
+			)
+			Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
+
+			var fw_cpp = comp.generateFW_Cpp()
+			var fw_cpp_path = appCpp.applicationName + "//" + comp.componentName + ".cc"
+			fsa.generateFile(
+				fw_cpp_path,
+				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_DEV_SRC,
+				fw_cpp.beautify
+			)
+			Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
+
+			var python_file_path = appCpp.applicationName + "//python//" + comp.componentName + ".py"
+			// if (!fsa.isFile(python_file_path)) {
+			fsa.generateFile(
+				python_file_path,
+				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_DEV_SRC,
+				comp.generate_python
+			)
+
+		}
+
+		var cmake = createCMakeList(appCpp)
+		var cmake_path = appCpp.applicationName + ".cmake"
+		fsa.generateFile(
+			cmake_path,
+			IFileSystemAccess::DEFAULT_OUTPUT,
+			cmake
+		)
+
+	}
+
+	def CharSequence beautify(CharSequence sequence) {
 		beautifyString(sequence.toString())
 	}
-	
-	
-	
+
 	def beautifyString(String code) {
 		var indent = 0;
 		var temp = new StringBuilder
@@ -155,20 +157,27 @@ public class CppGenerator extends AbstractGenerator {
 		}
 		return temp.toString
 	}
-	
+
 	def createTopCmakeLists() {
 		'''
-		cmake_minimum_required(VERSION 3.0)
-		include_directories(${CMAKE_SOURCE_DIR}/messages/)
-		«FOR a : Appname»
-		include_directories(${CMAKE_SOURCE_DIR}/basecode/«a»/include)		
-		«ENDFOR»
-		«FOR a : Appname»		
-		add_subdirectory(devcode/«a»)
-		«ENDFOR»
+			cmake_minimum_required(VERSION 3.0)
+			set(CMAKE_SYSTEM_NAME Linux)
+			set(CMAKE_CXX_FLAGS "-std=c++11")
+			set(CMAKE_C_FLAGS "-std=c99")
+			set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/${ARCH})		
+			set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/${ARCH})		
+			set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY  ${CMAKE_SOURCE_DIR}/bin/${ARCH})
+			#Library Dependencies
+			set(DEPENDENCIES ${RIAPS_PREFIX})
+			set (LIBALLPATH_INCLUDE ${DEPENDENCIES}/include)
+			set (LIBALLPATH_LIB ${DEPENDENCIES}/lib)
+			include_directories(${CMAKE_SOURCE_DIR}/messages)			
+			link_directories(${LIBALLPATH_LIB})
+			«FOR a : Appname»
+				include(«a».cmake)		
+			«ENDFOR»
 		'''
 	}
-
 
 	def String StructQualifiedName(FStructType x) {
 		return x.fullyQualifiedName.toString("/");
@@ -211,30 +220,12 @@ public class CppGenerator extends AbstractGenerator {
 		val capnpMsgs = new HashSet<FType>
 		val content = '''
 			#Initial Setup		
-			cmake_minimum_required(VERSION 3.0)
-			project («app.applicationName»)
+			include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/base/«app.applicationName»)
+			include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/dev/«app.applicationName»)
 			
-			set(CMAKE_SYSTEM_NAME Linux)
-			set (CMAKE_CXX_FLAGS "-std=c++11")
-			set (CMAKE_C_FLAGS "-std=c99")
-			
-			
-			set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${ARCH}/bin)		
-			set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${ARCH}/bin)		
-			set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY  ${CMAKE_CURRENT_SOURCE_DIR}/${ARCH}/bin)
-			
-			#Library Dependencies
-			set(DEPENDENCIES ${RIAPS_PREFIX})
-			set (LIBALLPATH_INCLUDE ${DEPENDENCIES}/include)
-			set (LIBALLPATH_LIB ${DEPENDENCIES}/lib)
-			link_directories(${LIBALLPATH_LIB})
-			
-			
-			#include directories
-			include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
-
-					
-			
+			set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/${ARCH}/«app.applicationName»)		
+			set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/${ARCH}/«app.applicationName»)		
+			set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY  ${CMAKE_SOURCE_DIR}/bin/${ARCH}/«app.applicationName»)
 			#capnproto files		
 			«FOR c : app.compList»
 				«FOR i: c.msgIncludes»
@@ -259,8 +250,8 @@ public class CppGenerator extends AbstractGenerator {
 				
 				# «c.componentName»
 				add_library(«c.componentName.toLowerCase» 
-							SHARED src/«c.componentName».cc
-							${CMAKE_SOURCE_DIR}/basecode/«app.applicationName»/src/«c.componentName»Base.cc
+							SHARED ${CMAKE_CURRENT_SOURCE_DIR}/src/dev/«app.applicationName»/«c.componentName».cc
+							${CMAKE_CURRENT_SOURCE_DIR}/src/base/«app.applicationName»/«c.componentName»Base.cc
 							«FOR i: c.msgIncludes»
 								${CMAKE_SOURCE_DIR}/messages/«i.fullyQualifiedName.toString("/")».capnp.c++
 								«FOR el: i.elements»

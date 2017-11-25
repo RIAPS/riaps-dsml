@@ -1,15 +1,15 @@
 package WeatherMonitor
 import WeatherMonitor.include.datatypes.*
-struct TempData
-{
-	temperature:Double 
-} 
+struct TempData 
+{ 
+	temperature:Double
+}  
 message TempData: TempData;
 message TempInternal: TempData;
-device Thermostat(a=1)
-{
+device Thermostat(a=1)  
+{ 
 // Defines a 'thermostat' device type
-	uses
+	uses 
 	{
 		// Resources the device component uses
 		cpu 25 % over 10 us;       // CPU at 25% over a 10 second interval

@@ -7,7 +7,10 @@ import org.eclipse.xtext.generator.IOutputConfigurationProvider
 import org.eclipse.xtext.generator.OutputConfiguration
 
 class RiapsOutputConfigurationProvider implements IOutputConfigurationProvider {
-	public final static String DEFAULT_OUTPUT_APPCODE = "DEFAULT_OUTPUT_APPCODE"
+	public final static String DEFAULT_OUTPUT_BASE_INCLUDE = "DEFAULT_OUTPUT_BASE_INCLUDE"
+	public final static String DEFAULT_OUTPUT_DEV_INCLUDE = "DEFAULT_OUTPUT_DEV_INCLUDE"
+	public final static String DEFAULT_OUTPUT_DEV_SRC = "DEFAULT_OUTPUT_DEV_SRC"
+	public final static String DEFAULT_OUTPUT_BASE_SRC = "DEFAULT_OUTPUT_BASE_SRC"
 	public final static String DEFAULT_OUTPUT_JSON = "DEFAULT_OUTPUT_JSON"
 	public final static String DEFAULT_OUTPUT_MESSAGE = "DEFAULT_OUTPUT_MESSAGE"
 
@@ -15,42 +18,75 @@ class RiapsOutputConfigurationProvider implements IOutputConfigurationProvider {
 	 * @return a set of {@link OutputConfiguration} available for the generator
 	 */
 	override Set<OutputConfiguration> getOutputConfigurations() {
-		var OutputConfiguration defaultOutput = new OutputConfiguration(IFileSystemAccess::DEFAULT_OUTPUT)
-		defaultOutput.setDescription("Output Folder")
-		defaultOutput.setOutputDirectory("./apps/basecode")
-		defaultOutput.setOverrideExistingResources(true)
-		defaultOutput.setCreateOutputDirectory(true)
-		defaultOutput.setCleanUpDerivedResources(true)
-		defaultOutput.setSetDerivedProperty(true)
 		
-		var OutputConfiguration onceOutput = new OutputConfiguration(DEFAULT_OUTPUT_APPCODE)
-		onceOutput.setDescription("Output Folder (once)")
-		onceOutput.setOutputDirectory("./apps/devcode")
-		onceOutput.setOverrideExistingResources(false)
-		onceOutput.setCreateOutputDirectory(true)
-		onceOutput.setCleanUpDerivedResources(false)
-		onceOutput.setSetDerivedProperty(false)
-		var hash1= newHashSet(defaultOutput, onceOutput)
+		var OutputConfiguration outputconfig = new OutputConfiguration(IFileSystemAccess::DEFAULT_OUTPUT)
+		outputconfig.setDescription("Output Folder")
+		outputconfig.setOutputDirectory("./apps")
+		outputconfig.setOverrideExistingResources(true)
+		outputconfig.setCreateOutputDirectory(true)
+		outputconfig.setCleanUpDerivedResources(true)
+		outputconfig.setSetDerivedProperty(true)
+		var hash1= newHashSet(outputconfig)
+
+		outputconfig= new OutputConfiguration(DEFAULT_OUTPUT_BASE_INCLUDE)
+		outputconfig.setDescription("Output Folder")
+		outputconfig.setOutputDirectory("./apps/include/base")
+		outputconfig.setOverrideExistingResources(true)
+		outputconfig.setCreateOutputDirectory(true)
+		outputconfig.setCleanUpDerivedResources(true)
+		outputconfig.setSetDerivedProperty(true)
+		hash1.add(outputconfig)
 		
-		var OutputConfiguration onceOutput2 = new OutputConfiguration(DEFAULT_OUTPUT_JSON)
-		onceOutput2.setDescription("Output JSON")
-		onceOutput2.setOutputDirectory("./apps/configs/")
-		onceOutput2.setOverrideExistingResources(true)
-		onceOutput2.setCreateOutputDirectory(true)
-		onceOutput2.setCleanUpDerivedResources(true)
-		onceOutput2.setSetDerivedProperty(true)
 		
-		hash1.add(onceOutput2)
+		outputconfig= new OutputConfiguration(DEFAULT_OUTPUT_BASE_SRC)
+		outputconfig.setDescription("Output Folder")
+		outputconfig.setOutputDirectory("./apps/src/base")
+		outputconfig.setOverrideExistingResources(true)
+		outputconfig.setCreateOutputDirectory(true)
+		outputconfig.setCleanUpDerivedResources(true)
+		outputconfig.setSetDerivedProperty(true)
+		hash1.add(outputconfig)
 		
-		var OutputConfiguration defaultOutputmessage = new OutputConfiguration(DEFAULT_OUTPUT_MESSAGE)
-		defaultOutputmessage.setDescription("Output Folder")
-		defaultOutputmessage.setOutputDirectory("./apps/messages/")
-		defaultOutputmessage.setOverrideExistingResources(true)
-		defaultOutputmessage.setCreateOutputDirectory(true)
-		defaultOutputmessage.setCleanUpDerivedResources(true)
-		defaultOutputmessage.setSetDerivedProperty(true)
 		
-		hash1.add(defaultOutputmessage)
+		outputconfig= new OutputConfiguration(DEFAULT_OUTPUT_DEV_INCLUDE)
+		outputconfig.setDescription("Output Folder")
+		outputconfig.setOutputDirectory("./apps/include/dev")
+		outputconfig.setOverrideExistingResources(false)
+		outputconfig.setCreateOutputDirectory(true)
+		outputconfig.setCleanUpDerivedResources(false)
+		outputconfig.setSetDerivedProperty(false)
+		hash1.add(outputconfig)
+		
+		
+		outputconfig= new OutputConfiguration(DEFAULT_OUTPUT_DEV_SRC)
+		outputconfig.setDescription("Output Folder")
+		outputconfig.setOutputDirectory("./apps/src/dev")
+		outputconfig.setOverrideExistingResources(false)
+		outputconfig.setCreateOutputDirectory(true)
+		outputconfig.setCleanUpDerivedResources(false)
+		outputconfig.setSetDerivedProperty(false)
+		hash1.add(outputconfig)
+		
+			
+		outputconfig = new OutputConfiguration(DEFAULT_OUTPUT_JSON)
+		outputconfig.setDescription("Output JSON")
+		outputconfig.setOutputDirectory("./apps/configs/")
+		outputconfig.setOverrideExistingResources(true)
+		outputconfig.setCreateOutputDirectory(true)
+		outputconfig.setCleanUpDerivedResources(true)
+		outputconfig.setSetDerivedProperty(true)
+		
+		hash1.add(outputconfig)
+		
+		outputconfig  = new OutputConfiguration(DEFAULT_OUTPUT_MESSAGE)
+		outputconfig.setDescription("Output Folder")
+		outputconfig.setOutputDirectory("./apps/messages/")
+		outputconfig.setOverrideExistingResources(true)
+		outputconfig.setCreateOutputDirectory(true)
+		outputconfig.setCleanUpDerivedResources(true)
+		outputconfig.setSetDerivedProperty(true)
+		hash1.add(outputconfig)
+
 		return hash1
 	}
 }

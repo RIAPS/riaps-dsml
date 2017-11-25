@@ -67,15 +67,24 @@ public static val INVALID_NAME = 'invalidName'
 	@Check
 	def checkAppNameStartsWithCapital(Application message) {
 		if (!Character.isUpperCase(message.name.charAt(0))) {
-			error('Name should start with a capital', AppPackage.Literals.MODEL__NAME)
+			error('Name should start with a capital', AppPackage.Literals.COLLECTION__NAME)
 		}
 	}
+	
+	@Check
+	def checkAppNameNotKeyword(Application app) {
+		if (app.name.toLowerCase==edu.vanderbilt.riaps.generator.cpp.AppCpp.defaultName ) {
+			error('Name cannot be '+app.name, AppPackage.Literals.COLLECTION__NAME)
+		}
+	}
+	
+	
 	
 	
 		@Check
 	def checkDeviceTypeStartsWithCapital(DeviceType message) {
 		if (!Character.isUpperCase(message.name.charAt(0))) {
-			error('Name should start with a capital', AppPackage.Literals.MODEL__NAME)
+			error('Name should start with a capital', AppPackage.Literals.COLLECTION__NAME)
 		}
 	}
 	

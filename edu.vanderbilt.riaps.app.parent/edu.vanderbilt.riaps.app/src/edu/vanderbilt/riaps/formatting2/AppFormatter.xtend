@@ -49,20 +49,20 @@ class AppFormatter extends AbstractFormatter2 {
 
 			if (collection instanceof DeviceType) {
 				collection.format
-				
+
 			}
 
 			if (collection instanceof FStructType) {
 				collection.format
 			}
-			
+
 			if (collection instanceof Message) {
 				collection.format
 			}
 
 		}
 	}
-	
+
 	def dispatch void format(FStructType collection, extension IFormattableDocument document) {
 		val open = collection.regionFor.keyword("{").prepend[noSpace; newLine].append[noSpace; newLine]
 		val close = collection.regionFor.keyword("}").prepend[noSpace; newLine].append[noSpace; newLine]
@@ -70,12 +70,12 @@ class AppFormatter extends AbstractFormatter2 {
 		collection.prepend[noSpace; newLine].append[noSpace; newLine]
 
 	}
-	
+
 	def dispatch void format(DeviceType collection, extension IFormattableDocument document) {
 		val open = collection.regionFor.keyword("{").prepend[noSpace; newLine].append[noSpace; newLine]
 		val close = collection.regionFor.keyword("}").prepend[noSpace; newLine].append[noSpace; newLine]
 		interior(open, close)[indent]
-		
+
 		if(collection.constraint !== null) collection.constraint.format
 		collection.prepend[noSpace; newLine].append[noSpace; newLine]
 
@@ -98,6 +98,12 @@ class AppFormatter extends AbstractFormatter2 {
 			component.format;
 			component.prepend[noSpace; newLine].append[noSpace; newLine]
 		}
+
+		for (DeviceType component : app.devices) {
+			component.format;
+			component.prepend[noSpace; newLine].append[noSpace; newLine]
+		}
+
 		for (Group group : app.getGroups()) {
 			group.format;
 			group.prepend[noSpace; newLine].append[noSpace; newLine]
@@ -166,7 +172,7 @@ class AppFormatter extends AbstractFormatter2 {
 			instance.prepend[noSpace; newLine].append[noSpace; newLine]
 		}
 	}
-	
+
 	override createCommentReplacer(IComment comment) {
 		val EObject grammarElement = comment.getGrammarElement();
 		if (grammarElement instanceof AbstractRule) {
