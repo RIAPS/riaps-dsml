@@ -2,7 +2,7 @@
 <feature
       id="edu.vanderbilt.riaps.system.feature"
       label="RIAPS Domain Specific Modeling Environment"
-      version="0.8.3.qualifier"
+      version="0.8.4.qualifier"
       provider-name="Institute for Software Integrated Systems, Vanderbilt University">
 
    <plugin

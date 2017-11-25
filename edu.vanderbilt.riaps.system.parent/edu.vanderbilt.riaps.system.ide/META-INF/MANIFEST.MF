@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: edu.vanderbilt.riaps.system.ide
 Bundle-Vendor: Institute for Software Integrated Systems, Vanderbilt University
-Bundle-Version: 0.8.3.qualifier
+Bundle-Version: 0.8.4.qualifier
 Bundle-SymbolicName: edu.vanderbilt.riaps.system.ide; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: edu.vanderbilt.riaps.system,
