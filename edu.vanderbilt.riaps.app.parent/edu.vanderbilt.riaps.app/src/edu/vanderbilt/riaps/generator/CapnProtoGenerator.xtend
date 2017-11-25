@@ -81,11 +81,11 @@ class CapnProtoGenerator extends AbstractGenerator {
 
 	override doGenerate(Resource input, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		for (e : input.allContents.toIterable.filter(Model)) {
-			var packageNameArray = e.name.split(Pattern.quote("."))
+			//var packageNameArray = e.name.split(Pattern.quote("."))
 
 			for (type : e.collections) {
 				if (type instanceof FStructType) {
-					packageNameMap.put(type.name, packageNameArray.get(0))
+				//	packageNameMap.put(type.name, packageNameArray.get(0))
 
 					var aStruct = type as FStructType
 					Console.instance.log(java.util.logging.Level.INFO, aStruct.name + " generating")
@@ -101,7 +101,7 @@ class CapnProtoGenerator extends AbstractGenerator {
 				}
 
 				if (type instanceof FEnumerationType) {
-					packageNameMap.put(type.name, packageNameArray.get(0))
+					//packageNameMap.put(type.name, packageNameArray.get(0))
 					var anEnum = type as FEnumerationType
 					var messageString = anEnum.compileToString
 					fsa.generateFile(
@@ -153,12 +153,13 @@ class CapnProtoGenerator extends AbstractGenerator {
 		«var x= message.fullyQualifiedName»
 		«var s = x.getSegmentCount»
 		«createCapnpID()»;		
+		using Cxx = import "/capnp/c++.capnp";
 		enum «message.name» {
 			«var fields = createEnumFields(message)»
 			«FOR j : fields»
 				«j»
 			«ENDFOR»
-			};
+			}
 	'''
 
 	def String compileToString(FStructType message) ''' 
@@ -169,12 +170,13 @@ class CapnProtoGenerator extends AbstractGenerator {
 				«var result=z.add(j.type.derived.name)»
 				«IF (result)»
 					«var n = j.type.derived.fullyQualifiedName.toString("/")»
-					using import  "/«n».capnp".«j.type.derived.name»;
+«««					using import  "/«n».capnp".«j.type.derived.name»;
+					using import  "«n».capnp".«j.type.derived.name»;
 				«ENDIF»
 			«ENDIF»
 		«ENDFOR»
 		using Cxx = import "/capnp/c++.capnp";
-		$Cxx.namespace("«message.fullyQualifiedName.skipLast(1).toString("::")»");		
+«««		$Cxx.namespace("«message.fullyQualifiedName.skipLast(1).toString("::")»");		
 		
 		struct «message.name»
 		{

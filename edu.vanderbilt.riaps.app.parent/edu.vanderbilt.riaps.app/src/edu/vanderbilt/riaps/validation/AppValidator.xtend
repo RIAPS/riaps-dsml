@@ -20,16 +20,17 @@ import edu.vanderbilt.riaps.app.Configuration
 import org.eclipse.core.runtime.Path
 import edu.vanderbilt.riaps.app.FStructType
 import edu.vanderbilt.riaps.app.Message
+import edu.vanderbilt.riaps.app.FEnumerationType
+import edu.vanderbilt.riaps.app.FEnumerator
 
 /**
  * This class contains custom validation rules. 
- * 
+ *  
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
 class AppValidator extends AbstractAppValidator {
 
-
-public static val INVALID_NAME = 'invalidName'
+	public static val INVALID_NAME = 'invalidName'
 
 	@Check
 	def checkFStructTypeStartsWithCapital(FStructType message) {
@@ -38,14 +39,30 @@ public static val INVALID_NAME = 'invalidName'
 		}
 
 	}
-	
+
+	@Check
+	def checkEnumStartsWithCapital(FEnumerationType message) {
+		if (!Character.isUpperCase(message.name.charAt(0))) {
+			error('Name should start with a capital', AppPackage.Literals.COLLECTION__NAME)
+		}
+
+	}
+
+	@Check
+	def checkEnumStartsWithCapital(FEnumerator message) {
+		if (!Character.isLowerCase(message.name.charAt(0))) {
+			error('Name should start with a lower case letter', AppPackage.Literals.FENUMERATOR__NAME)
+		}
+
+	}
+
 	@Check
 	def checkMessageDeclarationStartsWithCapital(Message message) {
 		if (!Character.isUpperCase(message.name.charAt(0))) {
 			error('Name should start with a capital', AppPackage.Literals.COLLECTION__NAME)
 		}
 	}
-	
+
 	@Check
 	def checkGroupProperties(UsesBlock group) {
 		var leaders = group.property.filter(Leader)
@@ -70,38 +87,34 @@ public static val INVALID_NAME = 'invalidName'
 			error('Name should start with a capital', AppPackage.Literals.COLLECTION__NAME)
 		}
 	}
-	
+
 	@Check
 	def checkAppNameNotKeyword(Application app) {
-		if (app.name.toLowerCase==edu.vanderbilt.riaps.generator.cpp.AppCpp.defaultName ) {
-			error('Name cannot be '+app.name, AppPackage.Literals.COLLECTION__NAME)
+		if (app.name.toLowerCase == edu.vanderbilt.riaps.generator.cpp.AppCpp.defaultName) {
+			error('Name cannot be ' + app.name, AppPackage.Literals.COLLECTION__NAME)
 		}
 	}
-	
-	
-	
-	
-		@Check
+
+	@Check
 	def checkDeviceTypeStartsWithCapital(DeviceType message) {
 		if (!Character.isUpperCase(message.name.charAt(0))) {
 			error('Name should start with a capital', AppPackage.Literals.COLLECTION__NAME)
 		}
 	}
-	
-	
+
 	// Message not referenced
 	@Check
-	def checkLibraryName(Library lib){
-		if (!lib.name.startsWith("lib")){
-			error('library name must start with lib', AppPackage.Literals.LIBRARY__NAME)	
+	def checkLibraryName(Library lib) {
+		if (!lib.name.startsWith("lib")) {
+			error('library name must start with lib', AppPackage.Literals.LIBRARY__NAME)
 		}
 	}
-	
-		// Message not referenced
+
+	// Message not referenced
 	@Check
-	def checkConfigurationName(Configuration f){
-		if (!Path.isValidPosixPath(f.name)){
-			error('not a valid path', AppPackage.Literals.CONFIGURATION__NAME)	
+	def checkConfigurationName(Configuration f) {
+		if (!Path.isValidPosixPath(f.name)) {
+			error('not a valid path', AppPackage.Literals.CONFIGURATION__NAME)
 		}
 	}
 

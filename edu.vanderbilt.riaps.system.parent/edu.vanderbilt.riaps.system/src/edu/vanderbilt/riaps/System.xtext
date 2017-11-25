@@ -7,7 +7,7 @@ generate system "http://www.vanderbilt.edu/riaps/System"
 //This is the main model rule
 Model returns Mdodel:
 	{Model}
-	'package' name=FQN (';')?
+	//'package' name=FQN (';')?
 	(imports+=Import)*
 	(collections+=Collection)*;
 	

@@ -6,7 +6,7 @@ generate app "http://www.vanderbilt.edu/riaps/App"
 //This is the main model rule
 Model returns Mdodel:
 	{Model}
-	'package' name=FQN (';')?
+	//'package' name=FQN (';')?
 	(imports+=Import)*
 	(collections+=Collection)*;
 

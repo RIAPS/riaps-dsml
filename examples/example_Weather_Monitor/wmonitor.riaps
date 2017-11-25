@@ -1,9 +1,17 @@
-package WeatherMonitor
 import WeatherMonitor.include.datatypes.*
 struct TempData 
 { 
 	temperature:Double
-}  
+	measure:Second
+	entries: Entry
+}    
+struct Second{
+	value:Int32   
+}
+enumeration Entry{
+	fIRST
+	sECOND
+}
 message TempData: TempData;
 message TempInternal: TempData;
 device Thermostat(a=1)  
