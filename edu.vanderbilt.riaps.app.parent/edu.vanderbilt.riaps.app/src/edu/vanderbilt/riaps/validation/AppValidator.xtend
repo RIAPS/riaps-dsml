@@ -22,6 +22,7 @@ import edu.vanderbilt.riaps.app.FStructType
 import edu.vanderbilt.riaps.app.Message
 import edu.vanderbilt.riaps.app.FEnumerationType
 import edu.vanderbilt.riaps.app.FEnumerator
+import edu.vanderbilt.riaps.app.Model
 
 /**
  * This class contains custom validation rules. 
@@ -96,6 +97,17 @@ class AppValidator extends AbstractAppValidator {
 			error('Name should start with a capital', AppPackage.Literals.COLLECTION__NAME)
 		}
 	}
+	
+	
+	@Check
+	def checkModelOnlyConstainsOneApp(Application app) {
+		var model = (app.eContainer as Model)
+		var apps= model.collections.filter(Application)
+		
+		if (apps.size()>1) {
+			error('One model should only contain one application', AppPackage.Literals.COLLECTION__NAME )
+		}
+	}
 
 	@Check
 	def checkAppNameNotKeyword(Application app) {
@@ -148,6 +160,36 @@ class AppValidator extends AbstractAppValidator {
 			error('only one message block is allowed in a group', AppPackage.Literals.GROUP__NAME)
 		}
 	}
+	
+	@Check
+	def checkComponentUsesBlock(Component component) {
+		var block= component.constraint
+		
+		if (block.size() > 1) {
+			error('only one uses block is allowed in a component', AppPackage.Literals.COMPONENT__NAME)
+		}
+	}
+	
+		@Check
+	def checkDeviceTypeUsesBlock(DeviceType component) {
+		var block= component.constraint
+		
+		if (block.size() > 1) {
+			error('only one uses block is allowed in a Device',AppPackage.Literals.COLLECTION__NAME)
+		}
+	}
+	
+	
+		
+	@Check
+	def checkComponentHandler(Component component) {
+		var block= component.handler
+		
+		if (block.size() > 1) {
+			error('only one exceptionHandler is allowed in a component', AppPackage.Literals.COMPONENT__NAME)
+		}
+	}
+	
 
 	@Check
 	def checkGroupMessageBlock(Group group) {

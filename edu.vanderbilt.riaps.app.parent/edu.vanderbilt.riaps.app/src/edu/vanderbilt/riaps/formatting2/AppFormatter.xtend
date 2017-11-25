@@ -75,8 +75,11 @@ class AppFormatter extends AbstractFormatter2 {
 		val open = collection.regionFor.keyword("{").prepend[noSpace; newLine].append[noSpace; newLine]
 		val close = collection.regionFor.keyword("}").prepend[noSpace; newLine].append[noSpace; newLine]
 		interior(open, close)[indent]
+		for (constraint : collection.constraint) {
 
-		if(collection.constraint !== null) collection.constraint.format
+			if(constraint !== null) constraint.format
+
+		}
 		collection.prepend[noSpace; newLine].append[noSpace; newLine]
 
 	}
@@ -151,7 +154,8 @@ class AppFormatter extends AbstractFormatter2 {
 		val open = component.regionFor.keyword("{").prepend[noSpace; newLine].append[noSpace; newLine]
 		val close = component.regionFor.keyword("}").prepend[noSpace; newLine].append[noSpace; newLine]
 		interior(open, close)[indent]
-		component.constraint.format
+		for (constraint : component.constraint)
+			constraint.format
 
 	}
 

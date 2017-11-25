@@ -121,8 +121,7 @@ DeviceType :
 	'device' name=ID 
 	('()' | ('(' formals+=ComponentFormal (',' formals+=ComponentFormal)* ')')?)
 	'{'
-	  (constraint=DeviceUses)?
-	  (ports+=Port)+
+	  ((constraint+=DeviceUses)| (ports+=Port))+
 	'}';
 
 DeviceUses:
@@ -150,10 +149,8 @@ Component:
 	('()' | ('(' formals+=ComponentFormal (',' formals+=ComponentFormal)* ')')?)
 	'{'
 	// A component can first declare several requirements. It then declares the ports that it provides.
-	((constraint=ComponentUses)?)
+	((constraint+=ComponentUses)|(ports+=Port)|(handler+=exceptionHandler))+
 	// A component must have atleast one port 
-	(ports+=Port)+
-	(handler=exceptionHandler)?
 	'}';
 
 exceptionHandler:

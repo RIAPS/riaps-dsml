@@ -47,9 +47,9 @@ import edu.vanderbilt.riaps.app.DeviceRequirement
 		this.exceptHandler = ""
 
 		this.devices = new ArrayList<String>()
-		if (c.getConstraint() !== null) {
-			if (c.getConstraint().getRequirements() !== null) {
-				for (DeviceRequirement x : c.getConstraint().getRequirements()) {
+		if (c.constraint!== null && c.constraint.size>1) {
+			if (c.getConstraint().get(0).getRequirements() !== null) {
+				for (DeviceRequirement x : c.getConstraint().get(0).getRequirements()) {
 					if (x instanceof CPURequirement) {
 						if(this.cpu === null) this.cpu = new CPUConstraint
 
@@ -124,21 +124,22 @@ import edu.vanderbilt.riaps.app.DeviceRequirement
 		this.libraries = new ArrayList<String>()
 		this.files = new ArrayList<String>()
 		this.exceptHandler = ""
-		if (c.getHandler() !== null) {
-			if (c.getHandler() instanceof IGNORE) {
+		if (c.handler !== null && c.handler.size() > 1) {
+			var handler = c.handler.get(0)
+			if (handler instanceof IGNORE) {
 				this.exceptHandler = "IGNORE"
 			}
-			if (c.getHandler() instanceof EXIT) {
+			if (handler instanceof EXIT) {
 				this.exceptHandler = "EXIT"
 			}
-			if (c.getHandler() instanceof NAMEDHANDLER) {
-				this.exceptHandler = ((c.getHandler() as NAMEDHANDLER)).getName()
+			if (handler instanceof NAMEDHANDLER) {
+				this.exceptHandler = ((handler as NAMEDHANDLER)).getName()
 			}
 		}
 		this.devices = new ArrayList<String>()
-		if (c.getConstraint() !== null) {
-			if (c.getConstraint().getRequirements() !== null) {
-				for (ComponentRequirement x : c.getConstraint().getRequirements()) {
+		if (c.constraint !== null && c.constraint.size() > 1) {
+			if (c.constraint.get(0).getRequirements() !== null) {
+				for (ComponentRequirement x : c.constraint.get(0).getRequirements()) {
 					if (x instanceof CPURequirement) {
 						if(this.cpu === null) this.cpu = new CPUConstraint
 
