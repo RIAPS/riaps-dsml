@@ -9,6 +9,12 @@ import java.util.regex.Pattern
 import edu.vanderbilt.riaps.system.SystemPackage
 import edu.vanderbilt.riaps.system.NetworkInterface
 import edu.vanderbilt.riaps.Console
+import edu.vanderbilt.riaps.app.NumberDefault
+import edu.vanderbilt.riaps.system.ActorFormalAssignment
+import edu.vanderbilt.riaps.system.ActualValue
+import edu.vanderbilt.riaps.app.StringDefault
+import edu.vanderbilt.riaps.app.FormalDefault
+import edu.vanderbilt.riaps.app.BoolDefault
 
 /**
  * This class contains custom validation rules. 
@@ -23,14 +29,42 @@ class SystemValidator extends AbstractSystemValidator {
 	@Check
 	def checkCorrectAddress(NetworkInterface net) {
 		val s = net.ip
-		//Console.instance.log(java.util.logging.Level.INFO, "Ipaddress is " + s);
-		//val isWhitespace = s.matches("^\\s*$");
+		// Console.instance.log(java.util.logging.Level.INFO, "Ipaddress is " + s);
+		// val isWhitespace = s.matches("^\\s*$");
 		if (!PATTERN.matcher(s as String).matches)
-			error('Address is not a valid IP Address',null)
+			error('Address is not a valid IP Address', null)
 //		if (isWhitespace) {
 //			error('Ip Address cannot contain spaces',null)
 //			Console.instance.log(java.util.logging.Level.INFO, "Ip Address cannot contain space");
 //		}
+	}
+
+	@Check
+	def checkActorFormalAssignment(ActorFormalAssignment afa) {
+		var ActualValue av = afa.getArgValue();
+		var FormalDefault fd = afa.getArgName().getArgDefault();
+		if (fd !== null) {
+			if (fd instanceof StringDefault) {
+				if ((av.stringdefault ==null)) {
+					error(
+						'while the actual value was declared as String in Actor Definition. You are trying to assign a non-string parameter',
+						null)
+				}
+			} else if (fd instanceof BoolDefault) {
+				if (av.boolDefault ==null) {
+					error(
+						'while the actual value was declared as Bool in Actor Definition. You are trying to assign a non-Bool parameter',
+						null)
+				}
+			} else if (fd instanceof NumberDefault) {
+				if (av.numberdefault ==null) {
+					error(
+						'while the actual value was declared as Number in Actor Definition. You are trying to assign a non-Number parameter',
+						null)
+				}
+
+			}
+		}
 	}
 
 }

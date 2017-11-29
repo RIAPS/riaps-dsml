@@ -129,7 +129,7 @@ class CompCpp {
 		    	class «componentName»Base : public riaps::ComponentBase {
 		    		
 		    	public:
-		    		«componentName»Base(_component_conf_j &config, riaps::Actor &actor);
+		    		«componentName»Base(_component_conf &config, riaps::Actor &actor);
 		    		
 		    		«FOR PortCppBase p : ports»
 		    			«p.generateBaseH»
@@ -154,7 +154,7 @@ class CompCpp {
 		namespace «applicationName.toLowerCase» {
 		    namespace components {
 		    	
-		    	«componentName»Base::«componentName»Base(_component_conf_j &config, riaps::Actor &actor) : ComponentBase(config, actor) {
+		    	«componentName»Base::«componentName»Base(_component_conf &config, riaps::Actor &actor) : ComponentBase(config, actor) {
 		    	
 		    	}
 		    	
@@ -200,13 +200,14 @@ class CompCpp {
 		
 		        public:
 		
-		            «componentName»(_component_conf_j &config, riaps::Actor &actor);		
+		            «componentName»(_component_conf &config, riaps::Actor &actor);		
 		
 		            «FOR p : ports»
 		            	«p.generateFW_H()»
 		            	
 					«ENDFOR»		
-					virtual void OnOneShotTimer(const std::string& timerid);
+					//virtual void OnOneShotTimer(const std::string& timerid);
+					void OnGroupMessage(const riaps::groups::GroupId& groupId, capnp::FlatArrayMessageReader& capnpreader, riaps::ports::PortBase* port);
 					
 		         virtual ~«componentName»();
 		
@@ -214,7 +215,7 @@ class CompCpp {
 		    }
 		}
 		
-		extern "C" riaps::ComponentBase* create_component(_component_conf_j&, riaps::Actor& actor);
+		extern "C" riaps::ComponentBase* create_component(_component_conf&, riaps::Actor& actor);
 		extern "C" void destroy_component(riaps::ComponentBase*);
 		
 		
@@ -227,7 +228,7 @@ class CompCpp {
 		namespace «applicationName.toLowerCase» {
 		    namespace components {		
 		
-		        «componentName»::«componentName»(_component_conf_j &config, riaps::Actor &actor) :
+		        «componentName»::«componentName»(_component_conf &config, riaps::Actor &actor) :
 		                «componentName»Base(config, actor) {
 		        }
 		
@@ -235,7 +236,11 @@ class CompCpp {
 					«p.generateFW_Cpp()»
 					
 				«ENDFOR»
-				void «componentName»::OnOneShotTimer(const std::string& timerid){
+				//void «componentName»::OnOneShotTimer(const std::string& timerid){
+				//
+				//}
+				void «componentName»::OnGroupMessage(const riaps::groups::GroupId& groupId,
+									 capnp::FlatArrayMessageReader& capnpreader, riaps::ports::PortBase* port){
 				
 				}
 		
@@ -245,7 +250,7 @@ class CompCpp {
 		    }
 		}
 		
-		riaps::ComponentBase *create_component(_component_conf_j &config, riaps::Actor &actor) {
+		riaps::ComponentBase *create_component(_component_conf &config, riaps::Actor &actor) {
 		    auto result = new «applicationName.toLowerCase»::components::«componentName»(config, actor);
 		    return result;
 		}
