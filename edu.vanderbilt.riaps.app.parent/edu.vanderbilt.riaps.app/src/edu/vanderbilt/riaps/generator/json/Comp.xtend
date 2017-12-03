@@ -26,6 +26,8 @@ import edu.vanderbilt.riaps.app.EXIT
 import edu.vanderbilt.riaps.app.IGNORE
 import edu.vanderbilt.riaps.app.DeviceType
 import edu.vanderbilt.riaps.app.DeviceRequirement
+import edu.vanderbilt.riaps.app.QueryPort
+import edu.vanderbilt.riaps.app.AnswerPort
 
 @SuppressWarnings(#["unchecked", "rawtypes"]) class Comp {
 	String name
@@ -47,7 +49,7 @@ import edu.vanderbilt.riaps.app.DeviceRequirement
 		this.exceptHandler = ""
 
 		this.devices = new ArrayList<String>()
-		if (c.constraint!== null && c.constraint.size>1) {
+		if (c.constraint !== null && c.constraint.size > 1) {
 			if (c.getConstraint().get(0).getRequirements() !== null) {
 				for (DeviceRequirement x : c.getConstraint().get(0).getRequirements()) {
 					if (x instanceof CPURequirement) {
@@ -86,6 +88,8 @@ import edu.vanderbilt.riaps.app.DeviceRequirement
 		this.ports.put("subs", new HashMap<String, PubSubPort>())
 		this.ports.put("tims", new HashMap<String, TimePort>())
 		this.ports.put("inss", new HashMap<String, BoolPort>())
+		this.ports.put("qry", new HashMap<String, ClntSrvPort>())
+		this.ports.put("ans", new HashMap<String, ClntSrvPort>())
 		for (Port p : c.getPorts()) {
 			if (p instanceof ClntPort) {
 				var ClntSrvPort port = new ClntSrvPort((p as ClntPort))
@@ -93,6 +97,12 @@ import edu.vanderbilt.riaps.app.DeviceRequirement
 			} else if (p instanceof SrvPort) {
 				var ClntSrvPort port = new ClntSrvPort((p as SrvPort))
 				this.getPortMap("srvs").put(p.getName(), port)
+			} else if (p instanceof QueryPort) {
+				var ClntSrvPort port = new ClntSrvPort((p as QueryPort))
+				this.getPortMap("qry").put(p.getName(), port)
+			} else if (p instanceof AnswerPort) {
+				var ClntSrvPort port = new ClntSrvPort((p as AnswerPort))
+				this.getPortMap("ans").put(p.getName(), port)
 			} else if (p instanceof ReqPort) {
 				var ClntSrvPort port = new ClntSrvPort((p as ReqPort))
 				this.getPortMap("reqs").put(p.getName(), port)
@@ -176,6 +186,8 @@ import edu.vanderbilt.riaps.app.DeviceRequirement
 		this.ports.put("subs", new HashMap<String, PubSubPort>())
 		this.ports.put("tims", new HashMap<String, TimePort>())
 		this.ports.put("inss", new HashMap<String, BoolPort>())
+		this.ports.put("qry", new HashMap<String, ClntSrvPort>())
+		this.ports.put("ans", new HashMap<String, ClntSrvPort>())
 		for (Port p : c.getPorts()) {
 			if (p instanceof ClntPort) {
 				var ClntSrvPort port = new ClntSrvPort((p as ClntPort))
@@ -186,6 +198,12 @@ import edu.vanderbilt.riaps.app.DeviceRequirement
 			} else if (p instanceof ReqPort) {
 				var ClntSrvPort port = new ClntSrvPort((p as ReqPort))
 				this.getPortMap("reqs").put(p.getName(), port)
+			} else if (p instanceof QueryPort) {
+				var ClntSrvPort port = new ClntSrvPort((p as QueryPort))
+				this.getPortMap("qry").put(p.getName(), port)
+			} else if (p instanceof AnswerPort) {
+				var ClntSrvPort port = new ClntSrvPort((p as AnswerPort))
+				this.getPortMap("ans").put(p.getName(), port)
 			} else if (p instanceof RepPort) {
 				var ClntSrvPort port = new ClntSrvPort((p as RepPort))
 				this.getPortMap("reps").put(p.getName(), port)

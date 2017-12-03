@@ -1,7 +1,6 @@
 grammar edu.vanderbilt.riaps.App with org.eclipse.xtext.common.Terminals
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
-
 generate app "http://www.vanderbilt.edu/riaps/App"
 //This is the main model rule
 Model returns Mdodel:
@@ -48,41 +47,32 @@ Number hidden():
 terminal BOOL:
 	'true' | 'false';
 
-	//A collection defines the top level entries in the riaps file.
+//A collection defines the top level entries in the riaps file.
 // These can just be component definitions or application definitions.
 
-//An application is the top level
-// These are the real FCO
+
 Collection:
 	Application
-	|DeviceType
-	|FType
+	| Component
+	| DeviceType
+	| FType
 	| Message;
-	
 
 FType returns FType:
 	FEnumerationType |
 	FStructType;
 
-	
 FStructType returns FStructType:
 //A message can only refer to a structure.	
-	{FStructType}
-	'struct' name=ID
-	'{'
-	(elements+=FField)*
-	'}';
-
+	{FStructType} 'struct' name=ID '{' (elements+=FField)* '}';
 
 FField:
-	//the [] declares a filed to be an array
+//the [] declares a filed to be an array
 	name=ID ':' type=FTypeRef (list?='[' ']')? (';')?;
 
-
 FTypeRef returns FTypeRef:
-		//These are references to types.
+//These are references to types.
 	predefined=FBasicTypeId | derived=[FType|FQN];
-
 
 enum FBasicTypeId returns FBasicTypeId:
 //These are the basic types that are supported by the datatypes language
@@ -115,30 +105,27 @@ FEnumerator returns FEnumerator:
 
 Message:
 	'message' name=ID (':' type=[FStructType|FQN])? (';')?;
-//The device types and their tags will be captured in datatypes. A different place for them can be found later.
+	//The device types and their tags will be captured in datatypes. A different place for them can be found later.
 //for crossreference 
-DeviceType :
-	'device' name=ID 
+DeviceType:
+	'device' name=ID
 	('()' | ('(' formals+=ComponentFormal (',' formals+=ComponentFormal)* ')')?)
 	'{'
-	  ((constraint+=DeviceUses)| (ports+=Port))+
+	((constraint+=DeviceUses) | (ports+=Port))+
 	'}';
 
 DeviceUses:
 	{DeviceUses}
 	'uses'
 	'{'
-		(requirements+=DeviceRequirement (';')?)*
-	'}'
-;
+	(requirements+=DeviceRequirement (';')?)*
+	'}';
 
 DeviceRequirement:
-	Library|Configuration|CPURequirement|IORequirement
-;	
+	Library | Configuration | CPURequirement | IORequirement;
 
 IORequirement:
-	'io' name=STRING
-;
+	'io' name=STRING;
 	// A component can be an application component or a device component.
 
 // This is an application component
@@ -149,7 +136,7 @@ Component:
 	('()' | ('(' formals+=ComponentFormal (',' formals+=ComponentFormal)* ')')?)
 	'{'
 	// A component can first declare several requirements. It then declares the ports that it provides.
-	((constraint+=ComponentUses)|(ports+=Port)|(handler+=exceptionHandler))+
+	((constraint+=ComponentUses) | (ports+=Port) | (handler+=exceptionHandler))+
 	// A component must have atleast one port 
 	'}';
 
@@ -168,9 +155,9 @@ EXIT:
 	{EXIT}
 	'exit' (';')?;
 
-//declare in us
+	//declare in us
 CPURequirement:
-	'cpu' percentage=INT'%'  ('over' TimeInterval_Number=INT 'us')?;
+	'cpu' percentage=INT '%' ('over' TimeInterval_Number=INT 'us')?;
 
 	/*
  * Rule that defines different supported time units.
@@ -203,11 +190,11 @@ Port:
 	| InsPort;
 
 QueryPort:
-	'qry' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' (deadline=Deadline)?
+	'qry' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' (deadlinelimit=DeadlineLimit)?
 	(ratelimit=RateLimit)? (';')?;
 
 AnswerPort:
-	'ans' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' (deadline=Deadline)?
+	'ans' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')'
 	(ratelimit=RateLimit)? (';')?;
 
 RateLimit:
@@ -221,13 +208,13 @@ SubPort:
 	'sub' name=ID ':' type=[Message|FQN] (ratelimit=RateLimit)? (';')?;
 
 	//deadlines can be specified for client server ports.
-Deadline:
+DeadlineLimit:
 	'within' deadline=INT units=TimeUnit;
 
 	// Client port (request and reply message types) - Owned by an SMI client
 // Client operation is expected to send on the port and then receive on the same port
 ClntPort:
-	'clt' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' (deadline=Deadline)?
+	'clt' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' (deadlinelimit=DeadlineLimit)?
 	(ratelimit=RateLimit)? (';')?;
 
 SrvPort:
@@ -235,7 +222,7 @@ SrvPort:
 	(ratelimit=RateLimit)? (';')?;
 
 ReqPort:
-	'req' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' (deadline=Deadline)?
+	'req' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' (deadlinelimit=DeadlineLimit)?
 	(ratelimit=RateLimit)? (';')?;
 
 RepPort:
@@ -289,7 +276,7 @@ Application returns Application:
 	'app' (name=ID)
 	'{'
 	//declare the libraries, actors, components (app-specific components - an app's actor can use components described in a non-app namespace)
-	((actors+=Actor) | (components+=Component) | (devices+=DeviceType)| (groups+=Group) | messages+=Message)+
+	((actors+=Actor) | (components+=Component) | (devices+=DeviceType) | (groups+=Group) | messages+=Message)+
 
 	//Optionally deployment constraints can be specified to control how an app is deployed.
 	// the constraints are specified by the app developer
@@ -301,25 +288,18 @@ Group:
 	'group' name=ID '{'
 	((useclauses+=UsesBlock)
 	|
-	(gmessageblock+=GMessageBlock)
-	)+	
-	'}'  
-	
-;
+	(gmessageblock+=GMessageBlock))+
+	'}';
 
 UsesBlock:
-	'uses' property+=GroupProperty (',' property+=GroupProperty)*(';')?
-;
+	'uses' property+=GroupProperty (',' property+=GroupProperty)* (';')?;
 
 GMessageBlock:
 	'messages' '{'
-		(('group'':' groupMessages+=[Message|FQN] (',' groupMessages+=[Message|FQN])* (';')?)
-		|
-		('consensus'':' consensusMessages+=[Message|FQN] (',' consensusMessages+=[Message|FQN])* (';')?)
-		)+
-	'}'
-;	
-
+	(('group' ':' groupMessages+=[Message|FQN] (',' groupMessages+=[Message|FQN])* (';')?)
+	|
+	('consensus' ':' consensusMessages+=[Message|FQN] (',' consensusMessages+=[Message|FQN])* (';')?))+
+	'}';
 
 GroupProperty:
 	Leader
@@ -378,7 +358,7 @@ ActorRequirement:
 	MemoryRequirement | StorageRequirement | ActorDeviceRequirement;
 
 ActorDeviceRequirement:
-	requ=CompDeviceRequirement ('tag' tagsequence=DeviceTagSequence)?  ;
+	requ=CompDeviceRequirement ('tag' tagsequence=DeviceTagSequence)?;
 
 MemoryRequirement:
 	'mem' Number=INT 'MB'?;
@@ -403,7 +383,7 @@ Actual returns Actual:
 	//ActualValue:
 //	(stringdefault=StringDefault | numberdefault=NumberDefault | boolDefault=BoolDefault | param=[ActorFormal|FQN]);
 Instance:
-	name=ID ':' type=[Component|FQN]   ('()'|('(' actuals+=Actual (',' (actuals+=Actual))* ')'))? (';')?;
+	name=ID ':' type=[Component|FQN] ('()' | ('(' actuals+=Actual (',' (actuals+=Actual))* ')'))? (';')?;
 
 
 	

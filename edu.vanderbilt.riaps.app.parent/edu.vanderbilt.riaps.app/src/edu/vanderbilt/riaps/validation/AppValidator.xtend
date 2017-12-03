@@ -142,7 +142,7 @@ class AppValidator extends AbstractAppValidator {
 	@Check
 	def checkComponentNameStartsWithCapital(Component message) {
 		if (!Character.isUpperCase(message.name.charAt(0))) {
-			error('Name should start with a capital', AppPackage.Literals.COMPONENT__NAME)
+			error('Name should start with a capital', AppPackage.Literals.COLLECTION__NAME)
 		}
 	}
 
@@ -166,7 +166,7 @@ class AppValidator extends AbstractAppValidator {
 		var block= component.constraint
 		
 		if (block.size() > 1) {
-			error('only one uses block is allowed in a component', AppPackage.Literals.COMPONENT__NAME)
+			error('only one uses block is allowed in a component', AppPackage.Literals.COLLECTION__NAME)
 		}
 	}
 	
@@ -186,7 +186,7 @@ class AppValidator extends AbstractAppValidator {
 		var block= component.handler
 		
 		if (block.size() > 1) {
-			error('only one exceptionHandler is allowed in a component', AppPackage.Literals.COMPONENT__NAME)
+			error('only one exceptionHandler is allowed in a component', AppPackage.Literals.COLLECTION__NAME)
 		}
 	}
 	
