@@ -29,7 +29,7 @@ class RepPortCpp extends PortCppBase{
              riaps::ports::PortBase *port)=0;
                         
             virtual bool Send«portFcnName»(capnp::MallocMessageBuilder& messageBuilder,
-            «gen.StructQualifiedName(reqType,"::")»::Builder& message);
+            «gen.StructQualifiedName(repType,"::")»::Builder& message);
 		'''
 		return content
 	}
@@ -47,7 +47,7 @@ class RepPortCpp extends PortCppBase{
 	
 	override String generateFW_H() {
 		val content = '''
-			virtual void On«portFcnName»(const const «gen.StructQualifiedName(reqType,"::")»::Reader &message, riaps::ports::PortBase *port);
+			virtual void On«portFcnName»(const «gen.StructQualifiedName(reqType,"::")»::Reader &message, riaps::ports::PortBase *port);
 			'''
 		return content
 	}
