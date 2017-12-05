@@ -171,7 +171,11 @@ class AppFormatter extends AbstractFormatter2 {
 		val open = actor.regionFor.keyword("{").prepend[noSpace; newLine].append[noSpace; newLine]
 		val close = actor.regionFor.keyword("}").prepend[noSpace; newLine].append[noSpace; newLine]
 		interior(open, close)[indent]
-		for (instance : actor.instances) {
+		for (instance : actor.compInstances) {
+			instance.format
+			instance.prepend[noSpace; newLine].append[noSpace; newLine]
+		}
+		for (instance : actor.devInstances) {
 			instance.format
 			instance.prepend[noSpace; newLine].append[noSpace; newLine]
 		}

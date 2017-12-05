@@ -5,7 +5,6 @@ import java.util.HashMap
 import java.util.List
 import java.util.Map
 import edu.vanderbilt.riaps.app.Actor
-import edu.vanderbilt.riaps.app.ActorDeviceRequirement
 import edu.vanderbilt.riaps.app.ComponentFormal
 import edu.vanderbilt.riaps.app.ComponentRequirement
 import edu.vanderbilt.riaps.app.EXIT
@@ -19,6 +18,7 @@ import edu.vanderbilt.riaps.app.Instance
 import edu.vanderbilt.riaps.app.MemoryRequirement
 import edu.vanderbilt.riaps.app.NAMEDHANDLER
 import edu.vanderbilt.riaps.app.StorageRequirement
+import edu.vanderbilt.riaps.app.DeviceInstance
 
 @SuppressWarnings(#["unused", "unchecked", "rawtypes"]) class JsonActor {
 	transient String name
@@ -66,10 +66,7 @@ import edu.vanderbilt.riaps.app.StorageRequirement
 					}
 					if (x instanceof StorageRequirement) {
 						this.space = ((x as StorageRequirement)).getNumber()
-					}
-					if (x instanceof ActorDeviceRequirement) {
-						this.devices.add(((x as ActorDeviceRequirement)).getRequ().getDeviceRequirement().getName())
-					}
+					}					
 				}
 			}
 		}
@@ -91,22 +88,25 @@ import edu.vanderbilt.riaps.app.StorageRequirement
 			critical.put("type", l.getName())
 			this.locals.add(critical)
 		}
-		for (Instance i : a.getCompsection().getInstances()) {
+		for (Instance i : a.getCompsection().compInstances) {
 			var JsonInstance instance = new JsonInstance(i)
 			this.instances.put(instance.getName(), instance)
 		}
-		if(a.constraint!=null)
-		{
-			for ( i : a.constraint.requirements) {
-				if(i instanceof ActorDeviceRequirement)
-				{
-					var JsonInstance instance = new JsonInstance(i.requ)
-					this.instances.put(instance.getName(), instance)
-				}
-				
-				
-			}
-		}		
+		for (DeviceInstance i : a.getCompsection().devInstances) {
+			var JsonInstance instance = new JsonInstance(i)
+			this.instances.put(instance.getName(), instance)
+			this.devices.add(i.deviceRequirement.name)
+		}
+//		if(a.constraint!=null)
+//		{
+//			for ( i : a.constraint.requirements) {
+//				if(i instanceof ActorDeviceRequirement)
+//				{
+//					var JsonInstance instance = new JsonInstance(i.requ)
+//					this.instances.put(instance.getName(), instance)
+//				}
+//			}
+//		}		
 		
 	}
 

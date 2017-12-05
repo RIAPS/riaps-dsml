@@ -42,6 +42,28 @@ class AppValidator extends AbstractAppValidator {
 	}
 
 	@Check
+	def checkDeviceTypeNoReuseWithinApp(DeviceType dev) {
+		if (dev.eContainer instanceof Application) {
+			if (dev.reuselib !== null) {
+				error('A device within an application cannot be imported from a library',
+					AppPackage.Literals.COLLECTION__NAME)
+			}
+		}
+	}
+	
+	
+	@Check
+	def checkComponentTypeNoReuseWithinApp(Component dev) {
+		if (dev.eContainer instanceof Application) {
+			if (dev.getReuselib() !== null) {
+				error('A device within an application cannot be imported from a library',
+					AppPackage.Literals.COLLECTION__NAME)
+			}
+		}
+	}
+	
+
+	@Check
 	def checkFStructNameDoesNotContainUnderscore(FStructType message) {
 		if (message.name.contains('_')) {
 			error('Name cannot contain underscore', AppPackage.Literals.COLLECTION__NAME)

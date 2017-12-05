@@ -19,6 +19,7 @@ import edu.vanderbilt.riaps.app.ComponentFormal
 import edu.vanderbilt.riaps.app.ActorFormal
 import edu.vanderbilt.riaps.app.InstanceSection
 import edu.vanderbilt.riaps.app.CompDeviceRequirement
+import edu.vanderbilt.riaps.app.DeviceInstance
 
 /**
  * This class contains custom scoping description.
@@ -51,25 +52,42 @@ class AppScopeProvider extends AbstractAppScopeProvider {
 				val candidates = EcoreUtil2.getAllContentsOfType(rootElement.type, ComponentFormal)
 				return Scopes.scopeFor(candidates)
 			}
-			if (rootElement instanceof CompDeviceRequirement){
+			if (rootElement instanceof DeviceInstance) {
+				val candidates = EcoreUtil2.getAllContentsOfType(rootElement.deviceRequirement, ComponentFormal)
+				return Scopes.scopeFor(candidates)
+			}
+			if (rootElement instanceof CompDeviceRequirement) {
 				val candidates = EcoreUtil2.getAllContentsOfType(rootElement.deviceRequirement, ComponentFormal)
 				return Scopes.scopeFor(candidates)
 			}
 		} else if (context instanceof Actual && reference == AppPackage.Literals.ACTUAL__ARG_VALUE) {
-			Console.instance.log(java.util.logging.Level.INFO, "arg value reference")
+			// Console.instance.log(java.util.logging.Level.INFO, "arg value reference")
 			val rootElement = context.eContainer
 			if (rootElement instanceof Instance) {
 				val instanceSection = rootElement.eContainer
 
 				if (instanceSection instanceof InstanceSection) {
 					val actor = instanceSection.eContainer
-					Console.instance.log(java.util.logging.Level.INFO, actor.class.name)
+					// Console.instance.log(java.util.logging.Level.INFO, actor.class.name)
 					if (actor instanceof Actor) {
 						val candidates = EcoreUtil2.getAllContentsOfType(actor, ActorFormal)
 						return Scopes.scopeFor(candidates)
-
 					}
 				}
+
+			}
+			if (rootElement instanceof DeviceInstance) {
+				val instanceSection = rootElement.eContainer
+
+				if (instanceSection instanceof InstanceSection) {
+					val actor = instanceSection.eContainer
+					// Console.instance.log(java.util.logging.Level.INFO, actor.class.name)
+					if (actor instanceof Actor) {
+						val candidates = EcoreUtil2.getAllContentsOfType(actor, ActorFormal)
+						return Scopes.scopeFor(candidates)
+					}
+				}
+
 			}
 		}
 

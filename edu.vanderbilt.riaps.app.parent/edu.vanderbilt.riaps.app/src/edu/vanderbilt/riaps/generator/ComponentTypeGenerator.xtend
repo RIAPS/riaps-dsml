@@ -17,7 +17,7 @@ public class ComponentTypeGenerator extends AbstractGenerator {
 		var formattedString = "";
 		
 		for (a : resource.allContents.toIterable.filter(Actor)) {
-			for (i : a.compsection.instances){
+			for (i : a.compsection.compInstances){
 				var compType = new CompType(a, i.type);
 				formattedString += gson.toJson(compType);
 			}

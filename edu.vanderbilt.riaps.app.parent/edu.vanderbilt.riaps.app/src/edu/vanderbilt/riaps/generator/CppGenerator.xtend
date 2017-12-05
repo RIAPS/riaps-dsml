@@ -29,8 +29,10 @@ public class CppGenerator extends AbstractGenerator {
 			generateForApp(e, fsa, null, null)
 		}
 		for (model : resource.allContents.toIterable.filter(Model)) {
-			var globalDevices = model.collections.filter(DeviceType)
-			var globalcomponents = model.collections.filter(Component)
+
+			var globalDevices = model.collections.filter(DeviceType).filter(dt|dt.reuselib === null)
+
+			var globalcomponents = model.collections.filter(Component).filter(co|co.reuselib === null)
 			generateForApp(null, fsa, globalcomponents, globalDevices)
 		}
 
