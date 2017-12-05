@@ -47,8 +47,7 @@ class RepPortCpp extends PortCppBase{
 	
 	override String generateFW_H() {
 		val content = '''
-			virtual void On«portFcnName»(const 
-			messages::«reqType»::Reader &message, riaps::ports::PortBase *port);
+			virtual void On«portFcnName»(const const «gen.StructQualifiedName(reqType,"::")»::Reader &message, riaps::ports::PortBase *port);
 			'''
 		return content
 	}

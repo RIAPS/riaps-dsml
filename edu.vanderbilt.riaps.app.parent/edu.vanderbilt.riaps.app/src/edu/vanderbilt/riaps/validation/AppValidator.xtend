@@ -42,6 +42,22 @@ class AppValidator extends AbstractAppValidator {
 	}
 
 	@Check
+	def checkFStructNameDoesNotContainUnderscore(FStructType message) {
+		if (message.name.contains('_')) {
+			error('Name cannot contain underscore', AppPackage.Literals.COLLECTION__NAME)
+		}
+
+	}
+
+	@Check
+	def checkEnumNameDoesNotContainUnderscore(FEnumerationType message) {
+		if (message.name.contains('_')) {
+			error('Name cannot contain underscore', AppPackage.Literals.COLLECTION__NAME)
+		}
+
+	}
+
+	@Check
 	def checkEnumStartsWithCapital(FEnumerationType message) {
 		if (!Character.isUpperCase(message.name.charAt(0))) {
 			error('Name should start with a capital', AppPackage.Literals.COLLECTION__NAME)
@@ -64,15 +80,15 @@ class AppValidator extends AbstractAppValidator {
 		}
 	}
 
-
-@Check
+	@Check
 	def checkMessageTypeNull(Message message) {
-		
-		if (message.type ===null) {
-			warning('Only python applications can use this message type. c++ applications cannot.', AppPackage.Literals.COLLECTION__NAME)
+
+		if (message.type === null) {
+			warning('Only python applications can use this message type. c++ applications cannot.',
+				AppPackage.Literals.COLLECTION__NAME)
 		}
 	}
-	
+
 	@Check
 	def checkGroupProperties(UsesBlock group) {
 		var leaders = group.property.filter(Leader)
@@ -97,15 +113,14 @@ class AppValidator extends AbstractAppValidator {
 			error('Name should start with a capital', AppPackage.Literals.COLLECTION__NAME)
 		}
 	}
-	
-	
+
 	@Check
 	def checkModelOnlyConstainsOneApp(Application app) {
 		var model = (app.eContainer as Model)
-		var apps= model.collections.filter(Application)
-		
-		if (apps.size()>1) {
-			error('One model should only contain one application', AppPackage.Literals.COLLECTION__NAME )
+		var apps = model.collections.filter(Application)
+
+		if (apps.size() > 1) {
+			error('One model should only contain one application', AppPackage.Literals.COLLECTION__NAME)
 		}
 	}
 
@@ -160,36 +175,33 @@ class AppValidator extends AbstractAppValidator {
 			error('only one message block is allowed in a group', AppPackage.Literals.GROUP__NAME)
 		}
 	}
-	
+
 	@Check
 	def checkComponentUsesBlock(Component component) {
-		var block= component.constraint
-		
+		var block = component.constraint
+
 		if (block.size() > 1) {
 			error('only one uses block is allowed in a component', AppPackage.Literals.COLLECTION__NAME)
 		}
 	}
-	
-		@Check
+
+	@Check
 	def checkDeviceTypeUsesBlock(DeviceType component) {
-		var block= component.constraint
-		
+		var block = component.constraint
+
 		if (block.size() > 1) {
-			error('only one uses block is allowed in a Device',AppPackage.Literals.COLLECTION__NAME)
+			error('only one uses block is allowed in a Device', AppPackage.Literals.COLLECTION__NAME)
 		}
 	}
-	
-	
-		
+
 	@Check
 	def checkComponentHandler(Component component) {
-		var block= component.handler
-		
+		var block = component.handler
+
 		if (block.size() > 1) {
 			error('only one exceptionHandler is allowed in a component', AppPackage.Literals.COLLECTION__NAME)
 		}
 	}
-	
 
 	@Check
 	def checkGroupMessageBlock(Group group) {
