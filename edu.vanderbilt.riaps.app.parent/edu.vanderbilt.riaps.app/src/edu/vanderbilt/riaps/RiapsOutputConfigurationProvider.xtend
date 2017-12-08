@@ -24,7 +24,8 @@ class RiapsOutputConfigurationProvider implements IOutputConfigurationProvider {
 		outputconfig.setOutputDirectory("./apps")
 		outputconfig.setOverrideExistingResources(true)
 		outputconfig.setCreateOutputDirectory(true)
-		outputconfig.setCleanUpDerivedResources(true)
+		//outputconfig.setCleanUpDerivedResources(true)
+		outputconfig.setCleanUpDerivedResources(false)
 		outputconfig.setSetDerivedProperty(true)
 		var hash1= newHashSet(outputconfig)
 
@@ -33,7 +34,7 @@ class RiapsOutputConfigurationProvider implements IOutputConfigurationProvider {
 		outputconfig.setOutputDirectory("./apps/include/base")
 		outputconfig.setOverrideExistingResources(true)
 		outputconfig.setCreateOutputDirectory(true)
-		outputconfig.setCleanUpDerivedResources(true)
+		outputconfig.setCleanUpDerivedResources(false)
 		outputconfig.setSetDerivedProperty(true)
 		hash1.add(outputconfig)
 		
@@ -43,7 +44,7 @@ class RiapsOutputConfigurationProvider implements IOutputConfigurationProvider {
 		outputconfig.setOutputDirectory("./apps/src/base")
 		outputconfig.setOverrideExistingResources(true)
 		outputconfig.setCreateOutputDirectory(true)
-		outputconfig.setCleanUpDerivedResources(true)
+		outputconfig.setCleanUpDerivedResources(false)
 		outputconfig.setSetDerivedProperty(true)
 		hash1.add(outputconfig)
 		
@@ -73,7 +74,7 @@ class RiapsOutputConfigurationProvider implements IOutputConfigurationProvider {
 		outputconfig.setOutputDirectory("./apps/configs/")
 		outputconfig.setOverrideExistingResources(true)
 		outputconfig.setCreateOutputDirectory(true)
-		outputconfig.setCleanUpDerivedResources(true)
+		outputconfig.setCleanUpDerivedResources(false)
 		outputconfig.setSetDerivedProperty(true)
 		
 		hash1.add(outputconfig)
@@ -83,7 +84,7 @@ class RiapsOutputConfigurationProvider implements IOutputConfigurationProvider {
 		outputconfig.setOutputDirectory("./apps/messages/")
 		outputconfig.setOverrideExistingResources(true)
 		outputconfig.setCreateOutputDirectory(true)
-		outputconfig.setCleanUpDerivedResources(true)
+		outputconfig.setCleanUpDerivedResources(false)
 		outputconfig.setSetDerivedProperty(true)
 		hash1.add(outputconfig)
 

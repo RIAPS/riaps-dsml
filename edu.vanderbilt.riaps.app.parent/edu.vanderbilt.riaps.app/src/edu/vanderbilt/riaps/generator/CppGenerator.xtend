@@ -22,18 +22,19 @@ import edu.vanderbilt.riaps.app.Model
 public class CppGenerator extends AbstractGenerator {
 
 	@Inject extension IQualifiedNameProvider
-	var HashSet<String> Appname = new HashSet<String>
+	
 
 	override doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
+		var HashSet<String> Appname = new HashSet<String>
 		for (e : resource.allContents.toIterable.filter(Application)) {
-			generateForApp(e, fsa, null, null)
+			generateForApp(e, fsa, null, null,Appname)
 		}
 		for (model : resource.allContents.toIterable.filter(Model)) {
 
 			var globalDevices = model.collections.filter(DeviceType).filter(dt|dt.reuselib === null)
 
 			var globalcomponents = model.collections.filter(Component).filter(co|co.reuselib === null)
-			generateForApp(null, fsa, globalcomponents, globalDevices)
+			generateForApp(null, fsa, globalcomponents, globalDevices,Appname)
 		}
 
 		fsa.generateFile(
@@ -49,21 +50,21 @@ public class CppGenerator extends AbstractGenerator {
 		fsa.generateFile(
 			"CMakeLists.txt",
 			IFileSystemAccess::DEFAULT_OUTPUT,
-			createTopCmakeLists
+			createTopCmakeLists(Appname)
 		)
 	}
 
 	protected def void generateForApp(Application myapp, IFileSystemAccess2 fsa, Iterable<Component> globalcomponents,
-		Iterable<DeviceType> globalDevices) {
+		Iterable<DeviceType> globalDevices,HashSet<String> Appname) {
 
 		// check and return if e contains messages that do not have a type
 		var AppCpp appCpp;
-		try {
+		//try {
 			appCpp = new AppCpp(myapp, this, globalcomponents, globalDevices)
-		} catch (NullPointerException except) {
+	//	} catch (NullPointerException except) {
 //Console.instance.log(java.util.logging.Level.SEVERE, except.toString);
-			return
-		}
+	//		return
+	//	}
 
 		Appname.add(appCpp.applicationName)
 		for (comp : appCpp.compList) {
@@ -160,7 +161,7 @@ public class CppGenerator extends AbstractGenerator {
 		return temp.toString
 	}
 
-	def createTopCmakeLists() {
+	def createTopCmakeLists(HashSet<String> Appname) {
 		'''
 			cmake_minimum_required(VERSION 3.0)
 			set(CMAKE_SYSTEM_NAME Linux)
