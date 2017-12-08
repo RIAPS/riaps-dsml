@@ -14,27 +14,27 @@ import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
 import org.eclipse.xtext.naming.IQualifiedNameProvider
-import org.eclipse.emf.common.util.EList
 import edu.vanderbilt.riaps.app.Component
 import edu.vanderbilt.riaps.app.DeviceType
 import edu.vanderbilt.riaps.app.Model
+import java.nio.file.Paths
+
 
 public class CppGenerator extends AbstractGenerator {
 
 	@Inject extension IQualifiedNameProvider
-	
 
 	override doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		var HashSet<String> Appname = new HashSet<String>
 		for (e : resource.allContents.toIterable.filter(Application)) {
-			generateForApp(e, fsa, null, null,Appname)
+			generateForApp(e, fsa, null, null, Appname)
 		}
 		for (model : resource.allContents.toIterable.filter(Model)) {
 
 			var globalDevices = model.collections.filter(DeviceType).filter(dt|dt.reuselib === null)
 
 			var globalcomponents = model.collections.filter(Component).filter(co|co.reuselib === null)
-			generateForApp(null, fsa, globalcomponents, globalDevices,Appname)
+			generateForApp(null, fsa, globalcomponents, globalDevices, Appname)
 		}
 
 		fsa.generateFile(
@@ -47,25 +47,60 @@ public class CppGenerator extends AbstractGenerator {
 			IFileSystemAccess::DEFAULT_OUTPUT,
 			createArmhfToolChain
 		)
-		fsa.generateFile(
-			"CMakeLists.txt",
-			IFileSystemAccess::DEFAULT_OUTPUT,
-			createTopCmakeLists(Appname)
-		)
+
+		var path = Paths.get("./apps/CMakeLists.txt");
+		var currentRelativePath = Paths.get("");
+		var s = currentRelativePath.toAbsolutePath().toString();
+
+		Console.instance.log(java.util.logging.Level.INFO, s + " is current");
+
+		// if (Files.exists(path))
+		// {
+		if (fsa.isFile("CMakeLists.txt", IFileSystemAccess::DEFAULT_OUTPUT)) {
+			var seq = fsa.readTextFile("CMakeLists.txt", IFileSystemAccess::DEFAULT_OUTPUT)
+			var StringBuilder data = new StringBuilder(seq)
+
+			Console.instance.log(java.util.logging.Level.SEVERE, data.toString);
+			for (a : Appname) {
+				var contentToCheck = appEntry(a)
+				if (!data.toString.contains(contentToCheck)) {
+					data.append(contentToCheck)
+				}
+			}
+			fsa.generateFile(
+				"CMakeLists.txt",
+				IFileSystemAccess::DEFAULT_OUTPUT,
+				data
+			)
+		} else {
+
+			// }
+			fsa.generateFile(
+				"CMakeLists.txt",
+				IFileSystemAccess::DEFAULT_OUTPUT,
+				createTopCmakeLists(Appname)
+			)
+
+		}
+	}
+
+	def appEntry(String a) {
+		'''
+			add_subdirectory(${CMAKE_SOURCE_DIR}/«a»)
+		'''
 	}
 
 	protected def void generateForApp(Application myapp, IFileSystemAccess2 fsa, Iterable<Component> globalcomponents,
-		Iterable<DeviceType> globalDevices,HashSet<String> Appname) {
+		Iterable<DeviceType> globalDevices, HashSet<String> Appname) {
 
 		// check and return if e contains messages that do not have a type
 		var AppCpp appCpp;
-		//try {
-			appCpp = new AppCpp(myapp, this, globalcomponents, globalDevices)
-	//	} catch (NullPointerException except) {
+		// try {
+		appCpp = new AppCpp(myapp, this, globalcomponents, globalDevices)
+		// } catch (NullPointerException except) {
 //Console.instance.log(java.util.logging.Level.SEVERE, except.toString);
-	//		return
-	//	}
-
+		// return
+		// }
 		Appname.add(appCpp.applicationName)
 		for (comp : appCpp.compList) {
 
@@ -116,7 +151,7 @@ public class CppGenerator extends AbstractGenerator {
 		}
 
 		var cmake = createCMakeList(appCpp)
-		var cmake_path = appCpp.applicationName + "//"+ "CMakeLists.txt"
+		var cmake_path = appCpp.applicationName + "//" + "CMakeLists.txt"
 		fsa.generateFile(
 			cmake_path,
 			IFileSystemAccess::DEFAULT_OUTPUT,
@@ -167,17 +202,17 @@ public class CppGenerator extends AbstractGenerator {
 			set(CMAKE_SYSTEM_NAME Linux)
 			set(CMAKE_CXX_FLAGS "-std=c++11")
 			set(CMAKE_C_FLAGS "-std=c99")
-			set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/${ARCH})		
-			set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/${ARCH})		
+			set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/${ARCH})
+			set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/${ARCH})
 			set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY  ${CMAKE_SOURCE_DIR}/bin/${ARCH})
 			#Library Dependencies
 			set(DEPENDENCIES ${RIAPS_PREFIX})
 			set (LIBALLPATH_INCLUDE ${DEPENDENCIES}/include)
-			set (LIBALLPATH_LIB ${DEPENDENCIES}/lib)						
-			link_directories(${LIBALLPATH_LIB})		
+			set (LIBALLPATH_LIB ${DEPENDENCIES}/lib)
+			link_directories(${LIBALLPATH_LIB})
 			include_directories(${CMAKE_SOURCE_DIR}/messages)
 			«FOR a : Appname»
-				add_subdirectory(${CMAKE_SOURCE_DIR}/«a»)		
+				add_subdirectory(${CMAKE_SOURCE_DIR}/«a»)
 			«ENDFOR»
 		'''
 	}
@@ -266,9 +301,9 @@ public class CppGenerator extends AbstractGenerator {
 							«ENDFOR»
 							)
 				«IF c.libraries.size==0»			
-				target_link_libraries(«c.componentName.toLowerCase» czmq riaps dl capnp kj)
+					target_link_libraries(«c.componentName.toLowerCase» czmq riaps dl capnp kj)
 				«ELSE»
-				target_link_libraries(«c.componentName.toLowerCase» czmq riaps dl capnp kj «FOR l:c.libraries SEPARATOR " "»«l»«ENDFOR»)
+					target_link_libraries(«c.componentName.toLowerCase» czmq riaps dl capnp kj «FOR l:c.libraries SEPARATOR " "»«l»«ENDFOR»)
 				«ENDIF»
 			«ENDFOR»
 		'''
