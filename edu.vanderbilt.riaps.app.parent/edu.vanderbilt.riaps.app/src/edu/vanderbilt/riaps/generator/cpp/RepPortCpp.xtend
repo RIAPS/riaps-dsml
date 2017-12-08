@@ -65,7 +65,7 @@ class RepPortCpp extends PortCppBase{
 	
 	override String generateBaseDispatch() {
 		val content = '''
-			if (portName == PORT_REP_REQUEST) {
+			if (portName == «macroName») {
 			                auto reader = capnpreader->getRoot<«gen.StructQualifiedName(reqType,"::")»>();
 			                On«portFcnName»(reader, port);
 			}

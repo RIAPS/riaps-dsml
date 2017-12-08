@@ -39,12 +39,12 @@ class ReqPortCpp extends PortCppBase {
     	val content = '''
 	        bool «componentName»Base::Send«portFcnName»(capnp::MallocMessageBuilder &messageBuilder, 
 	        «gen.StructQualifiedName(reqType,"::")»::Builder &message) {
-	        	std::cout<< "«componentName»Base::Send«portFcnName»()"<< std::endl;
+	        	//std::cout<< "«componentName»Base::Send«portFcnName»()"<< std::endl;
 	            return SendMessageOnPort(messageBuilder, «macroName»);
 	        }
 	
 	        bool «componentName»Base::Recv«portFcnName»(«gen.StructQualifiedName(repType,"::")»::Reader &message) {
-	        	std::cout<< "«componentName»Base::Recv«portFcnName»()"<< std::endl;
+	        	//std::cout<< "«componentName»Base::Recv«portFcnName»()"<< std::endl;
 	            auto port = GetRequestPortByName(«macroName»);
 	            if (port == NULL) return false;
 	
