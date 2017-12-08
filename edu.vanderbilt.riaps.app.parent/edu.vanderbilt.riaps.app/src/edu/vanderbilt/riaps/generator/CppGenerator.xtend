@@ -264,8 +264,11 @@ public class CppGenerator extends AbstractGenerator {
 								«ENDFOR»
 							«ENDFOR»
 							)
-							
-				target_link_libraries(«c.componentName.toLowerCase» czmq riaps dl capnp kj )
+				«IF c.libraries.size==0»			
+				target_link_libraries(«c.componentName.toLowerCase» czmq riaps dl capnp kj)
+				«ELSE»
+				target_link_libraries(«c.componentName.toLowerCase» czmq riaps dl capnp kj «FOR l:c.libraries SEPARATOR " "»«l»«ENDFOR»)
+				«ENDIF»
 			«ENDFOR»
 		'''
 		return content

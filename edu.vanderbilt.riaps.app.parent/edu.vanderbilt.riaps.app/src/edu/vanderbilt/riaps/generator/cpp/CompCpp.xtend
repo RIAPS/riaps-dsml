@@ -14,12 +14,16 @@ import edu.vanderbilt.riaps.app.ComponentFormal
 import edu.vanderbilt.riaps.app.FStructType
 import edu.vanderbilt.riaps.generator.CppGenerator
 import edu.vanderbilt.riaps.app.DeviceType
+import java.util.List
+import java.util.Set
+import edu.vanderbilt.riaps.app.Library
 
 @SuppressWarnings("unused", "unchecked")
 class CompCpp {
 	public String componentName
 	protected String applicationName
 	public var CppGenerator generator
+	public var Set<String> libraries = new HashSet<String>
 	protected var ports = new ArrayList<PortCppBase>
 	public var msgIncludes = new HashSet<FStructType>
 	protected var initParams = new ArrayList<String>
@@ -34,6 +38,15 @@ class CompCpp {
 		for (ComponentFormal formal : comp.getFormals()) {
 			initParams.add(formal.name)
 		}
+
+		for (use : comp.constraint) {
+			for (req : use.requirements) {
+				if (req instanceof Library) {
+					libraries.add(req.name.substring(3, req.name.length - 3))
+				}
+			}
+
+		}
 	}
 
 	new(DeviceType comp, String appName, HashMap<String, String> portMsgType, CppGenerator gen) {
@@ -41,7 +54,14 @@ class CompCpp {
 		applicationName = appName
 		generator = gen
 		createPorts(comp, portMsgType)
+		for (use : comp.constraint) {
+			for (req : use.requirements) {
+				if (req instanceof Library) {
+					libraries.add(req.name.substring(3, req.name.length - 3))
+				}
+			}
 
+		}
 		initParams.add("self")
 		for (ComponentFormal formal : comp.getFormals()) {
 			initParams.add(formal.name)
@@ -168,7 +188,7 @@ class CompCpp {
 					
 					void «componentName»Base::DispatchInsideMessage(zmsg_t* zmsg, riaps::ports::PortBase* port) {
 						    		//empty the header
-					 		    	}
+						    			}
 					 	
 					 	«FOR PortCppBase p : ports»
 					 		«p.generateBaseCpp()»
@@ -209,7 +229,7 @@ class CompCpp {
 					//virtual void OnOneShotTimer(const std::string& timerid);
 					void OnGroupMessage(const riaps::groups::GroupId& groupId, capnp::FlatArrayMessageReader& capnpreader, riaps::ports::PortBase* port);
 					
-		         virtual ~«componentName»();
+		      virtual ~«componentName»();
 		
 		        };
 		    }
