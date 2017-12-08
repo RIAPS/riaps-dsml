@@ -23,6 +23,7 @@ import edu.vanderbilt.riaps.app.Message
 import edu.vanderbilt.riaps.app.FEnumerationType
 import edu.vanderbilt.riaps.app.FEnumerator
 import edu.vanderbilt.riaps.app.Model
+import edu.vanderbilt.riaps.app.FField
 
 /**
  * This class contains custom validation rules. 
@@ -94,6 +95,18 @@ class AppValidator extends AbstractAppValidator {
 		}
 
 	}
+	
+	@Check
+	def checkElementStartsWithCapital(FField message) {
+		if (!Character.isLowerCase(message.name.charAt(0))) {
+			error('Name should start with a lower case letter', AppPackage.Literals.FFIELD__NAME)
+		}
+
+	}
+	
+		
+	
+	
 
 	@Check
 	def checkMessageDeclarationStartsWithCapital(Message message) {

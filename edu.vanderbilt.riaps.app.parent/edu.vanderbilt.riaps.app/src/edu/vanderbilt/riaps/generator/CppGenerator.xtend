@@ -38,7 +38,7 @@ public class CppGenerator extends AbstractGenerator {
 		}
 
 		fsa.generateFile(
-			"toolchain.host.cmake",
+			"toolchain.amd64.cmake",
 			IFileSystemAccess::DEFAULT_OUTPUT,
 			createx86ToolChain
 		)
@@ -70,7 +70,7 @@ public class CppGenerator extends AbstractGenerator {
 		for (comp : appCpp.compList) {
 
 			var base_h = comp.generateBaseH()
-			var base_h_path = appCpp.applicationName + "//" + comp.componentName + "Base.h"
+			var base_h_path = appCpp.applicationName + "//include//" + comp.componentName + "Base.h"
 			fsa.generateFile(
 				base_h_path,
 				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_BASE_INCLUDE,
@@ -79,7 +79,7 @@ public class CppGenerator extends AbstractGenerator {
 			Console.instance.log(java.util.logging.Level.INFO, base_h_path + " generated");
 
 			var base_cpp = comp.generateBaseCpp()
-			var base_cpp_path = appCpp.applicationName + "//" + comp.componentName + "Base.cc"
+			var base_cpp_path = appCpp.applicationName + "//src//" + comp.componentName + "Base.cc"
 			fsa.generateFile(
 				base_cpp_path,
 				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_BASE_SRC,
@@ -88,7 +88,7 @@ public class CppGenerator extends AbstractGenerator {
 			Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
 
 			var fw_h = comp.generateFW_H()
-			var fw_h_path = appCpp.applicationName + "//" + comp.componentName + ".h"
+			var fw_h_path = appCpp.applicationName + "//include//" + comp.componentName + ".h"
 			fsa.generateFile(
 				fw_h_path,
 				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_DEV_INCLUDE,
@@ -97,7 +97,7 @@ public class CppGenerator extends AbstractGenerator {
 			Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
 
 			var fw_cpp = comp.generateFW_Cpp()
-			var fw_cpp_path = appCpp.applicationName + "//" + comp.componentName + ".cc"
+			var fw_cpp_path = appCpp.applicationName + "//src//" + comp.componentName + ".cc"
 			fsa.generateFile(
 				fw_cpp_path,
 				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_DEV_SRC,
@@ -116,7 +116,7 @@ public class CppGenerator extends AbstractGenerator {
 		}
 
 		var cmake = createCMakeList(appCpp)
-		var cmake_path = appCpp.applicationName + ".cmake"
+		var cmake_path = appCpp.applicationName + "//"+ "CMakeLists.txt"
 		fsa.generateFile(
 			cmake_path,
 			IFileSystemAccess::DEFAULT_OUTPUT,
@@ -173,11 +173,11 @@ public class CppGenerator extends AbstractGenerator {
 			#Library Dependencies
 			set(DEPENDENCIES ${RIAPS_PREFIX})
 			set (LIBALLPATH_INCLUDE ${DEPENDENCIES}/include)
-			set (LIBALLPATH_LIB ${DEPENDENCIES}/lib)
-			include_directories(${CMAKE_SOURCE_DIR}/messages)			
-			link_directories(${LIBALLPATH_LIB})
+			set (LIBALLPATH_LIB ${DEPENDENCIES}/lib)						
+			link_directories(${LIBALLPATH_LIB})		
+			include_directories(${CMAKE_SOURCE_DIR}/messages)
 			«FOR a : Appname»
-				include(«a».cmake)		
+				add_subdirectory(${CMAKE_SOURCE_DIR}/«a»)		
 			«ENDFOR»
 		'''
 	}
@@ -222,9 +222,9 @@ public class CppGenerator extends AbstractGenerator {
 	def String createCMakeList(AppCpp app) {
 		val capnpMsgs = new HashSet<FType>
 		val content = '''
-			#Initial Setup		
-			include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/base/«app.applicationName»)
-			include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/dev/«app.applicationName»)
+			#Initial Setup	
+			project(«app.applicationName»)	
+			include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)			
 			
 			set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/${ARCH}/«app.applicationName»)		
 			set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/${ARCH}/«app.applicationName»)		
@@ -246,15 +246,16 @@ public class CppGenerator extends AbstractGenerator {
 				                   WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/messages"  
 				                   COMMAND capnp compile -oc++ "${CMAKE_SOURCE_DIR}/messages/«i.fullyQualifiedName.toString("/")».capnp" --import-path="${CMAKE_SOURCE_DIR}/messages"
 				                   )
+				
 			«ENDFOR»
 			
-			#component libraries
+			#component libraries			
 			«FOR c : app.compList»
 				
 				# «c.componentName»
 				add_library(«c.componentName.toLowerCase» 
-							SHARED ${CMAKE_CURRENT_SOURCE_DIR}/src/dev/«app.applicationName»/«c.componentName».cc
-							${CMAKE_CURRENT_SOURCE_DIR}/src/base/«app.applicationName»/«c.componentName»Base.cc
+							SHARED ${CMAKE_CURRENT_SOURCE_DIR}/src/«c.componentName».cc
+							${CMAKE_CURRENT_SOURCE_DIR}/src/«c.componentName»Base.cc
 							«FOR i: c.msgIncludes»
 								${CMAKE_SOURCE_DIR}/messages/«i.fullyQualifiedName.toString("/")».capnp.c++
 								«FOR el: i.elements»
