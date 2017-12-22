@@ -408,4 +408,14 @@
 			type="text">
 		</fileTypes>
 	</extension>
+ <extension
+       point="org.eclipse.ui.newWizards">
+    <wizard
+          class="edu.vanderbilt.riaps.ui.NewApp"
+          icon="icons/component.png"
+          id="edu.vanderbilt.riaps.ui.newApp"
+          name="RiapsApp"
+          project="true">
+    </wizard>
+ </extension>
 </plugin>

@@ -19,7 +19,6 @@ import edu.vanderbilt.riaps.app.DeviceType
 import edu.vanderbilt.riaps.app.Model
 import java.nio.file.Paths
 
-
 public class CppGenerator extends AbstractGenerator {
 
 	@Inject extension IQualifiedNameProvider
@@ -48,40 +47,42 @@ public class CppGenerator extends AbstractGenerator {
 			createArmhfToolChain
 		)
 
-		var path = Paths.get("./apps/CMakeLists.txt");
-		var currentRelativePath = Paths.get("");
-		var s = currentRelativePath.toAbsolutePath().toString();
+//		var path = Paths.get("./apps/CMakeLists.txt");
+//		var currentRelativePath = Paths.get("");
+//		var s = currentRelativePath.toAbsolutePath().toString();
+//
+//		Console.instance.log(java.util.logging.Level.INFO, s + " is current");
+//
+//		// if (Files.exists(path))
+//		// {
+//		if (fsa.isFile("CMakeLists.txt", IFileSystemAccess::DEFAULT_OUTPUT)) {
+//			var seq = fsa.readTextFile("CMakeLists.txt", IFileSystemAccess::DEFAULT_OUTPUT)
+//			var StringBuilder data = new StringBuilder(seq)
+//
+//			Console.instance.log(java.util.logging.Level.SEVERE, data.toString);
+//			for (a : Appname) {
+//				var contentToCheck = appEntry(a)
+//				if (!data.toString.contains(contentToCheck)) {
+//					data.append(contentToCheck)
+//				}
+//			}
+//			fsa.generateFile(
+//				"CMakeLists.txt",
+//				IFileSystemAccess::DEFAULT_OUTPUT,
+//				data
+//			)
+//		} else {
+//
+//			// }
+//			
+//
+//		}
+	fsa.generateFile(
+			"CMakeLists.txt",
+			IFileSystemAccess::DEFAULT_OUTPUT,
+			createTopCmakeLists(Appname)
+		)		
 
-		Console.instance.log(java.util.logging.Level.INFO, s + " is current");
-
-		// if (Files.exists(path))
-		// {
-		if (fsa.isFile("CMakeLists.txt", IFileSystemAccess::DEFAULT_OUTPUT)) {
-			var seq = fsa.readTextFile("CMakeLists.txt", IFileSystemAccess::DEFAULT_OUTPUT)
-			var StringBuilder data = new StringBuilder(seq)
-
-			Console.instance.log(java.util.logging.Level.SEVERE, data.toString);
-			for (a : Appname) {
-				var contentToCheck = appEntry(a)
-				if (!data.toString.contains(contentToCheck)) {
-					data.append(contentToCheck)
-				}
-			}
-			fsa.generateFile(
-				"CMakeLists.txt",
-				IFileSystemAccess::DEFAULT_OUTPUT,
-				data
-			)
-		} else {
-
-			// }
-			fsa.generateFile(
-				"CMakeLists.txt",
-				IFileSystemAccess::DEFAULT_OUTPUT,
-				createTopCmakeLists(Appname)
-			)
-
-		}
 	}
 
 	def appEntry(String a) {
@@ -105,7 +106,7 @@ public class CppGenerator extends AbstractGenerator {
 		for (comp : appCpp.compList) {
 
 			var base_h = comp.generateBaseH()
-			var base_h_path = appCpp.applicationName + "//include//" + comp.componentName + "Base.h"
+			var base_h_path =  "//cpp//include//" + comp.componentName + "Base.h"
 			fsa.generateFile(
 				base_h_path,
 				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_BASE_INCLUDE,
@@ -114,7 +115,7 @@ public class CppGenerator extends AbstractGenerator {
 			Console.instance.log(java.util.logging.Level.INFO, base_h_path + " generated");
 
 			var base_cpp = comp.generateBaseCpp()
-			var base_cpp_path = appCpp.applicationName + "//src//" + comp.componentName + "Base.cc"
+			var base_cpp_path =  "//cpp//" + comp.componentName + "Base.cc"
 			fsa.generateFile(
 				base_cpp_path,
 				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_BASE_SRC,
@@ -123,7 +124,7 @@ public class CppGenerator extends AbstractGenerator {
 			Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
 
 			var fw_h = comp.generateFW_H()
-			var fw_h_path = appCpp.applicationName + "//include//" + comp.componentName + ".h"
+			var fw_h_path =  "//cpp//include//" + comp.componentName + ".h"
 			fsa.generateFile(
 				fw_h_path,
 				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_DEV_INCLUDE,
@@ -132,7 +133,7 @@ public class CppGenerator extends AbstractGenerator {
 			Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
 
 			var fw_cpp = comp.generateFW_Cpp()
-			var fw_cpp_path = appCpp.applicationName + "//src//" + comp.componentName + ".cc"
+			var fw_cpp_path =  "//cpp//" + comp.componentName + ".cc"
 			fsa.generateFile(
 				fw_cpp_path,
 				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_DEV_SRC,
@@ -140,7 +141,7 @@ public class CppGenerator extends AbstractGenerator {
 			)
 			Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
 
-			var python_file_path = appCpp.applicationName + "//python//" + comp.componentName + ".py"
+			var python_file_path =  "//python//" + comp.componentName + ".py"
 			// if (!fsa.isFile(python_file_path)) {
 			fsa.generateFile(
 				python_file_path,
@@ -151,7 +152,7 @@ public class CppGenerator extends AbstractGenerator {
 		}
 
 		var cmake = createCMakeList(appCpp)
-		var cmake_path = appCpp.applicationName + "//" + "CMakeLists.txt"
+		var cmake_path = appCpp.applicationName+".cmake"
 		fsa.generateFile(
 			cmake_path,
 			IFileSystemAccess::DEFAULT_OUTPUT,
@@ -211,8 +212,9 @@ public class CppGenerator extends AbstractGenerator {
 			set (LIBALLPATH_LIB ${DEPENDENCIES}/lib)
 			link_directories(${LIBALLPATH_LIB})
 			include_directories(${CMAKE_SOURCE_DIR}/messages)
+			include_directories(${CMAKE_SOURCE_DIR}/cpp/include)
 			«FOR a : Appname»
-				add_subdirectory(${CMAKE_SOURCE_DIR}/«a»)
+				include(«a».cmake)
 			«ENDFOR»
 		'''
 	}
@@ -258,12 +260,7 @@ public class CppGenerator extends AbstractGenerator {
 		val capnpMsgs = new HashSet<FType>
 		val content = '''
 			#Initial Setup	
-			project(«app.applicationName»)	
-			include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)			
-			
-			set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/${ARCH}/«app.applicationName»)		
-			set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/${ARCH}/«app.applicationName»)		
-			set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY  ${CMAKE_SOURCE_DIR}/bin/${ARCH}/«app.applicationName»)
+			project(«app.applicationName»)				
 			#capnproto files		
 			«FOR c : app.compList»
 				«FOR i: c.msgIncludes»
@@ -289,8 +286,8 @@ public class CppGenerator extends AbstractGenerator {
 				
 				# «c.componentName»
 				add_library(«c.componentName.toLowerCase» 
-							SHARED ${CMAKE_CURRENT_SOURCE_DIR}/src/«c.componentName».cc
-							${CMAKE_CURRENT_SOURCE_DIR}/src/«c.componentName»Base.cc
+							SHARED ${CMAKE_CURRENT_SOURCE_DIR}/cpp/«c.componentName».cc
+							${CMAKE_CURRENT_SOURCE_DIR}/cpp/«c.componentName»Base.cc
 							«FOR i: c.msgIncludes»
 								${CMAKE_SOURCE_DIR}/messages/«i.fullyQualifiedName.toString("/")».capnp.c++
 								«FOR el: i.elements»

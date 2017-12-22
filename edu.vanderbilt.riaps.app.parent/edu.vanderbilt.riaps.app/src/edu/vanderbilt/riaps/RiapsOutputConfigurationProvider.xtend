@@ -21,7 +21,7 @@ class RiapsOutputConfigurationProvider implements IOutputConfigurationProvider {
 		
 		var OutputConfiguration outputconfig = new OutputConfiguration(IFileSystemAccess::DEFAULT_OUTPUT)
 		outputconfig.setDescription("Output Folder")
-		outputconfig.setOutputDirectory("./apps/")
+		outputconfig.setOutputDirectory("./src/")
 		outputconfig.setOverrideExistingResources(true)
 		outputconfig.setCreateOutputDirectory(true)
 		//outputconfig.setCleanUpDerivedResources(true)
@@ -31,7 +31,7 @@ class RiapsOutputConfigurationProvider implements IOutputConfigurationProvider {
 
 		outputconfig= new OutputConfiguration(DEFAULT_OUTPUT_BASE_INCLUDE)
 		outputconfig.setDescription("Output Folder")
-		outputconfig.setOutputDirectory("./apps/")
+		outputconfig.setOutputDirectory("./src/")
 		outputconfig.setOverrideExistingResources(true)
 		outputconfig.setCreateOutputDirectory(true)
 		outputconfig.setCleanUpDerivedResources(false)
@@ -41,7 +41,7 @@ class RiapsOutputConfigurationProvider implements IOutputConfigurationProvider {
 		
 		outputconfig= new OutputConfiguration(DEFAULT_OUTPUT_BASE_SRC)
 		outputconfig.setDescription("Output Folder")
-		outputconfig.setOutputDirectory("./apps/")
+		outputconfig.setOutputDirectory("./src/")
 		outputconfig.setOverrideExistingResources(true)
 		outputconfig.setCreateOutputDirectory(true)
 		outputconfig.setCleanUpDerivedResources(false)
@@ -51,7 +51,7 @@ class RiapsOutputConfigurationProvider implements IOutputConfigurationProvider {
 		
 		outputconfig= new OutputConfiguration(DEFAULT_OUTPUT_DEV_INCLUDE)
 		outputconfig.setDescription("Output Folder")
-		outputconfig.setOutputDirectory("./apps/")
+		outputconfig.setOutputDirectory("./src/")
 		outputconfig.setOverrideExistingResources(false)
 		outputconfig.setCreateOutputDirectory(true)
 		outputconfig.setCleanUpDerivedResources(false)
@@ -61,7 +61,7 @@ class RiapsOutputConfigurationProvider implements IOutputConfigurationProvider {
 		
 		outputconfig= new OutputConfiguration(DEFAULT_OUTPUT_DEV_SRC)
 		outputconfig.setDescription("Output Folder")
-		outputconfig.setOutputDirectory("./apps/")
+		outputconfig.setOutputDirectory("./src/")
 		outputconfig.setOverrideExistingResources(false)
 		outputconfig.setCreateOutputDirectory(true)
 		outputconfig.setCleanUpDerivedResources(false)
@@ -71,7 +71,7 @@ class RiapsOutputConfigurationProvider implements IOutputConfigurationProvider {
 			
 		outputconfig = new OutputConfiguration(DEFAULT_OUTPUT_JSON)
 		outputconfig.setDescription("Output JSON")
-		outputconfig.setOutputDirectory("./apps/json/")
+		outputconfig.setOutputDirectory("./src/json/")
 		outputconfig.setOverrideExistingResources(true)
 		outputconfig.setCreateOutputDirectory(true)
 		outputconfig.setCleanUpDerivedResources(false)
@@ -81,7 +81,7 @@ class RiapsOutputConfigurationProvider implements IOutputConfigurationProvider {
 		
 		outputconfig  = new OutputConfiguration(DEFAULT_OUTPUT_MESSAGE)
 		outputconfig.setDescription("Output Folder")
-		outputconfig.setOutputDirectory("./apps/messages/")
+		outputconfig.setOutputDirectory("./src/messages/")
 		outputconfig.setOverrideExistingResources(true)
 		outputconfig.setCreateOutputDirectory(true)
 		outputconfig.setCleanUpDerivedResources(false)

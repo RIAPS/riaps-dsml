@@ -47,7 +47,7 @@ add_custom_target(
     DEPENDS ${messagesrc}
     )
 '''
-		fsa.generateFile("CMakeLists.txt", RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_MESSAGE, topdatacmake)
+	//	fsa.generateFile("CMakeLists.txt", RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_MESSAGE, topdatacmake)
 
 	}
 }
