@@ -166,7 +166,7 @@ class StandAloneFileSystemAccess extends JavaIoFileSystemAccess {
 
 		hash1.put(RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_DEV_SRC, outputconfig)
 
-		outputconfig = new OutputConfiguration(RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_JSON)
+		outputconfig = new OutputConfiguration(RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_JSON_APP)
 		outputconfig.setDescription("Output JSON")
 		outputconfig.setOutputDirectory("./apps/configs/")
 		outputconfig.setOverrideExistingResources(true)
@@ -174,7 +174,7 @@ class StandAloneFileSystemAccess extends JavaIoFileSystemAccess {
 		outputconfig.setCleanUpDerivedResources(true)
 		outputconfig.setSetDerivedProperty(true)
 
-		hash1.put(RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_JSON, outputconfig)
+		hash1.put(RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_JSON_APP, outputconfig)
 
 		outputconfig = new OutputConfiguration(RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_MESSAGE)
 		outputconfig.setDescription("Output Folder")

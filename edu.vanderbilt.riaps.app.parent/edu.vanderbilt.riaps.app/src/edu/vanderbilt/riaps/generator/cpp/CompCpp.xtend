@@ -21,6 +21,8 @@ import edu.vanderbilt.riaps.app.Library
 @SuppressWarnings("unused", "unchecked")
 class CompCpp {
 	public String componentName
+	public Component comp_
+	public DeviceType device_
 	protected String applicationName
 	public var CppGenerator generator
 	public var Set<String> libraries = new HashSet<String>
@@ -32,7 +34,9 @@ class CompCpp {
 		componentName = comp.name
 		applicationName = appName
 		generator = gen
+		comp_=comp
 		createPorts(comp, portMsgType)
+		device_=null
 
 		initParams.add("self")
 		for (ComponentFormal formal : comp.getFormals()) {
@@ -51,6 +55,9 @@ class CompCpp {
 
 	new(DeviceType comp, String appName, HashMap<String, String> portMsgType, CppGenerator gen) {
 		componentName = comp.name
+		comp_=null
+		device_=comp
+		
 		applicationName = appName
 		generator = gen
 		createPorts(comp, portMsgType)

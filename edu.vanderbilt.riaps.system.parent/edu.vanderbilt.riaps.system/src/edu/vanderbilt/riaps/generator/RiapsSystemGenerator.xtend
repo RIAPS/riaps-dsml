@@ -32,7 +32,7 @@ class RiapsSystemGenerator extends AbstractGenerator{
 				var ActorDepl actorDepl = new ActorDepl(ad);
 				container.add(actorDepl);
 				var formattedString = gson.toJson(container);
-				fsa.generateFile(e.app.name+'_depl.json', RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_JSON, formattedString);
+				fsa.generateFile(e.app.name+'_depl.json', RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_JSON_APP, formattedString);
 			}
 		}
 

@@ -18,6 +18,8 @@ import edu.vanderbilt.riaps.app.Component
 import edu.vanderbilt.riaps.app.DeviceType
 import edu.vanderbilt.riaps.app.Model
 import java.nio.file.Paths
+import java.util.HashMap
+import edu.vanderbilt.riaps.generator.cpp.CompCpp
 
 public class CppGenerator extends AbstractGenerator {
 
@@ -25,25 +27,28 @@ public class CppGenerator extends AbstractGenerator {
 
 	override doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		var HashSet<String> Appname = new HashSet<String>
+		var HashMap<CompCpp, CharSequence> libraryTarget = new HashMap<CompCpp, CharSequence>
+		var HashMap<FType, CharSequence> MessageTarget= new HashMap<FType, CharSequence>
+		
 		for (e : resource.allContents.toIterable.filter(Application)) {
-			generateForApp(e, fsa, null, null, Appname)
+			generateForApp(e, fsa, null, null, Appname,libraryTarget,MessageTarget)
 		}
 		for (model : resource.allContents.toIterable.filter(Model)) {
 
 			var globalDevices = model.collections.filter(DeviceType).filter(dt|dt.reuselib === null)
 
 			var globalcomponents = model.collections.filter(Component).filter(co|co.reuselib === null)
-			generateForApp(null, fsa, globalcomponents, globalDevices, Appname)
+			generateForApp(null, fsa, globalcomponents, globalDevices, Appname,libraryTarget,MessageTarget)
 		}
 
 		fsa.generateFile(
-			"toolchain.amd64.cmake",
-			IFileSystemAccess::DEFAULT_OUTPUT,
+			".toolchain.amd64.cmake",
+			RiapsOutputConfigurationProvider::DEFAULT_OUTPUT_CMAKE,
 			createx86ToolChain
 		)
 		fsa.generateFile(
-			"toolchain.arm-linux-gnueabihf.cmake",
-			IFileSystemAccess::DEFAULT_OUTPUT,
+			".toolchain.arm-linux-gnueabihf.cmake",
+			RiapsOutputConfigurationProvider::DEFAULT_OUTPUT_CMAKE,
 			createArmhfToolChain
 		)
 
@@ -77,11 +82,11 @@ public class CppGenerator extends AbstractGenerator {
 //			
 //
 //		}
-	fsa.generateFile(
+		fsa.generateFile(
 			"CMakeLists.txt",
-			IFileSystemAccess::DEFAULT_OUTPUT,
-			createTopCmakeLists(Appname)
-		)		
+			RiapsOutputConfigurationProvider::DEFAULT_OUTPUT_CMAKE,
+			createTopCmakeLists(Appname,libraryTarget,MessageTarget)
+		)
 
 	}
 
@@ -92,7 +97,8 @@ public class CppGenerator extends AbstractGenerator {
 	}
 
 	protected def void generateForApp(Application myapp, IFileSystemAccess2 fsa, Iterable<Component> globalcomponents,
-		Iterable<DeviceType> globalDevices, HashSet<String> Appname) {
+		Iterable<DeviceType> globalDevices, HashSet<String> Appname,HashMap<CompCpp, CharSequence> libraryTarget,
+		HashMap<FType, CharSequence> MessageTarget) {
 
 		// check and return if e contains messages that do not have a type
 		var AppCpp appCpp;
@@ -106,7 +112,7 @@ public class CppGenerator extends AbstractGenerator {
 		for (comp : appCpp.compList) {
 
 			var base_h = comp.generateBaseH()
-			var base_h_path =  "//cpp//include//" + comp.componentName + "Base.h"
+			var base_h_path = "//include//" + comp.componentName + "Base.h"
 			fsa.generateFile(
 				base_h_path,
 				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_BASE_INCLUDE,
@@ -115,7 +121,7 @@ public class CppGenerator extends AbstractGenerator {
 			Console.instance.log(java.util.logging.Level.INFO, base_h_path + " generated");
 
 			var base_cpp = comp.generateBaseCpp()
-			var base_cpp_path =  "//cpp//" + comp.componentName + "Base.cc"
+			var base_cpp_path = comp.componentName + "Base.cc"
 			fsa.generateFile(
 				base_cpp_path,
 				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_BASE_SRC,
@@ -124,7 +130,7 @@ public class CppGenerator extends AbstractGenerator {
 			Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
 
 			var fw_h = comp.generateFW_H()
-			var fw_h_path =  "//cpp//include//" + comp.componentName + ".h"
+			var fw_h_path = "//include//" + comp.componentName + ".h"
 			fsa.generateFile(
 				fw_h_path,
 				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_DEV_INCLUDE,
@@ -133,7 +139,7 @@ public class CppGenerator extends AbstractGenerator {
 			Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
 
 			var fw_cpp = comp.generateFW_Cpp()
-			var fw_cpp_path =  "//cpp//" + comp.componentName + ".cc"
+			var fw_cpp_path = comp.componentName + ".cc"
 			fsa.generateFile(
 				fw_cpp_path,
 				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_DEV_SRC,
@@ -141,23 +147,23 @@ public class CppGenerator extends AbstractGenerator {
 			)
 			Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
 
-			var python_file_path =  "//python//" + comp.componentName + ".py"
+			var python_file_path = comp.componentName + ".py"
 			// if (!fsa.isFile(python_file_path)) {
 			fsa.generateFile(
 				python_file_path,
-				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_DEV_SRC,
+				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_DEV_PYTHON,
 				comp.generate_python
 			)
 
 		}
 
-		var cmake = createCMakeList(appCpp)
-		var cmake_path = appCpp.applicationName+".cmake"
-		fsa.generateFile(
-			cmake_path,
-			IFileSystemAccess::DEFAULT_OUTPUT,
-			cmake
-		)
+		createCMakeList(appCpp,libraryTarget,MessageTarget)
+//		var cmake_path = appCpp.applicationName + ".cmake"
+//		fsa.generateFile(
+//			cmake_path,
+//			RiapsOutputConfigurationProvider::DEFAULT_OUTPUT_CMAKE,
+//			cmake
+//		)
 
 	}
 
@@ -197,7 +203,8 @@ public class CppGenerator extends AbstractGenerator {
 		return temp.toString
 	}
 
-	def createTopCmakeLists(HashSet<String> Appname) {
+	def createTopCmakeLists(HashSet<String> Appname,HashMap<CompCpp, CharSequence> libraryTarget,
+		HashMap<FType, CharSequence> MessageTarget) {
 		'''
 			cmake_minimum_required(VERSION 3.0)
 			set(CMAKE_SYSTEM_NAME Linux)
@@ -211,11 +218,26 @@ public class CppGenerator extends AbstractGenerator {
 			set (LIBALLPATH_INCLUDE ${DEPENDENCIES}/include)
 			set (LIBALLPATH_LIB ${DEPENDENCIES}/lib)
 			link_directories(${LIBALLPATH_LIB})
-			include_directories(${CMAKE_SOURCE_DIR}/messages)
+			include_directories(${CMAKE_SOURCE_DIR}//messages-gen)
 			include_directories(${CMAKE_SOURCE_DIR}/cpp/include)
-			«FOR a : Appname»
-				include(«a».cmake)
+«««			«FOR a : Appname»
+«««				include(«a».cmake)
+«««			«ENDFOR»
+			«FOR m:MessageTarget.keySet»
+			 			
+			# Generating the headers and cpp for message «m»
+			«MessageTarget.get(m)»
 			«ENDFOR»
+			«FOR m:libraryTarget.keySet»
+			 
+			«IF m.comp_==null»
+			# Creating Libraries for Component «m.device_»
+			«ELSE»
+			# Creating Libraries for Component «m.comp_»
+			«ENDIF»
+			«libraryTarget.get(m)»
+			«ENDFOR»
+			
 		'''
 	}
 
@@ -256,54 +278,50 @@ public class CppGenerator extends AbstractGenerator {
 		'''
 	}
 
-	def String createCMakeList(AppCpp app) {
+	def void createCMakeList(AppCpp app, HashMap<CompCpp, CharSequence> libraryTarget,
+		HashMap<FType, CharSequence> MessageTarget) {
 		val capnpMsgs = new HashSet<FType>
-		val content = '''
-			#Initial Setup	
-			project(«app.applicationName»)				
-			#capnproto files		
-			«FOR c : app.compList»
-				«FOR i: c.msgIncludes»
-					«{capnpMsgs.add(i);""}»
-					«FOR el: i.elements»
-						«IF el.type.derived!==null»
-							«{capnpMsgs.add(el.type.derived);""}»
-						«ENDIF»
-					«ENDFOR»
-				«ENDFOR»
-			      «ENDFOR»
-			«FOR i : capnpMsgs»		
-				add_custom_command(OUTPUT  "${CMAKE_SOURCE_DIR}/messages/«i.fullyQualifiedName.toString("/")».capnp.c++"
-				                   DEPENDS "${CMAKE_SOURCE_DIR}/messages/«i.fullyQualifiedName.toString("/")».capnp" 
-				                   WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/messages"  
-				                   COMMAND capnp compile -oc++ "${CMAKE_SOURCE_DIR}/messages/«i.fullyQualifiedName.toString("/")».capnp" --import-path="${CMAKE_SOURCE_DIR}/messages"
-				                   )
-				
-			«ENDFOR»
-			
-			#component libraries			
-			«FOR c : app.compList»
-				
-				# «c.componentName»
-				add_library(«c.componentName.toLowerCase» 
-							SHARED ${CMAKE_CURRENT_SOURCE_DIR}/cpp/«c.componentName».cc
-							${CMAKE_CURRENT_SOURCE_DIR}/cpp/«c.componentName»Base.cc
-							«FOR i: c.msgIncludes»
-								${CMAKE_SOURCE_DIR}/messages/«i.fullyQualifiedName.toString("/")».capnp.c++
-								«FOR el: i.elements»
-									«IF el.type.derived!==null»
-										${CMAKE_SOURCE_DIR}/messages/«el.type.derived.fullyQualifiedName.toString("/")».capnp.c++					
-									«ENDIF»
-								«ENDFOR»
-							«ENDFOR»
-							)
+		for (c : app.compList) {
+			for (i : c.msgIncludes) {
+				capnpMsgs.add(i)
+				for (e1 : i.elements) {
+					if (e1.type.derived !== null) {
+						capnpMsgs.add(e1.type.derived)
+					}
+				}
+			}
+			var libout = '''
+				add_library(«c.componentName» 
+											SHARED ${CMAKE_CURRENT_SOURCE_DIR}/cpp/«c.componentName».cc
+											${CMAKE_CURRENT_SOURCE_DIR}/cpp/«c.componentName»Base.cc
+											«FOR i : c.msgIncludes»
+												${CMAKE_SOURCE_DIR}/messages-gen/«i.fullyQualifiedName.toString("/")».capnp.c++
+												«FOR el: i.elements»
+													«IF el.type.derived!==null»
+														${CMAKE_SOURCE_DIR}/messages-gen/«el.type.derived.fullyQualifiedName.toString("/")».capnp.c++					
+													«ENDIF»
+												«ENDFOR»
+											«ENDFOR»
+											)
 				«IF c.libraries.size==0»			
-					target_link_libraries(«c.componentName.toLowerCase» czmq riaps dl capnp kj)
+					target_link_libraries(«c.componentName» czmq riaps dl capnp kj)
 				«ELSE»
-					target_link_libraries(«c.componentName.toLowerCase» czmq riaps dl capnp kj «FOR l:c.libraries SEPARATOR " "»«l»«ENDFOR»)
+					target_link_libraries(«c.componentName» czmq riaps dl capnp kj «FOR l:c.libraries SEPARATOR " "»«l»«ENDFOR»)
 				«ENDIF»
-			«ENDFOR»
-		'''
-		return content
+			'''
+			libraryTarget.put(c, libout)
+
+		}
+		for (i : capnpMsgs) {
+			var out = '''
+				add_custom_command(OUTPUT  "${CMAKE_SOURCE_DIR}/messages-gen/«i.fullyQualifiedName.toString("/")».capnp.c++"
+								                   DEPENDS "${CMAKE_SOURCE_DIR}/messages-gen/«i.fullyQualifiedName.toString("/")».capnp" 
+								                   WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}//messages-gen"  
+								                   COMMAND capnp compile -oc++ "${CMAKE_SOURCE_DIR}/messages-gen/«i.fullyQualifiedName.toString("/")».capnp" --import-path="${CMAKE_SOURCE_DIR}//messages-gen"
+								                   )
+			'''
+			MessageTarget.put(i, out)
+		}
+
 	}
 }

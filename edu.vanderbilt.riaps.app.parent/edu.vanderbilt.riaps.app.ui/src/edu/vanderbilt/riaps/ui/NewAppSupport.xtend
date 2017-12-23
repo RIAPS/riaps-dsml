@@ -17,6 +17,8 @@ import org.eclipse.core.resources.IFile
 import java.io.InputStream
 import java.io.ByteArrayInputStream
 import org.eclipse.emf.edit.command.CreateChildCommand.Helper
+import org.eclipse.core.resources.IResourceFilterDescription
+import org.eclipse.core.resources.FileInfoMatcherDescription
 
 class NewAppSupport {
 
@@ -38,6 +40,7 @@ class NewAppSupport {
 		Assert.isNotNull(projectName)
 		Assert.isTrue(projectName.trim().length() > 0)
 		var IProject project = createBaseProject(projectName, location)
+	
 		try {
 			addNature(project)
 			//var String[] paths = #["src/build/armhf", "src/build/amd64"]
@@ -104,7 +107,7 @@ class NewAppSupport {
 		else
 			mkdir -p src/bin/armhf/build
 			cd src/bin/armhf/build/ && \
-			cmake -DCMAKE_TOOLCHAIN_FILE=toolchain.arm-linux-gnueabihf.cmake  ../../..
+			cmake -DCMAKE_TOOLCHAIN_FILE=.toolchain.arm-linux-gnueabihf.cmake  ../../..
 			@echo "done"
 		endif
 		
@@ -114,7 +117,7 @@ class NewAppSupport {
 		else
 			mkdir -p src/bin/amd64/build/
 			cd src/bin/amd64/build/ && \
-			cmake -DCMAKE_TOOLCHAIN_FILE=toolchain.amd64.cmake  ../../..
+			cmake -DCMAKE_TOOLCHAIN_FILE=.toolchain.amd64.cmake  ../../..
 			@echo "done"
 		endif
 		'''
@@ -571,8 +574,8 @@ class NewAppSupport {
 				<pathentry kind="mac" name="__WCHAR_UNSIGNED__" path="" value="1"/>
 				<pathentry kind="mac" name="_GNU_SOURCE" path="" value="1"/>
 				<pathentry include="/opt/riaps/armhf/include" kind="inc" path="" system="true"/>
-				<pathentry include="src/messages" kind="inc" path="" system="true"/>
-				<pathentry include="src/cpp/include/" kind="inc" path="" system="true"/>
+				<pathentry include="messages-gen" kind="inc" path="" system="true"/>
+				<pathentry include="cpp/include/" kind="inc" path="" system="true"/>
 				<pathentry include="/usr/lib/gcc-cross/arm-linux-gnueabihf/5/include" kind="inc" path="" system="true"/>
 				<pathentry include="/usr/lib/gcc-cross/arm-linux-gnueabihf/5/include-fixed" kind="inc" path="" system="true"/>
 				<pathentry include="/usr/arm-linux-gnueabihf/include" kind="inc" path="" system="true"/>
@@ -660,6 +663,14 @@ class NewAppSupport {
 		if (!file.exists) {
 			file.create(source, false, null);
 		}
+	}
+	
+	def private static void addresourcefilters(IProject newProject) throws CoreException{
+		var folder = newProject.getFolder(".");
+		folder.createFilter(
+    	IResourceFilterDescription.FILES,
+        new FileInfoMatcherDescription("cmake",  
+            "*.cmake"), 0, null);
 	}
 	
 	def private static void addCproject(IProject newProject) throws CoreException {
