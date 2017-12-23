@@ -96,27 +96,27 @@ class NewAppSupport {
 	def private static createMakefile() {
 		'''
 		CMAKE := $(shell which cmake 2> /dev/null)
-		all: src/bin/armhf/build/Makefile src/bin/amd64/build/Makefile 
+		all: bin/armhf/build/Makefile bin/amd64/build/Makefile 
 		
 		realclean:		
-			rm -rf src/bin
+			rm -rf bin
 		
-		src/bin/armhf/build/Makefile: src/CMakeLists.txt
+		bin/armhf/build/Makefile: src/CMakeLists.txt
 		ifndef CMAKE
 			$(error "cmake is not available. Please install")
 		else
-			mkdir -p src/bin/armhf/build
-			cd src/bin/armhf/build/ && \
+			mkdir -p bin/armhf/build
+			cd bin/armhf/build/ && \
 			cmake -DCMAKE_TOOLCHAIN_FILE=.toolchain.arm-linux-gnueabihf.cmake  ../../..
 			@echo "done"
 		endif
 		
-		src/bin/amd64/build/Makefile: src/CMakeLists.txt
+		bin/amd64/build/Makefile: src/CMakeLists.txt
 		ifndef CMAKE
 			$(error "cmake is not available. Please install")
 		else
-			mkdir -p src/bin/amd64/build/
-			cd src/bin/amd64/build/ && \
+			mkdir -p bin/amd64/build/
+			cd bin/amd64/build/ && \
 			cmake -DCMAKE_TOOLCHAIN_FILE=.toolchain.amd64.cmake  ../../..
 			@echo "done"
 		endif
@@ -589,7 +589,7 @@ class NewAppSupport {
 				<buildTargets>
 					<target name="all-armhf" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
 						<buildCommand>make</buildCommand>
-						<buildArguments>-C src/bin/armhf/build -j2</buildArguments>
+						<buildArguments>-C bin/armhf/build -j2</buildArguments>
 						<buildTarget>all</buildTarget>
 						<stopOnError>true</stopOnError>
 						<useDefaultCommand>false</useDefaultCommand>
@@ -597,7 +597,7 @@ class NewAppSupport {
 					</target>
 					<target name="clean-armhf" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
 						<buildCommand>make</buildCommand>
-						<buildArguments>-C src/bin/armhf/build  -j2</buildArguments>
+						<buildArguments>-C bin/armhf/build  -j2</buildArguments>
 						<buildTarget>clean</buildTarget>
 						<stopOnError>true</stopOnError>
 						<useDefaultCommand>false</useDefaultCommand>
@@ -605,7 +605,7 @@ class NewAppSupport {
 					</target>
 					<target name="clean-amd64" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
 						<buildCommand>make</buildCommand>
-						<buildArguments>-C src/bin/amd64/build -j2</buildArguments>
+						<buildArguments>-C bin/amd64/build -j2</buildArguments>
 						<buildTarget>clean</buildTarget>
 						<stopOnError>true</stopOnError>
 						<useDefaultCommand>false</useDefaultCommand>
@@ -621,7 +621,7 @@ class NewAppSupport {
 					</target>
 					<target name="all-amd64" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
 						<buildCommand>make</buildCommand>
-						<buildArguments>-C src/bin/amd64/build -j2</buildArguments>
+						<buildArguments>-C bin/amd64/build -j2</buildArguments>
 						<buildTarget>all</buildTarget>
 						<stopOnError>true</stopOnError>
 						<useDefaultCommand>false</useDefaultCommand>
