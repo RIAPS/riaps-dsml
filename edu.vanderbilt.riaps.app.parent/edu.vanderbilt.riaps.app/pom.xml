@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>edu.vanderbilt.riaps.app</groupId>
 		<artifactId>edu.vanderbilt.riaps.app.parent</artifactId>
-		<version>0.8.7-SNAPSHOT</version>
+		<version>0.8.8-SNAPSHOT</version>
 	</parent>
 	<artifactId>edu.vanderbilt.riaps.app</artifactId>
 	<packaging>eclipse-plugin</packaging>
