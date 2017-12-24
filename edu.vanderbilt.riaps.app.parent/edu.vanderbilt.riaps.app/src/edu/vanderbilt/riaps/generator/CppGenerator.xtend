@@ -20,6 +20,11 @@ import edu.vanderbilt.riaps.app.Model
 import java.nio.file.Paths
 import java.util.HashMap
 import edu.vanderbilt.riaps.generator.cpp.CompCpp
+import org.eclipse.swt.internal.Platform
+import org.eclipse.core.runtime.URIUtil
+import org.eclipse.core.runtime.FileLocator
+import org.eclipse.xtext.generator.IFileSystemAccessExtension2
+import org.eclipse.emf.common.CommonPlugin
 
 public class CppGenerator extends AbstractGenerator {
 
@@ -28,17 +33,17 @@ public class CppGenerator extends AbstractGenerator {
 	override doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		var HashSet<String> Appname = new HashSet<String>
 		var HashMap<CompCpp, CharSequence> libraryTarget = new HashMap<CompCpp, CharSequence>
-		var HashMap<FType, CharSequence> MessageTarget= new HashMap<FType, CharSequence>
-		
+		var HashMap<FType, CharSequence> MessageTarget = new HashMap<FType, CharSequence>
+
 		for (e : resource.allContents.toIterable.filter(Application)) {
-			generateForApp(e, fsa, null, null, Appname,libraryTarget,MessageTarget)
+			generateForApp(e, fsa, null, null, Appname, libraryTarget, MessageTarget)
 		}
 		for (model : resource.allContents.toIterable.filter(Model)) {
 
 			var globalDevices = model.collections.filter(DeviceType).filter(dt|dt.reuselib === null)
 
 			var globalcomponents = model.collections.filter(Component).filter(co|co.reuselib === null)
-			generateForApp(null, fsa, globalcomponents, globalDevices, Appname,libraryTarget,MessageTarget)
+			generateForApp(null, fsa, globalcomponents, globalDevices, Appname, libraryTarget, MessageTarget)
 		}
 
 		fsa.generateFile(
@@ -51,6 +56,11 @@ public class CppGenerator extends AbstractGenerator {
 			RiapsOutputConfigurationProvider::DEFAULT_OUTPUT_CMAKE,
 			createArmhfToolChain
 		)
+		
+		var uri = (fsa as IFileSystemAccessExtension2).getURI(".toolchain.arm-linux-gnueabihf.cmake")
+		Console.instance.log(java.util.logging.Level.INFO, "generated "+CommonPlugin.resolve(uri));
+		Console.instance.log(java.util.logging.Level.INFO, "generated "+CommonPlugin.resolve(resource.URI));
+		
 
 //		var path = Paths.get("./apps/CMakeLists.txt");
 //		var currentRelativePath = Paths.get("");
@@ -85,9 +95,13 @@ public class CppGenerator extends AbstractGenerator {
 		fsa.generateFile(
 			"CMakeLists.txt",
 			RiapsOutputConfigurationProvider::DEFAULT_OUTPUT_CMAKE,
-			createTopCmakeLists(Appname,libraryTarget,MessageTarget)
+			createTopCmakeLists(Appname, libraryTarget, MessageTarget)
 		)
-
+		fsa.generateFile(
+			".clang-format",
+			RiapsOutputConfigurationProvider::DEFAULT_OUTPUT_CMAKE,
+			clangformatter
+		)
 	}
 
 	def appEntry(String a) {
@@ -97,17 +111,17 @@ public class CppGenerator extends AbstractGenerator {
 	}
 
 	protected def void generateForApp(Application myapp, IFileSystemAccess2 fsa, Iterable<Component> globalcomponents,
-		Iterable<DeviceType> globalDevices, HashSet<String> Appname,HashMap<CompCpp, CharSequence> libraryTarget,
+		Iterable<DeviceType> globalDevices, HashSet<String> Appname, HashMap<CompCpp, CharSequence> libraryTarget,
 		HashMap<FType, CharSequence> MessageTarget) {
 
 		// check and return if e contains messages that do not have a type
 		var AppCpp appCpp;
-		// try {
-		appCpp = new AppCpp(myapp, this, globalcomponents, globalDevices)
-		// } catch (NullPointerException except) {
-//Console.instance.log(java.util.logging.Level.SEVERE, except.toString);
-		// return
-		// }
+		try {
+			appCpp = new AppCpp(myapp, this, globalcomponents, globalDevices)
+		} catch (NullPointerException except) {
+			Console.instance.log(java.util.logging.Level.SEVERE, except.message);
+			return
+		}
 		Appname.add(appCpp.applicationName)
 		for (comp : appCpp.compList) {
 
@@ -118,7 +132,7 @@ public class CppGenerator extends AbstractGenerator {
 				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_BASE_INCLUDE,
 				base_h.beautify
 			)
-			Console.instance.log(java.util.logging.Level.INFO, base_h_path + " generated");
+			//Console.instance.log(java.util.logging.Level.INFO, base_h_path + " generated");
 
 			var base_cpp = comp.generateBaseCpp()
 			var base_cpp_path = comp.componentName + "Base.cc"
@@ -127,7 +141,7 @@ public class CppGenerator extends AbstractGenerator {
 				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_BASE_SRC,
 				base_cpp.beautify
 			)
-			Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
+///			Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
 
 			var fw_h = comp.generateFW_H()
 			var fw_h_path = "//include//" + comp.componentName + ".h"
@@ -136,7 +150,7 @@ public class CppGenerator extends AbstractGenerator {
 				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_DEV_INCLUDE,
 				fw_h.beautify
 			)
-			Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
+	//		Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
 
 			var fw_cpp = comp.generateFW_Cpp()
 			var fw_cpp_path = comp.componentName + ".cc"
@@ -145,7 +159,7 @@ public class CppGenerator extends AbstractGenerator {
 				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_DEV_SRC,
 				fw_cpp.beautify
 			)
-			Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
+			//Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
 
 			var python_file_path = comp.componentName + ".py"
 			// if (!fsa.isFile(python_file_path)) {
@@ -154,17 +168,20 @@ public class CppGenerator extends AbstractGenerator {
 				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_DEV_PYTHON,
 				comp.generate_python
 			)
+			
+			
+			
+			
 
 		}
 
-		createCMakeList(appCpp,libraryTarget,MessageTarget)
+		createCMakeList(appCpp, libraryTarget, MessageTarget)
 //		var cmake_path = appCpp.applicationName + ".cmake"
 //		fsa.generateFile(
 //			cmake_path,
 //			RiapsOutputConfigurationProvider::DEFAULT_OUTPUT_CMAKE,
 //			cmake
 //		)
-
 	}
 
 	def CharSequence beautify(CharSequence sequence) {
@@ -203,7 +220,7 @@ public class CppGenerator extends AbstractGenerator {
 		return temp.toString
 	}
 
-	def createTopCmakeLists(HashSet<String> Appname,HashMap<CompCpp, CharSequence> libraryTarget,
+	def createTopCmakeLists(HashSet<String> Appname, HashMap<CompCpp, CharSequence> libraryTarget,
 		HashMap<FType, CharSequence> MessageTarget) {
 		'''
 			cmake_minimum_required(VERSION 3.0)
@@ -220,22 +237,22 @@ public class CppGenerator extends AbstractGenerator {
 			link_directories(${LIBALLPATH_LIB})
 			include_directories(${CMAKE_SOURCE_DIR}//messages-gen)
 			include_directories(${CMAKE_SOURCE_DIR}/cpp/include)
-«««			«FOR a : Appname»
+			«««			«FOR a : Appname»
 «««				include(«a».cmake)
 «««			«ENDFOR»
-			«FOR m:MessageTarget.keySet»
-			 			
-			# Generating the headers and cpp for message «m»
-			«MessageTarget.get(m)»
+			«FOR m : MessageTarget.keySet»
+				
+				# Generating the headers and cpp for message «m»
+				«MessageTarget.get(m)»
 			«ENDFOR»
-			«FOR m:libraryTarget.keySet»
-			 
-			«IF m.comp_==null»
-			# Creating Libraries for Component «m.device_»
-			«ELSE»
-			# Creating Libraries for Component «m.comp_»
-			«ENDIF»
-			«libraryTarget.get(m)»
+			«FOR m : libraryTarget.keySet»
+				
+				«IF m.comp_==null»
+					# Creating Libraries for Component «m.device_»
+				«ELSE»
+					# Creating Libraries for Component «m.comp_»
+				«ENDIF»
+				«libraryTarget.get(m)»
 			«ENDFOR»
 			
 		'''
@@ -292,17 +309,18 @@ public class CppGenerator extends AbstractGenerator {
 			}
 			var libout = '''
 				add_library(«c.componentName» 
-											SHARED ${CMAKE_CURRENT_SOURCE_DIR}/cpp/«c.componentName».cc
-											${CMAKE_CURRENT_SOURCE_DIR}/cpp/«c.componentName»Base.cc
-											«FOR i : c.msgIncludes»
-												${CMAKE_SOURCE_DIR}/messages-gen/«i.fullyQualifiedName.toString("/")».capnp.c++
-												«FOR el: i.elements»
-													«IF el.type.derived!==null»
-														${CMAKE_SOURCE_DIR}/messages-gen/«el.type.derived.fullyQualifiedName.toString("/")».capnp.c++					
-													«ENDIF»
-												«ENDFOR»
-											«ENDFOR»
-											)
+							SHARED ${CMAKE_CURRENT_SOURCE_DIR}/cpp/«c.componentName».cc
+							${CMAKE_CURRENT_SOURCE_DIR}/cpp/«c.componentName»Base.cc
+							«FOR i : c.msgIncludes»
+								${CMAKE_SOURCE_DIR}/messages-gen/«i.fullyQualifiedName.toString("/")».capnp.c++
+								«FOR el: i.elements»
+									«IF el.type.derived!==null»
+										${CMAKE_SOURCE_DIR}/messages-gen/«el.type.derived.fullyQualifiedName.toString("/")».capnp.c++					
+									«ENDIF»
+								«ENDFOR»
+							«ENDFOR»
+							)
+							
 				«IF c.libraries.size==0»			
 					target_link_libraries(«c.componentName» czmq riaps dl capnp kj)
 				«ELSE»
@@ -315,13 +333,107 @@ public class CppGenerator extends AbstractGenerator {
 		for (i : capnpMsgs) {
 			var out = '''
 				add_custom_command(OUTPUT  "${CMAKE_SOURCE_DIR}/messages-gen/«i.fullyQualifiedName.toString("/")».capnp.c++"
-								                   DEPENDS "${CMAKE_SOURCE_DIR}/messages-gen/«i.fullyQualifiedName.toString("/")».capnp" 
-								                   WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}//messages-gen"  
-								                   COMMAND capnp compile -oc++ "${CMAKE_SOURCE_DIR}/messages-gen/«i.fullyQualifiedName.toString("/")».capnp" --import-path="${CMAKE_SOURCE_DIR}//messages-gen"
-								                   )
+								   DEPENDS "${CMAKE_SOURCE_DIR}/messages-gen/«i.fullyQualifiedName.toString("/")».capnp" 
+								   WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}//messages-gen"  
+								   COMMAND capnp compile -oc++ "${CMAKE_SOURCE_DIR}/messages-gen/«i.fullyQualifiedName.toString("/")».capnp" --import-path="${CMAKE_SOURCE_DIR}//messages-gen"
+								   )
 			'''
 			MessageTarget.put(i, out)
 		}
 
+	}
+
+	def String clangformatter() {
+		'''
+			---
+			Language:        Cpp
+			# BasedOnStyle:  LLVM
+			AccessModifierOffset: -2
+			AlignAfterOpenBracket: Align
+			AlignConsecutiveAssignments: false
+			AlignConsecutiveDeclarations: false
+			AlignEscapedNewlinesLeft: false
+			AlignOperands:   true
+			AlignTrailingComments: true
+			AllowAllParametersOfDeclarationOnNextLine: true
+			AllowShortBlocksOnASingleLine: false
+			AllowShortCaseLabelsOnASingleLine: false
+			AllowShortFunctionsOnASingleLine: All
+			AllowShortIfStatementsOnASingleLine: false
+			AllowShortLoopsOnASingleLine: false
+			AlwaysBreakAfterDefinitionReturnType: None
+			AlwaysBreakAfterReturnType: None
+			AlwaysBreakBeforeMultilineStrings: false
+			AlwaysBreakTemplateDeclarations: false
+			BinPackArguments: true
+			BinPackParameters: true
+			BraceWrapping:   
+			  AfterClass:      false
+			  AfterControlStatement: false
+			  AfterEnum:       false
+			  AfterFunction:   false
+			  AfterNamespace:  false
+			  AfterObjCDeclaration: false
+			  AfterStruct:     false
+			  AfterUnion:      false
+			  BeforeCatch:     false
+			  BeforeElse:      false
+			  IndentBraces:    false
+			BreakBeforeBinaryOperators: None
+			BreakBeforeBraces: Attach
+			BreakBeforeTernaryOperators: true
+			BreakConstructorInitializersBeforeComma: false
+			ColumnLimit:     80
+			CommentPragmas:  '^ IWYU pragma:'
+			ConstructorInitializerAllOnOneLineOrOnePerLine: false
+			ConstructorInitializerIndentWidth: 4
+			ContinuationIndentWidth: 4
+			Cpp11BracedListStyle: true
+			DerivePointerAlignment: false
+			DisableFormat:   false
+			ExperimentalAutoDetectBinPacking: false
+			ForEachMacros:   [ foreach, Q_FOREACH, BOOST_FOREACH ]
+			IncludeCategories: 
+			  - Regex:           '^"(llvm|llvm-c|clang|clang-c)/'
+			    Priority:        2
+			  - Regex:           '^(<|"(gtest|isl|json)/)'
+			    Priority:        3
+			  - Regex:           '.*'
+			    Priority:        1
+			IndentCaseLabels: false
+			IndentWidth:     2
+			IndentWrappedFunctionNames: false
+			KeepEmptyLinesAtTheStartOfBlocks: true
+			MacroBlockBegin: ''
+			MacroBlockEnd:   ''
+			MaxEmptyLinesToKeep: 1
+			NamespaceIndentation: All 
+			ObjCBlockIndentWidth: 2
+			ObjCSpaceAfterProperty: false
+			ObjCSpaceBeforeProtocolList: true
+			PenaltyBreakBeforeFirstCallParameter: 19
+			PenaltyBreakComment: 300
+			PenaltyBreakFirstLessLess: 120
+			PenaltyBreakString: 1000
+			PenaltyExcessCharacter: 1000000
+			PenaltyReturnTypeOnItsOwnLine: 60
+			PointerAlignment: Right
+			ReflowComments:  true
+			SortIncludes:    true
+			SpaceAfterCStyleCast: false
+			SpaceBeforeAssignmentOperators: true
+			SpaceBeforeParens: ControlStatements
+			SpaceInEmptyParentheses: false
+			SpacesBeforeTrailingComments: 1
+			SpacesInAngles:  false
+			SpacesInContainerLiterals: true
+			SpacesInCStyleCastParentheses: false
+			SpacesInParentheses: false
+			SpacesInSquareBrackets: false
+			Standard:        Cpp11
+			TabWidth:        8
+			UseTab:          Never
+			...
+		'''
 	}
 }

@@ -28,7 +28,7 @@ class CompCpp {
 	public var Set<String> libraries = new HashSet<String>
 	protected var ports = new ArrayList<PortCppBase>
 	public var msgIncludes = new HashSet<FStructType>
-	protected var initParams = new ArrayList<String>
+	protected var initialParams = new ArrayList<String>
 
 	new(Component comp, String appName, HashMap<String, String> portMsgType, CppGenerator gen) {
 		componentName = comp.name
@@ -38,9 +38,9 @@ class CompCpp {
 		createPorts(comp, portMsgType)
 		device_=null
 
-		initParams.add("self")
+		initialParams.add("self")
 		for (ComponentFormal formal : comp.getFormals()) {
-			initParams.add(formal.name)
+			initialParams.add(formal.name)
 		}
 
 		for (use : comp.constraint) {
@@ -69,9 +69,9 @@ class CompCpp {
 			}
 
 		}
-		initParams.add("self")
+		initialParams.add("self")
 		for (ComponentFormal formal : comp.getFormals()) {
-			initParams.add(formal.name)
+			initialParams.add(formal.name)
 		}
 	}
 
@@ -232,8 +232,7 @@ class CompCpp {
 		            «FOR p : ports»
 		            	«p.generateFW_H()»
 		            	
-					«ENDFOR»		
-					//virtual void OnOneShotTimer(const std::string& timerid);
+					«ENDFOR»
 					void OnGroupMessage(const riaps::groups::GroupId& groupId, capnp::FlatArrayMessageReader& capnpreader, riaps::ports::PortBase* port);
 					
 		      virtual ~«componentName»();
@@ -263,9 +262,6 @@ class CompCpp {
 					«p.generateFW_Cpp()»
 					
 				«ENDFOR»
-				//void «componentName»::OnOneShotTimer(const std::string& timerid){
-				//
-				//}
 				void «componentName»::OnGroupMessage(const riaps::groups::GroupId& groupId,
 									 capnp::FlatArrayMessageReader& capnpreader, riaps::ports::PortBase* port){
 				
@@ -294,7 +290,7 @@ class CompCpp {
 		import logging
 		
 		class «componentName»(Component):
-		    def __init__(«FOR p : initParams SEPARATOR ','»«ENDFOR»):
+		    def __init__(«FOR p : initialParams SEPARATOR ','»«p»«ENDFOR»):
 		        super(«componentName», self).__init__()	        
 		        self.pid = os.getpid()
 		        self.logger.info("(PID %s) - starting «componentName», %s",str(self.pid),str(now))

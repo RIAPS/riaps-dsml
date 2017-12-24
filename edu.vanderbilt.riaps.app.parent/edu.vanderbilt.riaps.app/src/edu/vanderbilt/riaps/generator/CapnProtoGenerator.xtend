@@ -88,7 +88,7 @@ class CapnProtoGenerator extends AbstractGenerator {
 				//	packageNameMap.put(type.name, packageNameArray.get(0))
 
 					var aStruct = type as FStructType
-					Console.instance.log(java.util.logging.Level.INFO, aStruct.name + " generating")
+					//Console.instance.log(java.util.logging.Level.INFO, aStruct.name + " generating")
 					var messageString = aStruct.compileToString
 
 					fsa.generateFile(
@@ -96,8 +96,8 @@ class CapnProtoGenerator extends AbstractGenerator {
 						RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_MESSAGE,
 						messageString.beautify
 					)
-					Console.instance.log(java.util.logging.Level.INFO,
-						aStruct.fullyQualifiedName.toString("/") + ".capnp generated");
+					//Console.instance.log(java.util.logging.Level.INFO,
+					//	aStruct.fullyQualifiedName.toString("/") + ".capnp generated");
 				}
 
 				if (type instanceof FEnumerationType) {
@@ -109,8 +109,8 @@ class CapnProtoGenerator extends AbstractGenerator {
 						RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_MESSAGE,
 						messageString.beautify
 					)
-					Console.instance.log(java.util.logging.Level.INFO,
-						anEnum.fullyQualifiedName.toString("/") + ".capnp generated");
+				//	Console.instance.log(java.util.logging.Level.INFO,
+					//	anEnum.fullyQualifiedName.toString("/") + ".capnp generated");
 				}
 			}
 		}
@@ -193,7 +193,7 @@ class CapnProtoGenerator extends AbstractGenerator {
 	def String getIdlType(FField field) {
 		if (field.type.derived !== null)
 			return field.type.derived.name;
-		Console.instance.log(java.util.logging.Level.INFO, field.type.predefined.literal)
+		//Console.instance.log(java.util.logging.Level.INFO, field.type.predefined.literal)
 		if (field.type.predefined.literal == "Boolean")
 			return "Bool"
 		if (field.type.predefined.literal == "Float")

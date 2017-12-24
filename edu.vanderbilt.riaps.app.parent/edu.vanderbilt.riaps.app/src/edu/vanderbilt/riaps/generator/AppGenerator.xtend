@@ -28,26 +28,10 @@ class AppGenerator extends AbstractGenerator {
 		g1.doGenerate(resource, fsa, context);
 		g3.doGenerate(resource, fsa, context);
 		g4.doGenerate(resource, fsa, context);
-		
-		for (e : resource.allContents.toIterable.filter(Model)) {
-			if(e.collections.filter(FStructType).size()==0) return
-		}
-		var topdatacmake = '''
-cmake_minimum_required(VERSION 3.0)
-file(GLOB_RECURSE CAPNP_SRCS     RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.capnp)
-SET(messagesrc "")
-foreach(capnpfile ${CAPNP_SRCS})
-  message (${capnpfile})
-  LIST(APPEND messagesrc "${capnpfile}.c++" "${capnpfile}.h")
-  add_custom_command(OUTPUT  "${capnpfile}.c++" "${capnpfile}.h" DEPENDS "${capnpfile}" WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"  COMMAND capnp compile -oc++ "${capnpfile}" --import-path="${CMAKE_CURRENT_SOURCE_DIR}")
-endforeach(capnpfile)
 
-add_custom_target(
-    messages ALL
-    DEPENDS ${messagesrc}
-    )
-'''
-	//	fsa.generateFile("CMakeLists.txt", RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_MESSAGE, topdatacmake)
+		for (e : resource.allContents.toIterable.filter(Model)) {
+			if(e.collections.filter(FStructType).size() == 0) return
+		}
 
 	}
 }

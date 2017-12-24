@@ -96,12 +96,18 @@ class NewAppSupport {
 	def private static createMakefile() {
 		'''
 		CMAKE := $(shell which cmake 2> /dev/null)
-		all: bin/armhf/build/Makefile bin/amd64/build/Makefile 
+		CLANG-FORMAT := $(shell which clang-format 2> /dev/null)
+		RM-CMD := $(shell which rm 2> /dev/null)
+		all: bin/armhf/build/Makefile bin/amd64/build/Makefile all-armhf all-amd64
 		
-		realclean:		
-			rm -rf bin
+		realclean:		 
+		ifndef RM-CMD
+			rmdir bin /s /q
+		else
+			$(shell rm -rf bin)
+		endif
 		
-		bin/armhf/build/Makefile: src/CMakeLists.txt
+		bin/armhf/build/Makefile: CMakeLists.txt
 		ifndef CMAKE
 			$(error "cmake is not available. Please install")
 		else
@@ -111,7 +117,7 @@ class NewAppSupport {
 			@echo "done"
 		endif
 		
-		bin/amd64/build/Makefile: src/CMakeLists.txt
+		bin/amd64/build/Makefile: CMakeLists.txt
 		ifndef CMAKE
 			$(error "cmake is not available. Please install")
 		else
@@ -120,10 +126,48 @@ class NewAppSupport {
 			cmake -DCMAKE_TOOLCHAIN_FILE=.toolchain.amd64.cmake  ../../..
 			@echo "done"
 		endif
+		
+		all-amd64: bin/amd64/build/Makefile
+		ifndef CMAKE
+			$(error "cmake is not available. Please install")
+		else
+			make -C bin/amd64/build -j2
+		endif
+		
+		all-armhf: bin/armhf/build/Makefile
+		ifndef CMAKE
+			$(error "cmake is not available. Please install")
+		else
+			make -C bin/armhf/build -j2
+		endif
+		
+		
+		clean-armhf: bin/armhf/build/Makefile
+		ifndef CMAKE
+			$(error "cmake is not available. Please install")
+		else
+			make -C bin/armhf/build clean -j2
+		endif
+		
+		clean-amd64: bin/amd64/build/Makefile
+		ifndef CMAKE
+			$(error "cmake is not available. Please install")
+		else
+			make -C bin/amd64/build clean -j2
+		endif
+		
+		reformat: cpp
+		ifndef CLANG-FORMAT
+			$(error "clang-format is not available. Please install")
+		else
+			clang-format -i -style=file cpp/*.cc
+			clang-format -i -style=file cpp/include/*.h
+		endif
+		
 		'''
 	}
 	
-	def private static createCProject(){
+	def private static createCProject(String path){
 		'''
 		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 		<?fileVersion 4.0.0?><cproject>
@@ -585,35 +629,35 @@ class NewAppSupport {
 				<pathentry include="/usr/arm-linux-gnueabihf/include/c++/5/arm-linux-gnueabihf" kind="inc" path="" system="true"/>
 				<pathentry include="/usr/arm-linux-gnueabihf/include/c++/5/backward" kind="inc" path="" system="true"/>
 			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 			<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
 				<buildTargets>
 					<target name="all-armhf" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
 						<buildCommand>make</buildCommand>
-						<buildArguments>-C bin/armhf/build -j2</buildArguments>
-						<buildTarget>all</buildTarget>
+						<buildArguments/>
+						<buildTarget>all-armhf</buildTarget>
 						<stopOnError>true</stopOnError>
-						<useDefaultCommand>false</useDefaultCommand>
+						<useDefaultCommand>true</useDefaultCommand>
 						<runAllBuilders>true</runAllBuilders>
 					</target>
 					<target name="clean-armhf" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
 						<buildCommand>make</buildCommand>
-						<buildArguments>-C bin/armhf/build  -j2</buildArguments>
-						<buildTarget>clean</buildTarget>
+						<buildArguments/>
+						<buildTarget>clean-armhf</buildTarget>
 						<stopOnError>true</stopOnError>
-						<useDefaultCommand>false</useDefaultCommand>
+						<useDefaultCommand>true</useDefaultCommand>
 						<runAllBuilders>true</runAllBuilders>
 					</target>
 					<target name="clean-amd64" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
 						<buildCommand>make</buildCommand>
-						<buildArguments>-C bin/amd64/build -j2</buildArguments>
-						<buildTarget>clean</buildTarget>
+						<buildArguments/>
+						<buildTarget>clean-amd64</buildTarget>
 						<stopOnError>true</stopOnError>
-						<useDefaultCommand>false</useDefaultCommand>
+						<useDefaultCommand>true</useDefaultCommand>
 						<runAllBuilders>true</runAllBuilders>
 					</target>
 					<target name="reset" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
 						<buildCommand>make</buildCommand>
-						<buildArguments/>
 						<buildTarget>realclean all</buildTarget>
 						<stopOnError>true</stopOnError>
 						<useDefaultCommand>false</useDefaultCommand>
@@ -621,24 +665,31 @@ class NewAppSupport {
 					</target>
 					<target name="all-amd64" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
 						<buildCommand>make</buildCommand>
-						<buildArguments>-C bin/amd64/build -j2</buildArguments>
-						<buildTarget>all</buildTarget>
+						<buildArguments/>
+						<buildTarget>all-amd64</buildTarget>
 						<stopOnError>true</stopOnError>
-						<useDefaultCommand>false</useDefaultCommand>
+						<useDefaultCommand>true</useDefaultCommand>
 						<runAllBuilders>true</runAllBuilders>
 					</target>
 					<target name="realclean" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
 						<buildCommand>make</buildCommand>
-						<buildArguments/>
 						<buildTarget>realclean</buildTarget>
+						<stopOnError>false</stopOnError>
+						<useDefaultCommand>true</useDefaultCommand>
+						<runAllBuilders>true</runAllBuilders>
+					</target>
+					<target name="reformat" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+						<buildCommand>make</buildCommand>
+						<buildArguments/>
+						<buildTarget>reformat</buildTarget>
 						<stopOnError>false</stopOnError>
 						<useDefaultCommand>true</useDefaultCommand>
 						<runAllBuilders>true</runAllBuilders>
 					</target>
 				</buildTargets>
 			</storageModule>
-			<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 		</cproject>
+				
 		'''
 	}
 
@@ -674,8 +725,10 @@ class NewAppSupport {
 	}
 	
 	def private static void addCproject(IProject newProject) throws CoreException {
+		
+		var currentpath=newProject.getLocation.toOSString
 		var IFile file = newProject.getFile(".cproject"); // such as file.exists() == false
-		var contents = createCProject.toString.getBytes;
+		var contents = createCProject(currentpath).toString.getBytes;
 		var source = new ByteArrayInputStream(contents);
 		if (!file.exists) {
 			file.create(source, false, null);
