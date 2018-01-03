@@ -107,10 +107,17 @@ Message:
 	'message' name=ID (':' type=[FStructType|FQN])? (';')?;
 	//The device types and their tags will be captured in datatypes. A different place for them can be found later.
 //for crossreference 
+
+enum SupportLanguages returns SupportLanguages:
+	python ='python'|
+	py='py'|
+	cpp='cpp'
+;
 DeviceType:
+	('@' 'lang'  language=SupportLanguages)?
 	'device' name=ID
 	('()' | ('(' formals+=ComponentFormal (',' formals+=ComponentFormal)* ')')?)
-	('from' reuselib=Library)?
+	//('from' reuselib=Library)?
 	'{'
 	((constraint+=DeviceUses) | (ports+=Port))+
 	'}';
@@ -133,9 +140,10 @@ IORequirement:
 // we capture its ports and its requirements.
 // Component types used in the application
 Component:
+	('@' 'lang'  language=SupportLanguages)?
 	(realtime?='rt')? 'component' name=ID
 	('()' | ('(' formals+=ComponentFormal (',' formals+=ComponentFormal)* ')')?)
-	('from' reuselib=Library)? 
+	//('from' reuselib=Library)? 
 	'{'
 	// A component can first declare several requirements. It then declares the ports that it provides.
 	((constraint+=ComponentUses) | (ports+=Port) | (handler+=exceptionHandler))+

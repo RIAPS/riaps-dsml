@@ -27,7 +27,7 @@ public class ComponentTypeGenerator extends AbstractGenerator {
 			"ComponentTypes.json",
 			formattedString
 		)
-		Console.instance.log(java.util.logging.Level.INFO, "ComponentTypes.json generated");
+		//Console.instance.log(java.util.logging.Level.INFO, "ComponentTypes.json generated");
 
 	}
 }

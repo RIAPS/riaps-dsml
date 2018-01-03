@@ -1,8 +1,6 @@
 package edu.vanderbilt.riaps.ui
 
 import java.net.URI
-import org.eclipse.core.resources.IContainer
-import org.eclipse.core.resources.IFolder
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IProjectDescription
 import org.eclipse.core.resources.ResourcesPlugin
@@ -12,18 +10,13 @@ import org.eclipse.core.runtime.IProgressMonitor
 import java.util.ArrayList
 import edu.vanderbilt.riaps.Console
 import java.util.List
-import java.util.Collections
 import org.eclipse.core.resources.IFile
-import java.io.InputStream
 import java.io.ByteArrayInputStream
-import org.eclipse.emf.edit.command.CreateChildCommand.Helper
-import org.eclipse.core.resources.IResourceFilterDescription
-import org.eclipse.core.resources.FileInfoMatcherDescription
 
 class NewAppSupport {
 
 	static val riapsNatures = #{'org.eclipse.cdt.make.core.makeNature', 'org.eclipse.cdt.make.core.ScannerConfigNature',
-		'org.eclipse.cdt.core.ccnature', 'org.eclipse.cdt.core.cnature', 'org.eclipse.xtext.ui.shared.xtextNature'}
+		'org.eclipse.cdt.core.ccnature', 'org.eclipse.cdt.core.cnature', 'org.eclipse.xtext.ui.shared.xtextNature','org.python.pydev.pythonNature'}
 
 	// static val riapsNatures = #{'org.eclipse.xtext.ui.shared.xtextNature'}
 	/** 
@@ -46,7 +39,7 @@ class NewAppSupport {
 			//var String[] paths = #["src/build/armhf", "src/build/amd64"]
 			//addToProjectStructureFolder(project, paths)
 			addMakefile(project)
-			addCproject(project)
+			addCprojectAndPydev(project)
 		} catch (CoreException e) {
 			e.printStackTrace()
 			project = null
@@ -83,7 +76,7 @@ class NewAppSupport {
 		return newProject
 	}
 
-	def private static void createFolder(IFolder folder) throws CoreException {
+/*/	def private static void createFolder(IFolder folder) throws CoreException {
 		var IContainer parent = folder.getParent()
 		if (parent instanceof IFolder) {
 			createFolder((parent as IFolder))
@@ -92,68 +85,77 @@ class NewAppSupport {
 			folder.create(false, true, null)
 		}
 	}
-
+*/
+    def private static createPyDev(){
+    	'''
+    	<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+    	<?eclipse-pydev version="1.0"?><pydev_project>
+    	<pydev_property name="org.python.pydev.PYTHON_PROJECT_INTERPRETER">Default</pydev_property>
+    	<pydev_property name="org.python.pydev.PYTHON_PROJECT_VERSION">python interpreter</pydev_property>
+    	</pydev_project>
+    	'''
+    }
 	def private static createMakefile() {
 		'''
 		CMAKE := $(shell which cmake 2> /dev/null)
 		CLANG-FORMAT := $(shell which clang-format 2> /dev/null)
 		RM-CMD := $(shell which rm 2> /dev/null)
-		all: bin/armhf/build/Makefile bin/amd64/build/Makefile all-armhf all-amd64
+		all: build/armhf/Makefile build/amd64/Makefile all-armhf all-amd64
 		
 		realclean:		 
 		ifndef RM-CMD
-			rmdir bin /s /q
+			rmdir build /s /q
 		else
-			$(shell rm -rf bin)
+			$(shell rm -rf build)
 		endif
 		
-		bin/armhf/build/Makefile: CMakeLists.txt
+		build/armhf/Makefile: CMakeLists.txt
 		ifndef CMAKE
 			$(error "cmake is not available. Please install")
 		else
-			mkdir -p bin/armhf/build
-			cd bin/armhf/build/ && \
-			cmake -DCMAKE_TOOLCHAIN_FILE=.toolchain.arm-linux-gnueabihf.cmake  ../../..
+			mkdir -p build/armhf/
+			cd build/armhf/ && \
+			cmake -DCMAKE_TOOLCHAIN_FILE=.toolchain.arm-linux-gnueabihf.cmake -DCMAKE_INSTALL_PREFIX="/"  ../..
 			@echo "done"
 		endif
 		
-		bin/amd64/build/Makefile: CMakeLists.txt
+		build/amd64/Makefile: CMakeLists.txt
 		ifndef CMAKE
 			$(error "cmake is not available. Please install")
 		else
-			mkdir -p bin/amd64/build/
-			cd bin/amd64/build/ && \
-			cmake -DCMAKE_TOOLCHAIN_FILE=.toolchain.amd64.cmake  ../../..
+			mkdir -p build/amd64/
+			cd build/amd64/ && \
+			cmake -DCMAKE_TOOLCHAIN_FILE=.toolchain.amd64.cmake  -DCMAKE_INSTALL_PREFIX="/" ../..
 			@echo "done"
 		endif
 		
-		all-amd64: bin/amd64/build/Makefile
+		all-amd64: build/amd64/Makefile
 		ifndef CMAKE
 			$(error "cmake is not available. Please install")
 		else
-			make -C bin/amd64/build -j2
+			make -C build/amd64/ -j2
 		endif
 		
-		all-armhf: bin/armhf/build/Makefile
+		all-armhf: build/armhf/Makefile
 		ifndef CMAKE
 			$(error "cmake is not available. Please install")
 		else
-			make -C bin/armhf/build -j2
+			make -C build/armhf -j2
 		endif
 		
 		
-		clean-armhf: bin/armhf/build/Makefile
+		clean-armhf: build/armhf/Makefilee
 		ifndef CMAKE
 			$(error "cmake is not available. Please install")
 		else
-			make -C bin/armhf/build clean -j2
+			make -C build/armhf clean -j2
 		endif
 		
-		clean-amd64: bin/amd64/build/Makefile
+		clean-amd64: build/amd64/Makefile
 		ifndef CMAKE
 			$(error "cmake is not available. Please install")
 		else
-			make -C bin/amd64/build clean -j2
+			make -C build/amd64 clean -j2
 		endif
 		
 		reformat: cpp
@@ -699,13 +701,13 @@ class NewAppSupport {
 	 * @param newProject
 	 * @param paths
 	 * @throws CoreException
-	 */
+	 
 	def private static void addToProjectStructureFolder(IProject newProject, String[] paths) throws CoreException {
 		for (String path : paths) {
 			var etcFolders = newProject.getFolder(path);
 			createFolder(etcFolders);
 		}
-	}
+	}*/
 
 	def private static void addMakefile(IProject newProject) throws CoreException {
 		var IFile file = newProject.getFile("makefile"); // such as file.exists() == false
@@ -716,15 +718,9 @@ class NewAppSupport {
 		}
 	}
 	
-	def private static void addresourcefilters(IProject newProject) throws CoreException{
-		var folder = newProject.getFolder(".");
-		folder.createFilter(
-    	IResourceFilterDescription.FILES,
-        new FileInfoMatcherDescription("cmake",  
-            "*.cmake"), 0, null);
-	}
+
 	
-	def private static void addCproject(IProject newProject) throws CoreException {
+	def private static void addCprojectAndPydev(IProject newProject) throws CoreException {
 		
 		var currentpath=newProject.getLocation.toOSString
 		var IFile file = newProject.getFile(".cproject"); // such as file.exists() == false
@@ -733,34 +729,59 @@ class NewAppSupport {
 		if (!file.exists) {
 			file.create(source, false, null);
 		}
+		file = newProject.getFile(".pydevproject"); // such as file.exists() == false
+		 contents = createPyDev.toString.getBytes;
+		 source = new ByteArrayInputStream(contents);
+		if (!file.exists) {
+			file.create(source, false, null);
+		}
 	}
 	
-
-	def private static void addNature(IProject project) throws CoreException {
-
+	def private static void addNature(IProject project, String nature)
+	{
 		var IProjectDescription description = project.getDescription()
 		var String[] prevNatures = description.getNatureIds();
 		var List<String> newNatures = new ArrayList<String>();
-		for (nature : prevNatures) {
-			newNatures.add(nature);
+		for (nature1 : prevNatures) {
+			newNatures.add(nature1);
 		}
-
-		for (nature : riapsNatures) {
-			if (!project.hasNature(nature)) {
-				newNatures.add(nature);
-			}
+		if (!project.hasNature(nature)) {
+			newNatures.add(nature)
+			description.setNatureIds(newNatures)
 		}
-		description.setNatureIds(newNatures);
 		var IProgressMonitor monitor = null;
 		try {
 			project.setDescription(description, monitor);
 
 		} catch (org.eclipse.core.runtime.CoreException e) {
-			Console.instance.log(java.util.logging.Level.INFO,
-				"Problem encountered while setting natures. Check if you have cdt environment installed");
+			Console.instance.log(java.util.logging.Level.INFO, "Problem encountered while setting nature " + nature);
 			description.setNatureIds(prevNatures);
 			project.setDescription(description, monitor);
 		}
+			 
+	}
+	
+
+	def private static void addNature(IProject project) throws CoreException {
+
+	//	var IProjectDescription description = project.getDescription()		
+	//	var List<String> newNatures = new ArrayList<String>();
+		for (nature : riapsNatures) {
+			if (!project.hasNature(nature)) {
+				addNature(project,nature)
+			}
+		}
+//		description.setNatureIds(newNatures);
+//		var IProgressMonitor monitor = null;
+//		try {
+//			project.setDescription(description, monitor);
+//
+//		} catch (org.eclipse.core.runtime.CoreException e) {
+//			Console.instance.log(java.util.logging.Level.INFO,
+//				"Problem encountered while setting natures. Check if you have cdt environment installed");
+//			description.setNatureIds(prevNatures);
+//			project.setDescription(description, monitor);
+//		}
 
 	}
 

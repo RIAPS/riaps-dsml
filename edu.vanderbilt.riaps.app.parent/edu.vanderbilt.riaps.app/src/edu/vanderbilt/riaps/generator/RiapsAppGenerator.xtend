@@ -27,8 +27,8 @@ public class RiapsAppGenerator extends AbstractGenerator {
 				e.name + "_app.json", RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_JSON_APP,
 				formattedString
 			)
-			Console.instance.log(java.util.logging.Level.INFO, e.fullyQualifiedName.toString("/") + 
-			".json generated");
+			//Console.instance.log(java.util.logging.Level.INFO, e.fullyQualifiedName.toString("/") + 
+			//".json generated");
 		}
 
 	}

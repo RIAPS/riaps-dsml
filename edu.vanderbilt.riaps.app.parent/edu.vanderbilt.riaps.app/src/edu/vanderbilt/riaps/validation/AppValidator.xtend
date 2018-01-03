@@ -24,6 +24,7 @@ import edu.vanderbilt.riaps.app.FEnumerationType
 import edu.vanderbilt.riaps.app.FEnumerator
 import edu.vanderbilt.riaps.app.Model
 import edu.vanderbilt.riaps.app.FField
+import edu.vanderbilt.riaps.Console
 
 /**
  * This class contains custom validation rules. 
@@ -42,18 +43,17 @@ class AppValidator extends AbstractAppValidator {
 
 	}
 
-	@Check
-	def checkDeviceTypeNoReuseWithinApp(DeviceType dev) {
-		if (dev.eContainer instanceof Application) {
-			if (dev.reuselib !== null) {
-				error('A device within an application cannot be imported from a library',
-					AppPackage.Literals.COLLECTION__NAME)
-			}
-		}
-	}
-	
-	
-	@Check
+//	@Check
+//	def checkDeviceTypeNoReuseWithinApp(DeviceType dev) {
+//		if (dev.eContainer instanceof Application) {
+//			if (dev.reuselib !== null) {
+//				error('A device within an application cannot be imported from a library',
+//					AppPackage.Literals.COLLECTION__NAME)
+//			}
+//		}
+//	}
+
+	/*@Check
 	def checkComponentTypeNoReuseWithinApp(Component dev) {
 		if (dev.eContainer instanceof Application) {
 			if (dev.getReuselib() !== null) {
@@ -61,8 +61,7 @@ class AppValidator extends AbstractAppValidator {
 					AppPackage.Literals.COLLECTION__NAME)
 			}
 		}
-	}
-	
+	}*/
 
 	@Check
 	def checkFStructNameDoesNotContainUnderscore(FStructType message) {
@@ -95,7 +94,7 @@ class AppValidator extends AbstractAppValidator {
 		}
 
 	}
-	
+
 	@Check
 	def checkElementStartsWithCapital(FField message) {
 		if (!Character.isLowerCase(message.name.charAt(0))) {
@@ -103,10 +102,6 @@ class AppValidator extends AbstractAppValidator {
 		}
 
 	}
-	
-		
-	
-	
 
 	@Check
 	def checkMessageDeclarationStartsWithCapital(Message message) {
@@ -154,8 +149,29 @@ class AppValidator extends AbstractAppValidator {
 		var model = (app.eContainer as Model)
 		var apps = model.collections.filter(Application)
 
+	//	Console.instance.log(java.util.logging.Level.INFO, "app " + app.eResource.URI.lastSegment);
 		if (apps.size() > 1) {
 			error('One model should only contain one application', AppPackage.Literals.COLLECTION__NAME)
+		}
+	}
+
+	@Check
+	def checkAppNameSameAsContainingFile(Application app) {
+		var filename = app.eResource.URI.lastSegment
+		var dot = filename.lastIndexOf('.');
+		var String base = " ";
+		var String ext = " "
+		if (dot == -1) {
+			base = filename
+			ext = ""
+		} else {
+			base = filename.substring(0, dot);
+			ext = filename.substring(dot + 1);
+		}
+
+		if (app.name != base) {
+			error('The name of the application should match the name of the model file ' + base,
+				AppPackage.Literals.COLLECTION__NAME)
 		}
 	}
 

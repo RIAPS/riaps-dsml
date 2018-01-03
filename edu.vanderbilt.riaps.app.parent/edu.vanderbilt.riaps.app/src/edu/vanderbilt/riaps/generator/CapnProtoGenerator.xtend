@@ -27,6 +27,15 @@ import java.io.InputStreamReader
 import java.io.IOException
 
 import edu.vanderbilt.riaps.RiapsOutputConfigurationProvider
+import edu.vanderbilt.riaps.app.PubPort
+import edu.vanderbilt.riaps.app.Port
+import edu.vanderbilt.riaps.app.SubPort
+import edu.vanderbilt.riaps.app.SrvPort
+import edu.vanderbilt.riaps.app.ClntPort
+import edu.vanderbilt.riaps.app.RepPort
+import edu.vanderbilt.riaps.app.ReqPort
+import edu.vanderbilt.riaps.app.QueryPort
+import edu.vanderbilt.riaps.app.AnswerPort
 
 class CapnProtoGenerator extends AbstractGenerator {
 	@Inject extension IQualifiedNameProvider
@@ -38,7 +47,7 @@ class CapnProtoGenerator extends AbstractGenerator {
 		while (sb.length() < length) {
 			sb.append(Integer.toHexString(random.nextInt()));
 		}
-		return sb.toString();
+	return sb.toString();
 	}
 
 	def static String createCapnpID() {
@@ -76,10 +85,82 @@ class CapnProtoGenerator extends AbstractGenerator {
 		'''
 	}
 
-	static var typedefs = new HashMap<String, SequenceDefinition>
-	static var packageNameMap = new HashMap<String, String>
+	
 
-	override doGenerate(Resource input, IFileSystemAccess2 fsa, IGeneratorContext context) {
+	override doGenerate(Resource input, IFileSystemAccess2 fsa, IGeneratorContext context)
+	 {
+		var HashSet<FStructType> allstructs = new HashSet<FStructType>
+		var HashSet<FEnumerationType> allenums = new HashSet<FEnumerationType>
+		
+		for (e : input.allContents.toIterable.filter(Port)) {
+			if(e instanceof PubPort)
+			{
+				var astruct=e.type.type
+				if(astruct!==null)
+					allstructs.add(astruct)	
+			}
+			if(e instanceof SubPort)
+			{
+				var astruct=e.type.type
+				if(astruct!==null)
+				allstructs.add(astruct)	
+			}	
+			if(e instanceof SrvPort)
+			{
+				var astruct=e.req_type.type
+				var astruct2=e.rep_type.type
+				if(astruct!==null)
+					allstructs.add(astruct)
+				if(astruct2!==null)
+					allstructs.add(astruct2)		
+			}	
+			if(e instanceof ClntPort)
+			{
+				var astruct=e.req_type.type
+				var astruct2=e.rep_type.type
+			if(astruct!==null)
+					allstructs.add(astruct)
+				if(astruct2!==null)
+					allstructs.add(astruct2)		
+			}	
+			if(e instanceof RepPort)
+			{
+				var astruct=e.req_type.type
+				var astruct2=e.rep_type.type
+				if(astruct!==null)
+					allstructs.add(astruct)
+				if(astruct2!==null)
+					allstructs.add(astruct2)		
+			}
+			if(e instanceof ReqPort)
+			{
+				var astruct=e.req_type.type
+				var astruct2=e.rep_type.type
+			if(astruct!==null)
+					allstructs.add(astruct)
+				if(astruct2!==null)
+					allstructs.add(astruct2)			
+			}	
+			if(e instanceof QueryPort)
+			{
+				var astruct=e.req_type.type
+				var astruct2=e.rep_type.type
+			if(astruct!==null)
+					allstructs.add(astruct)
+				if(astruct2!==null)
+					allstructs.add(astruct2)			
+			}	
+			if(e instanceof AnswerPort)
+			{
+				var astruct=e.req_type.type
+				var astruct2=e.rep_type.type
+			if(astruct!==null)
+					allstructs.add(astruct)
+				if(astruct2!==null)
+					allstructs.add(astruct2)		
+			}		
+		}
+		
 		for (e : input.allContents.toIterable.filter(Model)) {
 			//var packageNameArray = e.name.split(Pattern.quote("."))
 
@@ -88,31 +169,75 @@ class CapnProtoGenerator extends AbstractGenerator {
 				//	packageNameMap.put(type.name, packageNameArray.get(0))
 
 					var aStruct = type as FStructType
+					allstructs.add(aStruct)
+					
 					//Console.instance.log(java.util.logging.Level.INFO, aStruct.name + " generating")
-					var messageString = aStruct.compileToString
+				}
+				if (type instanceof FEnumerationType) {
+					//packageNameMap.put(type.name, packageNameArray.get(0))
+					var anEnum = type as FEnumerationType
+					allenums.add(anEnum)
+				}
+			}
+		}
+		
+		var moreToCheck = true
 
-					fsa.generateFile(
+		while (moreToCheck) {
+			moreToCheck = false
+			var HashSet<FStructType> allstructsrefs = new HashSet<FStructType>
+			for (aStruct : allstructs) {
+				for (element : aStruct.elements) {
+					if (element.type.derived !== null) {
+						var entry = element.type.derived
+						if (entry instanceof FStructType) {
+							if (!allstructs.contains(entry)) {
+								allstructsrefs.add(entry)
+								moreToCheck = true
+							}
+
+						} else if (entry instanceof FEnumerationType) {
+							allenums.add(entry)
+						}
+					}
+				}
+			}
+			allstructs.addAll(allstructsrefs)
+		}
+		
+		for(aStruct:allstructs){
+			try{
+			var messageString = aStruct.compileToString
+			fsa.generateFile(
 						aStruct.fullyQualifiedName.toString("/") + ".capnp",
 						RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_MESSAGE,
 						messageString.beautify
 					)
-					//Console.instance.log(java.util.logging.Level.INFO,
-					//	aStruct.fullyQualifiedName.toString("/") + ".capnp generated");
-				}
-
-				if (type instanceof FEnumerationType) {
-					//packageNameMap.put(type.name, packageNameArray.get(0))
-					var anEnum = type as FEnumerationType
-					var messageString = anEnum.compileToString
+					
+			}
+			catch(java.lang.NullPointerException e )
+			{
+				Console.instance.log(java.util.logging.Level.INFO, aStruct.toString + " problem")
+			}
+			
+		}
+		for(anEnum:allenums)
+		{
+			try{
+			var messageString = anEnum.compileToString
+		
 					fsa.generateFile(
 						anEnum.fullyQualifiedName.toString("/") + ".capnp",
 						RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_MESSAGE,
 						messageString.beautify
 					)
-				//	Console.instance.log(java.util.logging.Level.INFO,
-					//	anEnum.fullyQualifiedName.toString("/") + ".capnp generated");
+					
 				}
+					catch(java.lang.NullPointerException e )
+			{
+				Console.instance.log(java.util.logging.Level.INFO, anEnum.toString + " problem")
 			}
+			
 		}
 	}
 

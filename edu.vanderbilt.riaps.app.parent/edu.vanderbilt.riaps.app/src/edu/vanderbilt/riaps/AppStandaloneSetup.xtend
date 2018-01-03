@@ -3,7 +3,6 @@
  */
 package edu.vanderbilt.riaps
 
-
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
  */

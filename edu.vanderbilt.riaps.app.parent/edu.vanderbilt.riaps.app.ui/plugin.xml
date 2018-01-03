@@ -411,11 +411,16 @@
  <extension
        point="org.eclipse.ui.newWizards">
     <wizard
+          category="edu.vanderbilt.riaps.app.ui.riaps"
           class="edu.vanderbilt.riaps.ui.NewApp"
           icon="icons/component.png"
           id="edu.vanderbilt.riaps.ui.newApp"
-          name="RiapsApp"
+          name="App"
           project="true">
     </wizard>
+    <category
+          id="edu.vanderbilt.riaps.app.ui.riaps"
+          name="RIAPS">
+    </category>
  </extension>
 </plugin>

@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.URIUtil
 import org.eclipse.core.runtime.FileLocator
 import org.eclipse.xtext.generator.IFileSystemAccessExtension2
 import org.eclipse.emf.common.CommonPlugin
+import edu.vanderbilt.riaps.app.SupportLanguages
 
 public class CppGenerator extends AbstractGenerator {
 
@@ -40,9 +41,8 @@ public class CppGenerator extends AbstractGenerator {
 		}
 		for (model : resource.allContents.toIterable.filter(Model)) {
 
-			var globalDevices = model.collections.filter(DeviceType).filter(dt|dt.reuselib === null)
-
-			var globalcomponents = model.collections.filter(Component).filter(co|co.reuselib === null)
+			var globalDevices = model.collections.filter(DeviceType) // .filter(dt|dt.reuselib === null)
+			var globalcomponents = model.collections.filter(Component) // .filter(co|co.reuselib === null)
 			generateForApp(null, fsa, globalcomponents, globalDevices, Appname, libraryTarget, MessageTarget)
 		}
 
@@ -56,12 +56,10 @@ public class CppGenerator extends AbstractGenerator {
 			RiapsOutputConfigurationProvider::DEFAULT_OUTPUT_CMAKE,
 			createArmhfToolChain
 		)
-		
-		var uri = (fsa as IFileSystemAccessExtension2).getURI(".toolchain.arm-linux-gnueabihf.cmake")
-		Console.instance.log(java.util.logging.Level.INFO, "generated "+CommonPlugin.resolve(uri));
-		Console.instance.log(java.util.logging.Level.INFO, "generated "+CommonPlugin.resolve(resource.URI));
-		
 
+		var uri = (fsa as IFileSystemAccessExtension2).getURI(".toolchain.arm-linux-gnueabihf.cmake")
+		// Console.instance.log(java.util.logging.Level.INFO, "generated "+CommonPlugin.resolve(uri));
+		// Console.instance.log(java.util.logging.Level.INFO, "generated "+CommonPlugin.resolve(resource.URI));
 //		var path = Paths.get("./apps/CMakeLists.txt");
 //		var currentRelativePath = Paths.get("");
 //		var s = currentRelativePath.toAbsolutePath().toString();
@@ -115,14 +113,11 @@ public class CppGenerator extends AbstractGenerator {
 		HashMap<FType, CharSequence> MessageTarget) {
 
 		// check and return if e contains messages that do not have a type
+		
 		var AppCpp appCpp;
 		try {
 			appCpp = new AppCpp(myapp, this, globalcomponents, globalDevices)
-		} catch (NullPointerException except) {
-			Console.instance.log(java.util.logging.Level.SEVERE, except.message);
-			return
-		}
-		Appname.add(appCpp.applicationName)
+			Appname.add(appCpp.applicationName)
 		for (comp : appCpp.compList) {
 
 			var base_h = comp.generateBaseH()
@@ -132,8 +127,7 @@ public class CppGenerator extends AbstractGenerator {
 				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_BASE_INCLUDE,
 				base_h.beautify
 			)
-			//Console.instance.log(java.util.logging.Level.INFO, base_h_path + " generated");
-
+			// Console.instance.log(java.util.logging.Level.INFO, base_h_path + " generated");
 			var base_cpp = comp.generateBaseCpp()
 			var base_cpp_path = comp.componentName + "Base.cc"
 			fsa.generateFile(
@@ -142,7 +136,6 @@ public class CppGenerator extends AbstractGenerator {
 				base_cpp.beautify
 			)
 ///			Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
-
 			var fw_h = comp.generateFW_H()
 			var fw_h_path = "//include//" + comp.componentName + ".h"
 			fsa.generateFile(
@@ -150,8 +143,7 @@ public class CppGenerator extends AbstractGenerator {
 				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_DEV_INCLUDE,
 				fw_h.beautify
 			)
-	//		Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
-
+			// Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
 			var fw_cpp = comp.generateFW_Cpp()
 			var fw_cpp_path = comp.componentName + ".cc"
 			fsa.generateFile(
@@ -159,29 +151,28 @@ public class CppGenerator extends AbstractGenerator {
 				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_DEV_SRC,
 				fw_cpp.beautify
 			)
-			//Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
-
-			var python_file_path = comp.componentName + ".py"
-			// if (!fsa.isFile(python_file_path)) {
-			fsa.generateFile(
-				python_file_path,
-				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_DEV_PYTHON,
-				comp.generate_python
-			)
-			
-			
-			
-			
-
+			// Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
+			if (comp.comp_.getLanguage() == null || comp.comp_.getLanguage() == SupportLanguages.PY ||
+				comp.comp_.getLanguage() == SupportLanguages.PYTHON) {
+				var python_file_path = comp.componentName + ".py"
+				// if (!fsa.isFile(python_file_path)) {
+				fsa.generateFile(
+					python_file_path,
+					RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_DEV_PYTHON,
+					comp.generate_python
+				)
+			}
 		}
-
 		createCMakeList(appCpp, libraryTarget, MessageTarget)
-//		var cmake_path = appCpp.applicationName + ".cmake"
-//		fsa.generateFile(
-//			cmake_path,
-//			RiapsOutputConfigurationProvider::DEFAULT_OUTPUT_CMAKE,
-//			cmake
-//		)
+		return
+		} catch (NullPointerException except) {
+			Console.instance.log(java.util.logging.Level.SEVERE,
+				"@todo You probably have an untyped message. C++ code will not be generated. But we still need to check and generate python code");			
+		}		
+		
+		//try to generate python code
+		
+
 	}
 
 	def CharSequence beautify(CharSequence sequence) {
@@ -227,9 +218,9 @@ public class CppGenerator extends AbstractGenerator {
 			set(CMAKE_SYSTEM_NAME Linux)
 			set(CMAKE_CXX_FLAGS "-std=c++11")
 			set(CMAKE_C_FLAGS "-std=c99")
-			set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/${ARCH})
-			set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/${ARCH})
-			set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY  ${CMAKE_SOURCE_DIR}/bin/${ARCH})
+			set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build/${ARCH}/bin)
+			set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+			set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY  ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 			#Library Dependencies
 			set(DEPENDENCIES ${RIAPS_PREFIX})
 			set (LIBALLPATH_INCLUDE ${DEPENDENCIES}/include)
@@ -326,6 +317,7 @@ public class CppGenerator extends AbstractGenerator {
 				«ELSE»
 					target_link_libraries(«c.componentName» czmq riaps dl capnp kj «FOR l:c.libraries SEPARATOR " "»«l»«ENDFOR»)
 				«ENDIF»
+				install(TARGETS «c.componentName» DESTINATION lib)
 			'''
 			libraryTarget.put(c, libout)
 
@@ -335,7 +327,7 @@ public class CppGenerator extends AbstractGenerator {
 				add_custom_command(OUTPUT  "${CMAKE_SOURCE_DIR}/messages-gen/«i.fullyQualifiedName.toString("/")».capnp.c++"
 								   DEPENDS "${CMAKE_SOURCE_DIR}/messages-gen/«i.fullyQualifiedName.toString("/")».capnp" 
 								   WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}//messages-gen"  
-								   COMMAND capnp compile -oc++ "${CMAKE_SOURCE_DIR}/messages-gen/«i.fullyQualifiedName.toString("/")».capnp" --import-path="${CMAKE_SOURCE_DIR}//messages-gen"
+								   COMMAND ${CMAKE_COMMAND} -E env "PATH=/opt/riaps/amd64/bin" capnp compile -oc++ "${CMAKE_SOURCE_DIR}/messages-gen/«i.fullyQualifiedName.toString("/")».capnp" --import-path="${CMAKE_SOURCE_DIR}//messages-gen"
 								   )
 			'''
 			MessageTarget.put(i, out)

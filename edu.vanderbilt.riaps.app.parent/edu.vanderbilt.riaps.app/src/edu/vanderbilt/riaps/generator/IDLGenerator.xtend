@@ -51,7 +51,7 @@ class IDLGenerator extends AbstractGenerator {
 				e.fullyQualifiedName.toString("/") + ".idl",
 				messageString.beautify
 			)
-			Console.instance.log(java.util.logging.Level.INFO,e.fullyQualifiedName.toString("/") + ".idl generated");
+			//Console.instance.log(java.util.logging.Level.INFO,e.fullyQualifiedName.toString("/") + ".idl generated");
 		}
 		
 		for (e : input.allContents.toIterable.filter(FEnumerationType)) {
@@ -61,7 +61,7 @@ class IDLGenerator extends AbstractGenerator {
 				e.fullyQualifiedName.toString("/") + ".idl",
 				messageString.beautify
 			)
-			Console.instance.log(java.util.logging.Level.INFO,e.fullyQualifiedName.toString("/") + ".idl generated");
+			//Console.instance.log(java.util.logging.Level.INFO,e.fullyQualifiedName.toString("/") + ".idl generated");
 		}
 	}
 
@@ -162,7 +162,7 @@ class IDLGenerator extends AbstractGenerator {
 		if (field.type.derived != null)
 			return field.type.derived.name;
 
-		Console.instance.log(java.util.logging.Level.INFO, field.type.predefined.literal)
+		//Console.instance.log(java.util.logging.Level.INFO, field.type.predefined.literal)
 		if(field.type.predefined.literal == "Int8")
 			return "octet"
 		if(field.type.predefined.literal == "UInt8")
