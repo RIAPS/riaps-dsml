@@ -1,2 +1,2 @@
-export oldversion='0.8.8'
-export newversion='0.8.8'
+export oldversion='0.8.9'
+export newversion='0.8.9'
