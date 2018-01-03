@@ -118,6 +118,11 @@ public class CppGenerator extends AbstractGenerator {
 		try {
 			appCpp = new AppCpp(myapp, this, globalcomponents, globalDevices)
 			Appname.add(appCpp.applicationName)
+			
+			} catch (NullPointerException except) {
+			Console.instance.log(java.util.logging.Level.SEVERE,
+				"@todo You probably have an untyped message. C++ code will not be generated. But we still need to check and generate python code");			
+		}	
 		for (comp : appCpp.compList) {
 
 			var base_h = comp.generateBaseH()
@@ -152,8 +157,8 @@ public class CppGenerator extends AbstractGenerator {
 				fw_cpp.beautify
 			)
 			// Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
-			if (comp.comp_.getLanguage() == null || comp.comp_.getLanguage() == SupportLanguages.PY ||
-				comp.comp_.getLanguage() == SupportLanguages.PYTHON) {
+		
+		//	if (comp.comp_.getLanguage() === null || comp.comp_.getLanguage() == SupportLanguages.PY || comp.comp_.getLanguage() == SupportLanguages.PYTHON) {
 				var python_file_path = comp.componentName + ".py"
 				// if (!fsa.isFile(python_file_path)) {
 				fsa.generateFile(
@@ -161,14 +166,11 @@ public class CppGenerator extends AbstractGenerator {
 					RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_DEV_PYTHON,
 					comp.generate_python
 				)
-			}
+			//}
 		}
 		createCMakeList(appCpp, libraryTarget, MessageTarget)
-		return
-		} catch (NullPointerException except) {
-			Console.instance.log(java.util.logging.Level.SEVERE,
-				"@todo You probably have an untyped message. C++ code will not be generated. But we still need to check and generate python code");			
-		}		
+		
+		
 		
 		//try to generate python code
 		
