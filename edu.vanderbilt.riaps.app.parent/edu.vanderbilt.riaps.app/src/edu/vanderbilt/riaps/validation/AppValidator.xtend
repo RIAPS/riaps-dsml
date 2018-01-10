@@ -170,7 +170,7 @@ class AppValidator extends AbstractAppValidator {
 		}
 
 		if (app.name != base) {
-			error('The name of the application should match the name of the model file ' + base,
+			warning('The name of the application does not match the name of the model file ' + base,
 				AppPackage.Literals.COLLECTION__NAME)
 		}
 	}
