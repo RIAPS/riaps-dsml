@@ -412,9 +412,9 @@
        point="org.eclipse.ui.newWizards">
     <wizard
           category="edu.vanderbilt.riaps.app.ui.riaps"
-          class="edu.vanderbilt.riaps.ui.NewApp"
+          class="edu.vanderbilt.riaps.ui.RIAPSApp"
           icon="icons/component.png"
-          id="edu.vanderbilt.riaps.ui.newApp"
+          id="edu.vanderbilt.riaps.ui.riapsApp"
           name="App"
           project="true">
     </wizard>

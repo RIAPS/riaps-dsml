@@ -7,7 +7,7 @@ import org.eclipse.ui.IWorkbench
 import org.eclipse.ui.dialogs.WizardNewProjectCreationPage
 import java.net.URI
 
-class NewApp extends Wizard implements INewWizard {
+class RIAPSApp extends Wizard implements INewWizard {
 	private WizardNewProjectCreationPage _pageOne
 
 	new() { // TODO Auto-generated constructor stub
@@ -24,7 +24,7 @@ class NewApp extends Wizard implements INewWizard {
 		if (!_pageOne.useDefaults()) {
 			location = _pageOne.getLocationURI();
 		} // else location == null
-		NewAppSupport.createProject(name, location);
+		RIAPSAppSupport.createProject(name, location);
 		return true
 	}
 

@@ -13,7 +13,7 @@ import java.util.List
 import org.eclipse.core.resources.IFile
 import java.io.ByteArrayInputStream
 
-class NewAppSupport {
+class RIAPSAppSupport {
 
 //	static val riapsNatures = #{'org.eclipse.cdt.make.core.makeNature', 'org.eclipse.cdt.make.core.ScannerConfigNature',
 	//	'org.eclipse.cdt.core.ccnature', 'org.eclipse.cdt.core.cnature', 'org.eclipse.xtext.ui.shared.xtextNature','org.python.pydev.pythonNature'}
@@ -175,15 +175,10 @@ static val riapsNatures = #{'org.eclipse.cdt.core.cnature', 'org.eclipse.cdt.cor
 	def private static createCProject(String Project){
 		'''
 		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-		
 		<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
-		
 			<storageModule moduleId="org.eclipse.cdt.core.settings">
-		
 				<cconfiguration id="cdt.managedbuild.toolchain.gnu.base.1969425846">
-		
 					<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.toolchain.gnu.base.1969425846" moduleId="org.eclipse.cdt.core.settings" name="Default">
-		
 						<externalSettings/>
 		
 						<extensions>
