@@ -88,8 +88,8 @@ import edu.vanderbilt.riaps.app.AnswerPort
 		this.ports.put("subs", new HashMap<String, PubSubPort>())
 		this.ports.put("tims", new HashMap<String, TimePort>())
 		this.ports.put("inss", new HashMap<String, BoolPort>())
-		this.ports.put("qry", new HashMap<String, ClntSrvPort>())
-		this.ports.put("ans", new HashMap<String, ClntSrvPort>())
+		this.ports.put("qrys", new HashMap<String, ClntSrvPort>())
+		this.ports.put("anss", new HashMap<String, ClntSrvPort>())
 		for (Port p : c.getPorts()) {
 			if (p instanceof ClntPort) {
 				var ClntSrvPort port = new ClntSrvPort((p as ClntPort))
