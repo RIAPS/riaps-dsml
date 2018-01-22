@@ -223,7 +223,7 @@ class AppValidator extends AbstractAppValidator {
 	def checkGroupUsesBlock(Group group) {
 		var messageblock = group.useclauses
 		if (messageblock.size() > 1) {
-			error('only one message block is allowed in a group', AppPackage.Literals.GROUP__NAME)
+			error('only one uses block is allowed in a group', AppPackage.Literals.GROUP__NAME)
 		}
 	}
 

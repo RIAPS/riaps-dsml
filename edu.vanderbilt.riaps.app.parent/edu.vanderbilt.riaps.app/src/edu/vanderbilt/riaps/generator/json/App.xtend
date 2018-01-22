@@ -24,20 +24,29 @@ import edu.vanderbilt.riaps.app.DeviceType
 
 @SuppressWarnings("unused") class App {
 	String name
+	Map <String, AppGroups> groups
 	Map<String, Comp> devices
 	Map<String, Comp> components
 	Map<String, JsonActor> actors
 	List<HashMap<String, String>> messages
 	List <String> libraries
 
+
 	new(Application a) {
 		this.name = a.getName()
 		this.libraries = new ArrayList <String>()
 		this.devices = new HashMap<String, Comp>()
+		this.groups = new HashMap<String, AppGroups>()
 		this.components = new HashMap<String, Comp>()
 		this.actors = new HashMap<String, JsonActor>()
 		this.messages = new ArrayList<HashMap<String, String>>()
 		var HashSet<String> messageSet = new HashSet<String>()
+		for(g:a.groups)
+		{
+			var AppGroups group = new AppGroups(g)
+			groups.put(g.name,group)			
+		}
+		
 		for (Component c : a.getComponents()) {
 			if (c instanceof Component) {
 				for (Port p : c.getPorts()) {
