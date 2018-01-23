@@ -26,6 +26,21 @@ import org.eclipse.core.runtime.FileLocator
 import org.eclipse.xtext.generator.IFileSystemAccessExtension2
 import org.eclipse.emf.common.CommonPlugin
 import edu.vanderbilt.riaps.app.SupportLanguages
+import java.util.ArrayList
+import edu.vanderbilt.riaps.app.ComponentFormal
+import edu.vanderbilt.riaps.app.Port
+import edu.vanderbilt.riaps.generator.cpp.TimerPortCpp
+import edu.vanderbilt.riaps.generator.json.TimePort
+import edu.vanderbilt.riaps.app.SubPort
+import edu.vanderbilt.riaps.app.PubPort
+import edu.vanderbilt.riaps.app.InsPort
+import edu.vanderbilt.riaps.app.AnswerPort
+import edu.vanderbilt.riaps.app.QueryPort
+import edu.vanderbilt.riaps.app.TimPort
+import edu.vanderbilt.riaps.app.ReqPort
+import edu.vanderbilt.riaps.app.SrvPort
+import edu.vanderbilt.riaps.app.ClntPort
+import edu.vanderbilt.riaps.app.RepPort
 
 public class CppGenerator extends AbstractGenerator {
 
@@ -113,52 +128,52 @@ public class CppGenerator extends AbstractGenerator {
 		HashMap<FType, CharSequence> MessageTarget) {
 
 		// check and return if e contains messages that do not have a type
-		
-		var AppCpp appCpp;
+		var AppCpp appCpp = null;
 		try {
 			appCpp = new AppCpp(myapp, this, globalcomponents, globalDevices)
 			Appname.add(appCpp.applicationName)
-			
-			} catch (NullPointerException except) {
-			Console.instance.log(java.util.logging.Level.SEVERE,
-				"@todo You probably have an untyped message. C++ code will not be generated. But we still need to check and generate python code");			
-		}	
-		for (comp : appCpp.compList) {
 
-			var base_h = comp.generateBaseH()
-			var base_h_path = "//include//" + comp.componentName + "Base.h"
-			fsa.generateFile(
-				base_h_path,
-				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_BASE_INCLUDE,
-				base_h.beautify
-			)
-			// Console.instance.log(java.util.logging.Level.INFO, base_h_path + " generated");
-			var base_cpp = comp.generateBaseCpp()
-			var base_cpp_path = comp.componentName + "Base.cc"
-			fsa.generateFile(
-				base_cpp_path,
-				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_BASE_SRC,
-				base_cpp.beautify
-			)
+		} catch (NullPointerException except) {
+			Console.instance.log(java.util.logging.Level.SEVERE,
+				"@todo You probably have an untyped message. C++ code will not be generated. But we still need to check and generate python code");
+		}
+
+		if ((appCpp !== null) && (appCpp.compList !== null)) {
+			for (comp : appCpp.compList) {
+
+				var base_h = comp.generateBaseH()
+				var base_h_path = "//include//" + comp.componentName + "Base.h"
+				fsa.generateFile(
+					base_h_path,
+					RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_BASE_INCLUDE,
+					base_h.beautify
+				)
+				// Console.instance.log(java.util.logging.Level.INFO, base_h_path + " generated");
+				var base_cpp = comp.generateBaseCpp()
+				var base_cpp_path = comp.componentName + "Base.cc"
+				fsa.generateFile(
+					base_cpp_path,
+					RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_BASE_SRC,
+					base_cpp.beautify
+				)
 ///			Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
-			var fw_h = comp.generateFW_H()
-			var fw_h_path = "//include//" + comp.componentName + ".h"
-			fsa.generateFile(
-				fw_h_path,
-				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_DEV_INCLUDE,
-				fw_h.beautify
-			)
-			// Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
-			var fw_cpp = comp.generateFW_Cpp()
-			var fw_cpp_path = comp.componentName + ".cc"
-			fsa.generateFile(
-				fw_cpp_path,
-				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_DEV_SRC,
-				fw_cpp.beautify
-			)
-			// Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
-		
-		//	if (comp.comp_.getLanguage() === null || comp.comp_.getLanguage() == SupportLanguages.PY || comp.comp_.getLanguage() == SupportLanguages.PYTHON) {
+				var fw_h = comp.generateFW_H()
+				var fw_h_path = "//include//" + comp.componentName + ".h"
+				fsa.generateFile(
+					fw_h_path,
+					RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_DEV_INCLUDE,
+					fw_h.beautify
+				)
+				// Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
+				var fw_cpp = comp.generateFW_Cpp()
+				var fw_cpp_path = comp.componentName + ".cc"
+				fsa.generateFile(
+					fw_cpp_path,
+					RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_DEV_SRC,
+					fw_cpp.beautify
+				)
+				// Console.instance.log(java.util.logging.Level.INFO, base_cpp_path + " generated");
+				// if (comp.comp_.getLanguage() === null || comp.comp_.getLanguage() == SupportLanguages.PY || comp.comp_.getLanguage() == SupportLanguages.PYTHON) {
 				var python_file_path = comp.componentName + ".py"
 				// if (!fsa.isFile(python_file_path)) {
 				fsa.generateFile(
@@ -166,14 +181,125 @@ public class CppGenerator extends AbstractGenerator {
 					RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_DEV_PYTHON,
 					comp.generate_python
 				)
-			//}
+			// }
+			}
+			createCMakeList(appCpp, libraryTarget, MessageTarget)
+		} else {
+			for (comp : myapp.components) {
+				var python_file_path = comp.name + ".py"
+				// if (!fsa.isFile(python_file_path)) {
+				fsa.generateFile(
+					python_file_path,
+					RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_DEV_PYTHON,
+					comp.generate_python
+				)
+			}
+
 		}
-		createCMakeList(appCpp, libraryTarget, MessageTarget)
-		
-		
-		
-		//try to generate python code
-		
+
+	// try to generate python code
+	}
+
+	def CharSequence generate_python(Component component) {
+		var componentName = component.name
+		var initialParams = new ArrayList<String>
+		initialParams.add("self")
+		for (ComponentFormal formal : component.getFormals()) {
+			initialParams.add(formal.name)
+		}
+		'''
+			#«componentName».py
+			from riaps.run.comp import Component
+			import os
+			import logging
+			
+			class «componentName»(Component):
+			    def __init__(«FOR p : initialParams SEPARATOR ','»«p»«ENDFOR»):
+			        super(«componentName», self).__init__()
+			        self.pid = os.getpid()
+			        self.logger.info("(PID %s) - starting «componentName», %s",str(self.pid),str(now))
+			        
+			«FOR p : component.ports»
+				«p.generate_python()»
+			«ENDFOR»    
+			    
+			    def __destroy__(self):
+			        self.logger.info("(PID %s) - stopping «componentName», %s",str(self.pid),now)   	        	        
+		'''
+
+	}
+
+	def CharSequence generate_python(Port port) {
+		if (port instanceof PubPort) {
+		}
+
+		if (port instanceof SubPort) {
+			val content = '''
+				
+				    def on_«port.name»(self):
+				       msg = self.«port.name».recv_pyobj()
+				       self.logger.info("PID (%s) - on_«port.name»():%s",str(self.pid), str(msg))
+			'''
+			return content
+		}
+
+		if (port instanceof ClntPort) {
+			var portName = port.name
+			val content = '''
+				
+				    def on_«port.name»(self):
+				       req = self.«port.name».recv_pyobj()
+				       self.logger.info("PID (%s) - on_«portName»():%s",str(self.pid),str(req))
+			'''
+			return content
+		}
+
+		if (port instanceof SrvPort) {
+			
+			val content = '''
+				
+				    def on_«port.name»(self):
+				       msg = self.«port.name».recv_pyobj()
+				      self.logger.info("PID (%s) - on_query():%s",str(self.pid),str(msg))
+			'''
+			return content
+		}
+
+		if (port instanceof ReqPort) {
+			
+			val content = '''
+				
+				    def on_«port.name»(self):
+				       req = self.«port.name».recv_pyobj()
+				       self.logger.info("PID (%s) - on_«port.name»():%s",str(self.pid),str(req))
+			'''
+			return content
+		}
+		if (port instanceof RepPort) {
+			val content = '''
+				
+				    def on_«port.name»(self):
+				       msg = self.«port.name».recv_pyobj()
+				       self.logger.info("PID (%s) - on_query():%s",str(self.pid),str(msg))
+			'''
+			return content
+		}
+
+		if (port instanceof TimPort) {
+			val content = '''
+				
+				    def on_«port.name»(self):
+				       now = self.«port.name».recv_pyobj()
+				       self.logger.info('PID(%s) - on_«port.name»(): %s',str(self.pid),str(now))
+			'''
+			return content
+		}
+		if (port instanceof QueryPort) {
+		}
+		if (port instanceof AnswerPort) {
+		}
+		if (port instanceof InsPort) {
+		}
 
 	}
 
