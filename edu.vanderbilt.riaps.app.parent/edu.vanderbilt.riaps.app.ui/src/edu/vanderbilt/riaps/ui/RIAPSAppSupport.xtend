@@ -42,10 +42,8 @@ static val riapsNatures = #{'org.eclipse.cdt.core.cnature', 'org.eclipse.cdt.cor
 			//var String[] paths = #["src/build/armhf", "src/build/amd64"]
 			//addToProjectStructureFolder(project, paths)
 			addMakefile(project)
+			addLaunchers(project) 
 			addCprojectAndPydev(project)
-			addLaunchers(project)
-			
-			
 		} catch (CoreException e) {
 			e.printStackTrace()
 			project = null
