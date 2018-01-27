@@ -12,6 +12,7 @@ import edu.vanderbilt.riaps.Console
 import java.util.List
 import org.eclipse.core.resources.IFile
 import java.io.ByteArrayInputStream
+import javax.xml.ws.soap.AddressingFeature.Responses
 
 class RIAPSAppSupport {
 
@@ -42,6 +43,9 @@ static val riapsNatures = #{'org.eclipse.cdt.core.cnature', 'org.eclipse.cdt.cor
 			//addToProjectStructureFolder(project, paths)
 			addMakefile(project)
 			addCprojectAndPydev(project)
+			addLaunchers(project)
+			
+			
 		} catch (CoreException e) {
 			e.printStackTrace()
 			project = null
@@ -102,7 +106,7 @@ static val riapsNatures = #{'org.eclipse.cdt.core.cnature', 'org.eclipse.cdt.cor
 		CMAKE := $(shell which cmake 2> /dev/null)
 		CLANG-FORMAT := $(shell which clang-format 2> /dev/null)
 		RM-CMD := $(shell which rm 2> /dev/null)
-		all: build/armhf/Makefile build/amd64/Makefile all-armhf all-amd64
+		all: 
 		
 		realclean:		 
 		ifndef RM-CMD
@@ -172,6 +176,33 @@ static val riapsNatures = #{'org.eclipse.cdt.core.cnature', 'org.eclipse.cdt.cor
 	}
 	
 	
+	def private static createCtrlLauncher(String projectName){
+		'''
+		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+		<launchConfiguration type="org.python.pydev.debug.regularLaunchConfigurationType">
+		<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+		<listEntry value="/usr/local/bin/riaps_ctrl"/>
+		</listAttribute>
+		<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+		<listEntry value="1"/>
+		</listAttribute>
+		<mapAttribute key="org.eclipse.debug.core.environmentVariables">
+		
+		<mapEntry key="RIAPSAPPS" value="${workspace_loc:/}"/>
+		</mapAttribute>
+		<stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION" value="/usr/local/bin/riaps_ctrl"/>
+		<stringAttribute key="org.eclipse.ui.externaltools.ATTR_OTHER_WORKING_DIRECTORY" value="${workspace_loc:/}"/>
+		<stringAttribute key="org.eclipse.ui.externaltools.ATTR_TOOL_ARGUMENTS" value="-p 8888"/>
+		<stringAttribute key="org.eclipse.ui.externaltools.ATTR_WORKING_DIRECTORY" value="${workspace_loc:/}"/>
+		<stringAttribute key="org.python.pydev.debug.ATTR_INTERPRETER" value="__default"/>
+		<stringAttribute key="org.python.pydev.debug.ATTR_PROJECT" value="«projectName»"/>
+		<stringAttribute key="process_factory_id" value="org.python.pydev.debug.processfactory.PyProcessFactory"/>
+		</launchConfiguration>
+		'''
+		
+	}
+	
+	
 	
 	/** 
 	 * Create a folder structure with a parent root, overlay, and a few child
@@ -200,7 +231,7 @@ static val riapsNatures = #{'org.eclipse.cdt.core.cnature', 'org.eclipse.cdt.cor
 	
 	def private static void addCprojectAndPydev(IProject newProject) throws CoreException {
 		
-		var currentpath=newProject.getLocation.toOSString
+		//var currentpath=newProject.getLocation.toOSString
 		var IFile file = newProject.getFile(".cproject"); // such as file.exists() == false
 		var contents = CProjectSetting.createCProject(newProject.name).toString.getBytes;
 		
@@ -225,6 +256,18 @@ static val riapsNatures = #{'org.eclipse.cdt.core.cnature', 'org.eclipse.cdt.cor
 		if (!file.exists) {
 			file.create(source, false, null);
 		}
+	}
+	
+	
+	def private static void addLaunchers(IProject newProject) throws CoreException{		
+		var IFile file = newProject.getFile("ctrl.launch"); // such as file.exists() == false
+		var contents = createCtrlLauncher(newProject.name).toString.getBytes;
+		var source = new ByteArrayInputStream(contents);
+		if (!file.exists) {
+			file.create(source, false, null);
+		}
+		
+		
 	}
 	
 	def private static void addNature(IProject project, String nature)
