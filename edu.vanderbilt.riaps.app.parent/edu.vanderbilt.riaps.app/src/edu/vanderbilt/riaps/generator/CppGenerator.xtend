@@ -217,14 +217,14 @@ public class CppGenerator extends AbstractGenerator {
 			    def __init__(«FOR p : initialParams SEPARATOR ','»«p»«ENDFOR»):
 			        super(«componentName», self).__init__()
 			        self.pid = os.getpid()
-			        self.logger.info("(PID %s) - starting «componentName», %s",str(self.pid),str(now))
+			        self.logger.info("(PID %s) - starting «componentName», %s",str(self.pid))
 			        
 			«FOR p : component.ports»
 				«p.generate_python()»
 			«ENDFOR»    
 			    
 			    def __destroy__(self):
-			        self.logger.info("(PID %s) - stopping «componentName», %s",str(self.pid),now)   	        	        
+			        self.logger.info("(PID %s) - stopping «componentName», %s",str(self.pid))   	        	        
 		'''
 
 	}
@@ -237,8 +237,8 @@ public class CppGenerator extends AbstractGenerator {
 			val content = '''
 				
 				    def on_«port.name»(self):
-				       msg = self.«port.name».recv_pyobj()
-				       self.logger.info("PID (%s) - on_«port.name»():%s",str(self.pid), str(msg))
+				        msg = self.«port.name».recv_pyobj()
+				        self.logger.info("PID (%s) - on_«port.name»():%s",str(self.pid), str(msg))
 			'''
 			return content
 		}
@@ -248,8 +248,8 @@ public class CppGenerator extends AbstractGenerator {
 			val content = '''
 				
 				    def on_«port.name»(self):
-				       req = self.«port.name».recv_pyobj()
-				       self.logger.info("PID (%s) - on_«portName»():%s",str(self.pid),str(req))
+				        req = self.«port.name».recv_pyobj()
+				        self.logger.info("PID (%s) - on_«portName»():%s",str(self.pid),str(req))
 			'''
 			return content
 		}
