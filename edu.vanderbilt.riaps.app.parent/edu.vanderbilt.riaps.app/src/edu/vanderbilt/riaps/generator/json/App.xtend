@@ -21,33 +21,33 @@ import edu.vanderbilt.riaps.app.SubPort
 import edu.vanderbilt.riaps.app.Message
 import edu.vanderbilt.riaps.generator.json.Comp
 import edu.vanderbilt.riaps.app.DeviceType
+import edu.vanderbilt.riaps.app.Instance
+import edu.vanderbilt.riaps.app.DeviceInstance
 
 @SuppressWarnings("unused") class App {
 	String name
-	Map <String, AppGroups> groups
+	Map<String, AppGroups> groups
 	Map<String, Comp> devices
 	Map<String, Comp> components
 	Map<String, JsonActor> actors
 	List<HashMap<String, String>> messages
-	List <String> libraries
-
+	List<String> libraries
 
 	new(Application a) {
 		this.name = a.getName()
-		this.libraries = new ArrayList <String>()
+		this.libraries = new ArrayList<String>()
 		this.devices = new HashMap<String, Comp>()
 		this.groups = new HashMap<String, AppGroups>()
 		this.components = new HashMap<String, Comp>()
 		this.actors = new HashMap<String, JsonActor>()
 		this.messages = new ArrayList<HashMap<String, String>>()
 		var HashSet<String> messageSet = new HashSet<String>()
-		for(g:a.groups)
-		{
+		for (g : a.groups) {
 			var AppGroups group = new AppGroups(g)
-			groups.put(g.name,group)			
+			groups.put(g.name, group)
 		}
-		
-		for (Component c : a.getComponents()) {
+
+		for (Component c : a.collectComponents()) {
 			if (c instanceof Component) {
 				for (Port p : c.getPorts()) {
 					if (p instanceof PubPort) {
@@ -80,7 +80,7 @@ import edu.vanderbilt.riaps.app.DeviceType
 			mm.put("name", s)
 			this.messages.add(mm)
 		}
-		for (Component c : a.getComponents()) {
+		for (Component c : a.collectComponents()) {
 			if (c instanceof Component) {
 				var Comp ac = new Comp(c)
 				this.components.put(ac.getName(), ac)
@@ -89,11 +89,11 @@ import edu.vanderbilt.riaps.app.DeviceType
 				this.devices.put(dc.getName(), dc)
 			}
 		}
-		
-		for (DeviceType c : a.devices) {
-				var Comp dc = new Comp(c)
-				this.devices.put(dc.getName(), dc)
-			
+
+		for (DeviceType c : a.collectdevices) {
+			var Comp dc = new Comp(c)
+			this.devices.put(dc.getName(), dc)
+
 		}
 		for (Actor ac : a.getActors()) {
 			var JsonActor jac = new JsonActor(ac)
@@ -105,6 +105,40 @@ import edu.vanderbilt.riaps.app.DeviceType
 		// mm.put("name", m.getType().getName());
 		// this.messages.add(mm);
 		// }
+	}
+
+	def Iterable<? extends Component> collectComponents(Application application) {
+		var dt = application.components
+		for (Actor ac : application.getActors()) {
+			if (ac.compsection !== null) {
+				for (Instance i : ac.getCompsection().compInstances) {
+					if (!dt.contains(i.type)) {
+						dt.add(i.type)
+					}
+
+				}
+
+			}
+
+		}
+		return dt
+	}
+
+	def Iterable<? extends DeviceType> collectdevices(Application application) {
+		var dt = application.devices
+		for (Actor ac : application.getActors()) {
+			if (ac.compsection !== null) {
+				for (DeviceInstance i : ac.getCompsection().devInstances) {
+					if (!dt.contains(i.deviceRequirement)) {
+						dt.add(i.deviceRequirement)
+					}
+
+				}
+
+			}
+
+		}
+		return dt
 	}
 
 	def String getName() {
