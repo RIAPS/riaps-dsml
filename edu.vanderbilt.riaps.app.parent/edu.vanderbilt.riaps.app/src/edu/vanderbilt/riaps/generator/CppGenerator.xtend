@@ -217,14 +217,14 @@ public class CppGenerator extends AbstractGenerator {
 			    def __init__(«FOR p : initialParams SEPARATOR ','»«p»«ENDFOR»):
 			        super(«componentName», self).__init__()
 			        self.pid = os.getpid()
-			        self.logger.info("(PID %s) - starting «componentName», %s",str(self.pid))
+			        self.logger.info("(PID %s) - starting «componentName»",str(self.pid))
 			        
 			«FOR p : component.ports»
 				«p.generate_python()»
 			«ENDFOR»    
 			    
 			    def __destroy__(self):
-			        self.logger.info("(PID %s) - stopping «componentName», %s",str(self.pid))   	        	        
+			        self.logger.info("(PID %s) - stopping «componentName»",str(self.pid))   	        	        
 		'''
 
 	}
@@ -427,7 +427,7 @@ public class CppGenerator extends AbstractGenerator {
 				}
 			}
 			var libout = '''
-				add_library(«c.componentName» 
+				add_library(«c.componentName.toLowerCase» 
 							SHARED ${CMAKE_CURRENT_SOURCE_DIR}/cpp/«c.componentName».cc
 							${CMAKE_CURRENT_SOURCE_DIR}/cpp/«c.componentName»Base.cc
 							«FOR i : c.msgIncludes»
@@ -441,11 +441,11 @@ public class CppGenerator extends AbstractGenerator {
 							)
 							
 				«IF c.libraries.size==0»			
-					target_link_libraries(«c.componentName» czmq riaps dl capnp kj)
+					target_link_libraries(«c.componentName.toLowerCase» czmq riaps dl capnp kj)
 				«ELSE»
-					target_link_libraries(«c.componentName» czmq riaps dl capnp kj «FOR l:c.libraries SEPARATOR " "»«l»«ENDFOR»)
+					target_link_libraries(«c.componentName.toLowerCase» czmq riaps dl capnp kj «FOR l:c.libraries SEPARATOR " "»«l»«ENDFOR»)
 				«ENDIF»
-				install(TARGETS «c.componentName» DESTINATION lib)
+				install(TARGETS «c.componentName.toLowerCase» DESTINATION lib)
 			'''
 			libraryTarget.put(c, libout)
 

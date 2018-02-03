@@ -293,14 +293,14 @@ class CompCpp {
 		    def __init__(«FOR p : initialParams SEPARATOR ','»«p»«ENDFOR»):
 		        super(«componentName», self).__init__()	        
 		        self.pid = os.getpid()
-		        self.logger.info("(PID %s) - starting «componentName», %s",str(self.pid))
+		        self.logger.info("(PID %s) - starting «componentName»",str(self.pid))
 		        
 		    «FOR p : ports»
-		    	«p.generate_python()»
+		«p.generate_python()»
 		    «ENDFOR»    
 		    
 		    def __destroy__(self):			
-		        self.logger.info("(PID %s) - stopping «componentName», %s",str(self.pid))   	        	        
+		        self.logger.info("(PID %s) - stopping «componentName»",str(self.pid))   	        	        
 	'''
 
 }
