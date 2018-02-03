@@ -15,6 +15,7 @@ class RiapsOutputConfigurationProvider implements IOutputConfigurationProvider {
 	public final static String DEFAULT_OUTPUT_JSON_APP = "DEFAULT_OUTPUT_JSON"
 	public final static String DEFAULT_OUTPUT_MESSAGE = "DEFAULT_OUTPUT_MESSAGE"
 	public final static String DEFAULT_OUTPUT_CMAKE = "DEFAULT_OUTPUT_CMAKE"
+	public final static String DEFAULT_OUTPUT_THIRD_PARTY="DEFAULT_OUTPUT_THIRD_PARTY"
 
 	/** 
 	 * @return a set of {@link OutputConfiguration} available for the generator
@@ -35,6 +36,17 @@ class RiapsOutputConfigurationProvider implements IOutputConfigurationProvider {
 		outputconfig.setDescription("Output Folder")
 		outputconfig.setOutputDirectory(".")
 		outputconfig.setOverrideExistingResources(true)
+		outputconfig.setCreateOutputDirectory(true)
+		//outputconfig.setCleanUpDerivedResources(true)
+		outputconfig.setCleanUpDerivedResources(false)
+		outputconfig.setSetDerivedProperty(true)
+		hash1.add(outputconfig)
+		
+		
+		outputconfig = new OutputConfiguration(DEFAULT_OUTPUT_THIRD_PARTY)
+		outputconfig.setDescription("Output Folder")
+		outputconfig.setOutputDirectory("./ext")
+		outputconfig.setOverrideExistingResources(false)
 		outputconfig.setCreateOutputDirectory(true)
 		//outputconfig.setCleanUpDerivedResources(true)
 		outputconfig.setCleanUpDerivedResources(false)
@@ -66,7 +78,7 @@ class RiapsOutputConfigurationProvider implements IOutputConfigurationProvider {
 		outputconfig.setOverrideExistingResources(false)
 		outputconfig.setCreateOutputDirectory(true)
 		outputconfig.setCleanUpDerivedResources(false)
-		outputconfig.setSetDerivedProperty(true)
+		outputconfig.setSetDerivedProperty(false)
 		hash1.add(outputconfig)
 		
 		

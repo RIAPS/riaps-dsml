@@ -115,6 +115,11 @@ public class CppGenerator extends AbstractGenerator {
 			RiapsOutputConfigurationProvider::DEFAULT_OUTPUT_CMAKE,
 			clangformatter
 		)
+		fsa.generateFile(
+			"readme.txt",
+			RiapsOutputConfigurationProvider::DEFAULT_OUTPUT_THIRD_PARTY,
+			"Put third party artifacts here"
+		)
 	}
 
 	def appEntry(String a) {
@@ -224,7 +229,7 @@ public class CppGenerator extends AbstractGenerator {
 			«ENDFOR»    
 			    
 			    def __destroy__(self):
-			        self.logger.info("(PID %s) - stopping «componentName»",str(self.pid))   	        	        
+			    self.logger.info("(PID %s) - stopping «componentName»",str(self.pid))   	        	        
 		'''
 
 	}
@@ -255,7 +260,7 @@ public class CppGenerator extends AbstractGenerator {
 		}
 
 		if (port instanceof SrvPort) {
-			
+
 			val content = '''
 				
 				    def on_«port.name»(self):
@@ -266,7 +271,7 @@ public class CppGenerator extends AbstractGenerator {
 		}
 
 		if (port instanceof ReqPort) {
-			
+
 			val content = '''
 				
 				    def on_«port.name»(self):
