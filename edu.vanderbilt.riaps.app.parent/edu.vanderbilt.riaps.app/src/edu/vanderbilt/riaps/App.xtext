@@ -165,9 +165,7 @@ EXIT:
 	{EXIT}
 	'exit' (';')?;
 
-	//declare in us
-CPURequirement:
-	'cpu' percentage=INT '%' ('over' TimeInterval_Number=INT 'us')?;
+
 
 	/*
  * Rule that defines different supported time units.
@@ -270,8 +268,10 @@ ComponentRequirement:
 	Library | Configuration | CPURequirement | CompDeviceRequirement | NetworkRequirement;
 
 NetworkRequirement:
-	'net' Number=INT 'MB' ('over' TimeInterval_Number=INT 'us')?;
-
+	'net' (max?='max')? Number=INT 'MB' ('over' TimeInterval_Number=INT 'us')?;
+	//declare in us
+CPURequirement:
+	'cpu' (max?='max')? percentage=INT '%' ('over' TimeInterval_Number=INT 'us')?;
 CompDeviceRequirement:
 	('device' deviceRequirement=[DeviceType] ('(' actuals+=Actual (',' (actuals+=Actual))* ')')?);
 	//('tag' tag=DeviceTagSequence)?
@@ -365,7 +365,7 @@ RestartSpec:
 	'restart' (maxtries=INT)? ('delay' delay=INT unit=TimeUnit)? (';')?;
 
 ActorRequirement:
-	MemoryRequirement | StorageRequirement;
+	MemoryRequirement |CPURequirement| StorageRequirement |NetworkRequirement;
 
 MemoryRequirement:
 	'mem' Number=INT 'MB'?;

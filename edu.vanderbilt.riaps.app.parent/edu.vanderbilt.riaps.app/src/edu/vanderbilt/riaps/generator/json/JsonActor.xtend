@@ -19,6 +19,7 @@ import edu.vanderbilt.riaps.app.MemoryRequirement
 import edu.vanderbilt.riaps.app.NAMEDHANDLER
 import edu.vanderbilt.riaps.app.StorageRequirement
 import edu.vanderbilt.riaps.app.DeviceInstance
+import edu.vanderbilt.riaps.app.NetworkRequirement
 
 @SuppressWarnings(#["unused", "unchecked", "rawtypes"]) class JsonActor {
 	transient String name
@@ -31,6 +32,8 @@ import edu.vanderbilt.riaps.app.DeviceInstance
 	List devices
 	int memory = -1
 	int space = -1
+	CPUConstraint cpu
+	NetConstraint net
 	String exceptHandler
 	RestartSpecification restart
 
@@ -66,7 +69,24 @@ import edu.vanderbilt.riaps.app.DeviceInstance
 					}
 					if (x instanceof StorageRequirement) {
 						this.space = ((x as StorageRequirement)).getNumber()
-					}					
+					}
+					if (x instanceof CPURequirement) {
+						this.cpu = new CPUConstraint
+						this.cpu.max=x.max 
+						this.cpu.period = ((x as CPURequirement)).getTimeInterval_Number()
+						if(this.cpu.period == 0) this.cpu.period = 1000000
+						this.cpu.quota = ((x as CPURequirement)).getPercentage()
+						var double tmp = this.cpu.period
+						tmp = tmp / 100.0
+						this.cpu.quota = (this.cpu.quota * tmp).intValue
+
+					}
+					if (x instanceof NetworkRequirement) {
+						if(this.net === null) this.net = new NetConstraint
+						this.net.max=x.max 
+						this.net.period = ((x as NetworkRequirement)).getTimeInterval_Number()
+						this.net.quota = ((x as NetworkRequirement)).getNumber()
+					}
 				}
 			}
 		}
@@ -107,7 +127,6 @@ import edu.vanderbilt.riaps.app.DeviceInstance
 //				}
 //			}
 //		}		
-		
 	}
 
 	def String getName() {

@@ -49,13 +49,14 @@ import edu.vanderbilt.riaps.app.AnswerPort
 		this.exceptHandler = ""
 
 		this.devices = new ArrayList<String>()
-		if (c.constraint !== null && c.constraint.size > 1) {
+		if (c.constraint !== null && c.constraint.size >= 1) {
 			if (c.getConstraint().get(0).getRequirements() !== null) {
 				for (DeviceRequirement x : c.getConstraint().get(0).getRequirements()) {
 					if (x instanceof CPURequirement) {
 						if(this.cpu === null) this.cpu = new CPUConstraint
 
 						this.cpu.period = ((x as CPURequirement)).getTimeInterval_Number()
+						this.cpu.max = x.max
 						if(this.cpu.period == 0) this.cpu.period = 1000000
 						this.cpu.quota = ((x as CPURequirement)).getPercentage()
 						var double tmp = this.cpu.period
@@ -64,6 +65,7 @@ import edu.vanderbilt.riaps.app.AnswerPort
 					}
 					if (x instanceof NetworkRequirement) {
 						if(this.net === null) this.net = new NetConstraint
+						this.net.max = x.max
 						this.net.period = ((x as NetworkRequirement)).getTimeInterval_Number()
 						this.net.quota = ((x as NetworkRequirement)).getNumber()
 					}
@@ -147,11 +149,14 @@ import edu.vanderbilt.riaps.app.AnswerPort
 			}
 		}
 		this.devices = new ArrayList<String>()
-		if (c.constraint !== null && c.constraint.size() > 1) {
+		// System.out.println("here in constraint")
+		if (c.constraint !== null && c.constraint.size() >= 1) {
+			// System.out.println("here in constraint is not null")
 			if (c.constraint.get(0).getRequirements() !== null) {
 				for (ComponentRequirement x : c.constraint.get(0).getRequirements()) {
 					if (x instanceof CPURequirement) {
 						if(this.cpu === null) this.cpu = new CPUConstraint
+						this.cpu.max = x.max
 
 						this.cpu.period = ((x as CPURequirement)).getTimeInterval_Number()
 						if(this.cpu.period == 0) this.cpu.period = 1000000
@@ -162,6 +167,7 @@ import edu.vanderbilt.riaps.app.AnswerPort
 					}
 					if (x instanceof NetworkRequirement) {
 						if(this.net === null) this.net = new NetConstraint
+						this.net.max = x.max
 						this.net.period = ((x as NetworkRequirement)).getTimeInterval_Number()
 						this.net.quota = ((x as NetworkRequirement)).getNumber()
 					}
@@ -242,9 +248,11 @@ import edu.vanderbilt.riaps.app.AnswerPort
 class NetConstraint {
 	public int quota
 	public int period
+	public boolean max
 }
 
 class CPUConstraint {
 	public int quota
 	public int period
+	public boolean max
 }
