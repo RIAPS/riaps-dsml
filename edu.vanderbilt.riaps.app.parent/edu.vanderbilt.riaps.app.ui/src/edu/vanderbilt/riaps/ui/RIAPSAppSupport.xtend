@@ -171,7 +171,7 @@ static val riapsNatures = #{'org.eclipse.cdt.core.cnature', 'org.eclipse.cdt.cor
 		endif
 		
 		
-		package: pkg package.sh
+		package: package.sh
 			chmod +x package.sh
 			./package.sh
 		'''

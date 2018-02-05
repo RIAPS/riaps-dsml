@@ -129,15 +129,17 @@ public class CppGenerator extends AbstractGenerator {
 	}
 
 	def createPackage(Application myapp) {
-		'''
+		'''		
 		set +e
 		export outputdir=`mktemp -d`
 		mkdir $outputdir/«myapp.name»
 		cp -r pkg/* $outputdir/«myapp.name»
-		pushd $outputdir
-		tar czvf «myapp.name».tar.gz «myapp.name»
-		popd
-		mv $outputdir/«myapp.name».tar.gz .		
+		export currentdir=`pwd`
+		cd  $outputdir
+		tar czvf «myapp.name».tar.gz «myapp.name»/*
+		cd $currentdir
+		mv $outputdir/«myapp.name».tar.gz .   
+		
 		'''
 	}
 
@@ -248,7 +250,7 @@ public class CppGenerator extends AbstractGenerator {
 			«ENDFOR»    
 			    
 			    def __destroy__(self):
-			    self.logger.info("(PID %s) - stopping «componentName»",str(self.pid))   	        	        
+			        self.logger.info("(PID %s) - stopping «componentName»",str(self.pid))   	        	        
 		'''
 
 	}
@@ -284,7 +286,7 @@ public class CppGenerator extends AbstractGenerator {
 				
 				    def on_«port.name»(self):
 				       msg = self.«port.name».recv_pyobj()
-				      self.logger.info("PID (%s) - on_query():%s",str(self.pid),str(msg))
+				       self.logger.info("PID (%s) - on_query():%s",str(self.pid),str(msg))
 			'''
 			return content
 		}
