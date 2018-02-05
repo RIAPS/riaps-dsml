@@ -170,6 +170,10 @@ static val riapsNatures = #{'org.eclipse.cdt.core.cnature', 'org.eclipse.cdt.cor
 			clang-format -i -style=file cpp/include/*.h
 		endif
 		
+		
+		package: pkg package.sh
+			chmod +x package.sh
+			./package.sh
 		'''
 	}
 	

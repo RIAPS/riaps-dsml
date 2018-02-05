@@ -45,7 +45,7 @@ class RiapsOutputConfigurationProvider implements IOutputConfigurationProvider {
 		
 		outputconfig = new OutputConfiguration(DEFAULT_OUTPUT_THIRD_PARTY)
 		outputconfig.setDescription("Output Folder")
-		outputconfig.setOutputDirectory("./ext")
+		outputconfig.setOutputDirectory("./pkg")
 		outputconfig.setOverrideExistingResources(false)
 		outputconfig.setCreateOutputDirectory(true)
 		//outputconfig.setCleanUpDerivedResources(true)

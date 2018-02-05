@@ -166,6 +166,14 @@ class CProjectSetting {
 							<useDefaultCommand>true</useDefaultCommand>
 							<runAllBuilders>true</runAllBuilders>
 						</target>
+						<target name="package" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
+							<buildCommand>make</buildCommand>
+							<buildArguments/>
+							<buildTarget>package</buildTarget>
+							<stopOnError>true</stopOnError>
+							<useDefaultCommand>true</useDefaultCommand>
+							<runAllBuilders>true</runAllBuilders>
+						</target>
 					</buildTargets>
 				</storageModule>
 				<storageModule moduleId="scannerConfiguration">

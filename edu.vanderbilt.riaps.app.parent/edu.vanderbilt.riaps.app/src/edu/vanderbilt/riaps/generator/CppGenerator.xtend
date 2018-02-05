@@ -53,6 +53,11 @@ public class CppGenerator extends AbstractGenerator {
 
 		for (e : resource.allContents.toIterable.filter(Application)) {
 			generateForApp(e, fsa, null, null, Appname, libraryTarget, MessageTarget)
+			fsa.generateFile(
+				"package.sh",
+				RiapsOutputConfigurationProvider::DEFAULT_OUTPUT_CMAKE,
+				createPackage(e)
+			)
 		}
 		for (model : resource.allContents.toIterable.filter(Model)) {
 
@@ -110,6 +115,7 @@ public class CppGenerator extends AbstractGenerator {
 			RiapsOutputConfigurationProvider::DEFAULT_OUTPUT_CMAKE,
 			createTopCmakeLists(Appname, libraryTarget, MessageTarget)
 		)
+
 		fsa.generateFile(
 			".clang-format",
 			RiapsOutputConfigurationProvider::DEFAULT_OUTPUT_CMAKE,
@@ -120,6 +126,19 @@ public class CppGenerator extends AbstractGenerator {
 			RiapsOutputConfigurationProvider::DEFAULT_OUTPUT_THIRD_PARTY,
 			"Put third party artifacts here"
 		)
+	}
+
+	def createPackage(Application myapp) {
+		'''
+		set +e
+		export outputdir=`mktemp -d`
+		mkdir $outputdir/«myapp.name»
+		cp -r pkg/* $outputdir/«myapp.name»
+		pushd $outputdir
+		tar czvf «myapp.name».tar.gz «myapp.name»
+		popd
+		mv $outputdir/«myapp.name».tar.gz .		
+		'''
 	}
 
 	def appEntry(String a) {
