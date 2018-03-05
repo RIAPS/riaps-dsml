@@ -6,7 +6,7 @@ import edu.vanderbilt.riaps.app.PubPort
 import edu.vanderbilt.riaps.generator.CppGenerator
 import edu.vanderbilt.riaps.app.FStructType
 
-class PubPortCpp extends PortCppBase {
+class InssPortCpp extends PortCppBase {
 	public FStructType msgType
 	public CppGenerator gen
 	

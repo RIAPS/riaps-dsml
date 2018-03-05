@@ -1,18 +1,18 @@
 package edu.vanderbilt.riaps.ui
 
+import edu.vanderbilt.riaps.Console
+import java.io.ByteArrayInputStream
 import java.net.URI
+import java.util.ArrayList
+import java.util.List
+import javax.xml.ws.soap.AddressingFeature.Responses
+import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IProjectDescription
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.Assert
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IProgressMonitor
-import java.util.ArrayList
-import edu.vanderbilt.riaps.Console
-import java.util.List
-import org.eclipse.core.resources.IFile
-import java.io.ByteArrayInputStream
-import javax.xml.ws.soap.AddressingFeature.Responses
 
 class RIAPSAppSupport {
 
@@ -32,11 +32,16 @@ static val riapsNatures = #{'org.eclipse.cdt.core.cnature', 'org.eclipse.cdt.cor
 	 * @param natureId
 	 * @return
 	 */
-	def static IProject createProject(String projectName, URI location) {
+	def static IProject createProject(String projectName, URI location,RiapsAPPType apptype) {
+		if (apptype == RiapsAPPType.CPPAPP)
+			createCPPAPP(projectName, location)
+	}
+	
+	protected def static IProject createCPPAPP(String projectName, URI location) {
 		Assert.isNotNull(projectName)
 		Assert.isTrue(projectName.trim().length() > 0)
 		var IProject project = createBaseProject(projectName, location)
-	
+			
 		try {
 			addNature(project)
 			//var String[] paths = #["src/build/armhf", "src/build/amd64"]
@@ -48,7 +53,7 @@ static val riapsNatures = #{'org.eclipse.cdt.core.cnature', 'org.eclipse.cdt.cor
 			e.printStackTrace()
 			project = null
 		}
-
+		
 		return project
 	}
 

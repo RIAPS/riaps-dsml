@@ -412,15 +412,39 @@
        point="org.eclipse.ui.newWizards">
     <wizard
           category="edu.vanderbilt.riaps.app.ui.riaps"
-          class="edu.vanderbilt.riaps.ui.RIAPSApp"
-          icon="icons/component.png"
-          id="edu.vanderbilt.riaps.ui.riapsApp"
-          name="App"
+          class="edu.vanderbilt.riaps.ui.RIAPSCPPApp"
+          icon="icons/cpp.png"
+          id="edu.vanderbilt.riaps.ui.riapsCPPApp"
+          name="CPPApp"
           project="true">
     </wizard>
     <category
           id="edu.vanderbilt.riaps.app.ui.riaps"
           name="RIAPS">
     </category>
+    <wizard
+          category="edu.vanderbilt.riaps.app.ui.riaps"
+          class="edu.vanderbilt.riaps.ui.RIAPSCPPLib"
+          icon="icons/CPPlibrary.png"
+          id="edu.vanderbilt.riaps.ui.riapsCPPLib"
+          name="CPPLib"
+          project="true">
+    </wizard>
+    <wizard
+          category="edu.vanderbilt.riaps.app.ui.riaps"
+          class="edu.vanderbilt.riaps.ui.RIAPSPyLib"
+          icon="icons/pylib.png"
+          id="edu.vanderbilt.riaps.ui.riapsPyLib"
+          name="PyLib"
+          project="true">
+    </wizard>
+    <wizard
+          category="edu.vanderbilt.riaps.app.ui.riaps"
+          class="edu.vanderbilt.riaps.ui.RIAPSPyApp"
+          icon="icons/python.png"
+          id="edu.vanderbilt.riaps.ui.riapsPyApp"
+          name="PyApp"
+          project="true">
+    </wizard>
  </extension>
 </plugin>

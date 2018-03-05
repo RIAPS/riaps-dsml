@@ -8,6 +8,7 @@ import edu.vanderbilt.riaps.app.TimPort
 
 	new(TimPort p) {
 		this.name = p.getName()
+	
 		this.period = p.getSpec()
 	}
 }

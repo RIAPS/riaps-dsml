@@ -7,11 +7,11 @@ import org.eclipse.ui.IWorkbench
 import org.eclipse.ui.dialogs.WizardNewProjectCreationPage
 import java.net.URI
 
-class RIAPSApp extends Wizard implements INewWizard {
+class RIAPSCPPApp extends Wizard implements INewWizard {
 	private WizardNewProjectCreationPage _pageOne
 
 	new() { // TODO Auto-generated constructor stub
-		windowTitle = "New RIAPS APP"
+		windowTitle = "New RIAPS CPP Application"
 	}
 
 	override void init(IWorkbench workbench, IStructuredSelection selection) { // TODO Auto-generated method stub
@@ -24,7 +24,7 @@ class RIAPSApp extends Wizard implements INewWizard {
 		if (!_pageOne.useDefaults()) {
 			location = _pageOne.getLocationURI();
 		} // else location == null
-		RIAPSAppSupport.createProject(name, location);
+		RIAPSAppSupport.createProject(name, location, RiapsAPPType.CPPAPP);
 		return true
 	}
 
@@ -32,8 +32,8 @@ class RIAPSApp extends Wizard implements INewWizard {
 		super.addPages();
 
 		_pageOne = new WizardNewProjectCreationPage("New RIAPS APP Wizard");
-		_pageOne.setTitle("New RIAPS APP");
-		_pageOne.setDescription("Create RIAPS APP.");
+		_pageOne.setTitle("New RIAPS CPP APP");
+		_pageOne.setDescription("Create RIAPS CPP APP.");
 
 		addPage(_pageOne);
 	}
