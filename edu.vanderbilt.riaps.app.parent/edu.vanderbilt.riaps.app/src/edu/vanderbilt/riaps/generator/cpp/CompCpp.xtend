@@ -17,6 +17,7 @@ import edu.vanderbilt.riaps.app.DeviceType
 import java.util.List
 import java.util.Set
 import edu.vanderbilt.riaps.app.Library
+import edu.vanderbilt.riaps.app.clibrary
 
 @SuppressWarnings("unused", "unchecked")
 class CompCpp {
@@ -46,7 +47,12 @@ class CompCpp {
 		for (use : comp.constraint) {
 			for (req : use.requirements) {
 				if (req instanceof Library) {
-					libraries.add(req.name.substring(3, req.name.length - 3))
+					if(req.lib instanceof clibrary)
+					{
+						var lname=(req.lib as clibrary).name
+						libraries.add(lname.substring(3, lname.length - 3))
+					
+					}
 				}
 			}
 
@@ -64,7 +70,12 @@ class CompCpp {
 		for (use : comp.constraint) {
 			for (req : use.requirements) {
 				if (req instanceof Library) {
-					libraries.add(req.name.substring(3, req.name.length - 3))
+					if(req.lib instanceof clibrary)
+					{
+						var lname=(req.lib as clibrary).name
+						libraries.add(lname.substring(3, lname.length - 3))
+					
+					}
 				}
 			}
 

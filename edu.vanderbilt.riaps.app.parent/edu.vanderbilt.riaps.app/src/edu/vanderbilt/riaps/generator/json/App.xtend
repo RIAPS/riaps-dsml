@@ -23,6 +23,9 @@ import edu.vanderbilt.riaps.generator.json.Comp
 import edu.vanderbilt.riaps.app.DeviceType
 import edu.vanderbilt.riaps.app.Instance
 import edu.vanderbilt.riaps.app.DeviceInstance
+import edu.vanderbilt.riaps.app.Library
+import edu.vanderbilt.riaps.app.clibrary
+import edu.vanderbilt.riaps.app.pylibrary
 
 @SuppressWarnings("unused") class App {
 	String name
@@ -31,16 +34,18 @@ import edu.vanderbilt.riaps.app.DeviceInstance
 	Map<String, Comp> components
 	Map<String, JsonActor> actors
 	List<HashMap<String, String>> messages
-	List<String> libraries
+	List<HashMap<String, String>> libraries
+	
 
 	new(Application a) {
 		this.name = a.getName()
-		this.libraries = new ArrayList<String>()
+		
 		this.devices = new HashMap<String, Comp>()
 		this.groups = new HashMap<String, AppGroups>()
 		this.components = new HashMap<String, Comp>()
 		this.actors = new HashMap<String, JsonActor>()
 		this.messages = new ArrayList<HashMap<String, String>>()
+		this.libraries = new ArrayList<HashMap<String, String>>()
 		var HashSet<String> messageSet = new HashSet<String>()
 		for (g : a.groups) {
 			var AppGroups group = new AppGroups(g)
@@ -95,6 +100,11 @@ import edu.vanderbilt.riaps.app.DeviceInstance
 			this.devices.put(dc.getName(), dc)
 
 		}
+		for(Library x:a.libraries){
+			var mm = new HashMap<String,String>();
+			mm.put("name", (x as Library).getName());
+			this.libraries.add(mm)
+		}
 		for (Actor ac : a.getActors()) {
 			var JsonActor jac = new JsonActor(ac)
 			actors.put(jac.getName(), jac)
@@ -105,6 +115,15 @@ import edu.vanderbilt.riaps.app.DeviceInstance
 		// mm.put("name", m.getType().getName());
 		// this.messages.add(mm);
 		// }
+	}
+	
+	def String getName(Library library){
+		if (library===null) return "";
+		if(library.lib instanceof clibrary)
+			return (library.lib as clibrary).name
+		
+		if(library.lib instanceof pylibrary)
+			return (library.lib as pylibrary).name
 	}
 
 	def Iterable<? extends Component> collectComponents(Application application) {

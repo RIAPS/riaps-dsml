@@ -28,11 +28,14 @@ import edu.vanderbilt.riaps.app.DeviceType
 import edu.vanderbilt.riaps.app.DeviceRequirement
 import edu.vanderbilt.riaps.app.QueryPort
 import edu.vanderbilt.riaps.app.AnswerPort
+import edu.vanderbilt.riaps.app.clibrary
+import edu.vanderbilt.riaps.app.pylibrary
 
 @SuppressWarnings(#["unchecked", "rawtypes"]) class Comp {
 	String name
 	List formals
-	List libraries
+	// List libraries
+	List<HashMap<String, String>> libraries
 	List files
 	List devices
 	CPUConstraint cpu
@@ -44,7 +47,8 @@ import edu.vanderbilt.riaps.app.AnswerPort
 
 		this.name = c.getName()
 		this.formals = new ArrayList<String>()
-		this.libraries = new ArrayList<String>()
+		// this.libraries = new ArrayList<String>()
+		this.libraries = new ArrayList<HashMap<String, String>>()
 		this.files = new ArrayList<String>()
 		this.exceptHandler = ""
 
@@ -70,7 +74,10 @@ import edu.vanderbilt.riaps.app.AnswerPort
 						this.net.quota = ((x as NetworkRequirement)).getNumber()
 					}
 					if (x instanceof Library) {
-						this.libraries.add(((x as Library)).getName())
+						var mm = new HashMap<String, String>();
+						mm.put("name", (x as Library).getName());
+						this.libraries.add(mm)
+					// this.libraries.add(((x as Library)).getName())
 					}
 					if (x instanceof Configuration) {
 						this.files.add(((x as Configuration)).getName())
@@ -133,7 +140,8 @@ import edu.vanderbilt.riaps.app.AnswerPort
 	new(Component c) {
 		this.name = c.getName()
 		this.formals = new ArrayList<String>()
-		this.libraries = new ArrayList<String>()
+		// this.libraries = new ArrayList<String>()
+		this.libraries = new ArrayList<HashMap<String, String>>()
 		this.files = new ArrayList<String>()
 		this.exceptHandler = ""
 		if (c.handler !== null && c.handler.size() > 1) {
@@ -172,7 +180,10 @@ import edu.vanderbilt.riaps.app.AnswerPort
 						this.net.quota = ((x as NetworkRequirement)).getNumber()
 					}
 					if (x instanceof Library) {
-						this.libraries.add(((x as Library)).getName())
+						var mm = new HashMap<String, String>();
+						mm.put("name", (x as Library).getName());
+						this.libraries.add(mm)
+					// this.libraries.add(((x as Library)).getName())
 					}
 					if (x instanceof Configuration) {
 						this.files.add(((x as Configuration)).getName())
@@ -230,6 +241,15 @@ import edu.vanderbilt.riaps.app.AnswerPort
 		for (ComponentFormal cf : c.getFormals()) {
 			this.formals.add(new ComponentArgument(cf))
 		}
+	}
+
+	def String getName(Library library) {
+		if(library === null) return "";
+		if (library.lib instanceof clibrary)
+			return (library.lib as clibrary).name
+
+		if (library.lib instanceof pylibrary)
+			return (library.lib as pylibrary).name
 	}
 
 	def private Map getPortMap(String name) {

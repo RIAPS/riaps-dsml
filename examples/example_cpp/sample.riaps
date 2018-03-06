@@ -1,7 +1,3 @@
-package riapsex 
-
-import riapsex.*
-
 app DistributedEstimator {
 	message sensorReady: SensorReady; 
     message sensorQuery: SensorQuery; 

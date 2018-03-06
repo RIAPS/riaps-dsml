@@ -39,4 +39,4 @@ class RiapsSystemGenerator extends AbstractGenerator{
 		
 		//Console.getInstance().log(java.util.logging.Level.INFO, fileName + " generated");
 	}
-}
+} 

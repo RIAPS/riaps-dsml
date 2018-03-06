@@ -190,12 +190,12 @@ class AppValidator extends AbstractAppValidator {
 	}
 
 	// Message not referenced
-	@Check
-	def checkLibraryName(Library lib) {
-		if (!lib.name.startsWith("lib")) {
-			error('library name must start with lib', AppPackage.Literals.LIBRARY__NAME)
-		}
-	}
+//	@Check
+//	def checkLibraryName(Library lib) {
+//		if (!lib.name.startsWith("lib")) {
+//			error('library name must start with lib', AppPackage.Literals.LIBRARY__NAME)
+//		}
+//	}
 
 	// Message not referenced
 	@Check
