@@ -14,7 +14,7 @@ class AppGroups {
 
 	new(Group group) {
 		var u = group.useclauses
-		if (u !== null) {
+		if (u !== null && u.size()>0) {
 			var u1 = u.get(0)
 			var pr = u1.property
 			for (p : pr) {
@@ -23,11 +23,11 @@ class AppGroups {
 				}
 				if (p instanceof Consensus) {
 					consensus = true
-				}
+				} 
 			}
 		}
 		var gblocklist = group.gmessageblock
-		if (gblocklist !== null) {
+		if (gblocklist !== null && gblocklist.size()>0) {
 			if (gblocklist.size > 0) {
 				var gblock = gblocklist.get(0)
 				var gmessages = gblock.groupMessages
