@@ -41,15 +41,32 @@ import edu.vanderbilt.riaps.app.ReqPort
 import edu.vanderbilt.riaps.app.SrvPort
 import edu.vanderbilt.riaps.app.ClntPort
 import edu.vanderbilt.riaps.app.RepPort
+import java.util.Properties
+import java.io.StringReader
 
 public class CppGenerator extends AbstractGenerator {
 
+	var cppProjectType=true
 	@Inject extension IQualifiedNameProvider
 
 	override doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		var HashSet<String> Appname = new HashSet<String>
 		var HashMap<CompCpp, CharSequence> libraryTarget = new HashMap<CompCpp, CharSequence>
 		var HashMap<FType, CharSequence> MessageTarget = new HashMap<FType, CharSequence>
+		if (fsa.isFile(".project.props", RiapsOutputConfigurationProvider::DEFAULT_OUTPUT_CMAKE)) {
+			var seq = fsa.readTextFile(".project.props", RiapsOutputConfigurationProvider::DEFAULT_OUTPUT_CMAKE)
+			var StringBuilder data = new StringBuilder(seq)
+			 val p = new Properties();
+   			p.load(new StringReader(data.toString));
+			Console.instance.log(java.util.logging.Level.SEVERE, p.getProperty("ProjectType"));
+			if(p.getProperty("ProjectType").toLowerCase.equals("pyapp"))
+			{
+				cppProjectType=false
+				Console.instance.log(java.util.logging.Level.SEVERE, "setting cpp project type to false");
+			}
+		} else {
+			Console.instance.log(java.util.logging.Level.SEVERE, ".project.props not found");
+		}
 
 		for (e : resource.allContents.toIterable.filter(Application)) {
 			generateForApp(e, fsa, null, null, Appname, libraryTarget, MessageTarget)
@@ -77,7 +94,7 @@ public class CppGenerator extends AbstractGenerator {
 			createArmhfToolChain
 		)
 
-		var uri = (fsa as IFileSystemAccessExtension2).getURI(".toolchain.arm-linux-gnueabihf.cmake")
+		// var uri = (fsa as IFileSystemAccessExtension2).getURI(".toolchain.arm-linux-gnueabihf.cmake")
 		// Console.instance.log(java.util.logging.Level.INFO, "generated "+CommonPlugin.resolve(uri));
 		// Console.instance.log(java.util.logging.Level.INFO, "generated "+CommonPlugin.resolve(resource.URI));
 //		var path = Paths.get("./apps/CMakeLists.txt");
@@ -129,18 +146,25 @@ public class CppGenerator extends AbstractGenerator {
 	}
 
 	def createPackage(Application myapp) {
-		'''		
-		set +e
-		export outputdir=`mktemp -d`
-		mkdir $outputdir/«myapp.name»
-		cp -r pkg/* $outputdir/«myapp.name»
-		export currentdir=`pwd`
-		cd  $outputdir
-		tar czvf «myapp.name».tar.gz «myapp.name»/*
-		cd $currentdir
-		mv $outputdir/«myapp.name».tar.gz .   
-		
+
+		var contents = '''			   
+			set +e
+			«IF cppProjectType==false»
+			mkdir -p pkg
+			cp -r python/* pkg
+			cp -r json-gen/* pkg						
+			«ENDIF»	
+			export outputdir=`mktemp -d`
+			mkdir $outputdir/«myapp.name»
+			cp -r pkg/* $outputdir/«myapp.name»
+			export currentdir=`pwd`
+			cd  $outputdir
+			tar czvf «myapp.name».tar.gz «myapp.name»/*
+			cd $currentdir
+			mv $outputdir/«myapp.name».tar.gz .   
+			
 		'''
+		return contents
 	}
 
 	def appEntry(String a) {
@@ -250,7 +274,7 @@ public class CppGenerator extends AbstractGenerator {
 			«ENDFOR»    
 			    
 			    def __destroy__(self):
-			        self.logger.info("(PID %s) - stopping «componentName»",str(self.pid))   	        	        
+			    self.logger.info("(PID %s) - stopping «componentName»",str(self.pid))   	        	        
 		'''
 
 	}

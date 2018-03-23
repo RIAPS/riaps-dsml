@@ -113,9 +113,11 @@ KnownNodes:
 ;
 
 
-IP returns  ecore::EString:   (INT '.' INT '.' INT '.' INT)	;
+IPAddress returns  ecore::EString:   (INT '.' INT '.' INT '.' INT)	;
 
-
+IP:
+	IPAddress|STRING
+;
 
 NetworkInterface:
 	'net' name=ID 'address' ip=IP 	(';')?

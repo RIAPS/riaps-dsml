@@ -26,18 +26,18 @@ class SystemValidator extends AbstractSystemValidator {
 	private static final Pattern PATTERN = Pattern.compile(
 		"^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
 
-	@Check
-	def checkCorrectAddress(NetworkInterface net) {
-		val s = net.ip
-		// Console.instance.log(java.util.logging.Level.INFO, "Ipaddress is " + s);
-		// val isWhitespace = s.matches("^\\s*$");
-		if (!PATTERN.matcher(s as String).matches)
-			error('Address is not a valid IP Address', null)
-//		if (isWhitespace) {
-//			error('Ip Address cannot contain spaces',null)
-//			Console.instance.log(java.util.logging.Level.INFO, "Ip Address cannot contain space");
-//		}
-	}
+//	@Check
+//	def checkCorrectAddress(NetworkInterface net) {
+//		val s = net.ip
+//		// Console.instance.log(java.util.logging.Level.INFO, "Ipaddress is " + s);
+//		// val isWhitespace = s.matches("^\\s*$");
+//		if (!PATTERN.matcher(s as String).matches)
+//			error('Address is not a valid IP Address', null)
+////		if (isWhitespace) {
+////			error('Ip Address cannot contain spaces',null)
+////			Console.instance.log(java.util.logging.Level.INFO, "Ip Address cannot contain space");
+////		}
+//	}
 
 	@Check
 	def checkActorFormalAssignment(ActorFormalAssignment afa) {

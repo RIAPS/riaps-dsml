@@ -31,7 +31,6 @@ class RiapsOutputConfigurationProvider implements IOutputConfigurationProvider {
 		outputconfig.setCleanUpDerivedResources(false)
 		outputconfig.setSetDerivedProperty(true)
 		var hash1= newHashSet(outputconfig)
-		
 		outputconfig = new OutputConfiguration(DEFAULT_OUTPUT_CMAKE)
 		outputconfig.setDescription("Output Folder")
 		outputconfig.setOutputDirectory(".")
@@ -41,8 +40,6 @@ class RiapsOutputConfigurationProvider implements IOutputConfigurationProvider {
 		outputconfig.setCleanUpDerivedResources(false)
 		outputconfig.setSetDerivedProperty(true)
 		hash1.add(outputconfig)
-		
-		
 		outputconfig = new OutputConfiguration(DEFAULT_OUTPUT_THIRD_PARTY)
 		outputconfig.setDescription("Output Folder")
 		outputconfig.setOutputDirectory("./pkg")
@@ -52,7 +49,6 @@ class RiapsOutputConfigurationProvider implements IOutputConfigurationProvider {
 		outputconfig.setCleanUpDerivedResources(false)
 		outputconfig.setSetDerivedProperty(true)
 		hash1.add(outputconfig)
-
 		outputconfig= new OutputConfiguration(DEFAULT_OUTPUT_BASE_INCLUDE)
 		outputconfig.setDescription("Output Folder")
 		outputconfig.setOutputDirectory("./cpp/")

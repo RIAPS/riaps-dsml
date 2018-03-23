@@ -424,22 +424,6 @@
     </category>
     <wizard
           category="edu.vanderbilt.riaps.app.ui.riaps"
-          class="edu.vanderbilt.riaps.ui.RIAPSCPPLib"
-          icon="icons/CPPlibrary.png"
-          id="edu.vanderbilt.riaps.ui.riapsCPPLib"
-          name="CPPLib"
-          project="true">
-    </wizard>
-    <wizard
-          category="edu.vanderbilt.riaps.app.ui.riaps"
-          class="edu.vanderbilt.riaps.ui.RIAPSPyLib"
-          icon="icons/pylib.png"
-          id="edu.vanderbilt.riaps.ui.riapsPyLib"
-          name="PyLib"
-          project="true">
-    </wizard>
-    <wizard
-          category="edu.vanderbilt.riaps.app.ui.riaps"
           class="edu.vanderbilt.riaps.ui.RIAPSPyApp"
           icon="icons/python.png"
           id="edu.vanderbilt.riaps.ui.riapsPyApp"

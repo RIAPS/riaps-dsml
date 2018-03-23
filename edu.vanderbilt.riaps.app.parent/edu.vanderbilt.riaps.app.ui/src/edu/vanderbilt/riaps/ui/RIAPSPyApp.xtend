@@ -11,7 +11,7 @@ class RIAPSPyApp extends Wizard implements INewWizard {
 	private WizardNewProjectCreationPage _pageOne
 
 	new() { // TODO Auto-generated constructor stub
-		windowTitle = "New RIAPS CPP Application"
+		windowTitle = "New RIAPS Python Application"
 	}
 
 	override void init(IWorkbench workbench, IStructuredSelection selection) { // TODO Auto-generated method stub
@@ -31,9 +31,9 @@ class RIAPSPyApp extends Wizard implements INewWizard {
 	override void addPages() {
 		super.addPages();
 
-		_pageOne = new WizardNewProjectCreationPage("New RIAPS APP Wizard");
-		_pageOne.setTitle("New RIAPS CPP APP");
-		_pageOne.setDescription("Create RIAPS CPP APP.");
+		_pageOne = new WizardNewProjectCreationPage("New RIAPS Python APP Wizard");
+		_pageOne.setTitle("New RIAPS Python APP");
+		_pageOne.setDescription("Create RIAPS Python APP.");
 
 		addPage(_pageOne);
 	}
