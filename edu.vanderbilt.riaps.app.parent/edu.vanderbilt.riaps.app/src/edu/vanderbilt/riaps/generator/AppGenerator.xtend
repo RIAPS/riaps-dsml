@@ -30,7 +30,7 @@ class AppGenerator extends AbstractGenerator {
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		g1.doGenerate(resource, fsa, context);
 		//g3.doGenerate(resource, fsa, context);
-	//	g4.doGenerate(resource, fsa, context);
+		g4.doGenerate(resource, fsa, context);
 
 		for (e : resource.allContents.toIterable.filter(Model)) {
 			if(e.collections.filter(FStructType).size() == 0) return

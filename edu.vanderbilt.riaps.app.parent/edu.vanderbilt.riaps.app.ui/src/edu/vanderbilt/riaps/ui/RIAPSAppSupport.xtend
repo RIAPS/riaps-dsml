@@ -37,11 +37,11 @@ class RIAPSAppSupport {
 	 * @return
 	 */
 	def static IProject createProject(String projectName, URI location, RiapsAPPType apptype) {
-		if (apptype == RiapsAPPType.CPPAPP)
+		//if (apptype == RiapsAPPType.CPPAPP)
 			createCPPAPP(projectName, location, "CPPAPP")
 
-		if (apptype == RiapsAPPType.PYAPP)
-			createCPPAPP(projectName, location, "PYAPP")
+		//if (apptype == RiapsAPPType.PYAPP)
+		//	createCPPAPP(projectName, location, "PYAPP")
 
 	}
 
