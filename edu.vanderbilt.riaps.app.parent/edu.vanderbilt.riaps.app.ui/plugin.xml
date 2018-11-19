@@ -410,14 +410,6 @@
 	</extension>
  <extension
        point="org.eclipse.ui.newWizards">
-    <wizard
-          category="edu.vanderbilt.riaps.app.ui.riaps"
-          class="edu.vanderbilt.riaps.ui.RIAPSCPPApp"
-          icon="icons/cpp.png"
-          id="edu.vanderbilt.riaps.ui.riapsCPPApp"
-          name="CPPApp"
-          project="true">
-    </wizard>
     <category
           id="edu.vanderbilt.riaps.app.ui.riaps"
           name="RIAPS">
@@ -427,7 +419,7 @@
           class="edu.vanderbilt.riaps.ui.RIAPSPyApp"
           icon="icons/python.png"
           id="edu.vanderbilt.riaps.ui.riapsPyApp"
-          name="PyApp"
+          name="RIAPSApp"
           project="true">
     </wizard>
  </extension>

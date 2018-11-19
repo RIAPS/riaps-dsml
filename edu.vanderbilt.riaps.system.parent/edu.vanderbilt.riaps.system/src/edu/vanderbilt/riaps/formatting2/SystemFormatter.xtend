@@ -6,7 +6,6 @@ package edu.vanderbilt.riaps.formatting2
 import com.google.inject.Inject
 import edu.vanderbilt.riaps.services.SystemGrammarAccess
 import edu.vanderbilt.riaps.system.Collection
-import edu.vanderbilt.riaps.system.DeviceSupported
 import edu.vanderbilt.riaps.system.Import
 import edu.vanderbilt.riaps.system.Model
 import edu.vanderbilt.riaps.system.NodeType
@@ -45,10 +44,7 @@ class SystemFormatter extends AbstractFormatter2 {
 		val close = nodeType.regionFor.keyword("}").prepend[noSpace; newLine].append[noSpace; newLine]
 		interior(open, close)[indent]
 
-		for (DeviceSupported deviceSupport : nodeType.getDeviceSupport()) {
-			deviceSupport.format;
-			deviceSupport.prepend[noSpace; newLine].append[noSpace; newLine]
-		}
+	 
 		nodeType.getMemory.format;
 		nodeType.getMemory.prepend[noSpace; newLine].append[noSpace; newLine]
 		nodeType.getStorage.format;
@@ -61,10 +57,7 @@ class SystemFormatter extends AbstractFormatter2 {
 		val close = nodeType.regionFor.keyword("}").prepend[noSpace; newLine].append[noSpace; newLine]
 		interior(open, close)[indent]
 
-		for (DeviceSupported deviceSupport : nodeType.getDeviceSupport()) {
-			deviceSupport.format;
-			deviceSupport.prepend[noSpace; newLine].append[noSpace; newLine]
-		}
+	 
 		nodeType.getMemory.format;
 		nodeType.getStorage.format;
 		nodeType.getMemory.prepend[noSpace; newLine].append[noSpace; newLine]

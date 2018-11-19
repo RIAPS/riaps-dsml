@@ -21,8 +21,7 @@ FQN:
 	ID ('.' ID)*;	
 	
 Collection:
-	NodeType
-	|KnownNodes
+	KnownNodes
 	|AppDeployment
 ;
 terminal INT returns ecore::EInt:
@@ -55,31 +54,16 @@ NodeType returns NodeType:
 	{NodeType}
 	'nodeType' (name=ID)
 	'{'
-		//(provision+=Provision)+
-		(deviceSupport+=DeviceSupported)*
+		//(provision+=Provision)+		
 		(memory=MemoryProvision)?
 		(storage=StorageProvision)?		
 	'}';
 
 Provision:
-	DeviceSupported
-	|MemoryProvision
+     MemoryProvision
 	|StorageProvision
 ;
 
-//Devices can be specifically tagged read hierarchically from left to right
-DeviceSupported:
-	'device' device=[App::DeviceType] ('tag' tag=DeviceTagSequence)?(';')?
-;
-
-
-DeviceTagSequence:
-	tag+=DeviceTag ('.' tag+=DeviceTag)*
-;	
-
-DeviceTag:
-	name=ID
-;
 	
 MemoryProvision:
 	'mem' value=INT unit = MemoryUnits (';')?
@@ -105,7 +89,7 @@ MemoryUnits:
 KnownNodes:
 	'host' (name=ID) (':' kind=[NodeType|FQN])?
 	'{'
-		(deviceSupport+=DeviceSupported)*
+		
 		(memory=MemoryProvision)?
 		(storage=StorageProvision)?
 		(netinterface+=NetworkInterface)*

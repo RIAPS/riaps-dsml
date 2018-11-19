@@ -7,92 +7,47 @@ import edu.vanderbilt.riaps.app.RepPort
 import edu.vanderbilt.riaps.app.QueryPort
 import edu.vanderbilt.riaps.app.AnswerPort
 import java.util.concurrent.TimeUnit
-import edu.vanderbilt.riaps.app.DeadlineLimit
+import edu.vanderbilt.riaps.generator.AppGenerator
 
 @SuppressWarnings("unused") class ClntSrvPort {
 	transient String name
 	String req_type
 	String rep_type
 	int deadline
-	int upperlimit
-	int lowerlimit
+	
+	Boolean timed
 
 	new(ClntPort p) {
 		this.name = p.getName()
-		this.deadline = 0
+
 		this.req_type = p.getReq_type().getName()
 		this.rep_type = p.getRep_type().getName()
-		this.deadline = p.getDeadline()
-		if (p.getRatelimit() !== null) {
-			if (p.getRatelimit().isNolower()) {
-				this.lowerlimit = 0
-			} else
-				this.lowerlimit = p.getRatelimit().getLower()
+		this.timed = p.timed
+
+	}
+
+	new(SrvPort p) {
+		this.name = p.getName()
+		this.timed = p.timed
+		this.deadline = 0
+		if (p.deadline > 0) {
+			this.deadline = AppGenerator.convert(p.deadline, p.unit)
 		}
-		if (p.getRatelimit() !== null) {
-			if (p.getRatelimit().isNoupper()) {
-				this.upperlimit = -1
-			} else
-				this.upperlimit = p.getRatelimit().getUpper()
-		}
-	}
+		this.req_type = p.getReq_type().getName()
+		this.rep_type = p.getRep_type().getName()
 
-	def int getDeadline(ClntPort port) {
-		if (port.deadlinelimit === null)
-			return 0
-
-		return getDeadline(port.deadlinelimit)
-	}
-
-
-	def int getDeadline(QueryPort port) {
-		if (port.deadlinelimit === null)
-			return 0
-
-		return getDeadline(port.deadlinelimit)
-	}
-
-	def int getDeadline(ReqPort port) {
-		if (port.deadlinelimit === null)
-			return 0
-
-		return getDeadline(port.deadlinelimit)
-	}
-
-	def int getDeadline(DeadlineLimit deadlinelimit) {
-		var real_deadline_ms = 0
-		if (deadlinelimit.units.milliseconds) {
-			real_deadline_ms = deadlinelimit.deadline
-			return real_deadline_ms
-		} else if (deadlinelimit.units.seconds) {
-			real_deadline_ms = deadlinelimit.deadline * 1000
-			return real_deadline_ms
-		} else
-			(deadlinelimit.units.microseconds)
-		{
-			real_deadline_ms = deadlinelimit.deadline / 1000
-			return real_deadline_ms
-		}
 	}
 
 	new(AnswerPort p) {
 		this.name = p.getName()
 		this.deadline = 0
+		if (p.deadline > 0) {
+			this.deadline = AppGenerator.convert(p.deadline, p.unit)
+		}
+		this.timed = p.timed
 		this.req_type = p.getReq_type().getName()
 		this.rep_type = p.getRep_type().getName()
-		//this.deadline = p.getDeadline()
-		if (p.getRatelimit() !== null) {
-			if (p.getRatelimit().isNolower()) {
-				this.lowerlimit = 0
-			} else
-				this.lowerlimit = p.getRatelimit().getLower()
-		}
-		if (p.getRatelimit() !== null) {
-			if (p.getRatelimit().isNoupper()) {
-				this.upperlimit = -1
-			} else
-				this.upperlimit = p.getRatelimit().getUpper()
-		}
+
 	}
 
 	new(QueryPort p) {
@@ -100,38 +55,10 @@ import edu.vanderbilt.riaps.app.DeadlineLimit
 		this.deadline = 0
 		this.req_type = p.getReq_type().getName()
 		this.rep_type = p.getRep_type().getName()
-	this.deadline = p.getDeadline()
-		if (p.getRatelimit() !== null) {
-			if (p.getRatelimit().isNolower()) {
-				this.lowerlimit = 0
-			} else
-				this.lowerlimit = p.getRatelimit().getLower()
+		if (p.deadline > 0) {
+			this.deadline = AppGenerator.convert(p.deadline, p.unit)
 		}
-		if (p.getRatelimit() !== null) {
-			if (p.getRatelimit().isNoupper()) {
-				this.upperlimit = -1
-			} else
-				this.upperlimit = p.getRatelimit().getUpper()
-		}
-	}
-
-	new(SrvPort p) {
-		this.name = p.getName()
-		this.deadline = 0
-		this.req_type = p.getReq_type().getName()
-		this.rep_type = p.getRep_type().getName()		
-		if (p.getRatelimit() !== null) {
-			if (p.getRatelimit().isNolower()) {
-				this.lowerlimit = 0
-			} else
-				this.lowerlimit = p.getRatelimit().getLower()
-		}
-		if (p.getRatelimit() !== null) {
-			if (p.getRatelimit().isNoupper()) {
-				this.upperlimit = -1
-			} else
-				this.upperlimit = p.getRatelimit().getUpper()
-		}
+		this.timed = p.timed
 	}
 
 	new(ReqPort p) {
@@ -140,18 +67,10 @@ import edu.vanderbilt.riaps.app.DeadlineLimit
 		this.deadline = p.getDeadline()
 		this.req_type = p.getReq_type().getName()
 		this.rep_type = p.getRep_type().getName()
-		if (p.getRatelimit() !== null) {
-			if (p.getRatelimit().isNolower()) {
-				this.lowerlimit = 0
-			} else
-				this.lowerlimit = p.getRatelimit().getLower()
+		if (p.deadline > 0) {
+			this.deadline = AppGenerator.convert(p.deadline, p.unit)
 		}
-		if (p.getRatelimit() !== null) {
-			if (p.getRatelimit().isNoupper()) {
-				this.upperlimit = -1
-			} else
-				this.upperlimit = p.getRatelimit().getUpper()
-		}
+		this.timed = p.timed
 	}
 
 	new(RepPort p) {
@@ -159,17 +78,9 @@ import edu.vanderbilt.riaps.app.DeadlineLimit
 		this.name = p.getName()
 		this.req_type = p.getReq_type().getName()
 		this.rep_type = p.getRep_type().getName()
-		if (p.getRatelimit() !== null) {
-			if (p.getRatelimit().isNolower()) {
-				this.lowerlimit = 0
-			} else
-				this.lowerlimit = p.getRatelimit().getLower()
+		if (p.deadline > 0) {
+			this.deadline = AppGenerator.convert(p.deadline, p.unit)
 		}
-		if (p.getRatelimit() !== null) {
-			if (p.getRatelimit().isNoupper()) {
-				this.upperlimit = -1
-			} else
-				this.upperlimit = p.getRatelimit().getUpper()
-		}
+		this.timed = p.timed
 	}
 }
