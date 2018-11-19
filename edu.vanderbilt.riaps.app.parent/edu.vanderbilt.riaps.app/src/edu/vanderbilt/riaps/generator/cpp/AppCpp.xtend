@@ -15,7 +15,6 @@ import edu.vanderbilt.riaps.app.PubPort
 import edu.vanderbilt.riaps.app.Port
 import edu.vanderbilt.riaps.app.SrvPort
 import edu.vanderbilt.riaps.generator.CppGenerator
-import edu.vanderbilt.riaps.app.DeviceType
 import org.eclipse.emf.common.util.EList
 
 class AppCpp {
@@ -25,16 +24,20 @@ class AppCpp {
 	public var CppGenerator generator
 	public var static defaultName="globals"
 
-	new(Application app, CppGenerator gen, Iterable<Component> comps, Iterable<DeviceType> devices) {
-		var mycomponents = comps
-		var mydevices = devices
+	new(Application app, CppGenerator gen, Iterable<Component> comps) {
+		for (c:comps)
+		{
+			
+		}
+		var mycomponents = comps.filter[appComponent]
+		var mydevices = comps.filter[ioComponent]
 		if (app === null) {
 			applicationName = defaultName
 
 		} else {
 			applicationName = app.name
 			mycomponents = app.components
-			mydevices = app.devices
+			
 
 		}
 		generator = gen

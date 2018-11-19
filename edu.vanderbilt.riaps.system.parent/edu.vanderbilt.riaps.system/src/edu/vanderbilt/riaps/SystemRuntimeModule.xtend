@@ -13,5 +13,5 @@ class SystemRuntimeModule extends AbstractSystemRuntimeModule {
 	override configure(Binder binder) {
 		super.configure(binder);
 		binder.bind(typeof(IOutputConfigurationProvider)).to(typeof(RiapsOutputConfigurationProvider)).in(typeof(Singleton));
-	}
+	} 
 }

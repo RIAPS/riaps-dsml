@@ -15,7 +15,6 @@ import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
 import org.eclipse.xtext.naming.IQualifiedNameProvider
 import edu.vanderbilt.riaps.app.Component
-import edu.vanderbilt.riaps.app.DeviceType
 import edu.vanderbilt.riaps.app.Model
 import java.nio.file.Paths
 import java.util.HashMap
@@ -69,7 +68,7 @@ public class CppGenerator extends AbstractGenerator {
 		}
 
 		for (e : resource.allContents.toIterable.filter(Application)) {
-			generateForApp(e, fsa, null, null, Appname, libraryTarget, MessageTarget)
+			generateForApp(e, fsa, null,  Appname, libraryTarget, MessageTarget)
 			fsa.generateFile(
 				"package.sh",
 				RiapsOutputConfigurationProvider::DEFAULT_OUTPUT_CMAKE,
@@ -78,9 +77,9 @@ public class CppGenerator extends AbstractGenerator {
 		}
 		for (model : resource.allContents.toIterable.filter(Model)) {
 
-			var globalDevices = model.collections.filter(DeviceType) // .filter(dt|dt.reuselib === null)
+			
 			var globalcomponents = model.collections.filter(Component) // .filter(co|co.reuselib === null)
-			generateForApp(null, fsa, globalcomponents, globalDevices, Appname, libraryTarget, MessageTarget)
+			generateForApp(null, fsa, globalcomponents, Appname, libraryTarget, MessageTarget)
 		}
 
 		fsa.generateFile(
@@ -174,13 +173,13 @@ public class CppGenerator extends AbstractGenerator {
 	}
 
 	protected def void generateForApp(Application myapp, IFileSystemAccess2 fsa, Iterable<Component> globalcomponents,
-		Iterable<DeviceType> globalDevices, HashSet<String> Appname, HashMap<CompCpp, CharSequence> libraryTarget,
+		 HashSet<String> Appname, HashMap<CompCpp, CharSequence> libraryTarget,
 		HashMap<FType, CharSequence> MessageTarget) {
 
 		// check and return if e contains messages that do not have a type
 		var AppCpp appCpp = null;
 		try {
-			appCpp = new AppCpp(myapp, this, globalcomponents, globalDevices)
+			appCpp = new AppCpp(myapp, this, globalcomponents)
 			Appname.add(appCpp.applicationName)
 
 		} catch (NullPointerException except) {
@@ -415,12 +414,8 @@ public class CppGenerator extends AbstractGenerator {
 				«MessageTarget.get(m)»
 			«ENDFOR»
 			«FOR m : libraryTarget.keySet»
-				
-				«IF m.comp_==null»
-					# Creating Libraries for Component «m.device_»
-				«ELSE»
 					# Creating Libraries for Component «m.comp_»
-				«ENDIF»
+				
 				«libraryTarget.get(m)»
 			«ENDFOR»
 			

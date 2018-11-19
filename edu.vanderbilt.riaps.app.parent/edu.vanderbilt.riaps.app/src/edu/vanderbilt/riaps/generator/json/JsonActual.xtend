@@ -11,7 +11,7 @@ import edu.vanderbilt.riaps.app.Actual
 		this.name = a.getArgName().getName()
 		this.param=null
 		if (a.getTringdefault() !== null) {
-			this.value = a.getTringdefault().getValue()
+			this.value = a.getTringdefault().getValue() 
 		} else if (a.getBoolDefault() !== null) {
 			this.value = new Boolean(a.getBoolDefault().getValue())
 		} else if (a.getNumberdefault() !== null) {

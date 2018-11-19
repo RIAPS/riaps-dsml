@@ -13,7 +13,7 @@ import java.util.HashSet
 import edu.vanderbilt.riaps.app.ComponentFormal
 import edu.vanderbilt.riaps.app.FStructType
 import edu.vanderbilt.riaps.generator.CppGenerator
-import edu.vanderbilt.riaps.app.DeviceType
+
 import java.util.List
 import java.util.Set
 import edu.vanderbilt.riaps.app.Library
@@ -23,7 +23,6 @@ import edu.vanderbilt.riaps.app.clibrary
 class CompCpp {
 	public String componentName
 	public Component comp_
-	public DeviceType device_
 	protected String applicationName
 	public var CppGenerator generator
 	public var Set<String> libraries = new HashSet<String>
@@ -37,81 +36,17 @@ class CompCpp {
 		generator = gen
 		comp_=comp
 		createPorts(comp, portMsgType)
-		device_=null
-
-		initialParams.add("self")
-		for (ComponentFormal formal : comp.getFormals()) {
-			initialParams.add(formal.name)
-		}
-
-		for (use : comp.constraint) {
-			for (req : use.requirements) {
-				if (req instanceof Library) {
-					if(req.lib instanceof clibrary)
-					{
-						var lname=(req.lib as clibrary).name
-						libraries.add(lname.substring(3, lname.length - 3))
-					
-					}
-				}
-			}
-
-		}
-	}
-
-	new(DeviceType comp, String appName, HashMap<String, String> portMsgType, CppGenerator gen) {
-		componentName = comp.name
-		comp_=null
-		device_=comp
 		
-		applicationName = appName
-		generator = gen
-		createPorts(comp, portMsgType)
-		for (use : comp.constraint) {
-			for (req : use.requirements) {
-				if (req instanceof Library) {
-					if(req.lib instanceof clibrary)
-					{
-						var lname=(req.lib as clibrary).name
-						libraries.add(lname.substring(3, lname.length - 3))
-					
-					}
-				}
-			}
 
-		}
 		initialParams.add("self")
 		for (ComponentFormal formal : comp.getFormals()) {
 			initialParams.add(formal.name)
 		}
+
+		
 	}
 
-	def void createPorts(DeviceType riapsComponent, HashMap<String, String> portMsgTypeMap) {
-		for (Port port : riapsComponent.getPorts()) {
-			if (port instanceof PubPort) {
-				var pubPort = new PubPortCpp(port, riapsComponent.name, portMsgTypeMap, generator)
-				ports.add(pubPort)
-				var aStruct = port.type.type
-				msgIncludes.add(aStruct)
-			} else if (port instanceof SubPort) {
-				var subPort = new SubPortCpp(port, riapsComponent.name, portMsgTypeMap, generator)
-				ports.add(subPort)
-				msgIncludes.add((port as SubPort).type.type)
-			} else if (port instanceof ReqPort) {
-				var reqPort = new ReqPortCpp(port, riapsComponent.name, portMsgTypeMap, generator)
-				ports.add(reqPort)
-				msgIncludes.add((port as ReqPort).req_type.type)
-				msgIncludes.add((port as ReqPort).rep_type.type)
-			} else if (port instanceof RepPort) {
-				var repPort = new RepPortCpp(port, riapsComponent.name, portMsgTypeMap, generator)
-				ports.add(repPort)
-				msgIncludes.add((port as RepPort).req_type.type)
-				msgIncludes.add((port as RepPort).rep_type.type)
-			} else if (port instanceof TimPort) {
-				ports.add(new TimerPortCpp(port, riapsComponent.name))
-			}
-		}
-	}
+
 
 	def void createPorts(Component riapsComponent, HashMap<String, String> portMsgTypeMap) {
 		for (Port port : riapsComponent.getPorts()) {

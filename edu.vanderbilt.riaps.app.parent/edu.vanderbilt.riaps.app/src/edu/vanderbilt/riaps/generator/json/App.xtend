@@ -20,9 +20,7 @@ import edu.vanderbilt.riaps.app.SubPort
 //import edu.vanderbilt.riaps.app.MessageRef;
 import edu.vanderbilt.riaps.app.Message
 import edu.vanderbilt.riaps.generator.json.Comp
-import edu.vanderbilt.riaps.app.DeviceType
 import edu.vanderbilt.riaps.app.Instance
-import edu.vanderbilt.riaps.app.DeviceInstance
 import edu.vanderbilt.riaps.app.Library
 import edu.vanderbilt.riaps.app.clibrary
 import edu.vanderbilt.riaps.app.pylibrary
@@ -85,17 +83,14 @@ import edu.vanderbilt.riaps.app.pylibrary
 			mm.put("name", s)
 			this.messages.add(mm)
 		}
-		for (Component c : a.collectComponents()) {
-			if (c instanceof Component) {
+		for ( c : a.collectComponents()) {
+			
 				var Comp ac = new Comp(c)
 				this.components.put(ac.getName(), ac)
-			} else {
-				var Comp dc = new Comp(c)
-				this.devices.put(dc.getName(), dc)
-			}
+			
 		}
 
-		for (DeviceType c : a.collectdevices) {
+		for ( c : a.collectdevices) {
 			var Comp dc = new Comp(c)
 			this.devices.put(dc.getName(), dc)
 
@@ -127,36 +122,36 @@ import edu.vanderbilt.riaps.app.pylibrary
 	}
 
 	def Iterable<? extends Component> collectComponents(Application application) {
-		var dt = application.components
-		for (Actor ac : application.getActors()) {
-			if (ac.compsection !== null) {
-				for (Instance i : ac.getCompsection().compInstances) {
-					if (!dt.contains(i.type)) {
-						dt.add(i.type)
-					}
-
-				}
-
-			}
-
-		}
+		var dt = application.components.filter[appComponent].toList
+//		for (Actor ac : application.getActors()) {
+//			if (ac.compsection !== null) {
+//				for (Instance i : ac.getCompsection().compInstances) {
+//					if (!dt.contains(i.type)) {
+//						dt.add(i.type)
+//					}
+//
+//				}
+//
+//			}
+//
+//		}
 		return dt
 	}
 
-	def Iterable<? extends DeviceType> collectdevices(Application application) {
-		var dt = application.devices
-		for (Actor ac : application.getActors()) {
-			if (ac.compsection !== null) {
-				for (DeviceInstance i : ac.getCompsection().devInstances) {
-					if (!dt.contains(i.deviceRequirement)) {
-						dt.add(i.deviceRequirement)
-					}
-
-				}
-
-			}
-
-		}
+	def Iterable<? extends Component> collectdevices(Application application) {
+		var dt = application.components.filter[ioComponent].toList
+//		for (Actor ac : application.getActors()) {
+//			if (ac.compsection !== null) {
+//				for ( i : ac.getCompsection().compInstances) {
+//					if (!dt.contains(i.type)) {
+//						dt.add(i.type)
+//					}
+//
+//				}
+//
+//			}
+//
+//		}
 		return dt
 	}
 

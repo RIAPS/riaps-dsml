@@ -4,8 +4,6 @@ import java.util.List
 import java.util.ArrayList
 import edu.vanderbilt.riaps.app.Instance
 import edu.vanderbilt.riaps.app.Actual
-import edu.vanderbilt.riaps.app.CompDeviceRequirement
-import edu.vanderbilt.riaps.app.DeviceInstance
 
 @SuppressWarnings(#["unused", "unchecked", "rawtypes"]) class JsonInstance {
 	transient String name
@@ -29,14 +27,14 @@ import edu.vanderbilt.riaps.app.DeviceInstance
 		}
 	}
 	
-		new(DeviceInstance i) {
-		this.name = i.getName()
-		this.type = i.deviceRequirement.getName()
-		this.actuals = new ArrayList<String>()
-		for (Actual a : i.getActuals()) {
-			this.actuals.add(new JsonActual(a))
-		}
-	}
+//		new(DeviceInstance i) {
+//		this.name = i.getName()
+//		this.type = i.deviceRequirement.getName()
+//		this.actuals = new ArrayList<String>()
+//		for (Actual a : i.getActuals()) {
+//			this.actuals.add(new JsonActual(a))
+//		}
+	//}
 	
 
 	def String getName() {

@@ -9,12 +9,9 @@ import edu.vanderbilt.riaps.app.Group
 import edu.vanderbilt.riaps.app.Leader
 import edu.vanderbilt.riaps.app.Consensus
 import java.util.HashSet
-import edu.vanderbilt.riaps.app.GMessageBlock
-import edu.vanderbilt.riaps.app.UsesBlock
 import edu.vanderbilt.riaps.app.Component
 import edu.vanderbilt.riaps.app.Actor
 import edu.vanderbilt.riaps.app.Application
-import edu.vanderbilt.riaps.app.DeviceType
 import edu.vanderbilt.riaps.app.Library
 import edu.vanderbilt.riaps.app.Configuration
 import org.eclipse.core.runtime.Path
@@ -26,7 +23,7 @@ import edu.vanderbilt.riaps.app.Model
 import edu.vanderbilt.riaps.app.FField
 import edu.vanderbilt.riaps.Console
 
-/**
+/** 
  * This class contains custom validation rules. 
  *  
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
@@ -38,7 +35,7 @@ class AppValidator extends AbstractAppValidator {
 	@Check
 	def checkFStructTypeStartsWithCapital(FStructType message) {
 		if (!Character.isUpperCase(message.name.charAt(0))) {
-			error('Name should start with a capital', AppPackage.Literals.COLLECTION__NAME)
+			warning('Name should start with a capital', AppPackage.Literals.COLLECTION__NAME) 
 		}
 
 	}
@@ -82,7 +79,7 @@ class AppValidator extends AbstractAppValidator {
 	@Check
 	def checkEnumStartsWithCapital(FEnumerationType message) {
 		if (!Character.isUpperCase(message.name.charAt(0))) {
-			error('Name should start with a capital', AppPackage.Literals.COLLECTION__NAME)
+			warning('Name should start with a capital', AppPackage.Literals.COLLECTION__NAME)
 		}
 
 	}
@@ -106,36 +103,11 @@ class AppValidator extends AbstractAppValidator {
 	@Check
 	def checkMessageDeclarationStartsWithCapital(Message message) {
 		if (!Character.isUpperCase(message.name.charAt(0))) {
-			error('Name should start with a capital', AppPackage.Literals.COLLECTION__NAME)
+			warning('Name should start with a capital',null) 
 		}
 	}
 
-	@Check
-	def checkMessageTypeNull(Message message) {
 
-		if (message.type === null) {
-			warning('Only python applications can use this message type. c++ applications cannot.',
-				AppPackage.Literals.COLLECTION__NAME)
-		}
-	}
-
-	@Check
-	def checkGroupProperties(UsesBlock group) {
-		var leaders = group.property.filter(Leader)
-
-		if (leaders.size() > 1) {
-			error('duplicate leader definition found', null)
-		}
-	}
-
-	@Check
-	def checkGroupPropertiesConsensus(UsesBlock group) {
-
-		var consensus = group.property.filter(Consensus)
-		if (consensus.size() > 1) {
-			error('duplicate consensus definition found', null)
-		}
-	}
 
 	@Check
 	def checkAppNameStartsWithCapital(Application message) {
@@ -182,12 +154,7 @@ class AppValidator extends AbstractAppValidator {
 		}
 	}
 
-	@Check
-	def checkDeviceTypeStartsWithCapital(DeviceType message) {
-		if (!Character.isUpperCase(message.name.charAt(0))) {
-			error('Name should start with a capital', AppPackage.Literals.COLLECTION__NAME)
-		}
-	}
+	 
 
 	// Message not referenced
 //	@Check
@@ -219,68 +186,16 @@ class AppValidator extends AbstractAppValidator {
 		}
 	}
 
-	@Check
-	def checkGroupUsesBlock(Group group) {
-		var messageblock = group.useclauses
-		if (messageblock.size() > 1) {
-			error('only one uses block is allowed in a group', AppPackage.Literals.GROUP__NAME)
-		}
-	}
 
-	@Check
-	def checkComponentUsesBlock(Component component) {
-		var block = component.constraint
+ 
 
-		if (block.size() > 1) {
-			error('only one uses block is allowed in a component', AppPackage.Literals.COLLECTION__NAME)
-		}
-	}
+ 
 
-	@Check
-	def checkDeviceTypeUsesBlock(DeviceType component) {
-		var block = component.constraint
+ 
 
-		if (block.size() > 1) {
-			error('only one uses block is allowed in a Device', AppPackage.Literals.COLLECTION__NAME)
-		}
-	}
 
-	@Check
-	def checkComponentHandler(Component component) {
-		var block = component.handler
 
-		if (block.size() > 1) {
-			error('only one exceptionHandler is allowed in a component', AppPackage.Literals.COLLECTION__NAME)
-		}
-	}
+	
 
-	@Check
-	def checkGroupMessageBlock(Group group) {
-		var messageblock = group.gmessageblock
-		if (messageblock.size() > 1) {
-			error('only one message block is allowed in a group', AppPackage.Literals.GROUP__NAME)
-		}
-	}
 
-	@Check
-	def checkGroupConsensusMessageUnique(GMessageBlock group) {
-		var consensusMessage = group.consensusMessages
-		var consensusMessageunique = new HashSet<Message>()
-		for (Message x : consensusMessage) {
-			if (!consensusMessageunique.add(x)) {
-				error('duplicate entry ' + x.name + ' found in consensus Messages', null)
-			}
-		}
-	}
-
-	@Check
-	def checkGroupGroupMessageUnique(GMessageBlock group) {
-		var consensusMessage = group.groupMessages
-		var consensusMessageunique = new HashSet<Message>()
-		for (Message x : consensusMessage) {
-			if (!consensusMessageunique.add(x)) {
-				error('duplicate entry ' + x.name + ' found in group Messages', null)
-			}
-		}
-	}
 }

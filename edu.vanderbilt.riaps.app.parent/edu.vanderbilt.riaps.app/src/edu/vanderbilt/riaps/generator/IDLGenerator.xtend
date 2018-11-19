@@ -35,7 +35,7 @@ class IDLGenerator extends AbstractGenerator {
 		def String uniqueIdentifier() {
 			typename + '_' + suffix
 		}
-
+ 
 		def String sequenceName() '''		 
 			typedef sequence<«typename»> «uniqueIdentifier»;		
 		'''
