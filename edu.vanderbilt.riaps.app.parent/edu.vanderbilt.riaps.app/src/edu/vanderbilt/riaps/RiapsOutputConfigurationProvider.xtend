@@ -89,7 +89,7 @@ class RiapsOutputConfigurationProvider implements IOutputConfigurationProvider {
 		outputconfig.setSetDerivedProperty(false)
 		hash1.add(outputconfig)
 		
-		
+		 
 		outputconfig= new OutputConfiguration(DEFAULT_OUTPUT_DEV_SRC)
 		outputconfig.setDescription("Output Folder")
 		outputconfig.setOutputDirectory("./cpp/")
@@ -102,9 +102,9 @@ class RiapsOutputConfigurationProvider implements IOutputConfigurationProvider {
 			
 		outputconfig = new OutputConfiguration(DEFAULT_OUTPUT_JSON_APP)
 		outputconfig.setDescription("Output JSON")
-		outputconfig.setOutputDirectory("./json-gen/")
+		outputconfig.setOutputDirectory(".")
 		outputconfig.setOverrideExistingResources(true)
-		outputconfig.setCreateOutputDirectory(true)
+		outputconfig.setCreateOutputDirectory(false)
 		outputconfig.setCleanUpDerivedResources(false)
 		outputconfig.setSetDerivedProperty(true)
 		
@@ -112,9 +112,9 @@ class RiapsOutputConfigurationProvider implements IOutputConfigurationProvider {
 		
 		outputconfig  = new OutputConfiguration(DEFAULT_OUTPUT_MESSAGE)
 		outputconfig.setDescription("Output Folder")
-		outputconfig.setOutputDirectory("./messages-gen/")
+		outputconfig.setOutputDirectory(".")
 		outputconfig.setOverrideExistingResources(true)
-		outputconfig.setCreateOutputDirectory(true)
+		outputconfig.setCreateOutputDirectory(false)
 		outputconfig.setCleanUpDerivedResources(false)
 		outputconfig.setSetDerivedProperty(true)
 		hash1.add(outputconfig)
