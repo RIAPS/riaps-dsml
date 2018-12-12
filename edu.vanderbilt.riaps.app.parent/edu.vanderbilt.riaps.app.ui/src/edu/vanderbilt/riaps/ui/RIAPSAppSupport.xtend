@@ -117,6 +117,7 @@ class RIAPSAppSupport {
 
 	def private static createMakefile() {
 		'''
+			SHELL := /bin/bash
 			CMAKE := $(shell which cmake 2> /dev/null)
 			CLANG-FORMAT := $(shell which clang-format 2> /dev/null)
 			RM-CMD := $(shell which rm 2> /dev/null)
@@ -135,7 +136,7 @@ class RIAPSAppSupport {
 			else
 				mkdir -p build/armhf/
 				cd build/armhf/ && \
-				cmake -DCMAKE_TOOLCHAIN_FILE=.toolchain.arm-linux-gnueabihf.cmake -DCMAKE_INSTALL_PREFIX="/"  ../..
+				cmake -Darch=armhf -DCMAKE_INSTALL_PREFIX="/"  ../..
 				@echo "done"
 			endif
 			
@@ -145,9 +146,13 @@ class RIAPSAppSupport {
 			else
 				mkdir -p build/amd64/
 				cd build/amd64/ && \
-				cmake -DCMAKE_TOOLCHAIN_FILE=.toolchain.amd64.cmake  -DCMAKE_INSTALL_PREFIX="/" ../..
+				cmake -Darch=amd64  -DCMAKE_INSTALL_PREFIX="/" ../..
 				@echo "done"
 			endif
+			
+			CMakeLists.txt: compselection.sh 
+				source compselection.sh && riaps_gen -m ${JSON} -cpp ${CPPCOMPS} -py ${PYCOMPS} -o . -s capnp
+			
 			
 			all-amd64: build/amd64/Makefile
 			ifndef CMAKE
@@ -182,14 +187,8 @@ class RIAPSAppSupport {
 			ifndef CLANG-FORMAT
 				$(error "clang-format is not available. Please install")
 			else
-				clang-format -i -style=file cpp/*.cc
-				clang-format -i -style=file cpp/include/*.h
-			endif
-			
-			
-			package: package.sh
-				chmod +x package.sh
-				./package.sh
+				find . -iname *.h -o -iname *.cc -o -iname *.cpp | xargs clang-format -i -style=file				
+			endif			
 		'''
 	}
 
