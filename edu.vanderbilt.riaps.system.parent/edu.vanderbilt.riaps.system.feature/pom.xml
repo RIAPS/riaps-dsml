@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>edu.vanderbilt.riaps.system</groupId>
 		<artifactId>edu.vanderbilt.riaps.system.parent</artifactId>
-		<version>0.9.11-SNAPSHOT</version>
+		<version>0.9.15-SNAPSHOT</version>
 	</parent>
 	<artifactId>edu.vanderbilt.riaps.system.feature</artifactId>
 	<packaging>eclipse-feature</packaging>
