@@ -112,7 +112,7 @@ class AppValidator extends AbstractAppValidator {
 	@Check
 	def checkAppNameStartsWithCapital(Application message) {
 		if (!Character.isUpperCase(message.name.charAt(0))) {
-			error('Name should start with a capital', AppPackage.Literals.COLLECTION__NAME)
+			warning('Name should start with a capital',null) 
 		}
 	}
 
@@ -168,22 +168,22 @@ class AppValidator extends AbstractAppValidator {
 	@Check
 	def checkConfigurationName(Configuration f) {
 		if (!Path.isValidPosixPath(f.name)) {
-			error('not a valid path', AppPackage.Literals.CONFIGURATION__NAME)
+			error('not a valid path', null)
 		}
 	}
 
 	@Check
 	def checkComponentNameStartsWithCapital(Component message) {
 		if (!Character.isUpperCase(message.name.charAt(0))) {
-			error('Name should start with a capital', AppPackage.Literals.COLLECTION__NAME)
-		}
+			warning('Name should start with a capital', AppPackage.Literals.COMPONENT__NAME)
+		} 
 	}
 
 	@Check
 	def checkActorNameStartsWithCapital(Actor message) {
 		if (!Character.isUpperCase(message.name.charAt(0))) {
-			error('Name should start with a capital', AppPackage.Literals.ACTOR__NAME)
-		}
+			warning('Name should start with a capital', AppPackage.Literals.ACTOR__NAME)
+		} 
 	}
 
 
