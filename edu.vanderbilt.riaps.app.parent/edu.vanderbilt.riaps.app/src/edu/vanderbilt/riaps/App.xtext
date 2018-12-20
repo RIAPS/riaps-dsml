@@ -50,10 +50,10 @@ terminal BOOL:
 //A collection defines the top level entries in the riaps file.
 // These can just be component definitions or application definitions.
 
-
+//Disabling messages at the top
 Collection:
-	Application	
-	| FType;
+	Application	;
+	//| FType;
 
 FType returns FType:
 	FEnumerationType |
@@ -111,14 +111,28 @@ enum SupportLanguages returns SupportLanguages:
 	cpp='cpp'
 ;
 
+// Component implementation language - C++
+CppImpl: 
+	('c++' | 'cpp' | 'C++') 
+;
+
+// Component implementation language - Python
+PyImpl:
+	( 'Python' | 'python' | 'py' ) 
+;
+
+// Component implementation language
+Language:
+	cppImpl ?= CppImpl | pyImpl ?=  PyImpl
+; 
 
 // This is an application component
 // we capture its ports and its requirements.
 // Component types used in the application
-Component:
-	('@' 'lang'  language=SupportLanguages)?
-	( appComponent?='component' | ioComponent?='device') name=ID
+Component:	
+	(appComponent?='component' | ioComponent?='device') name=ID 
 	('()' | ('(' formals+=ComponentFormal (',' formals+=ComponentFormal)* ')')?)
+	 ( 'in' language=Language)?
 	//('from' reuselib=Library)? 
 	'{'
 	// A component can first declare several requirements. It then declares the ports that it provides.

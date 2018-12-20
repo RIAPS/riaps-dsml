@@ -30,16 +30,28 @@ import edu.vanderbilt.riaps.app.pylibrary
 import edu.vanderbilt.riaps.generator.AppGenerator
 
 @SuppressWarnings(#["unchecked", "rawtypes"]) class Comp {
-	String name
 	List formals 
+	String language;
+	String name
 	// List libraries
 	List<HashMap<String, String>> libraries
 	//List files
 	//List devices
 	Map<String, Map> ports
+	
 
 	new(Component c) {
+		this.language="default"
 		this.name = c.getName()
+		if (c.language!=null)
+		{
+			if(c.language.cppImpl)
+				this.language="cpp"
+			
+			if(c.language.pyImpl)
+			this.language="py"
+			
+		}
 		this.formals = new ArrayList<String>()
 		// this.libraries = new ArrayList<String>()
 		this.libraries = new ArrayList<HashMap<String, String>>()

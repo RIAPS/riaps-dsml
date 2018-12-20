@@ -32,13 +32,13 @@ class AppValidator extends AbstractAppValidator {
 
 	public static val INVALID_NAME = 'invalidName'
 
-	@Check
-	def checkFStructTypeStartsWithCapital(FStructType message) {
-		if (!Character.isUpperCase(message.name.charAt(0))) {
-			warning('Name should start with a capital', AppPackage.Literals.COLLECTION__NAME) 
-		}
-
-	}
+//	@Check
+//	def checkFStructTypeStartsWithCapital(FStructType message) {
+//		if (!Character.isUpperCase(message.name.charAt(0))) {
+//			warning('Name should start with a capital', AppPackage.Literals.COLLECTION__NAME) 
+//		}
+//
+//	}
 
 //	@Check
 //	def checkDeviceTypeNoReuseWithinApp(DeviceType dev) {
@@ -60,45 +60,45 @@ class AppValidator extends AbstractAppValidator {
 		}
 	}*/
 
-	@Check
-	def checkFStructNameDoesNotContainUnderscore(FStructType message) {
-		if (message.name.contains('_')) {
-			error('Name cannot contain underscore', AppPackage.Literals.COLLECTION__NAME)
-		}
-
-	}
-
-	@Check
-	def checkEnumNameDoesNotContainUnderscore(FEnumerationType message) {
-		if (message.name.contains('_')) {
-			error('Name cannot contain underscore', AppPackage.Literals.COLLECTION__NAME)
-		}
-
-	}
-
-	@Check
-	def checkEnumStartsWithCapital(FEnumerationType message) {
-		if (!Character.isUpperCase(message.name.charAt(0))) {
-			warning('Name should start with a capital', AppPackage.Literals.COLLECTION__NAME)
-		}
-
-	}
-
-	@Check
-	def checkEnumStartsWithCapital(FEnumerator message) {
-		if (!Character.isLowerCase(message.name.charAt(0))) {
-			error('Name should start with a lower case letter', AppPackage.Literals.FENUMERATOR__NAME)
-		}
-
-	}
-
-	@Check
-	def checkElementStartsWithCapital(FField message) {
-		if (!Character.isLowerCase(message.name.charAt(0))) {
-			error('Name should start with a lower case letter', AppPackage.Literals.FFIELD__NAME)
-		}
-
-	}
+//	@Check
+//	def checkFStructNameDoesNotContainUnderscore(FStructType message) {
+//		if (message.name.contains('_')) {
+//			error('Name cannot contain underscore', AppPackage.Literals.COLLECTION__NAME)
+//		}
+//
+//	}
+//
+//	@Check
+//	def checkEnumNameDoesNotContainUnderscore(FEnumerationType message) {
+//		if (message.name.contains('_')) {
+//			error('Name cannot contain underscore', AppPackage.Literals.COLLECTION__NAME)
+//		}
+//
+//	}
+//
+//	@Check
+//	def checkEnumStartsWithCapital(FEnumerationType message) {
+//		if (!Character.isUpperCase(message.name.charAt(0))) {
+//			warning('Name should start with a capital', AppPackage.Literals.COLLECTION__NAME)
+//		}
+//
+//	}
+//
+//	@Check
+//	def checkEnumStartsWithCapital(FEnumerator message) {
+//		if (!Character.isLowerCase(message.name.charAt(0))) {
+//			error('Name should start with a lower case letter', AppPackage.Literals.FENUMERATOR__NAME)
+//		}
+//
+//	}
+//
+//	@Check
+//	def checkElementStartsWithCapital(FField message) {
+//		if (!Character.isLowerCase(message.name.charAt(0))) {
+//			error('Name should start with a lower case letter', AppPackage.Literals.FFIELD__NAME)
+//		}
+//
+//	}
 
 	@Check
 	def checkMessageDeclarationStartsWithCapital(Message message) {
@@ -123,7 +123,7 @@ class AppValidator extends AbstractAppValidator {
 
 	//	Console.instance.log(java.util.logging.Level.INFO, "app " + app.eResource.URI.lastSegment);
 		if (apps.size() > 1) {
-			error('One model should only contain one application', AppPackage.Literals.COLLECTION__NAME)
+			error('One model should only contain one application', null)
 		}
 	}
 
@@ -143,14 +143,14 @@ class AppValidator extends AbstractAppValidator {
 
 		if (app.name != base) {
 			warning('The name of the application does not match the name of the model file ' + base,
-				AppPackage.Literals.COLLECTION__NAME)
+				AppPackage.Literals.APPLICATION__NAME)
 		}
 	}
 
 	@Check
 	def checkAppNameNotKeyword(Application app) {
 		if (app.name.toLowerCase == edu.vanderbilt.riaps.generator.cpp.AppCpp.defaultName) {
-			error('Name cannot be ' + app.name, AppPackage.Literals.COLLECTION__NAME)
+			error('Name cannot be ' + app.name, AppPackage.Literals.APPLICATION__NAME)
 		}
 	}
 
