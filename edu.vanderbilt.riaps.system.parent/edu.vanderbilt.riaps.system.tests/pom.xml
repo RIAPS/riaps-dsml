@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>edu.vanderbilt.riaps.system</groupId>
 		<artifactId>edu.vanderbilt.riaps.system.parent</artifactId>
-		<version>0.9.16-SNAPSHOT</version>
+		<version>0.9.17-SNAPSHOT</version>
 	</parent>
 	<artifactId>edu.vanderbilt.riaps.system.tests</artifactId>
 	<packaging>eclipse-test-plugin</packaging>
