@@ -149,11 +149,7 @@ class RIAPSAppSupport {
 				cmake -Darch=amd64  -DCMAKE_INSTALL_PREFIX="/" ../..
 				@echo "done"
 			endif
-			
-			CMakeLists.txt: compselection.sh 
-				source compselection.sh && riaps_gen -m ${JSON} -cpp ${CPPCOMPS} -py ${PYCOMPS} -o . -s capnp
-			
-			
+
 			all-amd64: build/amd64/Makefile
 			ifndef CMAKE
 				$(error "cmake is not available. Please install")
