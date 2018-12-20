@@ -95,9 +95,11 @@ class CProjectSetting {
 										</tool>
 										<tool id="cdt.managedbuild.tool.gnu.c.compiler.base.«rand9»" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.base">
 											<option id="gnu.c.compiler.option.include.paths.«rand10»" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
-												<listOptionValue builtIn="false" value="&quot;${workspace_loc:/«Project»/messages-gen}&quot;"/>
+												<listOptionValue builtIn="false" value="&quot;${workspace_loc:/«Project»/include}&quot;"/>
 												<listOptionValue builtIn="false" value="&quot;${workspace_loc:/«Project»/cpp/include}&quot;"/>
 												<listOptionValue builtIn="false" value="/opt/riaps/amd64/include"/>
+												<listOptionValue builtIn="false" value="/usr/include/python3.6m"/>
+												<listOptionValue builtIn="false" value="/opt/riaps/amd64/include/pybind11/include"/>
 											</option>
 											<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.«rand11»" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 										</tool>
@@ -113,6 +115,8 @@ class CProjectSetting {
 												<listOptionValue builtIn="false" value="&quot;${workspace_loc:/«Project»/messages-gen}&quot;"/>
 												<listOptionValue builtIn="false" value="&quot;${workspace_loc:/«Project»/cpp/include}&quot;"/>
 												<listOptionValue builtIn="false" value="/opt/riaps/amd64/include"/>
+												<listOptionValue builtIn="false" value="/usr/include/python3.6m"/>
+												<listOptionValue builtIn="false" value="/opt/riaps/amd64/include/pybind11/include"/>
 											</option>
 											<inputType id="cdt.managedbuild.tool.gnu.assembler.input.«rand17»" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 										</tool>
