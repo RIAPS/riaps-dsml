@@ -16,7 +16,7 @@ class RiapsOutputConfigurationProvider implements IOutputConfigurationProvider {
 	public final static String DEFAULT_OUTPUT_MESSAGE = "DEFAULT_OUTPUT_MESSAGE"
 	public final static String DEFAULT_OUTPUT_CMAKE = "DEFAULT_OUTPUT_CMAKE"
 	public final static String DEFAULT_OUTPUT_THIRD_PARTY="DEFAULT_OUTPUT_THIRD_PARTY"
-
+ 
 	/** 
 	 * @return a set of {@link OutputConfiguration} available for the generator
 	 */

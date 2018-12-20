@@ -9,6 +9,6 @@ package edu.vanderbilt.riaps
 class AppStandaloneSetup extends AppStandaloneSetupGenerated {
 
 	def static void doSetup() {
-		new AppStandaloneSetup().createInjectorAndDoEMFRegistration()
+		new AppStandaloneSetup().createInjectorAndDoEMFRegistration() 
 	}
 }

@@ -7,5 +7,5 @@ package edu.vanderbilt.riaps
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
-class AppRuntimeModule extends AbstractAppRuntimeModule {
+class AppRuntimeModule extends AbstractAppRuntimeModule { 
 }

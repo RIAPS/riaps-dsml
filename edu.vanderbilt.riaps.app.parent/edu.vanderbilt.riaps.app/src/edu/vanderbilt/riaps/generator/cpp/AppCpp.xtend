@@ -27,7 +27,7 @@ class AppCpp {
 	new(Application app, CppGenerator gen, Iterable<Component> comps) {
 		for (c:comps)
 		{
-			
+			 
 		}
 		var mycomponents = comps.filter[appComponent]
 		var mydevices = comps.filter[ioComponent]

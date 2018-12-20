@@ -38,7 +38,7 @@ class AppFormatter extends AbstractFormatter2 {
 //		for (Import imports : model.getImports()) {
 //			imports.format;
 //			imports.prepend[noSpace; newLine].append[noSpace; newLine]
-//		}
+//		} 
 		model.prepend[noSpace].append[noSpace; newLine]
 
 		for (collection : model.getCollections()) {

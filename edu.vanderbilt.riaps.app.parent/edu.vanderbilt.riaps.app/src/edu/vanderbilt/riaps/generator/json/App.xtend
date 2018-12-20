@@ -35,7 +35,7 @@ import edu.vanderbilt.riaps.app.pylibrary
 	List<HashMap<String, String>> libraries
 	
 
-	new(Application a) {
+	new(Application a) { 
 		this.name = a.getName()
 		
 		this.devices = new HashMap<String, Comp>()

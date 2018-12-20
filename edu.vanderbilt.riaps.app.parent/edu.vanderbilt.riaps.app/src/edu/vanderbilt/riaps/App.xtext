@@ -19,6 +19,7 @@ FQN:
 	ID ('.' ID)*;
 	////////////////////////////////////////////////////////////////	
 //These are the terminal Rules	
+@Override
 terminal INT returns ecore::EInt:
 	'0'..'9' ('0'..'9' | '_')*;
 
@@ -52,8 +53,8 @@ terminal BOOL:
 
 //Disabling messages at the top
 Collection:
-	Application	;
-	//| FType;
+	Application	
+	| FType;
 
 FType returns FType:
 	FEnumerationType |
@@ -111,19 +112,11 @@ enum SupportLanguages returns SupportLanguages:
 	cpp='cpp'
 ;
 
-// Component implementation language - C++
-CppImpl: 
-	('c++' | 'cpp' | 'C++') 
-;
 
-// Component implementation language - Python
-PyImpl:
-	( 'Python' | 'python' | 'py' ) 
-;
 
 // Component implementation language
 Language:
-	cppImpl ?= CppImpl | pyImpl ?=  PyImpl
+	cppImpl ?= ('c++' | 'cpp' | 'C++')  | pyImpl ?=  ( 'Python' | 'python' | 'py' ) 
 ; 
 
 // This is an application component

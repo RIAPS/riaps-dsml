@@ -30,7 +30,7 @@ import edu.vanderbilt.riaps.Console
  */
 class AppValidator extends AbstractAppValidator {
 
-	public static val INVALID_NAME = 'invalidName'
+	public static val INVALID_NAME = 'invalidName' 
 
 //	@Check
 //	def checkFStructTypeStartsWithCapital(FStructType message) {
@@ -130,7 +130,7 @@ class AppValidator extends AbstractAppValidator {
 	@Check
 	def checkAppNameSameAsContainingFile(Application app) {
 		var filename = app.eResource.URI.lastSegment
-		var dot = filename.lastIndexOf('.');
+		var dot = filename.lastIndexOf('.'); 
 		var String base = " ";
 		var String ext = " "
 		if (dot == -1) {
@@ -143,14 +143,14 @@ class AppValidator extends AbstractAppValidator {
 
 		if (app.name != base) {
 			warning('The name of the application does not match the name of the model file ' + base,
-				AppPackage.Literals.APPLICATION__NAME)
+				AppPackage.Literals.COLLECTION__NAME)
 		}
 	}
 
 	@Check
 	def checkAppNameNotKeyword(Application app) {
 		if (app.name.toLowerCase == edu.vanderbilt.riaps.generator.cpp.AppCpp.defaultName) {
-			error('Name cannot be ' + app.name, AppPackage.Literals.APPLICATION__NAME)
+			error('Name cannot be ' + app.name, AppPackage.Literals.COLLECTION__NAME)
 		}
 	}
 
