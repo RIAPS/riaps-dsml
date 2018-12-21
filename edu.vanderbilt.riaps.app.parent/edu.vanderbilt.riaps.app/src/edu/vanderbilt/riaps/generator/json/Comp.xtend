@@ -43,15 +43,9 @@ import edu.vanderbilt.riaps.generator.AppGenerator
 	new(Component c) {
 		this.language="default"
 		this.name = c.getName()
-		if (c.language!=null)
-		{
-			if(c.language.cppImpl)
-				this.language="cpp"
-			
-			if(c.language.pyImpl)
-			this.language="py"
-			
-		}
+		if(c.cpp) this.language="cpp"
+		else if (c.py)
+			this.language="py" 
 		this.formals = new ArrayList<String>()
 		// this.libraries = new ArrayList<String>()
 		this.libraries = new ArrayList<HashMap<String, String>>()

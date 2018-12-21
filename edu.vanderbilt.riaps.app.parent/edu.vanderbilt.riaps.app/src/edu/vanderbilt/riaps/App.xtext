@@ -106,18 +106,18 @@ Message:
 	//The device types and their tags will be captured in datatypes. A different place for them can be found later.
 //for crossreference 
 
-enum SupportLanguages returns SupportLanguages:
-	python ='python'|
-	py='py'|
-	cpp='cpp'
-;
+//enum SupportLanguages returns SupportLanguages:
+//	python ='python'|
+//	py='py'|
+//	cpp='cpp'
+//;
 
 
 
-// Component implementation language
-Language:
-	cppImpl ?= ('c++' | 'cpp' | 'C++')  | pyImpl ?=  ( 'Python' | 'python' | 'py' ) 
-; 
+//// Component implementation language
+//Language:
+//	cppImpl ?= ('c++' | 'cpp' | 'C++')  | pyImpl ?=  ( 'Python' | 'python' | 'py' ) 
+//; 
 
 // This is an application component
 // we capture its ports and its requirements.
@@ -125,7 +125,7 @@ Language:
 Component:	
 	(appComponent?='component' | ioComponent?='device') name=ID 
 	('()' | ('(' formals+=ComponentFormal (',' formals+=ComponentFormal)* ')')?)
-	 ( 'in' language=Language)?
+	 ('in'	(cpp?='c++'|cpp?='cpp'|cpp?='C++'|py?='Python'|py?='py'|py?='python'))?
 	//('from' reuselib=Library)? 
 	'{'
 	// A component can first declare several requirements. It then declares the ports that it provides.

@@ -24,7 +24,6 @@ import org.eclipse.core.runtime.URIUtil
 import org.eclipse.core.runtime.FileLocator
 import org.eclipse.xtext.generator.IFileSystemAccessExtension2
 import org.eclipse.emf.common.CommonPlugin
-import edu.vanderbilt.riaps.app.SupportLanguages
 import java.util.ArrayList
 import edu.vanderbilt.riaps.app.ComponentFormal
 import edu.vanderbilt.riaps.app.Port
