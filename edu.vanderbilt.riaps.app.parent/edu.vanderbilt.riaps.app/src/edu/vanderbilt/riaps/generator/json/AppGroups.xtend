@@ -6,7 +6,7 @@ import edu.vanderbilt.riaps.app.Consensus
 
 class AppGroups {
 	Boolean leader = false
-	Boolean consensus = false
+	Boolean consensus = false 
 	
 
 	new(Group group) {

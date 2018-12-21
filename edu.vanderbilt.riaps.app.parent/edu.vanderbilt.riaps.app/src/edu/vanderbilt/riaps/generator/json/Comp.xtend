@@ -30,15 +30,15 @@ import edu.vanderbilt.riaps.app.pylibrary
 import edu.vanderbilt.riaps.generator.AppGenerator
 
 @SuppressWarnings(#["unchecked", "rawtypes"]) class Comp {
-	List formals 
-	String language;
 	String name
+	List formals 
+    String language;
 	// List libraries
 	List<HashMap<String, String>> libraries
 	//List files
 	//List devices
 	Map<String, Map> ports
-	
+	 
 
 	new(Component c) {
 		this.language="default"

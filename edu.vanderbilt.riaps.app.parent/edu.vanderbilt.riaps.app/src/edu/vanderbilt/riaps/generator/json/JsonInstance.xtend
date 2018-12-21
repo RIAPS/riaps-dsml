@@ -5,7 +5,7 @@ import java.util.ArrayList
 import edu.vanderbilt.riaps.app.Instance
 import edu.vanderbilt.riaps.app.Actual
 
-@SuppressWarnings(#["unused", "unchecked", "rawtypes"]) class JsonInstance {
+@SuppressWarnings(#["unused", "unchecked", "rawtypes"]) class JsonInstance { 
 	transient String name
 	String type
 	List actuals

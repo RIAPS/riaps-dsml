@@ -31,7 +31,7 @@ import edu.vanderbilt.riaps.app.NetworkRequirement
 	SpaceConstraint spc
 	Memoryconstraint mem
 	CPUConstraint cpu
-	NetConstraint net
+	NetConstraint net 
 
 
 	new(Actor a) {

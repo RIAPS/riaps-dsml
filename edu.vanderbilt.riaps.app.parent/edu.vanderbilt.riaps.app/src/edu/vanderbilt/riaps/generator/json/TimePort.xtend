@@ -6,7 +6,7 @@ import edu.vanderbilt.riaps.app.TimPort
 	transient String name
 	int period
 
-	new(TimPort p) {
+	new(TimPort p) { 
 		this.name = p.getName()
 	
 		this.period = p.getSpec()
