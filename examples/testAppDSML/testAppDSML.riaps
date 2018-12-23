@@ -127,7 +127,7 @@ app TestAppDSML {
     } 
 
     // Averager actor - component sets default parameter value, actor supersedes with another default, and deplo will set final value
-    actor Averager(Ts=0.9.18) {
+    actor Averager(Ts=0.9.19) {
        {
           averager : Averager(Ts=Ts); 		
        }

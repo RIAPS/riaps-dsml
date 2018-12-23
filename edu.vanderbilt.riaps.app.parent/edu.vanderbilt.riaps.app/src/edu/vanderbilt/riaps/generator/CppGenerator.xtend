@@ -579,7 +579,7 @@ public class CppGenerator extends AbstractGenerator {
 			PenaltyBreakComment: 300
 			PenaltyBreakFirstLessLess: 120
 			PenaltyBreakString: 1000
-			PenaltyExcessCharacter: 0.9.1800
+			PenaltyExcessCharacter: 0.9.1900
 			PenaltyReturnTypeOnItsOwnLine: 60
 			PointerAlignment: Right
 			ReflowComments:  true

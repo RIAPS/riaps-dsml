@@ -3,7 +3,7 @@ Automatic-Module-Name: edu.vanderbilt.riaps.system.ui
 Bundle-ManifestVersion: 2
 Bundle-Name: edu.vanderbilt.riaps.system.ui
 Bundle-Vendor: My Company
-Bundle-Version: 0.9.18.qualifier
+Bundle-Version: 0.9.19.qualifier
 Bundle-SymbolicName: edu.vanderbilt.riaps.system.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: edu.vanderbilt.riaps.system,
