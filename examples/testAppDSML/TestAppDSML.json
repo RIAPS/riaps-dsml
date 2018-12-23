@@ -142,7 +142,7 @@
         "Averager":{
             "formals":[
                 {
-                    "default":0.9.19,
+                    "default":1.1.12,
                     "name":"Ts"
                 }
             ],
@@ -403,7 +403,7 @@
                 "tims":{
                     "update":{
                         "deadline":1000,
-                        "period":0.9.19
+                        "period":1.1.12
                     }
                 }
             }
@@ -535,7 +535,7 @@
                 "tims":{
                     "checkreply":{
                         "deadline":60000,
-                        "period":0.9.1900
+                        "period":1.1.1200
                     }
                 }
             }
@@ -594,7 +594,7 @@
                 "srvs":{},
                 "subs":{
                     "gatherData":{
-                        "deadline":0.9.19,
+                        "deadline":1.1.12,
                         "timed":true,
                         "type":"Msg1Data"
                     }

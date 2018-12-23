@@ -3,7 +3,7 @@ Automatic-Module-Name: edu.vanderbilt.riaps.app
 Bundle-ManifestVersion: 2
 Bundle-Name: edu.vanderbilt.riaps.app
 Bundle-Vendor: My Company
-Bundle-Version: 0.9.19.qualifier
+Bundle-Version: 1.1.12.qualifier
 Bundle-SymbolicName: edu.vanderbilt.riaps.app; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext,

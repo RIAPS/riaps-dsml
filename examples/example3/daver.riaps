@@ -27,7 +27,7 @@ app DistributedAverager
     }
 
     // Averager actor
-    actor Averager(value=0.0,Ts=0.9.19) 
+    actor Averager(value=0.0,Ts=1.1.12) 
     {
        local SensorData;					// Local message types
        {

@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>edu.vanderbilt.riaps.app</groupId>
 		<artifactId>edu.vanderbilt.riaps.app.parent</artifactId>
-		<version>0.9.19-SNAPSHOT</version>
+		<version>1.1.12-SNAPSHOT</version>
 	</parent>
 	<artifactId>edu.vanderbilt.riaps.app</artifactId>
 	<packaging>eclipse-plugin</packaging>
@@ -115,7 +115,7 @@
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
-					<version>0.9.19</version>
+					<version>1.1.12</version>
 					<configuration>
 						<lifecycleMappingMetadata>
 							<pluginExecutions>

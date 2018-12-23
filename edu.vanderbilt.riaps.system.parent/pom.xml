@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>edu.vanderbilt.riaps.system</groupId>
-	<version>0.9.19-SNAPSHOT</version>
+	<version>1.1.12-SNAPSHOT</version>
 	<artifactId>edu.vanderbilt.riaps.system.parent</artifactId>
 	<packaging>pom</packaging>
 
@@ -148,7 +148,7 @@
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
-					<version>0.9.19</version>
+					<version>1.1.12</version>
 					<configuration>
 						<lifecycleMappingMetadata>
 							<pluginExecutions>
