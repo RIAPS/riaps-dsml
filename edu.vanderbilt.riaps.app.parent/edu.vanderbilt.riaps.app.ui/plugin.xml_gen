@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="windows-1252"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
 <plugin>
 	<extension
@@ -249,6 +249,15 @@
 		<super type="org.eclipse.xtext.ui.check.expensive"/>
 		<persistent value="true"/>
 	</extension>
+	<extension point="org.eclipse.ui.preferencePages">
+		<page
+			category="edu.vanderbilt.riaps.App"
+			class="edu.vanderbilt.riaps.ui.AppExecutableExtensionFactory:org.eclipse.xtext.ui.validation.ValidatorPreferencePage"
+			id="edu.vanderbilt.riaps.App.validator.preferencePage"
+			name="Errors/Warnings">
+			<keywordReference id="edu.vanderbilt.riaps.ui.keyword_App"/>
+		</page>
+	</extension>
 	<extension point="org.eclipse.xtext.builder.participant">
 		<participant
 			class="edu.vanderbilt.riaps.ui.AppExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant"
@@ -397,12 +406,18 @@
 			class="edu.vanderbilt.riaps.ui.AppExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
 			extensions="riaps">
 		</viewer>
+		<contentTypeBinding
+			contentTypeId="edu.vanderbilt.riaps.App.contenttype"
+			contentViewerId="edu.vanderbilt.riaps.App.compare.contentViewers" />
 	</extension>
 	<extension point="org.eclipse.compare.contentMergeViewers">
 		<viewer id="edu.vanderbilt.riaps.App.compare.contentMergeViewers"
 			class="edu.vanderbilt.riaps.ui.AppExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
 			extensions="riaps" label="App Compare">
 		</viewer>
+		<contentTypeBinding
+			contentTypeId="edu.vanderbilt.riaps.App.contenttype"
+			contentMergeViewerId="edu.vanderbilt.riaps.App.compare.contentMergeViewers" />
 	</extension>
 	<extension point="org.eclipse.ui.editors.documentProviders">
 		<provider id="edu.vanderbilt.riaps.App.editors.documentProviders"

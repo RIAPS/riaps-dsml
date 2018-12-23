@@ -14,7 +14,7 @@ import edu.vanderbilt.riaps.RiapsOutputConfigurationProvider
  */
 @FinalFieldsConstructor
 class AppUiModule extends AbstractAppUiModule {
-
+ 
 	override configure(Binder binder) {
 		super.configure(binder);
 		binder.bind(typeof(IOutputConfigurationProvider)).to(typeof(RiapsOutputConfigurationProvider)).in(typeof(Singleton));

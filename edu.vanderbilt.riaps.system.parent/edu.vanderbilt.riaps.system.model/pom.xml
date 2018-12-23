@@ -16,7 +16,7 @@
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
+					<version>0.9.18</version>
 					<configuration>
 						<lifecycleMappingMetadata>
 							<pluginExecutions>
@@ -78,7 +78,7 @@
 								<artifactItem>
 									<groupId>edu.vanderbilt.riaps.system</groupId>
 									<artifactId>edu.vanderbilt.riaps.system</artifactId>
-									<version>1.0.0-SNAPSHOT</version>
+									<version>0.9.18-SNAPSHOT</version>
 									<type>jar</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>${project.build.directory}/classes</outputDirectory>
@@ -113,7 +113,7 @@
 			<plugin>
 				<groupId>com.alexecollins.maven.plugin</groupId>
 				<artifactId>script-maven-plugin</artifactId>
-				<version>1.0.0</version>
+				<version>0.9.18</version>
 				<executions>
 					<execution>
 						<phase>package</phase>

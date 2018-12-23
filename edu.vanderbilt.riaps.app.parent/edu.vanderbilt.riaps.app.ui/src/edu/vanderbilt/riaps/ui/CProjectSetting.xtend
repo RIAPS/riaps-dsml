@@ -1,6 +1,6 @@
 package edu.vanderbilt.riaps.ui
 
-import java.util.Random
+import java.util.Random 
 
 class CProjectSetting {
 
@@ -26,7 +26,7 @@ class CProjectSetting {
 		'''
 			<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 			<project>
-				<configuration id="cdt.managedbuild.toolchain.gnu.base.«rand1»" name="Default">
+				<configuration id="cdt.managedbuild.toolchain.gnu.base.ï¿½rand1ï¿½" name="Default">
 					<extension point="org.eclipse.cdt.core.LanguageSettingsProvider">
 						<provider copy-of="extension" id="org.eclipse.cdt.ui.UserLanguageSettingsProvider"/>
 						<provider-reference id="org.eclipse.cdt.core.ReferencedProjectsLanguageSettingsProvider" ref="shared-provider"/>
@@ -66,8 +66,8 @@ class CProjectSetting {
 			<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 			<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
 				<storageModule moduleId="org.eclipse.cdt.core.settings">
-					<cconfiguration id="cdt.managedbuild.toolchain.gnu.base.«rand1»">
-						<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.toolchain.gnu.base.«rand1»" moduleId="org.eclipse.cdt.core.settings" name="Default">
+					<cconfiguration id="cdt.managedbuild.toolchain.gnu.base.ï¿½rand1ï¿½">
+						<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.toolchain.gnu.base.ï¿½rand1ï¿½" moduleId="org.eclipse.cdt.core.settings" name="Default">
 							<externalSettings/>
 							<extensions>
 								<extension id="org.eclipse.cdt.core.GNU_ELF" point="org.eclipse.cdt.core.BinaryParser"/>
@@ -79,46 +79,46 @@ class CProjectSetting {
 							</extensions>
 						</storageModule>
 						<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-							<configuration artifactName="${ProjName}" buildProperties="" description="" id="cdt.managedbuild.toolchain.gnu.base.«rand1»" name="Default" parent="org.eclipse.cdt.build.core.emptycfg">
-								<folderInfo id="cdt.managedbuild.toolchain.gnu.base.«rand1».«rand2»" name="/" resourcePath="">
-									<toolChain id="cdt.managedbuild.toolchain.gnu.base.«rand3»" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.base">
+							<configuration artifactName="${ProjName}" buildProperties="" description="" id="cdt.managedbuild.toolchain.gnu.base.ï¿½rand1ï¿½" name="Default" parent="org.eclipse.cdt.build.core.emptycfg">
+								<folderInfo id="cdt.managedbuild.toolchain.gnu.base.ï¿½rand1ï¿½.ï¿½rand2ï¿½" name="/" resourcePath="">
+									<toolChain id="cdt.managedbuild.toolchain.gnu.base.ï¿½rand3ï¿½" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.base">
 										<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.GNU_ELF" id="cdt.managedbuild.target.gnu.platform.base.1745065708" name="Debug Platform" osList="linux,hpux,aix,qnx" superClass="cdt.managedbuild.target.gnu.platform.base"/>
-										<builder id="cdt.managedbuild.target.gnu.builder.base.«rand4»" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" superClass="cdt.managedbuild.target.gnu.builder.base"/>
-										<tool id="cdt.managedbuild.tool.gnu.archiver.base.«rand5»" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base"/>
-										<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.base.«rand6»" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.base">
-											<option id="gnu.cpp.compiler.option.include.paths.«rand7»" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
-												<listOptionValue builtIn="false" value="&quot;${workspace_loc:/«Project»/messages-gen}&quot;"/>
-												<listOptionValue builtIn="false" value="&quot;${workspace_loc:/«Project»/cpp/include}&quot;"/>
+										<builder id="cdt.managedbuild.target.gnu.builder.base.ï¿½rand4ï¿½" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" superClass="cdt.managedbuild.target.gnu.builder.base"/>
+										<tool id="cdt.managedbuild.tool.gnu.archiver.base.ï¿½rand5ï¿½" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base"/>
+										<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.base.ï¿½rand6ï¿½" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.base">
+											<option id="gnu.cpp.compiler.option.include.paths.ï¿½rand7ï¿½" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+												<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ï¿½Projectï¿½/messages-gen}&quot;"/>
+												<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ï¿½Projectï¿½/cpp/include}&quot;"/>
 												<listOptionValue builtIn="false" value="/opt/riaps/amd64/include"/>
 											</option>
-											<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.«rand8»" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+											<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.ï¿½rand8ï¿½" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 										</tool>
-										<tool id="cdt.managedbuild.tool.gnu.c.compiler.base.«rand9»" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.base">
-											<option id="gnu.c.compiler.option.include.paths.«rand10»" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
-												<listOptionValue builtIn="false" value="&quot;${workspace_loc:/«Project»/include}&quot;"/>
-												<listOptionValue builtIn="false" value="&quot;${workspace_loc:/«Project»/cpp/include}&quot;"/>
+										<tool id="cdt.managedbuild.tool.gnu.c.compiler.base.ï¿½rand9ï¿½" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.base">
+											<option id="gnu.c.compiler.option.include.paths.ï¿½rand10ï¿½" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+												<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ï¿½Projectï¿½/include}&quot;"/>
+												<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ï¿½Projectï¿½/cpp/include}&quot;"/>
 												<listOptionValue builtIn="false" value="/opt/riaps/amd64/include"/>
 												<listOptionValue builtIn="false" value="/usr/include/python3.6m"/>
 												<listOptionValue builtIn="false" value="/opt/riaps/amd64/include/pybind11/include"/>
 											</option>
-											<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.«rand11»" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+											<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.ï¿½rand11ï¿½" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 										</tool>
-										<tool id="cdt.managedbuild.tool.gnu.c.linker.base.«rand12»" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.base"/>
-										<tool id="cdt.managedbuild.tool.gnu.cpp.linker.base.«rand13»" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.base">
-											<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.«rand14»" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
+										<tool id="cdt.managedbuild.tool.gnu.c.linker.base.ï¿½rand12ï¿½" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.base"/>
+										<tool id="cdt.managedbuild.tool.gnu.cpp.linker.base.ï¿½rand13ï¿½" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.base">
+											<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.ï¿½rand14ï¿½" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 												<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 												<additionalInput kind="additionalinput" paths="$(LIBS)"/>
 											</inputType>
 										</tool>
-										<tool id="cdt.managedbuild.tool.gnu.assembler.base.«rand15»" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.base">
-											<option id="gnu.both.asm.option.include.paths.«rand16»" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
-												<listOptionValue builtIn="false" value="&quot;${workspace_loc:/«Project»/messages-gen}&quot;"/>
-												<listOptionValue builtIn="false" value="&quot;${workspace_loc:/«Project»/cpp/include}&quot;"/>
+										<tool id="cdt.managedbuild.tool.gnu.assembler.base.ï¿½rand15ï¿½" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.base">
+											<option id="gnu.both.asm.option.include.paths.ï¿½rand16ï¿½" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
+												<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ï¿½Projectï¿½/messages-gen}&quot;"/>
+												<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ï¿½Projectï¿½/cpp/include}&quot;"/>
 												<listOptionValue builtIn="false" value="/opt/riaps/amd64/include"/>
 												<listOptionValue builtIn="false" value="/usr/include/python3.6m"/>
 												<listOptionValue builtIn="false" value="/opt/riaps/amd64/include/pybind11/include"/>
 											</option>
-											<inputType id="cdt.managedbuild.tool.gnu.assembler.input.«rand17»" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+											<inputType id="cdt.managedbuild.tool.gnu.assembler.input.ï¿½rand17ï¿½" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 										</tool>
 									</toolChain>
 								</folderInfo>
@@ -128,12 +128,12 @@ class CProjectSetting {
 					</cconfiguration>
 				</storageModule>
 				<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-					<project id="«Project».null.«rand18»" name="«Project»"/>
+					<project id="ï¿½Projectï¿½.null.ï¿½rand18ï¿½" name="ï¿½Projectï¿½"/>
 				</storageModule>
 				<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 				<storageModule moduleId="refreshScope" versionNumber="2">
 					<configuration configurationName="Default">
-						<resource resourceType="PROJECT" workspacePath="/«Project»"/>
+						<resource resourceType="PROJECT" workspacePath="/ï¿½Projectï¿½"/>
 					</configuration>
 				</storageModule>
 				<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
@@ -182,10 +182,10 @@ class CProjectSetting {
 				</storageModule>
 				<storageModule moduleId="scannerConfiguration">
 					<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-					<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.base.«rand1»;cdt.managedbuild.toolchain.gnu.base.«rand1».«rand2»;cdt.managedbuild.tool.gnu.c.compiler.base.«rand9»;cdt.managedbuild.tool.gnu.c.compiler.input.«rand11»">
+					<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.base.ï¿½rand1ï¿½;cdt.managedbuild.toolchain.gnu.base.ï¿½rand1ï¿½.ï¿½rand2ï¿½;cdt.managedbuild.tool.gnu.c.compiler.base.ï¿½rand9ï¿½;cdt.managedbuild.tool.gnu.c.compiler.input.ï¿½rand11ï¿½">
 						<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 					</scannerConfigBuildInfo>
-					<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.base.«rand1»;cdt.managedbuild.toolchain.gnu.base.«rand1».«rand2»;cdt.managedbuild.tool.gnu.cpp.compiler.base.«rand6»;cdt.managedbuild.tool.gnu.cpp.compiler.input.«rand8»">
+					<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.base.ï¿½rand1ï¿½;cdt.managedbuild.toolchain.gnu.base.ï¿½rand1ï¿½.ï¿½rand2ï¿½;cdt.managedbuild.tool.gnu.cpp.compiler.base.ï¿½rand6ï¿½;cdt.managedbuild.tool.gnu.cpp.compiler.input.ï¿½rand8ï¿½">
 						<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 					</scannerConfigBuildInfo>
 				</storageModule>
@@ -241,9 +241,9 @@ class CProjectSetting {
 //		
 //											<listOptionValue builtIn="false" value="/opt/riaps/amd64/include"/>
 //		
-//											<listOptionValue builtIn="false" value="&quot;${workspace_loc:/«Project»/messages-gen}&quot;"/>
+//											<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ï¿½Projectï¿½/messages-gen}&quot;"/>
 //		
-//											<listOptionValue builtIn="false" value="&quot;${workspace_loc:/«Project»/cpp/include}&quot;"/>
+//											<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ï¿½Projectï¿½/cpp/include}&quot;"/>
 //		
 //										</option>
 //		
@@ -257,9 +257,9 @@ class CProjectSetting {
 //		
 //											<listOptionValue builtIn="false" value="/opt/riaps/amd64/include"/>
 //		
-//											<listOptionValue builtIn="false" value="&quot;${workspace_loc:/«Project»/messages-gen}&quot;"/>
+//											<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ï¿½Projectï¿½/messages-gen}&quot;"/>
 //		
-//											<listOptionValue builtIn="false" value="&quot;${workspace_loc:/«Project»/cpp/include}&quot;"/>
+//											<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ï¿½Projectï¿½/cpp/include}&quot;"/>
 //		
 //										</option>
 //		
@@ -287,9 +287,9 @@ class CProjectSetting {
 //		
 //											<listOptionValue builtIn="false" value="/opt/riaps/amd64/include"/>
 //		
-//											<listOptionValue builtIn="false" value="&quot;${workspace_loc:/«Project»/messages-gen}&quot;"/>
+//											<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ï¿½Projectï¿½/messages-gen}&quot;"/>
 //		
-//											<listOptionValue builtIn="false" value="&quot;${workspace_loc:/«Project»/cpp/include}&quot;"/>
+//											<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ï¿½Projectï¿½/cpp/include}&quot;"/>
 //		
 //										</option>
 //		
@@ -313,7 +313,7 @@ class CProjectSetting {
 //		
 //			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 //		
-//				<project id="«Project».null.854007512" name="«Project»"/>
+//				<project id="ï¿½Projectï¿½.null.854007512" name="ï¿½Projectï¿½"/>
 //		
 //			</storageModule>
 //		
@@ -323,7 +323,7 @@ class CProjectSetting {
 //		
 //				<configuration configurationName="Default">
 //		
-//					<resource resourceType="PROJECT" workspacePath="/«Project»"/>
+//					<resource resourceType="PROJECT" workspacePath="/ï¿½Projectï¿½"/>
 //		
 //				</configuration>
 //		
