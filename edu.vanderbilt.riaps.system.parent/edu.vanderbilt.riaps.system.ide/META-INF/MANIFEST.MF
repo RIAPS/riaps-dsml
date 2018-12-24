@@ -1,15 +1,15 @@
 Manifest-Version: 1.0
+Automatic-Module-Name: edu.vanderbilt.riaps.system.ide
 Bundle-ManifestVersion: 2
 Bundle-Name: edu.vanderbilt.riaps.system.ide
-Bundle-Vendor: Institute for Software Integrated Systems, Vanderbilt University
-Bundle-Version: 0.9.18.qualifier
+Bundle-Vendor: My Company
+Bundle-Version: 1.1.12.qualifier
 Bundle-SymbolicName: edu.vanderbilt.riaps.system.ide; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: edu.vanderbilt.riaps.system,
  org.eclipse.xtext.ide,
  org.eclipse.xtext.xbase.ide,
- org.antlr.runtime
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: edu.vanderbilt.riaps.ide.contentassist.antlr.internal,
  edu.vanderbilt.riaps.ide.contentassist.antlr
-

@@ -5,7 +5,7 @@ package edu.vanderbilt.riaps.generator
 
 import com.google.inject.Inject
 import com.google.inject.Provider
-import edu.vanderbilt.riaps.SystemStandaloneSetup
+import edu.vanderbilt.riaps.AppStandaloneSetup
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtext.generator.GeneratorContext
@@ -22,7 +22,7 @@ class Main {
 			System::err.println('Aborting: no path to EMF resource provided!')
 			return
 		}
-		val injector = new SystemStandaloneSetup().createInjectorAndDoEMFRegistration
+		val injector = new AppStandaloneSetup().createInjectorAndDoEMFRegistration
 		val main = injector.getInstance(Main)
 		main.runGenerator(args.get(0))
 	}

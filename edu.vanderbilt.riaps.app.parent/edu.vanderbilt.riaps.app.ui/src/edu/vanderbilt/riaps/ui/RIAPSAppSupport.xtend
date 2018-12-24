@@ -5,7 +5,6 @@ import java.io.ByteArrayInputStream
 import java.net.URI
 import java.util.ArrayList
 import java.util.List
-import javax.xml.ws.soap.AddressingFeature.Responses
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IProjectDescription
@@ -13,9 +12,7 @@ import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.Assert
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IProgressMonitor
-import java.io.File
-import java.util.Properties
-import java.io.FileOutputStream
+
 
 class RIAPSAppSupport {
 
@@ -207,7 +204,7 @@ class RIAPSAppSupport {
 			<stringAttribute key="org.eclipse.ui.externaltools.ATTR_TOOL_ARGUMENTS" value="-p 8888"/>
 			<stringAttribute key="org.eclipse.ui.externaltools.ATTR_WORKING_DIRECTORY" value="${workspace_loc:/}"/>
 			<stringAttribute key="org.python.pydev.debug.ATTR_INTERPRETER" value="__default"/>
-			<stringAttribute key="org.python.pydev.debug.ATTR_PROJECT" value="«projectName»"/>
+			<stringAttribute key="org.python.pydev.debug.ATTR_PROJECT" value="ï¿½projectNameï¿½"/>
 			<stringAttribute key="process_factory_id" value="org.python.pydev.debug.processfactory.PyProcessFactory"/>
 			</launchConfiguration>
 		'''
@@ -241,7 +238,7 @@ class RIAPSAppSupport {
 		var contents = 
 		'''
 		# Do not delete or modify this file by hand
-		ProjectType=«Type»
+		ProjectType=ï¿½Typeï¿½
 		'''
 		var source = new ByteArrayInputStream(contents.getBytes);
 		if (!file.exists) {

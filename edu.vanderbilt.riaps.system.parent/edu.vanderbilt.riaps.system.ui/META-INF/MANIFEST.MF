@@ -1,8 +1,9 @@
 Manifest-Version: 1.0
+Automatic-Module-Name: edu.vanderbilt.riaps.system.ui
 Bundle-ManifestVersion: 2
 Bundle-Name: edu.vanderbilt.riaps.system.ui
-Bundle-Vendor: Institute for Software Integrated Systems, Vanderbilt University
-Bundle-Version: 0.9.18.qualifier
+Bundle-Vendor: My Company
+Bundle-Version: 1.1.12.qualifier
 Bundle-SymbolicName: edu.vanderbilt.riaps.system.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: edu.vanderbilt.riaps.system,
@@ -15,12 +16,11 @@ Require-Bundle: edu.vanderbilt.riaps.system,
  org.eclipse.ui,
  org.eclipse.compare,
  org.eclipse.xtext.builder,
- org.eclipse.xtend.lib;resolution:=optional,
- org.eclipse.xtext.xbase.lib;bundle-version="2.13.0",
- edu.vanderbilt.riaps.app
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.eclipse.xtend.lib;bundle-version="2.14.0";resolution:=optional
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: edu.vanderbilt.riaps.ui.quickfix,
- edu.vanderbilt.riaps.ui.contentassist,
- edu.vanderbilt.riaps.system.ui.internal
+ edu.vanderbilt.riaps.system.ui.internal,
+ edu.vanderbilt.riaps.ui.contentassist
 Bundle-Activator: edu.vanderbilt.riaps.system.ui.internal.SystemActivator
