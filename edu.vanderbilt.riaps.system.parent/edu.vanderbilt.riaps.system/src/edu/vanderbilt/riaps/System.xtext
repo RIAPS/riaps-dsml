@@ -97,9 +97,10 @@ KnownNodes:
 ;
 
 
+
 IPAddress returns  ecore::EString:   (INT '.' INT '.' INT '.' INT)	;
 
-LocalSymbolicName returns ecore::EString: (ID'.' 'local');
+LocalSymbolicName returns ecore::EString: ((ID)('-'|ID)*('.' 'local')?);
 
 IP:
 	IPAddress|LocalSymbolicName|STRING
