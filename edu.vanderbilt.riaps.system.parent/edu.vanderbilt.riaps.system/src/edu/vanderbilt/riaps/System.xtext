@@ -97,10 +97,12 @@ KnownNodes:
 ;
 
 
+@Override 
+terminal ID: '^'?('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'-'|'0'..'9')*;
 
 IPAddress returns  ecore::EString:   (INT '.' INT '.' INT '.' INT)	;
 
-LocalSymbolicName returns ecore::EString: ((ID)('-'|ID)*('.' 'local')?);
+LocalSymbolicName returns ecore::EString: ((ID)('.' 'local')?);
 
 IP:
 	IPAddress|LocalSymbolicName|STRING
@@ -131,7 +133,7 @@ ActorDeployment:
 
 //(lb=INT (atmost?='to' up=INT))
 ActorAssignment:
-{ActorAssignment} actor=[App::Actor|FQN] ('(' formals+=ActorFormalAssignment (',' formals+=ActorFormalAssignment)* ')')?	
+{ActorAssignment} actor=[App::Actor|FQN] ('(' (formals+=ActorFormalAssignment (',' formals+=ActorFormalAssignment)*)? ')')?	
 ;
 
 ActorFormalAssignment returns ActorFormalAssignment :
