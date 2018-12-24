@@ -21,14 +21,11 @@ import edu.vanderbilt.riaps.system.KnownNodes
 		for (ActorAssignment aa : ad.getActors()) {
 			this.actors.add(new ActorAss(aa))
 		}
-	//	var Location loc = ad.getLocation()
-//		if (loc instanceof LocationNodes) {
-//			var LocationNodes locs = (loc as LocationNodes)
-//			for (KnownNodes kn : locs.getHosts()) {
-//				if (kn.getNetinterface().size() > 0) {
-//					target.add(kn.getNetinterface().get(0).getIp().trim.replaceAll("^\"|\"$", ""))
-//				}
-//			}
-//		}
+		if(ad.all) return;
+		var allHostedNodes = ad.hosts
+		// target.add(kn.trim.replaceAll("^\"|\"$", ""))
+		for (hostedNode : allHostedNodes) {
+			target.add(hostedNode.trim.replaceAll("^\"|\"$", ""))
+		}
 	}
 }

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Automatic-Module-Name: edu.vanderbilt.riaps.system
 Bundle-ManifestVersion: 2
 Bundle-Name: edu.vanderbilt.riaps.system
-Bundle-Vendor: My Company
+Bundle-Vendor: Institute for Software Integrated Systems, Vanderbilt University
 Bundle-Version: 1.1.12.qualifier
 Bundle-SymbolicName: edu.vanderbilt.riaps.system; singleton:=true
 Bundle-ActivationPolicy: lazy
@@ -15,7 +15,8 @@ Require-Bundle: org.eclipse.xtext,
  org.eclipse.xtext.util,
  org.eclipse.emf.common,
  org.eclipse.xtend.lib;bundle-version="2.14.0",
- org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
+ com.google.gson;bundle-version="2.3.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: edu.vanderbilt.riaps.system,
  edu.vanderbilt.riaps.system.impl,

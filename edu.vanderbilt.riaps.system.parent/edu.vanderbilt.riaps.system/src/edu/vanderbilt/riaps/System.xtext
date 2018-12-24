@@ -8,7 +8,7 @@ generate system "http://www.vanderbilt.edu/riaps/System"
 Model returns Mdodel:
 	{Model}
 	//'package' name=FQN (';')?
-	(imports+=Import)*
+	//(imports+=Import)*
 	(collections+=Collection)*;
 	
 Import:
@@ -99,8 +99,10 @@ KnownNodes:
 
 IPAddress returns  ecore::EString:   (INT '.' INT '.' INT '.' INT)	;
 
+LocalSymbolicName returns ecore::EString: (ID'.' 'local');
+
 IP:
-	IPAddress|STRING
+	IPAddress|LocalSymbolicName|STRING
 ;
 
 NetworkInterface:
@@ -113,8 +115,17 @@ AppDeployment:
  '}'
 ;
 
+//ActorDeployment:
+// 'on' (all?='all'|(exactly?='exactly' lb=INT)| (hosts+=[KnownNodes|FQN](',' hosts+=[KnownNodes|FQN])*)) actors+=ActorAssignment (',' actors+=ActorAssignment)* (';')?
+//;
+
+
+
+
 ActorDeployment:
-  'on' (all?='all'|(exactly?='exactly' lb=INT)| (hosts+=[KnownNodes|FQN](',' hosts+=[KnownNodes|FQN])*)) actors+=ActorAssignment (',' actors+=ActorAssignment)* (';')?
+ 'on' (all?='all'| 
+ 	'('(hosts+=IP (',' hosts+=IP)*)')'
+ ) actors+=ActorAssignment (',' actors+=ActorAssignment)* (';')?
 ;
 
 //(lb=INT (atmost?='to' up=INT))
