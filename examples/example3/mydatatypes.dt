@@ -1,6 +1,0 @@
-package t1
-
-struct mystruct
-{
-	content: String
-}
