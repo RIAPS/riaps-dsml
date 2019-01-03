@@ -7,7 +7,8 @@ Model returns Mdodel:
 	{Model}
 	//'package' name=FQN (';')
 	//(imports+=Import)*
-	(collections+=Collection)*;
+	(collections+=Application)*;
+	
 
 Import:
 	'import' (importedNamespace=ImportedFQN) (';');

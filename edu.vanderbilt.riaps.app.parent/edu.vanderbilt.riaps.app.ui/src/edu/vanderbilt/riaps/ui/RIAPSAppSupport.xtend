@@ -178,7 +178,7 @@ else
 	make -C build/amd64 clean -j2
 endif
 
-reformat: cpp
+reformat:
 ifndef CLANG-FORMAT
 	$(error "clang-format is not available. Please install")
 else
@@ -199,26 +199,20 @@ endif
 
 	def private static createCtrlLauncher(String projectName) {
 		'''
-			<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-			<launchConfiguration type="org.python.pydev.debug.regularLaunchConfigurationType">
-			<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-			<listEntry value="/usr/local/bin/riaps_ctrl"/>
-			</listAttribute>
-			<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
-			<listEntry value="1"/>
-			</listAttribute>
-			<mapAttribute key="org.eclipse.debug.core.environmentVariables">
-			
-			<mapEntry key="RIAPSAPPS" value="${workspace_loc:/}"/>
-			</mapAttribute>
-			<stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION" value="/usr/local/bin/riaps_ctrl"/>
-			<stringAttribute key="org.eclipse.ui.externaltools.ATTR_OTHER_WORKING_DIRECTORY" value="${workspace_loc:/}"/>
-			<stringAttribute key="org.eclipse.ui.externaltools.ATTR_TOOL_ARGUMENTS" value="-p 8888"/>
-			<stringAttribute key="org.eclipse.ui.externaltools.ATTR_WORKING_DIRECTORY" value="${workspace_loc:/}"/>
-			<stringAttribute key="org.python.pydev.debug.ATTR_INTERPRETER" value="__default"/>
-			<stringAttribute key="org.python.pydev.debug.ATTR_PROJECT" value="�projectName�"/>
-			<stringAttribute key="process_factory_id" value="org.python.pydev.debug.processfactory.PyProcessFactory"/>
-			</launchConfiguration>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.ui.externaltools.ProgramLaunchConfigurationType">
+<stringAttribute key="bad_container_name" value="/home/riaps/riaps_ctrl.launch"/>
+<mapAttribute key="org.eclipse.debug.core.environmentVariables">
+<mapEntry key="LD_LIBRARY_PATH" value="/opt/riaps/amd64/lib:/usr/local/lib"/>
+<mapEntry key="RIAPSAPPS" value="/home/riaps/riaps_apps"/>
+<mapEntry key="RIAPSHOME" value="/usr/local/riaps"/>
+</mapAttribute>
+<listAttribute key="org.eclipse.debug.ui.favoriteGroups">
+<listEntry value="org.eclipse.ui.externaltools.launchGroup"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_LAUNCH_CONFIGURATION_BUILD_SCOPE" value="${none}"/>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION" value="/usr/local/bin/riaps_ctrl"/>
+</launchConfiguration>
 		'''
 
 	}

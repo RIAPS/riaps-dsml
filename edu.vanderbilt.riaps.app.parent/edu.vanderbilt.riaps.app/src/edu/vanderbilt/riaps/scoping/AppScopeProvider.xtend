@@ -9,7 +9,7 @@ import edu.vanderbilt.riaps.app.CollocateConstraint
 import edu.vanderbilt.riaps.app.AppPackage
 import org.eclipse.xtext.EcoreUtil2
 import edu.vanderbilt.riaps.Console
-import edu.vanderbilt.riaps.app.Application
+import edu.vanderbilt.riaps.app.Application 
 import edu.vanderbilt.riaps.app.Actor
 import org.eclipse.xtext.scoping.Scopes
 import edu.vanderbilt.riaps.app.DistributeConstraint
@@ -18,7 +18,7 @@ import edu.vanderbilt.riaps.app.Instance
 import edu.vanderbilt.riaps.app.ComponentFormal
 import edu.vanderbilt.riaps.app.ActorFormal
 import edu.vanderbilt.riaps.app.InstanceSection
-
+ 
 
 /**
  * This class contains custom scoping description.
@@ -39,7 +39,7 @@ class AppScopeProvider extends AbstractAppScopeProvider {
 			// EcoreUtil2 provides useful functionality to do that
 			// For example searching for all elements within the root Object's tree    	
 			val rootElement = context.eContainer
-			if (rootElement instanceof Application) {
+			if (rootElement instanceof Application) { 
 				// Console.instance.log(java.util.logging.Level.INFO, rootElement.name)
 				val candidates = EcoreUtil2.getAllContentsOfType(rootElement, Actor)
 				// Create IEObjectDescriptions and puts them into an IScope instance
