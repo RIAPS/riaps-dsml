@@ -81,19 +81,19 @@ class AppFormatter extends AbstractFormatter2 {
 
 	
 
-		for (Group group : app.getGroups()) {
-			group.format;
-			group.prepend[noSpace; newLine].append[noSpace; newLine]
-		}
+//		for (Group group : app.getGroups()) {
+//			group.format;
+//			group.prepend[noSpace; newLine].append[noSpace; newLine]
+//		}
 
 		for (Actor actor : app.getActors()) {
 			actor.format;
 			actor.prepend[noSpace; newLine].append[noSpace; newLine]
 		}
-		for (DeploymentConstraint c : app.deploymentConstraints) {
-			c.format;
-			c.prepend[noSpace; newLine].append[noSpace; newLine]
-		}
+//		for (DeploymentConstraint c : app.deploymentConstraints) {
+//			c.format;
+//			c.prepend[noSpace; newLine].append[noSpace; newLine]
+//		}
 
 	}
 

@@ -46,10 +46,12 @@ class AppGenerator extends AbstractGenerator {
 			return (i * 60 * 1000);
 		} else if (unit.second) {
 			return (i * 1000);
-		} else if (unit.microsecond) {
-			return (i / 1000)
+		} 
+		//else if (unit.microsecond) {
+			//return (i / 1000)
 
-		} else
+		//} 
+		else
 			return 0
 	}
 

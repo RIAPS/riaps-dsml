@@ -103,7 +103,9 @@ FEnumerator returns FEnumerator:
 	name=ID ('=' value=STRING)?;
 
 Message:
-	'message' name=ID (':' type=[FStructType|FQN])? (';');
+	'message' name=ID 
+	(':' type=[FStructType|FQN])? 
+	(';'?);
 	//The device types and their tags will be captured in datatypes. A different place for them can be found later.
 //for crossreference 
 
@@ -158,7 +160,8 @@ TimeUnit:
 	second?='sec'
 	|minute?='min'
 	| millisecond?='msec'
-	| microsecond?='usec';
+	//| microsecond?='usec'
+	;
 
 terminal LIBRARY_NAME:
 	'lib' ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')* ('.so');
@@ -275,11 +278,14 @@ Application returns Application:
 	'app' (name=ID)
 	'{'
 	//declare the libraries, actors, components (app-specific components - an app's actor can use components described in a non-app namespace)
-	((actors+=Actor) | (components+=Component) | (libraries+=Library)| (groups+=Group) | messages+=Message)+
+	((actors+=Actor) | (components+=Component) | 
+		//(libraries+=Library)| (groups+=Group) |
+		 messages+=Message
+	)+
 
 	//Optionally deployment constraints can be specified to control how an app is deployed.
 	// the constraints are specified by the app developer
-	(deploymentConstraints+=DeploymentConstraint)*
+//	(deploymentConstraints+=DeploymentConstraint)*
 	'}';
 
 Group:

@@ -45,10 +45,10 @@ import edu.vanderbilt.riaps.app.pylibrary
 		this.messages = new ArrayList<HashMap<String, String>>()
 		this.libraries = new ArrayList<HashMap<String, String>>()
 		var HashSet<String> messageSet = new HashSet<String>()
-		for (g : a.groups) {
-			var AppGroups group = new AppGroups(g)
-			groups.put(g.name, group)
-		}
+//		for (g : a.groups) {
+//			var AppGroups group = new AppGroups(g)
+//			groups.put(g.name, group)
+//		}
 
 		for (Component c : a.collectComponents()) {
 			if (c instanceof Component) {
@@ -95,17 +95,17 @@ import edu.vanderbilt.riaps.app.pylibrary
 			this.devices.put(dc.getName(), dc)
 
 		}
-		for(Library x:a.libraries){
-			var mm = new HashMap<String,String>();
-			mm.put("name", (x as Library).getName());
-			this.libraries.add(mm)
-		}
+//		for(Library x:a.libraries){
+//			var mm = new HashMap<String,String>();
+//			mm.put("name", (x as Library).getName());
+//			this.libraries.add(mm)
+//		}
 		for (Actor ac : a.getActors()) {
 			var JsonActor jac = new JsonActor(ac)
 			actors.put(jac.getName(), jac)
 		}
-		for (DeploymentConstraint dc : a.getDeploymentConstraints()) { // TODO: Fill in
-		} // for (MessageRef m : a.getMessages()){
+//		for (DeploymentConstraint dc : a.getDeploymentConstraints()) { // TODO: Fill in
+//		} // for (MessageRef m : a.getMessages()){
 		// HashMap<String,String> mm = new HashMap<String,String>();
 		// mm.put("name", m.getType().getName());
 		// this.messages.add(mm);
