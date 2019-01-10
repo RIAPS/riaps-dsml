@@ -31,7 +31,7 @@ import edu.vanderbilt.riaps.RiapsOutputConfigurationProvider
 
 /**
  * Generates code from your model files on save.
- * 
+ *  
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#code-generation
  */
 class SystemGenerator extends AbstractGenerator {

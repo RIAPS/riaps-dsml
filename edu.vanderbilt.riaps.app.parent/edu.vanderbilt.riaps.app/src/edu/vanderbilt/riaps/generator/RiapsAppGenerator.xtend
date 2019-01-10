@@ -31,8 +31,7 @@ public class RiapsAppGenerator extends AbstractGenerator {
 			var app = new App(e);
 			var formattedString = gson.toJson(app);
 			fsa.generateFile(
-				e.name + ".json",
-				RiapsOutputConfigurationProvider.DEFAULT_OUTPUT_JSON_APP,
+				e.name + ".json",				
 				formattedString
 			)
 			 

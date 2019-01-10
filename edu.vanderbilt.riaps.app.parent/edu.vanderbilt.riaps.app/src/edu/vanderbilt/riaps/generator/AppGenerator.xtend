@@ -28,13 +28,13 @@ class AppGenerator extends AbstractGenerator {
 	@Inject CapnProtoGenerator g4
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
-		g1.doGenerate(resource, fsa, context);
+		//g1.doGenerate(resource, fsa, context);
 		//g3.doGenerate(resource, fsa, context);
-		g4.doGenerate(resource, fsa, context);
+		//g4.doGenerate(resource, fsa, context);
 
-		for (e : resource.allContents.toIterable.filter(Model)) {
-			if(e.collections.filter(FStructType).size() == 0) return
-		}
+		//for (e : resource.allContents.toIterable.filter(Model)) {
+		//	if(e.collections.filter(FStructType).size() == 0) return
+		//}
 
 	}
 
