@@ -3,13 +3,13 @@ Automatic-Module-Name: edu.vanderbilt.riaps.system
 Bundle-ManifestVersion: 2
 Bundle-Name: edu.vanderbilt.riaps.system
 Bundle-Vendor: Institute for Software Integrated Systems, Vanderbilt University
-Bundle-Version: 1.1.13.qualifier
+Bundle-Version: 1.1.14.qualifier
 Bundle-SymbolicName: edu.vanderbilt.riaps.system; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext,
  org.eclipse.xtext.xbase,
  org.eclipse.equinox.common;bundle-version="3.5.0",
- edu.vanderbilt.riaps.app;bundle-version="1.1.13",
+ edu.vanderbilt.riaps.app;bundle-version="1.1.14",
  org.eclipse.emf.ecore,
  org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
  org.eclipse.xtext.util,
