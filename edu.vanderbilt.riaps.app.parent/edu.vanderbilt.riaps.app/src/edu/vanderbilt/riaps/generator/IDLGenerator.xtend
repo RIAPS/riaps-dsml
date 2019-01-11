@@ -37,15 +37,12 @@ class IDLGenerator extends AbstractGenerator {
 		}
  
 		def String sequenceName() '''		 
-			typedef sequence<«typename»> «uniqueIdentifier»;		
+			typedef sequence<Â«typenameÂ»> Â«uniqueIdentifierÂ»;		
 		'''
 	}
-
 	static var typedefs = new HashMap<String, SequenceDefinition>
-
 	override doGenerate(Resource input, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		for (e : input.allContents.toIterable.filter(FStructType)) {
-
 			var messageString = e.compileToString
 			fsa.generateFile(
 				e.fullyQualifiedName.toString("/") + ".idl",
@@ -55,7 +52,6 @@ class IDLGenerator extends AbstractGenerator {
 		}
 		
 		for (e : input.allContents.toIterable.filter(FEnumerationType)) {
-
 			var messageString = e.compileToString
 			fsa.generateFile(
 				e.fullyQualifiedName.toString("/") + ".idl",
@@ -64,14 +60,12 @@ class IDLGenerator extends AbstractGenerator {
 			//Console.instance.log(java.util.logging.Level.INFO,e.fullyQualifiedName.toString("/") + ".idl generated");
 		}
 	}
-
 	def beautify(String code) {
 		var indent = 0;
 		var temp = new StringBuilder
 		var contents = code.split("\n")
 		var SEPARATOR = "    "
 		for (line : contents) {
-
 			if (line.contains("{")) {
 				for (var i = 0; i < indent; i++) {
 					temp.append(SEPARATOR)
@@ -98,70 +92,67 @@ class IDLGenerator extends AbstractGenerator {
 	}
 	
 	def String compileToString(FEnumerationType message) ''' 
-	«var x= message.fullyQualifiedName»
-	«var s = x.getSegmentCount»		
-	«FOR i : 0..<s-1»
-				module «x.getSegment(i)»
+	Â«var x= message.fullyQualifiedNameÂ»
+	Â«var s = x.getSegmentCountÂ»		
+	Â«FOR i : 0..<s-1Â»
+				module Â«x.getSegment(i)Â»
 				{
-	«ENDFOR»
-	enum «message.name» {
-		«FOR j : message.enumerators SEPARATOR ','»
-		«j.name»	
-		«ENDFOR»
+	Â«ENDFORÂ»
+	enum Â«message.nameÂ» {
+		Â«FOR j : message.enumerators SEPARATOR ','Â»
+		Â«j.nameÂ»	
+		Â«ENDFORÂ»
 		};
-	«FOR i : s-1..1»
+	Â«FOR i : s-1..1Â»
 				};
-	«ENDFOR»
+	Â«ENDFORÂ»
 	'''
-
 	def String compileToString(FStructType message) ''' 
-		«var z= new HashSet<String>»
-		«var listz= new HashSet<String>»
-		«var x= message.fullyQualifiedName»
-		«var s = x.getSegmentCount»		
-		«FOR j : message.elements»
-			«IF j.type.derived != null»
-				«var result=z.add(j.type.derived.name)»
-				«IF (result)»
-					«var n = j.type.derived.fullyQualifiedName.toString("/")»
-					#include <«n».idl>
-				«ENDIF»
-			«ENDIF»
-		«ENDFOR»
-		«FOR i : 0..<s-1»
-			module «x.getSegment(i)»
+		Â«var z= new HashSet<String>Â»
+		Â«var listz= new HashSet<String>Â»
+		Â«var x= message.fullyQualifiedNameÂ»
+		Â«var s = x.getSegmentCountÂ»		
+		Â«FOR j : message.elementsÂ»
+			Â«IF j.type.derived != nullÂ»
+				Â«var result=z.add(j.type.derived.name)Â»
+				Â«IF (result)Â»
+					Â«var n = j.type.derived.fullyQualifiedName.toString("/")Â»
+					#include <Â«nÂ».idl>
+				Â«ENDIFÂ»
+			Â«ENDIFÂ»
+		Â«ENDFORÂ»
+		Â«FOR i : 0..<s-1Â»
+			module Â«x.getSegment(i)Â»
 			{
-		«ENDFOR»
-		«FOR j : message.elements»
-					«IF j.isList»
-						«var result=listz.add(j.idlType)»
-						«IF (result)»
-							«var temp= new SequenceDefinition(message,j.idlType)»
-								«temp.sequenceName»
-						«ENDIF»
-					«ENDIF»
-		«ENDFOR»
-			struct «message.name»
+		Â«ENDFORÂ»
+		Â«FOR j : message.elementsÂ»
+					Â«IF j.isListÂ»
+						Â«var result=listz.add(j.idlType)Â»
+						Â«IF (result)Â»
+							Â«var temp= new SequenceDefinition(message,j.idlType)Â»
+								Â«temp.sequenceNameÂ»
+						Â«ENDIFÂ»
+					Â«ENDIFÂ»
+		Â«ENDFORÂ»
+			struct Â«message.nameÂ»
 			{
-			«FOR j : message.elements»	
-				«IF j.isList»
-					«var temp= new SequenceDefinition(message,j.idlType)»
-						«temp.uniqueIdentifier» «j.name»;
-				«ELSE»					
-						«j.idlType»  «j.name»;									
-				«ENDIF»	
-			«ENDFOR»
+			Â«FOR j : message.elementsÂ»	
+				Â«IF j.isListÂ»
+					Â«var temp= new SequenceDefinition(message,j.idlType)Â»
+						Â«temp.uniqueIdentifierÂ» Â«j.nameÂ»;
+				Â«ELSEÂ»					
+						Â«j.idlTypeÂ»  Â«j.nameÂ»;									
+				Â«ENDIFÂ»	
+			Â«ENDFORÂ»
 			};
-		«FOR i : s-1..1»
+		Â«FOR i : s-1..1Â»
 			};
-		«ENDFOR»
+		Â«ENDFORÂ»
 		
 	'''
-
 	def String getIdlType(FField field) {
 		if (field.type.derived != null)
 			return field.type.derived.name;
-
 		//Console.instance.log(java.util.logging.Level.INFO, field.type.predefined.literal)
 		if(field.type.predefined.literal == "Int8")
 			return "octet"
@@ -192,7 +183,5 @@ class IDLGenerator extends AbstractGenerator {
 	
 		return field.type.predefined.literal	
 		
-
 	}
-
 }

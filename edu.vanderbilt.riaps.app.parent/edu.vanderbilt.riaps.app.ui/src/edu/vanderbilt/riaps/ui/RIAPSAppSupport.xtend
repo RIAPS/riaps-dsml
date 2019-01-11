@@ -244,7 +244,7 @@ endif
 		var contents = 
 		'''
 		# Do not delete or modify this file by hand
-		ProjectType=�Type�
+		ProjectType=«Type»
 		'''
 		var source = new ByteArrayInputStream(contents.getBytes);
 		if (!file.exists) {

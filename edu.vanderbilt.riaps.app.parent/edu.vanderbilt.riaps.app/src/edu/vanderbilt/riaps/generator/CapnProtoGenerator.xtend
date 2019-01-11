@@ -81,7 +81,7 @@ class CapnProtoGenerator extends AbstractGenerator {
 		}
 
 		def String sequenceName() '''		 
-			typedef sequence<�typename�> �uniqueIdentifier�;		
+			typedef sequence<«typename»> «uniqueIdentifier»;		
 		'''
 	}
 
@@ -276,40 +276,40 @@ class CapnProtoGenerator extends AbstractGenerator {
 	}
 
 	def String compileToString(FEnumerationType message) ''' 
-		�var x= message.fullyQualifiedName�
-		�var s = x.getSegmentCount�
-		�createCapnpID()�;		
+		«var x= message.fullyQualifiedName»
+		«var s = x.getSegmentCount»
+		«createCapnpID()»;		
 		using Cxx = import "/capnp/c++.capnp";
-		enum �message.name� {
-			�var fields = createEnumFields(message)�
-			�FOR j : fields�
-				�j�
-			�ENDFOR�
+		enum «message.name» {
+			«var fields = createEnumFields(message)»
+			«FOR j : fields»
+				«j»
+			«ENDFOR»
 			}
 	'''
 
 	def String compileToString(FStructType message) ''' 
 		«var z= new HashSet<String>»
-		�createCapnpID()�;		
-		�FOR j : message.elements�
-			�IF j.type.derived !== null�
-				�var result=z.add(j.type.derived.name)�
-				�IF (result)�
-					�var n = j.type.derived.fullyQualifiedName.toString("/")�
-���					using import  "/�n�.capnp".�j.type.derived.name�;
-					using import  "�n�.capnp".�j.type.derived.name�;
-				�ENDIF�
-			�ENDIF�
-		�ENDFOR�
+		«createCapnpID()»;		
+		«FOR j : message.elements»
+			«IF j.type.derived !== null»
+				«var result=z.add(j.type.derived.name)»
+				«IF (result)»
+					«var n = j.type.derived.fullyQualifiedName.toString("/")»
+«««					using import  "/«n».capnp".«j.type.derived.name»;
+					using import  "«n».capnp".«j.type.derived.name»;
+				«ENDIF»
+			«ENDIF»
+		«ENDFOR»
 		using Cxx = import "/capnp/c++.capnp";
-���		$Cxx.namespace("�message.fullyQualifiedName.skipLast(1).toString("::")�");		
+«««		$Cxx.namespace("«message.fullyQualifiedName.skipLast(1).toString("::")»");		
 		
-		struct �message.name�
+		struct «message.name»
 		{
-			�var fieldList = createStructFields(message)�
-			�FOR field : fieldList�
-			�field�
-		    �ENDFOR�
+			«var fieldList = createStructFields(message)»
+			«FOR field : fieldList»
+			«field»
+		    «ENDFOR»
 		}
 	'''
 	
@@ -342,24 +342,24 @@ class CapnProtoGenerator extends AbstractGenerator {
 		for (var i = 0; i < struct.elements.length; i++) {
 			if (struct.elements.get(i).isList) {
 				val field = '''
-					�struct.elements.get(i).name� @�i�: List(�struct.elements.get(i).idlType�);
+					«struct.elements.get(i).name» @«i»: List(«struct.elements.get(i).idlType»);
 				'''
 				fieldList.add(field)
 			} else {
 				val field = '''
-					�struct.elements.get(i).name� @�i�: �struct.elements.get(i).idlType�;
+					«struct.elements.get(i).name» @«i»: «struct.elements.get(i).idlType»;
 				'''
 				fieldList.add(field)
 			}
 		}
 		return fieldList
-	}
+	} 
 
 	def ArrayList<String> createEnumFields(FEnumerationType enumeration) {
 		val fieldList = new ArrayList<String>()
 		for (var i = 0; i < enumeration.enumerators.length; i++) {
 			val field = '''
-				�enumeration.enumerators.get(i).name�	@�i�;
+				«enumeration.enumerators.get(i).name»	@«i»;
 			'''
 			fieldList.add(field)
 		}
