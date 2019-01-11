@@ -1,6 +1,6 @@
 package edu.vanderbilt.riaps.ui
 
-import java.util.Random 
+import java.util.Random
 
 class CProjectSetting {
 
@@ -87,16 +87,16 @@ class CProjectSetting {
 										<tool id="cdt.managedbuild.tool.gnu.archiver.base.«rand5»" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base"/>
 										<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.base.«rand6»" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.base">
 											<option id="gnu.cpp.compiler.option.include.paths.«rand7»" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
-												<listOptionValue builtIn="false" value="&quot;${workspace_loc:/«Project»/messages-gen}&quot;"/>
-												<listOptionValue builtIn="false" value="&quot;${workspace_loc:/«Project»/cpp/include}&quot;"/>
+												<listOptionValue builtIn="false" value="&quot;${workspace_loc:/«Project»/include}&quot;"/>
 												<listOptionValue builtIn="false" value="/opt/riaps/amd64/include"/>
+												<listOptionValue builtIn="false" value="/usr/include/python3.6m"/>
+												<listOptionValue builtIn="false" value="/opt/riaps/amd64/include/pybind11/include"/>
 											</option>
 											<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.«rand8»" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 										</tool>
 										<tool id="cdt.managedbuild.tool.gnu.c.compiler.base.«rand9»" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.base">
 											<option id="gnu.c.compiler.option.include.paths.«rand10»" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 												<listOptionValue builtIn="false" value="&quot;${workspace_loc:/«Project»/include}&quot;"/>
-												<listOptionValue builtIn="false" value="&quot;${workspace_loc:/«Project»/cpp/include}&quot;"/>
 												<listOptionValue builtIn="false" value="/opt/riaps/amd64/include"/>
 												<listOptionValue builtIn="false" value="/usr/include/python3.6m"/>
 												<listOptionValue builtIn="false" value="/opt/riaps/amd64/include/pybind11/include"/>
@@ -112,8 +112,7 @@ class CProjectSetting {
 										</tool>
 										<tool id="cdt.managedbuild.tool.gnu.assembler.base.«rand15»" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.base">
 											<option id="gnu.both.asm.option.include.paths.«rand16»" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
-												<listOptionValue builtIn="false" value="&quot;${workspace_loc:/«Project»/messages-gen}&quot;"/>
-												<listOptionValue builtIn="false" value="&quot;${workspace_loc:/«Project»/cpp/include}&quot;"/>
+												<listOptionValue builtIn="false" value="&quot;${workspace_loc:/«Project»/include}&quot;"/>
 												<listOptionValue builtIn="false" value="/opt/riaps/amd64/include"/>
 												<listOptionValue builtIn="false" value="/usr/include/python3.6m"/>
 												<listOptionValue builtIn="false" value="/opt/riaps/amd64/include/pybind11/include"/>
@@ -184,7 +183,7 @@ class CProjectSetting {
 				<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 			</cproject>
 		'''
-	
+
 	}
 
 }
