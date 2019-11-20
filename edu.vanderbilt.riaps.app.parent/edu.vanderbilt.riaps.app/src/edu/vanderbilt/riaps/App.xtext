@@ -176,8 +176,8 @@ pylibrary:
 	name=ID
 ;
 
-Library:
-	('library'|'lib')? lib=(pylibrary|clibrary) ';';
+LibraryReq:
+	('library')? lib=(pylibrary|clibrary) ';';
 
 Configuration:
 	'file' (name=STRING);
@@ -259,7 +259,7 @@ MemoryUnits:
 // against the computation node that supports that device.
 // TODO DeviceTypes might have to be defined in datatypes
 ComponentRequirement:
-	Library | Configuration | CPURequirement  | NetworkRequirement;
+	 Configuration | CPURequirement  | NetworkRequirement;
 
 NetworkRequirement:
 //	'net' (max?='max')? usage=INT (memUnit=MemUnit)? ( 'over' interval=INT (timeUnit=TimeUnit)? )? 
@@ -278,8 +278,8 @@ Application returns Application:
 	'app' (name=ID)
 	'{'
 	//declare the libraries, actors, components (app-specific components - an app's actor can use components described in a non-app namespace)
-	((actors+=Actor) | (components+=Component) | 
-		//(libraries+=Library)| (groups+=Group) |
+	((actors+=Actor) | (components+=Component) | (libraries+=LibraryReq)| 
+	//(libraries+=Library)| (groups+=Group) |
 		 messages+=Message
 	)+
 

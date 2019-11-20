@@ -12,7 +12,7 @@ import java.util.HashSet
 import edu.vanderbilt.riaps.app.Component
 import edu.vanderbilt.riaps.app.Actor
 import edu.vanderbilt.riaps.app.Application
-import edu.vanderbilt.riaps.app.Library
+import edu.vanderbilt.riaps.app.LibraryReq
 import edu.vanderbilt.riaps.app.Configuration
 import org.eclipse.core.runtime.Path
 import edu.vanderbilt.riaps.app.FStructType
