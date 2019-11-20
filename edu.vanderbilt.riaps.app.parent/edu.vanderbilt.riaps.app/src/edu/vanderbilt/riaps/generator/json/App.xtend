@@ -21,9 +21,10 @@ import edu.vanderbilt.riaps.app.SubPort
 import edu.vanderbilt.riaps.app.Message
 import edu.vanderbilt.riaps.generator.json.Comp
 import edu.vanderbilt.riaps.app.Instance
-import edu.vanderbilt.riaps.app.Library
+
 import edu.vanderbilt.riaps.app.clibrary
 import edu.vanderbilt.riaps.app.pylibrary
+import edu.vanderbilt.riaps.app.LibraryReq
 
 @SuppressWarnings("unused") class App {
 	String name
@@ -95,11 +96,11 @@ import edu.vanderbilt.riaps.app.pylibrary
 			this.devices.put(dc.getName(), dc)
 
 		}
-//		for(Library x:a.libraries){
-//			var mm = new HashMap<String,String>();
-//			mm.put("name", (x as Library).getName());
-//			this.libraries.add(mm)
-//		}
+		for(LibraryReq x:a.libraries){
+			var mm = new HashMap<String,String>();
+			mm.put("name", (x as LibraryReq).getName());
+			this.libraries.add(mm) 
+		}
 		for (Actor ac : a.getActors()) {
 			var JsonActor jac = new JsonActor(ac)
 			actors.put(jac.getName(), jac)
@@ -112,10 +113,14 @@ import edu.vanderbilt.riaps.app.pylibrary
 		// }
 	}
 	
-	def String getName(Library library){
+	def String getName(LibraryReq library){
 		if (library===null) return "";
 		if(library.lib instanceof clibrary)
-			return (library.lib as clibrary).name
+		{
+			var temp=  (library.lib as clibrary).name.split(".so").get(0)
+			return temp
+		}
+			
 		
 		if(library.lib instanceof pylibrary)
 			return (library.lib as pylibrary).name

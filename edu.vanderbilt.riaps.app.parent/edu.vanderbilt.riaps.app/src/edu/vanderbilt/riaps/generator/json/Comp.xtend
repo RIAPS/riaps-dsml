@@ -14,7 +14,6 @@ import edu.vanderbilt.riaps.app.TimPort
 import edu.vanderbilt.riaps.app.ReqPort
 import edu.vanderbilt.riaps.app.RepPort
 import edu.vanderbilt.riaps.app.InsPort
-import edu.vanderbilt.riaps.app.Library
 import edu.vanderbilt.riaps.app.NAMEDHANDLER
 import edu.vanderbilt.riaps.app.NetworkRequirement
 import edu.vanderbilt.riaps.app.Port
@@ -28,6 +27,7 @@ import edu.vanderbilt.riaps.app.AnswerPort
 import edu.vanderbilt.riaps.app.clibrary
 import edu.vanderbilt.riaps.app.pylibrary
 import edu.vanderbilt.riaps.generator.AppGenerator
+import edu.vanderbilt.riaps.app.LibraryReq
 
 @SuppressWarnings(#["unchecked", "rawtypes"]) class Comp {
 	String name
@@ -101,7 +101,7 @@ import edu.vanderbilt.riaps.generator.AppGenerator
 		}
 	}
 
-	def String getName(Library library) {
+	def String getName(LibraryReq library) {
 		if(library === null) return "";
 		if (library.lib instanceof clibrary)
 			return (library.lib as clibrary).name
