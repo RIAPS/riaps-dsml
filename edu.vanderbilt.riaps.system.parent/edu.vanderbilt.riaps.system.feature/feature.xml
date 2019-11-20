@@ -2,7 +2,7 @@
 <feature
       id="edu.vanderbilt.riaps.system.feature"
       label="RIAPS Development Tools"
-      version="1.1.14.qualifier">
+      version="1.1.17.qualifier">
 
    <plugin
          id="edu.vanderbilt.riaps.system"
