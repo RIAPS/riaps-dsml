@@ -8,7 +8,7 @@ before_install:
 - source version.sh
 - hash -r
 jdk:
-- oraclejdk8
+- openjdk8
 script: mvn -v && pushd edu.vanderbilt.riaps.system.parent && mvn clean install &&
   popd && pushd edu.vanderbilt.riaps.system.parent/edu.vanderbilt.riaps.system.repository/target && tar -zcvf riapsdsmlplugin-$oldversion.tar.gz repository/ && popd
 deploy:
