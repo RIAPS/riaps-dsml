@@ -21,10 +21,10 @@ Edit the updateversion.sh and execute to set the version correctly.
     $ apt-get install maven
 
 - Eclipse Plugins to install
-    - Using Help --> Install New Software ... --> Work with: Neon - http://download.eclipse.org/releases/neon (from dropdown)
+    - Using Help --> Install New Software ... --> Work with: 2019-09 - http://download.eclipse.org/releases/2019-09 (from dropdown)
     	- in "type filter text" box search for : m2e – Extensions Development Support
     - Using Help --> Eclipse Marketplace ...
-    	- Eclipse Xtext 2.11.0 and Eclipse Xtend 2.11.0
+    	- Eclipse Xtext 2.19.0 and Eclipse Xtend 2.19.0
 
 # To start with the development
 - Clone the git repository
