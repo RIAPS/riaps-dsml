@@ -16,9 +16,11 @@ Edit the updateversion.sh and execute to set the version correctly.
 	- install the available plugins.
 
 # Setup system before development
-    '''
+- System setup
+```
     $ export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
     $ apt-get install maven
+```
 
 - Eclipse Plugins to install
     - Using Help --> Install New Software ... --> Work with: 2019-09 - http://download.eclipse.org/releases/2019-09 (from dropdown)
