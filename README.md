@@ -18,7 +18,7 @@ Edit the updateversion.sh and execute to set the version correctly.
 # Setup system before development
 - System setup
 ```
-    $ export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
+    $ export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64
     $ apt-get install maven
 ```
 
@@ -30,7 +30,7 @@ Edit the updateversion.sh and execute to set the version correctly.
 
 # To start with the development
 - Clone the git repository
-- Run the mvn build once inside edu.vanderbilt.riaps.system.parent project directory. This step is necessary to create the src-gen and xtend-gen folders. These folders are not tracked in the git repository because they are generated.
+- Run the mvn build inside edu.vanderbilt.riaps.system.parent project directory. This step is necessary to create the src-gen and xtend-gen folders. These folders are not tracked in the git repository because they are generated.
 
     ```
     $ pushd edu.vanderbilt.riaps.system.parent && mvn clean install && popd
