@@ -118,28 +118,28 @@ Message:
 
 
 //// Component implementation language
-Language:
-	//cppImpl ?= ('c++' | 'cpp' | 'C++')  | pyImpl ?=  ( 'Python' | 'python' | 'py' ) 
-	(cpp?='c++'|cpp?='cpp'|cpp?='C++'|py?='Python'|py?='py'|py?='python')
-; 
+//Language:
+//	cppImpl ?= ('c++' | 'cpp' | 'C++')  | pyImpl ?=  ( 'Python' | 'python' | 'py' ) 
+//; 
 
 // Component Scheduler
 ComponentScheduler:
-	('rr' | 'priority')
-;
+	//schedrr?='rr' | schedpriority?='priority';
+	('rr' | 'priority');
 
 // This is an application component
 // we capture its ports and its requirements.
 // Component types used in the application
 Component:	
 	(appComponent?='component' | ioComponent?='device') name=ID 
-	 ('()' | ('(' formals+=ComponentFormal (',' formals+=ComponentFormal)* ')')?)
-	 ('in'	language=Language )?
+	('()' | ('(' formals+=ComponentFormal (',' formals+=ComponentFormal)* ')')?)
+	 ('in'	(cpp?='c++'|cpp?='cpp'|cpp?='C++'|py?='Python'|py?='py'|py?='python'))?
 	 ( 'scheduler' scheduler=ComponentScheduler ';' )?
+	//('from' reuselib=Library)? 
 	'{'
 	// A component can first declare several requirements. It then declares the ports that it provides.
 	((ports+=Port))+
-	// A component must have at least one port 
+	// A component must have atleast one port 
 	'}';
 
 exceptionHandler:
@@ -201,12 +201,25 @@ Port:
 	| AnswerPort
 	| InsPort;
 
+QueryPort:
+	'qry' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' (timed?='timed')? ( 'within' deadline=INT (unit=TimeUnit)? )?  (';');
+
+AnswerPort:
+	'ans' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')'
+	(timed?='timed')? ( 'within' deadline=INT (unit=TimeUnit)? )?  (';');
+
+RateLimit:
+	'[' (lower=INT | nolower?='-') ',' (upper=INT | noupper?='-') ']';
+
+	//Rate limits are optional
 PubPort:
 	'pub' name=ID ':' type=[Message|FQN] (timed?='timed')?  (';');
 
 SubPort:
 	'sub' name=ID ':' type=[Message|FQN] (timed?='timed')? 
   	( 'within' deadline=INT (unit=TimeUnit)? )?  (';');
+
+ 
 
 	// Client port (request and reply message types) - Owned by an SMI client
 // Client operation is expected to send on the port and then receive on the same port
@@ -218,8 +231,7 @@ SrvPort:
 	(timed?='timed')? ( 'within' deadline=INT (unit=TimeUnit)? )?  (';');
 
 ReqPort:
-	'req' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' 
-	(timed?='timed')? ( 'within' deadline=INT (unit=TimeUnit)? )?  (';');
+	'req' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' (timed?='timed')? ( 'within' deadline=INT (unit=TimeUnit)? )?  (';');
 
 RepPort:
 	'rep' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')'
@@ -228,50 +240,53 @@ RepPort:
 TimPort:
 	'timer' name=ID (spec=INT (unit=TimeUnit)?)? ('within' (within=INT (withinunit=TimeUnit)?))?  (';');
 
-QueryPort:
-	'qry' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')' 
-	(timed?='timed')? ( 'within' deadline=INT (unit=TimeUnit)? )?  (';');
-
-AnswerPort:
-	'ans' name=ID ':' '(' req_type=[Message|FQN] ',' rep_type=[Message|FQN] ')'
-	(timed?='timed')? ( 'within' deadline=INT (unit=TimeUnit)? )?  (';');
-
-//Inside port
+	//Inside port
 InsPort:
 	'inside' name=ID (spec?='default')? (';');
 
-//ComponentUses:
-	//{ComponentUses}
-	//'uses'
-	//'{'
-	//(requirements+=ComponentRequirement (';'))+
-	//'}';
+ComponentUses:
+	{ComponentUses}
+	'uses'
+	'{'
+	(requirements+=ComponentRequirement (';'))+
+	'}';
 
-/*
+	/*
  * Rule that defines different supported memory units. 
  */
-//MemoryUnits:
-	//kb?='KB'
-	//| mb?='MB'
-	//| gb?="GB";
+MemoryUnits:
+	kb?='KB'
+	| mb?='MB'
+	| gb?="GB";
 
 	//An application component can request a specific device. But It will need to talk via a device component running on the same 
 // node that also requires the same device. Here the requirement captures a device identifier that can be specialized to 
 // identify a subtag for a device for example PMU.north. In this case the device type is PMU. The north is a tag that can be hierarchically matched
 // against the computation node that supports that device.
 // TODO DeviceTypes might have to be defined in datatypes
-//ComponentRequirement:
-	 //Configuration | CPURequirement  | NetworkRequirement;
+ComponentRequirement:
+	 Configuration | CPURequirement  | NetworkRequirement;
+
+NetworkRequirement:
+//	'net' (max?='max')? usage=INT (memUnit=MemUnit)? ( 'over' interval=INT (timeUnit=TimeUnit)? )? 
+	'net' 'rate' rate=Number rateUnit=RateUnit 
+			( 'ceil' ceil=Number ceilUnit=RateUnit )? 
+			( 'burst' burst=Number burstUnit=BurstUnit )?
+;
 	
+	
+	
+CPURequirement:
+	'cpu' (max?='max')? percentage=INT '%' ('over' TimeInterval=INT (unit=TimeUnit)? )?;
 
 Application returns Application:
 	{Application}
 	'app' (name=ID)
 	'{'
-	//declare the messages, groups, libraries, actors, components (app-specific components 
-	//  - an app's actor can use components described in a non-app namespace)
+	//declare the libraries, actors, components (app-specific components - an app's actor can use components described in a non-app namespace)
 	((actors+=Actor) | (components+=Component) | (libraries+=LibraryReq) | 
-	 (groups+=Group) | messages+=Message
+	//(libraries+=Library)| 
+	(groups+=Group) | messages+=Message
 	)+
 
 	//Optionally deployment constraints can be specified to control how an app is deployed.
@@ -280,13 +295,27 @@ Application returns Application:
 	'}';
 
 Group:
-	'group' name=ID (kind=GroupKind)?
-  		  'using' message=[Message|FQN] (timed='timed')? ';' 	
+	'group' name=ID //(kind=GroupKind)?
+	      (('with' groupProperty+=GroupProperty(','  groupProperty+=GroupProperty)*)?)	
+  		  'using' message=[Message|FQN] (timed?='timed')? (';')
+;
+//('uses' groupProperty+=GroupProperty(','  groupProperty+=GroupProperty)*)? (';')
+//GroupKind:
+	//'with' (leaderkind?='leader' | consensuskind?='consensus')
+//;
+
+GroupProperty:
+	Leader | Consensus
 ;
 
-GroupKind:
-	'with' (leaderkind?='leader' | consensuskind?='consensus')
-;
+Leader:
+	{Leader}
+	hasLeader?=('leader');
+
+Consensus:
+	{Consensus}
+	hasConsensus?=('consensus');
+
 
 DeploymentConstraint:
 	CollocateConstraint | DistributeConstraint;
@@ -306,7 +335,7 @@ ActorFormal:
 	name=ID (('=' argDefault=FormalDefault)?);
 
 Actor:
-	((rt ?= 'real-time')?) 
+	((rt ?= 'real-time')?)
 	'actor' name=ID ('()' | ('(' formals+=ActorFormal (',' formals+=ActorFormal)* ')')?)
 	'{'
 	(('local' locals+=[Message|FQN] (',' locals+=[Message|FQN])* (';')) 
@@ -323,34 +352,37 @@ ActorUses:
 	(requirements+=ActorRequirement (';'))*
 	'}';
 
-//RestartSpec:
-	//{RestartSpec}
-	//'restart' (maxtries=INT)? ('delay' delay=INT unit=TimeUnit)? (';');
+RestartSpec:
+	{RestartSpec}
+	'restart' (maxtries=INT)? ('delay' delay=INT unit=TimeUnit)? (';');
 
 ActorRequirement:
-	 CPURequirement | MemoryRequirement | StorageRequirement | NetworkRequirement
-;
-
-CPURequirement:
-	'cpu' (max?='max')? percentage=INT '%' ('over' TimeInterval=INT (unit=TimeUnit)? )?
-;
+	MemoryRequirement |CPURequirement| StorageRequirement |NetworkRequirement;
 
 MemoryRequirement:
-	'mem' Number=INT ( unit=MemUnit )?
-;
+	'mem' Number=INT ( unit=MemUnit )?;
 
 MemUnit:
 	megabytes?='mb' | kilobytes?='kb' | gigabytes?='gb'
 ;
  
+
 StorageRequirement:
-	'space' Number=INT ( unit=SpaceUnit )?
-;
+	'space' Number=INT ( unit=MemUnit )?	
+	;
 	
-SpaceUnit:
-	megabytes?='mb' | gigabytes?='gb'
+	// Actor Scheduler
+ActorScheduler:
+	(rr ?= 'rr' | ('priority' priority=INT))
 ;
-	
+
+	// Wiring of clients to servers (both SMI and AMI)
+InstanceSection returns InstanceSection:
+	{InstanceSection}
+	'{'
+	(compInstances+=Instance)+
+	'}';
+
 RateUnit:
 	kbps?='kbps' | mbps?='mbps' 
 ;
@@ -360,30 +392,6 @@ BurstUnit:
 	kilo?='k' | kilbyte?='kb'
 ;
 
-NetworkRequirement:
-//	'net' (max?='max')? usage=INT (memUnit=MemUnit)? ( 'over' interval=INT (timeUnit=TimeUnit)? )? 
-	'net' 'rate' rate=Number rateUnit=RateUnit 
-			( 'ceil' ceil=Number ceilUnit=RateUnit )? 
-			( 'burst' burst=Number burstUnit=BurstUnit )?
-;
-
-//RateLimit:
-	//'[' (lower=INT | nolower?='-') ',' (upper=INT | noupper?='-') ']';
-	//Rate limits are optional
-	
-// Actor Scheduler
-ActorScheduler:
-	(rr ?= 'rr' | ('priority' priority=INT))
-;
-	
-	// Wiring of clients to servers (both SMI and AMI)
-InstanceSection returns InstanceSection:
-	{InstanceSection}
-	'{'
-	(compInstances+=Instance)+
-	'}';
-
-
 Actual returns Actual:
 	{Actual} argName=[ComponentFormal|FQN] '=' (tringdefault=StringDefault | numberdefault=NumberDefault |
 	boolDefault=BoolDefault | argValue=[ActorFormal|FQN]);
@@ -392,6 +400,3 @@ Actual returns Actual:
 //	(stringdefault=StringDefault | numberdefault=NumberDefault | boolDefault=BoolDefault | param=[ActorFormal|FQN]);
 Instance:
 	name=ID ':' type=[Component|FQN] ('()' | ('(' actuals+=Actual (',' (actuals+=Actual))* ')'))? (';');
-
-
-	
