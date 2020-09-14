@@ -47,7 +47,7 @@ Number hidden():
 	(INT | DECIMAL) ('.' (INT | DECIMAL))?;
 
 terminal BOOL:
-	'true' | 'false';
+	'true' | 'True' | 'TRUE' | 'false' | 'False' | 'FALSE';
 
 //A collection defines the top level entries in the riaps file.
 // These can just be component definitions or application definitions.
@@ -122,6 +122,11 @@ Message:
 //	cppImpl ?= ('c++' | 'cpp' | 'C++')  | pyImpl ?=  ( 'Python' | 'python' | 'py' ) 
 //; 
 
+// Component Scheduler
+ComponentScheduler:
+	//schedrr?='rr' | schedpriority?='priority';
+	('rr' | 'priority');
+
 // This is an application component
 // we capture its ports and its requirements.
 // Component types used in the application
@@ -129,6 +134,7 @@ Component:
 	(appComponent?='component' | ioComponent?='device') name=ID 
 	('()' | ('(' formals+=ComponentFormal (',' formals+=ComponentFormal)* ')')?)
 	 ('in'	(cpp?='c++'|cpp?='cpp'|cpp?='C++'|py?='Python'|py?='py'|py?='python'))?
+	 ( 'scheduler' scheduler=ComponentScheduler ';' )?
 	//('from' reuselib=Library)? 
 	'{'
 	// A component can first declare several requirements. It then declares the ports that it provides.
@@ -278,9 +284,9 @@ Application returns Application:
 	'app' (name=ID)
 	'{'
 	//declare the libraries, actors, components (app-specific components - an app's actor can use components described in a non-app namespace)
-	((actors+=Actor) | (components+=Component) | (libraries+=LibraryReq)| 
-	//(libraries+=Library)| (groups+=Group) |
-		 messages+=Message
+	((actors+=Actor) | (components+=Component) | (libraries+=LibraryReq) | 
+	//(libraries+=Library)| 
+	(groups+=Group) | messages+=Message
 	)+
 
 	//Optionally deployment constraints can be specified to control how an app is deployed.
@@ -289,13 +295,17 @@ Application returns Application:
 	'}';
 
 Group:
-	'group' name=ID 
-	('uses' groupProperty+=GroupProperty(','  groupProperty+=GroupProperty)*)? (';')	
+	'group' name=ID //(kind=GroupKind)?
+	      (('with' groupProperty+=GroupProperty(','  groupProperty+=GroupProperty)*)?)	
+  		  'using' message=[Message|FQN] (timed?='timed')? (';')
 ;
+//('uses' groupProperty+=GroupProperty(','  groupProperty+=GroupProperty)*)? (';')
+//GroupKind:
+	//'with' (leaderkind?='leader' | consensuskind?='consensus')
+//;
 
 GroupProperty:
-	Leader
-	|Consensus
+	Leader | Consensus
 ;
 
 Leader:
@@ -325,11 +335,13 @@ ActorFormal:
 	name=ID (('=' argDefault=FormalDefault)?);
 
 Actor:
+	((rt ?= 'real-time')?)
 	'actor' name=ID ('()' | ('(' formals+=ActorFormal (',' formals+=ActorFormal)* ')')?)
 	'{'
 	(('local' locals+=[Message|FQN] (',' locals+=[Message|FQN])* (';')) 
 	| ('internal' internals+=[Message|FQN] (',' internals+=[Message|FQN])* (';')))*
 	((constraint=ActorUses)?)
+	(('scheduler' scheduler=ActorScheduler ';' )?)	// Optional: scheduler
 	compsection=InstanceSection
 	'}';
 
@@ -356,9 +368,14 @@ MemUnit:
  
 
 StorageRequirement:
-	'space' Number=INT ( unit=MemUnit )?
-	
+	'space' Number=INT ( unit=MemUnit )?	
 	;
+	
+	// Actor Scheduler
+ActorScheduler:
+	(rr ?= 'rr' | ('priority' priority=INT))
+;
+
 	// Wiring of clients to servers (both SMI and AMI)
 InstanceSection returns InstanceSection:
 	{InstanceSection}
@@ -383,6 +400,3 @@ Actual returns Actual:
 //	(stringdefault=StringDefault | numberdefault=NumberDefault | boolDefault=BoolDefault | param=[ActorFormal|FQN]);
 Instance:
 	name=ID ':' type=[Component|FQN] ('()' | ('(' actuals+=Actual (',' (actuals+=Actual))* ')'))? (';');
-
-
-	
