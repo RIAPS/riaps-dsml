@@ -59,3 +59,5 @@ Edit the updateversion.sh and execute to set the version correctly.
 	- File --> Open Projects from File System... --> Directory
 	- Browse to git repository --> examples --> example_Weather_Monitor --> OK --> Finish
 If everything worked correctly the riaps example models will have syntax highlighting and autocomplete among other useful features.
+
+>Note: When releasing this tool, version number needs updating in many different places
