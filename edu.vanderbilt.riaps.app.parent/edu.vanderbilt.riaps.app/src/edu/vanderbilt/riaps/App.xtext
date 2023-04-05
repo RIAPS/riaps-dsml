@@ -297,7 +297,9 @@ Application returns Application:
 Group:
 	'group' name=ID //(kind=GroupKind)?
 	      (('with' groupProperty+=GroupProperty(','  groupProperty+=GroupProperty)*)?)	
-  		  'using' message=[Message|FQN] (timed?='timed')? (';')
+  		  'using' message=[Message|FQN] (timed?='timed')? 
+		  ( groupParams += GroupParam[','] )?
+		  (';')
 ;
 //('uses' groupProperty+=GroupProperty(','  groupProperty+=GroupProperty)*)? (';')
 //GroupKind:
@@ -316,6 +318,13 @@ Consensus:
 	{Consensus}
 	hasConsensus?=('consensus');
 
+GroupParam: 
+	( name = GroupParamName '=' value=INT ) 
+;   
+
+GroupParamName: 
+	('heartbeat' | 'electionMin' | 'electionMax' | 'peerTimeout' | 'consensusTimeout')
+; 
 
 DeploymentConstraint:
 	CollocateConstraint | DistributeConstraint;
