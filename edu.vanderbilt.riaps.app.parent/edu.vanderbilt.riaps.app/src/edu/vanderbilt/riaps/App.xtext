@@ -298,7 +298,7 @@ Group:
 	'group' name=ID //(kind=GroupKind)?
 	      (('with' groupProperty+=GroupProperty(','  groupProperty+=GroupProperty)*)?)	
   		  'using' message=[Message|FQN] (timed?='timed')? 
-		  ( groupParams += GroupParam[','] )?
+		  ( groupParams+=GroupParam(',') )?
 		  (';')
 ;
 //('uses' groupProperty+=GroupProperty(','  groupProperty+=GroupProperty)*)? (';')
@@ -319,12 +319,10 @@ Consensus:
 	hasConsensus?=('consensus');
 
 GroupParam: 
-	( name = GroupParamName '=' value=INT ) 
-;   
+	( name = GroupParamName '=' value=INT );   
 
 GroupParamName: 
-	('heartbeat' | 'electionMin' | 'electionMax' | 'peerTimeout' | 'consensusTimeout')
-; 
+	('heartbeat' | 'electionMin' | 'electionMax' | 'peerTimeout' | 'consensusTimeout'); 
 
 DeploymentConstraint:
 	CollocateConstraint | DistributeConstraint;
