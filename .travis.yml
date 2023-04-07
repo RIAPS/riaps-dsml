@@ -10,13 +10,13 @@ before_install:
 jdk:
 - openjdk11
 script: mvn -v && pushd edu.vanderbilt.riaps.system.parent && mvn clean install &&
-  popd && pushd edu.vanderbilt.riaps.system.parent/edu.vanderbilt.riaps.system.repository/target && tar -zcvf riapsdsmlplugin-$oldversion.tar.gz repository/ && popd
+  popd && pushd edu.vanderbilt.riaps.system.parent/edu.vanderbilt.riaps.system.repository/target && tar -zcvf riapsdsmlplugin-$newversion.tar.gz repository/ && popd
 deploy:
   provider: releases
   overwrite: true
   api_key:
      secure: KJc2ZCuB6PS/04Mz4NXjPcV5ly5M1YJbUrtdQvwKncBmW8QN2sS+aMd/C7HEX9ymTwjBmtcwoYSIC/5ibO4CuLO+ST3FMC5PoFMQR75xpS3XbyxzMu9QUJ8yHSW9YRd7A4AZ4q88b6QxrtbgkzV8Zlu7q8yUjAfs+msbe1etd6dxim+kxYSFx4TcQF0wyWhKWFRL23/aH0fW598VzT/ogb5AdpCTsYWynZMuwqwwzPcYf6Fzs9WLRiaTc8UJhMdHVw/QnMzEp9DYeQJK8jJe378raSIGYDkpkid8/VegIFLru+IpTk8Cxiiwi+HLonXpAirS8U9w0tA+oWPPfAaQGkGv8wDyQWQBZAWcSSAD2s+9Kv9VlKz5v0ihREylhCH6qYtLYcrlszSQBTwLIw7Hy5O2UkLKNaLdMs3R6ChPExBm47kdJOpQ5OY1R/eeTkQXGwAOZsPEk+NsONKSSlOgVUz92h/59lGlkPYpp3nFMfcxUDXoddsHYZ5wlXEQasMTPYs7peCcdpK3FCyUs1/Y4BNQ68daNG6V9eKfRfnGz7RXxNU3qUZnEpHp7sTVbzy66qNX1f/HOAggzK2jr3oPsTxiDhwar73uB1cVa0AdKYCfB8qAV+67ErNXDbcBpNcUiAfiw1CKY+dzQmh/JpAybVgbW6xxfY8cOxHl3tDEDJw=
-  file: 'edu.vanderbilt.riaps.system.parent/edu.vanderbilt.riaps.system.repository/target/riapsdsmlplugin-$oldversion.tar.gz'
+  file: 'edu.vanderbilt.riaps.system.parent/edu.vanderbilt.riaps.system.repository/target/riapsdsmlplugin-$newversion.tar.gz'
   #local_dir: edu.vanderbilt.riaps.system.parent/edu.vanderbilt.riaps.system.repository/target
   skip_cleanup: true
   on:
