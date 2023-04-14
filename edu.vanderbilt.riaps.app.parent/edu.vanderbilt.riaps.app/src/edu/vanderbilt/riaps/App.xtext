@@ -330,23 +330,23 @@ GroupParam:
 
 Heartbeat:
     {Heartbeat}
-    hasHeartbeat?=('heartbeat')'='INT;
+    ( hasHeartbeat?=('heartbeat')'='INT );
 
 ElectionMin:
     {ElectionMin}
-    hasElectionMin?=('electionMin')'='INT;
+    ( hasElectionMin?=('electionMin')'='INT );
 
 ElectionMax:
     {ElectionMax}
-    hasElectionMax?=('electionMax')'='INT;
+    ( hasElectionMax?=('electionMax')'='INT );
 
 PeerTimeout:
     {PeerTimeout}
-	hasPeerTimeout?=('peerTimeout')'='INT;
+	( hasPeerTimeout?=('peerTimeout')'='INT );
 
 ConsensusTimeout:
 	{ConsensusTimeout}
-	hasConsensusTimeout?=('consensusTimeout')'='INT;
+	( hasConsensusTimeout?=('consensusTimeout')'='INT );
 
 DeploymentConstraint:
 	CollocateConstraint | DistributeConstraint;
