@@ -15,6 +15,15 @@ Edit the updateversion.sh and execute to set the version correctly.
 	- Browse to location of untar-ed release and click ok.
 	- install the available plugins.
 
+# Creating a release
+- From `edu.vanderbilt.riaps.system.parent/edu.vanderbilt.riaps.system.repository/target/` directory, 
+
+```
+tar -zcvf riapsdsmlplugin-<version>.tar.gz repository/
+```
+
+- Transfer tar file to release server
+
 # Setup system before development
 - System setup
 ```

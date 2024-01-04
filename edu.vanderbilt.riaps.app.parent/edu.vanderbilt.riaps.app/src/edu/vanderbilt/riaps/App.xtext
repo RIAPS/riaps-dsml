@@ -298,7 +298,7 @@ Group:
 	'group' name=ID //(kind=GroupKind)?
 	      (('with' groupProperty+=GroupProperty(','  groupProperty+=GroupProperty)*)?)	
   		  'using' message=[Message|FQN] (timed?='timed')? 
-		  ( groupParams+=GroupParam(',') )?
+		  ( groupParams+=GroupParam(',' groupParams+=GroupParam)*)?
 		  (';')
 ;
 //('uses' groupProperty+=GroupProperty(','  groupProperty+=GroupProperty)*)? (';')
@@ -318,11 +318,35 @@ Consensus:
 	{Consensus}
 	hasConsensus?=('consensus');
 
-GroupParam: 
-	( name = GroupParamName '=' value=INT );   
+//GroupParam: 
+	//( name = GroupParamName '=' value=INT );   
 
-GroupParamName: 
-	('heartbeat' | 'electionMin' | 'electionMax' | 'peerTimeout' | 'consensusTimeout'); 
+//GroupParamName: 
+	//('heartbeat' | 'electionMin' | 'electionMax' | 'peerTimeout' | 'consensusTimeout'); 
+
+GroupParam:
+    Heartbeat | ElectionMin | ElectionMax | PeerTimeout | ConsensusTimeout
+;
+
+Heartbeat:
+    {Heartbeat}
+    ( hasHeartbeat?=('heartbeat')'='INT );
+
+ElectionMin:
+    {ElectionMin}
+    ( hasElectionMin?=('electionMin')'='INT );
+
+ElectionMax:
+    {ElectionMax}
+    ( hasElectionMax?=('electionMax')'='INT );
+
+PeerTimeout:
+    {PeerTimeout}
+	( hasPeerTimeout?=('peerTimeout')'='INT );
+
+ConsensusTimeout:
+	{ConsensusTimeout}
+	( hasConsensusTimeout?=('consensusTimeout')'='INT );
 
 DeploymentConstraint:
 	CollocateConstraint | DistributeConstraint;
